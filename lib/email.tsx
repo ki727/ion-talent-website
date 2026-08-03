@@ -18,9 +18,13 @@ import nodemailer from "nodemailer"
  *   APPLY_MAIL_TO         – recipient for candidate CV applications        [REQUIRED]
  *   REFERRAL_MAIL_TO      – recipient for company referrals                [REQUIRED]
  *
- *   CONTACT_FROM          – display name for contact emails (optional)
- *   APPLICATION_FROM      – display name for application emails (optional)
- *   REFERRAL_FROM         – display name for referral emails (optional)
+ *   CONTACT_FROM          – visible From address for contact emails         [REQUIRED]
+ *   APPLICATION_FROM      – visible From address for application emails     [REQUIRED]
+ *   REFERRAL_FROM         – visible From address for referral emails        [REQUIRED]
+ *
+ * GMAIL_USER is used for SMTP authentication only and is never used as a
+ * visible From address. Set the three *_FROM variables to a string like:
+ *   "ION Talent" <noreply@iontalentgroup.com>
  */
 
 const NAVY = "#0F172A"
@@ -74,17 +78,23 @@ function getReferralRecipient(): string {
   return requireEnv("REFERRAL_MAIL_TO")
 }
 
-/* Sender display names — optional, fall back to a safe generic label */
+/*
+ * Sender display-name aliases — REQUIRED.
+ *
+ * These must be set to a string like:  "ION Talent" <noreply@iontalentgroup.com>
+ * GMAIL_USER is the SMTP auth credential only and is never used as a visible
+ * From address so that the authenticated Google account is not leaked to recipients.
+ */
 function getContactFrom(): string {
-  return process.env.CONTACT_FROM || `"ION Talent Website" <${process.env.GMAIL_USER}>`
+  return requireEnv("CONTACT_FROM")
 }
 
 function getApplicationFrom(): string {
-  return process.env.APPLICATION_FROM || `"ION Talent Careers" <${process.env.GMAIL_USER}>`
+  return requireEnv("APPLICATION_FROM")
 }
 
 function getReferralFrom(): string {
-  return process.env.REFERRAL_FROM || `"ION Talent Referrals" <${process.env.GMAIL_USER}>`
+  return requireEnv("REFERRAL_FROM")
 }
 
 /* -------------------------------------------------------------------------- */
