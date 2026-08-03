@@ -156,9 +156,10 @@ export default function PrivacyPage() {
 
             <Section id="security" title="How we protect your data">
               <p>
-                CV files are transmitted securely and stored in encrypted cloud storage. Access is
-                restricted to authorised ION Talent personnel. We use industry-standard security
-                measures to protect your data against unauthorised access, disclosure or loss.
+                Data submitted through our website forms is transmitted over encrypted HTTPS
+                connections and delivered by email to authorised ION Talent personnel only. We use
+                industry-standard security measures to protect your data against unauthorised access,
+                disclosure or loss.
               </p>
             </Section>
 
