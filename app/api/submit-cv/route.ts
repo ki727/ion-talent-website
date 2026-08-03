@@ -27,7 +27,6 @@ export async function POST(request: NextRequest) {
     // Convert file to buffer for email attachment
     const cvBuffer = Buffer.from(await cvFile.arrayBuffer())
 
-    // Send email with CV to ki@iontalent.com
     await sendCVEmail({
       firstName,
       lastName,
