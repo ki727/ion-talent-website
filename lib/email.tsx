@@ -176,19 +176,21 @@ export async function sendCVEmail(data: CVEmailData) {
 /*  Opportunities: candidate registration                                      */
 /* -------------------------------------------------------------------------- */
 
+/** Internal recipient for candidate applications. */
+export function getApplicationRecipient(): string {
+  return process.env.APPLY_MAIL_TO || "apply@iontalentgroup.com"
+}
+
 export interface CandidateRegistrationData {
-  firstName: string
-  lastName: string
+  fullName: string
   email: string
-  phone: string
-  currentLocation: string
-  currentJobTitle: string
-  desiredRole: string
-  primaryFunction: string
-  yearsExperience: string
+  mobile: string
   linkedin: string
-  availability: string
-  additionalInfo?: string
+  currentLocation: string
+  desiredRole: string
+  noticePeriod: string
+  expectedSalary: string
+  coverNote?: string
   marketingOptIn: boolean
   consent: boolean
   timestamp: string
@@ -196,27 +198,60 @@ export interface CandidateRegistrationData {
 }
 
 export async function sendCandidateRegistrationEmail(data: CandidateRegistrationData) {
-  return send({
-    subject: `Talent network registration - ${data.firstName} ${data.lastName} (${data.desiredRole})`,
-    replyTo: data.email,
-    attachments: [data.cvFile],
-    html: buildEmail("Register Interest Submission", `${data.firstName} ${data.lastName}`, [
-      ["Name", `${data.firstName} ${data.lastName}`],
+  const transporter = getTransporter()
+  const html = buildEmail(
+    "Candidate Registration",
+    `${data.fullName} — ${data.desiredRole}`,
+    [
+      ["Full name", data.fullName],
       ["Email", data.email],
-      ["Phone", data.phone],
-      ["Current location", data.currentLocation],
-      ["Current job title", data.currentJobTitle],
-      ["Desired role", data.desiredRole],
-      ["Primary function", data.primaryFunction],
-      ["Years of experience", data.yearsExperience],
+      ["Mobile", data.mobile],
       ["LinkedIn", data.linkedin],
-      ["Availability", data.availability],
-      ["Additional information", data.additionalInfo],
+      ["Current location", data.currentLocation],
+      ["Desired role", data.desiredRole],
+      ["Notice period", data.noticePeriod],
+      ["Expected salary", data.expectedSalary],
+      ["Cover note", data.coverNote],
       ["Consent given", data.consent ? "Yes" : "No"],
       ["Marketing opt-in", data.marketingOptIn ? "Yes" : "No"],
       ["CV attached", data.cvFile.filename],
       ["Submitted", data.timestamp],
-    ]),
+    ],
+  )
+
+  // Send internal notification to apply@iontalentgroup.com
+  await transporter.sendMail({
+    from: `"ION Talent Website" <${process.env.GMAIL_USER}>`,
+    to: getApplicationRecipient(),
+    replyTo: data.email,
+    subject: `Candidate registration — ${data.fullName} (${data.desiredRole})`,
+    html,
+    attachments: [data.cvFile],
+  })
+
+  // Send candidate acknowledgement
+  const ackHtml = `<!doctype html>
+<html>
+  <body style="margin:0;padding:24px;background:#F8FAFC;font-family:Arial,Helvetica,sans-serif;">
+    <table role="presentation" cellpadding="0" cellspacing="0" style="max-width:600px;margin:0 auto;background:#FFFFFF;border:1px solid #E2E8F0;border-radius:14px;overflow:hidden;">
+      <tr><td style="background:#0F172A;padding:24px;">
+        <p style="margin:0;color:#14A8A8;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;">ION Talent</p>
+        <h1 style="margin:8px 0 0;color:#FFFFFF;font-size:20px;font-weight:700;">Thank you, ${esc(data.fullName)}</h1>
+      </td></tr>
+      <tr><td style="padding:24px;">
+        <p style="font-size:14px;color:#334155;line-height:1.6;">Thank you for registering your interest with ION Talent. Your details have been added to our specialist network for <strong>${esc(data.desiredRole)}</strong> opportunities.</p>
+        <p style="font-size:14px;color:#334155;line-height:1.6;">We review registrations carefully and will be in touch when your experience matches a relevant live requirement. In the meantime, please do not hesitate to contact us directly at <a href="mailto:hello@iontalentgroup.com" style="color:#14A8A8;">hello@iontalentgroup.com</a>.</p>
+        <p style="font-size:13px;color:#64748B;margin-top:24px;">ION Talent<br>iontalentgroup.com</p>
+      </td></tr>
+    </table>
+  </body>
+</html>`
+
+  await transporter.sendMail({
+    from: `"ION Talent" <${process.env.GMAIL_USER}>`,
+    to: data.email,
+    subject: `Your ION Talent registration — ${data.desiredRole}`,
+    html: ackHtml,
   })
 }
 

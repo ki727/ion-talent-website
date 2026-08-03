@@ -1,22 +1,18 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { sendCandidateRegistrationEmail } from "@/lib/email"
 
-const MAX_CV_BYTES = 5 * 1024 * 1024 // 5MB
+const MAX_CV_BYTES = 10 * 1024 * 1024 // 10 MB
 const ACCEPTED_EXTENSIONS = [".pdf", ".doc", ".docx"]
 
 const REQUIRED_FIELDS = [
-  "firstName",
-  "lastName",
+  "fullName",
   "email",
-  "phone",
-  "currentLocation",
-  "currentJobTitle",
-  "desiredRole",
-  "primaryFunction",
-  "yearsExperience",
+  "mobile",
   "linkedin",
-  "availability",
-  "additionalInfo",
+  "currentLocation",
+  "desiredRole",
+  "noticePeriod",
+  "expectedSalary",
 ] as const
 
 export async function POST(request: NextRequest) {
@@ -57,26 +53,27 @@ export async function POST(request: NextRequest) {
 
     if (cvFile.size > MAX_CV_BYTES) {
       return NextResponse.json(
-        { success: false, message: "CV must be 5MB or smaller." },
+        { success: false, message: "CV must be 10 MB or smaller." },
         { status: 400 },
       )
     }
 
     const cvBuffer = Buffer.from(await cvFile.arrayBuffer())
+    const coverNote =
+      typeof formData.get("coverNote") === "string"
+        ? (formData.get("coverNote") as string).trim()
+        : undefined
 
     await sendCandidateRegistrationEmail({
-      firstName: fields.firstName,
-      lastName: fields.lastName,
+      fullName: fields.fullName,
       email: fields.email,
-      phone: fields.phone,
-      currentLocation: fields.currentLocation,
-      currentJobTitle: fields.currentJobTitle,
-      desiredRole: fields.desiredRole,
-      primaryFunction: fields.primaryFunction,
-      yearsExperience: fields.yearsExperience,
+      mobile: fields.mobile,
       linkedin: fields.linkedin,
-      availability: fields.availability,
-      additionalInfo: fields.additionalInfo,
+      currentLocation: fields.currentLocation,
+      desiredRole: fields.desiredRole,
+      noticePeriod: fields.noticePeriod,
+      expectedSalary: fields.expectedSalary,
+      coverNote,
       consent: true,
       marketingOptIn: formData.get("marketingOptIn") === "true",
       timestamp: new Date().toISOString(),

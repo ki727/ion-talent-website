@@ -31,18 +31,22 @@ export function SiteHeader() {
       }`}
     >
       <div className="container mx-auto px-6 lg:px-12">
-        <div className="flex items-center justify-between h-20">
-          <Link href="/" className="flex items-center gap-3" aria-label="ION Talent home">
-            <img src="/ion-logo.svg" alt="" aria-hidden="true" className="h-9 w-9" />
-            <img src="/ion-talent-logo.png" alt="ION Talent" className="h-7 w-auto" />
+        <div className="flex items-center h-20 gap-4">
+          {/* Wordmark — fixed minimum width prevents it from colliding with nav */}
+          <Link href="/" className="flex shrink-0 items-center gap-2.5" aria-label="ION Talent home">
+            <img src="/ion-logo.svg" alt="" aria-hidden="true" className="h-8 w-8 shrink-0" />
+            <img src="/ion-talent-logo.png" alt="ION Talent" className="h-6 w-auto max-w-[120px]" />
           </Link>
 
-          <nav className="hidden md:flex items-center gap-10" aria-label="Primary">
+          {/* Spacer */}
+          <div className="flex-1" />
+
+          <nav className="hidden lg:flex items-center gap-8" aria-label="Primary">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-gray-700 hover:text-gray-900 transition-colors text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#14A8A8] focus-visible:ring-offset-2 rounded-sm"
+                className="whitespace-nowrap text-gray-700 hover:text-gray-900 transition-colors text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#14A8A8] focus-visible:ring-offset-2 rounded-sm"
               >
                 {link.label}
               </Link>
@@ -51,7 +55,7 @@ export function SiteHeader() {
 
           <Button
             asChild
-            className="hidden md:inline-flex items-center gap-2 bg-[#14A8A8] hover:bg-[#0F8F8F] text-white text-sm px-6 h-11 rounded-xl shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
+            className="hidden lg:inline-flex items-center gap-2 bg-[#14A8A8] hover:bg-[#0F8F8F] text-white text-sm px-5 h-10 rounded-xl shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md shrink-0"
           >
             <Link href="/#contact">
               Get Started
@@ -61,7 +65,7 @@ export function SiteHeader() {
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden w-10 h-10 flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#14A8A8] rounded-lg"
+            className="lg:hidden w-10 h-10 flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#14A8A8] rounded-lg"
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileMenuOpen}
           >
@@ -70,7 +74,7 @@ export function SiteHeader() {
         </div>
 
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-100 py-6">
+          <div className="lg:hidden border-t border-gray-100 py-6">
             <nav className="flex flex-col gap-6" aria-label="Mobile">
               {NAV_LINKS.map((link) => (
                 <Link
