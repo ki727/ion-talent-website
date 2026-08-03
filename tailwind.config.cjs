@@ -1,8 +1,7 @@
-import type { Config } from "tailwindcss"
+// CommonJS Tailwind v3 config — replaces tailwind.config.ts
+// Tailwind 3.0 does not support TypeScript config files; .cjs is the safe fix.
 
-// all in fixtures is set to tailwind v3 as interims solutions
-
-const config: Config = {
+const config = {
   darkMode: ["class"],
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -74,20 +73,12 @@ const config: Config = {
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
         },
       },
       animation: {
@@ -98,4 +89,5 @@ const config: Config = {
   },
   plugins: [require("tailwindcss-animate")],
 }
-export default config
+
+module.exports = config
