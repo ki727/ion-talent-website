@@ -1,53 +1,39 @@
-import nodemailer from "nodemailer";
+import { type NextRequest, NextResponse } from "next/server"
+import { sendContactEmail } from "@/lib/email"
 
-export async function POST(req: Request) {
+export async function POST(request: NextRequest) {
   try {
-    const formData = await req.formData();
+    const data = await request.json()
 
-    const name = formData.get("name");
-    const email = formData.get("email");
-    const message = formData.get("message");
-    const file = formData.get("cv") as File | null;
-
-    if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD || !process.env.MAIL_TO) {
-      return new Response("Email not configured", { status: 500 });
+    // Validate required fields
+    if (!data.name || !data.email || !data.company || !data.message) {
+      return NextResponse.json({ success: false, message: "Missing required fields" }, { status: 400 })
     }
 
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_APP_PASSWORD,
-      },
-    });
+    await sendContactEmail({
+      name: data.name,
+      email: data.email,
+      company: data.company,
+      phone: data.phone,
+      service: data.service,
+      message: data.message,
+      timeline: data.timeline,
+      timestamp: data.timestamp,
+    })
 
-    const attachments = [];
+    console.log("✅ Contact form email sent successfully:", {
+      name: data.name,
+      email: data.email,
+      company: data.company,
+      timestamp: data.timestamp,
+    })
 
-    if (file) {
-      const buffer = Buffer.from(await file.arrayBuffer());
-      attachments.push({
-        filename: file.name,
-        content: buffer,
-      });
-    }
-
-    await transporter.sendMail({
-      from: `"ION Talent Website" <${process.env.GMAIL_USER}>`,
-      to: process.env.MAIL_TO,
-      subject: "New CV / Contact Submission",
-      text: `
-Name: ${name}
-Email: ${email}
-
-Message:
-${message}
-      `,
-      attachments,
-    });
-
-    return new Response(JSON.stringify({ success: true }), { status: 200 });
-  } catch (err) {
-    console.error(err);
-    return new Response("Failed to send email", { status: 500 });
+    return NextResponse.json({
+      success: true,
+      message: "Contact form submitted successfully",
+    })
+  } catch (error) {
+    console.error("❌ Error processing contact form:", error)
+    return NextResponse.json({ success: false, message: "Failed to submit contact form" }, { status: 500 })
   }
 }
