@@ -39,19 +39,12 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    console.log("✅ CV submission email sent successfully:", {
-      candidate: `${data.firstName} ${data.lastName}`,
-      email: data.email,
-      cvFileName: cvFile.name,
-      timestamp: data.timestamp,
-    })
-
     return NextResponse.json({
       success: true,
       message: "CV submitted successfully",
     })
   } catch (error) {
-    console.error("❌ Error processing CV submission:", error)
+    console.error("[ION] cv-upload error:", error)
     return NextResponse.json({ success: false, message: "Failed to submit CV" }, { status: 500 })
   }
 }

@@ -21,19 +21,12 @@ export async function POST(request: NextRequest) {
       timestamp: data.timestamp,
     })
 
-    console.log("✅ Contact form email sent successfully:", {
-      name: data.name,
-      email: data.email,
-      company: data.company,
-      timestamp: data.timestamp,
-    })
-
     return NextResponse.json({
       success: true,
       message: "Contact form submitted successfully",
     })
   } catch (error) {
-    console.error("❌ Error processing contact form:", error)
+    console.error("[ION] contact form error:", error)
     return NextResponse.json({ success: false, message: "Failed to submit contact form" }, { status: 500 })
   }
 }

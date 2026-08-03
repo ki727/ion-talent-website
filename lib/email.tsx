@@ -3,20 +3,33 @@ import nodemailer from "nodemailer"
 /**
  * Central email transport for all ION Talent form submissions.
  *
- * Credentials are read from server-only environment variables and are never
- * exposed to the client. The transporter is created lazily so that a missing
- * credential can never break the production build - it only surfaces as a
- * runtime error on the affected API route.
+ * All recipients and sender display-names are read from environment variables.
+ * No email address is hard-coded. If a required destination variable is absent
+ * the function throws immediately with a clear configuration message so the
+ * missing variable is obvious in server logs — submissions are never silently
+ * dropped or re-routed.
+ *
+ * Variables used (all server-only, never exposed to the browser):
+ *
+ *   GMAIL_USER            – authenticated Gmail / Google Workspace account (SMTP auth only)
+ *   GMAIL_APP_PASSWORD    – 16-char app password for nodemailer
+ *
+ *   MAIL_TO               – recipient for contact / client enquiries       [REQUIRED]
+ *   APPLY_MAIL_TO         – recipient for candidate CV applications        [REQUIRED]
+ *   REFERRAL_MAIL_TO      – recipient for company referrals                [REQUIRED]
+ *
+ *   CONTACT_FROM          – display name for contact emails (optional)
+ *   APPLICATION_FROM      – display name for application emails (optional)
+ *   REFERRAL_FROM         – display name for referral emails (optional)
  */
 
 const NAVY = "#0F172A"
 const TEAL = "#14A8A8"
 const BORDER = "#E2E8F0"
 
-/** Where internal notifications are delivered. */
-export function getRecipient(): string {
-  return process.env.MAIL_TO || "ki@iontalentgroup.com"
-}
+/* -------------------------------------------------------------------------- */
+/*  Transport                                                                  */
+/* -------------------------------------------------------------------------- */
 
 function getTransporter() {
   const user = process.env.GMAIL_USER
@@ -24,7 +37,7 @@ function getTransporter() {
 
   if (!user || !pass) {
     throw new Error(
-      "Email is not configured. Set GMAIL_USER and GMAIL_APP_PASSWORD in your environment variables.",
+      "[ION Talent email] Configuration error: GMAIL_USER and GMAIL_APP_PASSWORD must be set.",
     )
   }
 
@@ -33,6 +46,50 @@ function getTransporter() {
     auth: { user, pass },
   })
 }
+
+/* -------------------------------------------------------------------------- */
+/*  Recipient helpers — fail safely if variable is missing                    */
+/* -------------------------------------------------------------------------- */
+
+function requireEnv(name: string): string {
+  const value = process.env[name]
+  if (!value) {
+    throw new Error(
+      `[ION Talent email] Configuration error: environment variable "${name}" is not set. ` +
+        `Set it in your Vercel project environment variables before enabling email delivery.`,
+    )
+  }
+  return value
+}
+
+function getContactRecipient(): string {
+  return requireEnv("MAIL_TO")
+}
+
+function getApplicationRecipient(): string {
+  return requireEnv("APPLY_MAIL_TO")
+}
+
+function getReferralRecipient(): string {
+  return requireEnv("REFERRAL_MAIL_TO")
+}
+
+/* Sender display names — optional, fall back to a safe generic label */
+function getContactFrom(): string {
+  return process.env.CONTACT_FROM || `"ION Talent Website" <${process.env.GMAIL_USER}>`
+}
+
+function getApplicationFrom(): string {
+  return process.env.APPLICATION_FROM || `"ION Talent Careers" <${process.env.GMAIL_USER}>`
+}
+
+function getReferralFrom(): string {
+  return process.env.REFERRAL_FROM || `"ION Talent Referrals" <${process.env.GMAIL_USER}>`
+}
+
+/* -------------------------------------------------------------------------- */
+/*  HTML builder                                                               */
+/* -------------------------------------------------------------------------- */
 
 /** Escapes user-supplied values before they are placed into an HTML email. */
 function esc(value: unknown): string {
@@ -52,12 +109,8 @@ function buildEmail(title: string, subtitle: string, rows: Row[]): string {
     .map(
       ([label, value]) => `
         <tr>
-          <td style="padding:12px 16px;border-bottom:1px solid ${BORDER};font-size:13px;color:#64748B;width:38%;vertical-align:top;">${esc(
-            label,
-          )}</td>
-          <td style="padding:12px 16px;border-bottom:1px solid ${BORDER};font-size:14px;color:${NAVY};font-weight:500;white-space:pre-wrap;">${esc(
-            value,
-          )}</td>
+          <td style="padding:12px 16px;border-bottom:1px solid ${BORDER};font-size:13px;color:#64748B;width:38%;vertical-align:top;">${esc(label)}</td>
+          <td style="padding:12px 16px;border-bottom:1px solid ${BORDER};font-size:14px;color:${NAVY};font-weight:500;white-space:pre-wrap;">${esc(value)}</td>
         </tr>`,
     )
     .join("")
@@ -84,26 +137,8 @@ function buildEmail(title: string, subtitle: string, rows: Row[]): string {
 </html>`
 }
 
-async function send(options: {
-  subject: string
-  html: string
-  replyTo?: string
-  attachments?: { filename: string; content: Buffer }[]
-}) {
-  const transporter = getTransporter()
-
-  return transporter.sendMail({
-    from: `"ION Talent Website" <${process.env.GMAIL_USER}>`,
-    to: getRecipient(),
-    replyTo: options.replyTo,
-    subject: options.subject,
-    html: options.html,
-    attachments: options.attachments,
-  })
-}
-
 /* -------------------------------------------------------------------------- */
-/*  Existing forms                                                             */
+/*  Contact / client enquiries  →  MAIL_TO                                    */
 /* -------------------------------------------------------------------------- */
 
 export interface ContactEmailData {
@@ -118,9 +153,12 @@ export interface ContactEmailData {
 }
 
 export async function sendContactEmail(data: ContactEmailData) {
-  return send({
-    subject: `New enquiry from ${data.name} - ${data.company}`,
+  const transporter = getTransporter()
+  await transporter.sendMail({
+    from: getContactFrom(),
+    to: getContactRecipient(),
     replyTo: data.email,
+    subject: `New enquiry — ${data.name}, ${data.company}`,
     html: buildEmail("New Client Enquiry", "Submitted via the website contact form", [
       ["Name", data.name],
       ["Email", data.email],
@@ -133,6 +171,10 @@ export async function sendContactEmail(data: ContactEmailData) {
     ]),
   })
 }
+
+/* -------------------------------------------------------------------------- */
+/*  CV upload (homepage form)  →  APPLY_MAIL_TO                               */
+/* -------------------------------------------------------------------------- */
 
 export interface CVEmailData {
   firstName: string
@@ -151,10 +193,12 @@ export interface CVEmailData {
 }
 
 export async function sendCVEmail(data: CVEmailData) {
-  return send({
-    subject: `CV submission - ${data.firstName} ${data.lastName}`,
+  const transporter = getTransporter()
+  await transporter.sendMail({
+    from: getApplicationFrom(),
+    to: getApplicationRecipient(),
     replyTo: data.email,
-    attachments: [data.cvFile],
+    subject: `CV submission — ${data.firstName} ${data.lastName}`,
     html: buildEmail("New CV Submission", `${data.firstName} ${data.lastName}`, [
       ["Name", `${data.firstName} ${data.lastName}`],
       ["Email", data.email],
@@ -169,17 +213,13 @@ export async function sendCVEmail(data: CVEmailData) {
       ["CV attached", data.cvFile.filename],
       ["Submitted", data.timestamp || new Date().toISOString()],
     ]),
+    attachments: [data.cvFile],
   })
 }
 
 /* -------------------------------------------------------------------------- */
-/*  Opportunities: candidate registration                                      */
+/*  Candidate registration (/opportunities)  →  APPLY_MAIL_TO                 */
 /* -------------------------------------------------------------------------- */
-
-/** Internal recipient for candidate applications. */
-export function getApplicationRecipient(): string {
-  return process.env.APPLY_MAIL_TO || "apply@iontalentgroup.com"
-}
 
 export interface CandidateRegistrationData {
   fullName: string
@@ -199,56 +239,55 @@ export interface CandidateRegistrationData {
 
 export async function sendCandidateRegistrationEmail(data: CandidateRegistrationData) {
   const transporter = getTransporter()
-  const html = buildEmail(
-    "Candidate Registration",
-    `${data.fullName} — ${data.desiredRole}`,
-    [
-      ["Full name", data.fullName],
-      ["Email", data.email],
-      ["Mobile", data.mobile],
-      ["LinkedIn", data.linkedin],
-      ["Current location", data.currentLocation],
-      ["Desired role", data.desiredRole],
-      ["Notice period", data.noticePeriod],
-      ["Expected salary", data.expectedSalary],
-      ["Cover note", data.coverNote],
-      ["Consent given", data.consent ? "Yes" : "No"],
-      ["Marketing opt-in", data.marketingOptIn ? "Yes" : "No"],
-      ["CV attached", data.cvFile.filename],
-      ["Submitted", data.timestamp],
-    ],
-  )
 
-  // Send internal notification to apply@iontalentgroup.com
+  // Internal notification → APPLY_MAIL_TO
   await transporter.sendMail({
-    from: `"ION Talent Website" <${process.env.GMAIL_USER}>`,
+    from: getApplicationFrom(),
     to: getApplicationRecipient(),
     replyTo: data.email,
     subject: `Candidate registration — ${data.fullName} (${data.desiredRole})`,
-    html,
+    html: buildEmail(
+      "Candidate Registration",
+      `${data.fullName} — ${data.desiredRole}`,
+      [
+        ["Full name", data.fullName],
+        ["Email", data.email],
+        ["Mobile", data.mobile],
+        ["LinkedIn", data.linkedin],
+        ["Current location", data.currentLocation],
+        ["Desired role", data.desiredRole],
+        ["Notice period", data.noticePeriod],
+        ["Expected salary", data.expectedSalary],
+        ["Cover note", data.coverNote],
+        ["Consent given", data.consent ? "Yes" : "No"],
+        ["Marketing opt-in", data.marketingOptIn ? "Yes" : "No"],
+        ["CV attached", data.cvFile.filename],
+        ["Submitted", data.timestamp],
+      ],
+    ),
     attachments: [data.cvFile],
   })
 
-  // Send candidate acknowledgement
+  // Candidate acknowledgement — from APPLICATION_FROM, no internal address exposed
   const ackHtml = `<!doctype html>
 <html>
   <body style="margin:0;padding:24px;background:#F8FAFC;font-family:Arial,Helvetica,sans-serif;">
     <table role="presentation" cellpadding="0" cellspacing="0" style="max-width:600px;margin:0 auto;background:#FFFFFF;border:1px solid #E2E8F0;border-radius:14px;overflow:hidden;">
-      <tr><td style="background:#0F172A;padding:24px;">
-        <p style="margin:0;color:#14A8A8;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;">ION Talent</p>
+      <tr><td style="background:${NAVY};padding:24px;">
+        <p style="margin:0;color:${TEAL};font-size:11px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;">ION Talent</p>
         <h1 style="margin:8px 0 0;color:#FFFFFF;font-size:20px;font-weight:700;">Thank you, ${esc(data.fullName)}</h1>
       </td></tr>
       <tr><td style="padding:24px;">
         <p style="font-size:14px;color:#334155;line-height:1.6;">Thank you for registering your interest with ION Talent. Your details have been added to our specialist network for <strong>${esc(data.desiredRole)}</strong> opportunities.</p>
-        <p style="font-size:14px;color:#334155;line-height:1.6;">We review registrations carefully and will be in touch when your experience matches a relevant live requirement. In the meantime, please do not hesitate to contact us directly at <a href="mailto:hello@iontalentgroup.com" style="color:#14A8A8;">hello@iontalentgroup.com</a>.</p>
-        <p style="font-size:13px;color:#64748B;margin-top:24px;">ION Talent<br>iontalentgroup.com</p>
+        <p style="font-size:14px;color:#334155;line-height:1.6;">We review registrations carefully and will be in touch when your experience matches a relevant live requirement.</p>
+        <p style="font-size:13px;color:#64748B;margin-top:24px;">ION Talent &mdash; iontalentgroup.com</p>
       </td></tr>
     </table>
   </body>
 </html>`
 
   await transporter.sendMail({
-    from: `"ION Talent" <${process.env.GMAIL_USER}>`,
+    from: getApplicationFrom(),
     to: data.email,
     subject: `Your ION Talent registration — ${data.desiredRole}`,
     html: ackHtml,
@@ -256,7 +295,7 @@ export async function sendCandidateRegistrationEmail(data: CandidateRegistration
 }
 
 /* -------------------------------------------------------------------------- */
-/*  Referrals                                                                  */
+/*  Company referrals  →  REFERRAL_MAIL_TO                                    */
 /* -------------------------------------------------------------------------- */
 
 export interface ReferralEmailData {
@@ -278,25 +317,32 @@ export interface ReferralEmailData {
 }
 
 export async function sendReferralEmail(data: ReferralEmailData) {
-  return send({
-    subject: `Company introduction - ${data.companyName} (via ${data.referrerName})`,
+  const transporter = getTransporter()
+  await transporter.sendMail({
+    from: getReferralFrom(),
+    to: getReferralRecipient(),
     replyTo: data.referrerEmail,
-    html: buildEmail("New Company Introduction", `${data.companyName} - ${data.companyLocation}`, [
-      ["Internal status", data.status],
-      ["Referrer name", data.referrerName],
-      ["Referrer email", data.referrerEmail],
-      ["Referrer phone", data.referrerPhone],
-      ["Company name", data.companyName],
-      ["Company location", data.companyLocation],
-      ["Hiring contact", data.contactName],
-      ["Contact job title", data.contactJobTitle],
-      ["Contact email or LinkedIn", data.contactDetails],
-      ["Roles hiring for", data.rolesHiring],
-      ["Referral source", data.relationship],
-      ["Additional context", data.additionalContext],
-      ["Genuine introduction confirmed", data.genuineIntroduction ? "Yes" : "No"],
-      ["Referral terms acknowledged", data.termsAcknowledged ? "Yes" : "No"],
-      ["Submitted", data.timestamp],
-    ]),
+    subject: `Company introduction — ${data.companyName} (via ${data.referrerName})`,
+    html: buildEmail(
+      "New Company Introduction",
+      `${data.companyName} — ${data.companyLocation}`,
+      [
+        ["Internal status", data.status],
+        ["Referrer name", data.referrerName],
+        ["Referrer email", data.referrerEmail],
+        ["Referrer phone", data.referrerPhone],
+        ["Company name", data.companyName],
+        ["Company location", data.companyLocation],
+        ["Hiring contact", data.contactName],
+        ["Contact job title", data.contactJobTitle],
+        ["Contact email or LinkedIn", data.contactDetails],
+        ["Roles hiring for", data.rolesHiring],
+        ["Referral source", data.relationship],
+        ["Additional context", data.additionalContext],
+        ["Genuine introduction confirmed", data.genuineIntroduction ? "Yes" : "No"],
+        ["Referral terms acknowledged", data.termsAcknowledged ? "Yes" : "No"],
+        ["Submitted", data.timestamp],
+      ],
+    ),
   })
 }

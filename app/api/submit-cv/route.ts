@@ -47,18 +47,12 @@ export async function POST(request: NextRequest) {
       timestamp: new Date().toISOString(),
     })
 
-    console.log("✅ CV submission email sent successfully:", {
-      name: `${firstName} ${lastName}`,
-      email,
-      timestamp: new Date().toISOString(),
-    })
-
     return NextResponse.json({
       success: true,
       message: "CV submitted successfully",
     })
   } catch (error) {
-    console.error("❌ Error processing CV submission:", error)
+    console.error("[ION] submit-cv error:", error)
     return NextResponse.json({ success: false, message: "Failed to submit CV" }, { status: 500 })
   }
 }
