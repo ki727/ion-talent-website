@@ -3,7 +3,6 @@
 import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
 import {
   Cpu,
   Building2,
@@ -260,9 +259,9 @@ export function IndustriesShowcase() {
                     <h4 className="text-lg font-bold text-[#1a1a1a] mb-4">Key Leadership Roles</h4>
                     <div className="flex flex-wrap gap-2">
                       {selectedIndustry.roles.map((role, index) => (
-                        <Badge
+                        <span
                           key={index}
-                          className="text-sm px-4 py-2 font-medium"
+                          className="inline-flex items-center rounded-full text-sm px-4 py-2 font-medium"
                           style={{
                             backgroundColor: `${selectedIndustry.color}15`,
                             color: selectedIndustry.color,
@@ -270,7 +269,7 @@ export function IndustriesShowcase() {
                           }}
                         >
                           {role}
-                        </Badge>
+                        </span>
                       ))}
                     </div>
                   </div>
