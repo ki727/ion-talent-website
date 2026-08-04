@@ -2,7 +2,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
 import { Cpu, Building2, Zap, Briefcase, Heart, ShoppingCart, ArrowRight, Globe } from "lucide-react"
 
 const industries = [
@@ -188,18 +187,17 @@ export function IndustryExpertise() {
                     <h4 className="text-sm font-semibold text-[#1a1a1a] mb-3">KEY SPECIALTIES</h4>
                     <div className="flex flex-wrap gap-2">
                       {industry.specialties.slice(0, 3).map((specialty, index) => (
-                        <Badge
+                        <span
                           key={index}
-                          variant="outline"
-                          className="text-xs bg-gray-50 text-[#6a6a6a] border-gray-200"
+                          className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold bg-gray-50 text-[#6a6a6a] border-gray-200"
                         >
                           {specialty}
-                        </Badge>
+                        </span>
                       ))}
                       {industry.specialties.length > 3 && (
-                        <Badge variant="outline" className="text-xs bg-gray-50 text-[#6a6a6a] border-gray-200">
+                        <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold bg-gray-50 text-[#6a6a6a] border-gray-200">
                           +{industry.specialties.length - 3} more
-                        </Badge>
+                        </span>
                       )}
                     </div>
                   </div>
