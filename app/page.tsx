@@ -2,40 +2,94 @@
 
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { EnhancedTestimonials } from "@/components/enhanced-testimonials"
 import { EnhancedContactForm } from "@/components/enhanced-contact-form"
 import { ScrollProgress } from "@/components/scroll-progress"
-import { FloatingContact } from "@/components/floating-contact"
 import { FadeIn } from "@/components/fade-in"
-import { Target, Award, Users, ArrowRight } from "lucide-react"
+import { FeaturedJobs } from "@/components/featured-jobs"
+import { StatCounter } from "@/components/stat-counter"
+import { HomepageReferralSection } from "@/components/homepage-referral-section"
+import { Target, Award, Users, ArrowRight, UserCheck, Radar, Globe } from "lucide-react"
 import Link from "next/link"
-import { useRef, useEffect } from "react"
-import { CVUploadSection } from "@/components/cv-upload-section"
+import { useRef, useEffect, useState } from "react"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 
 export default function HomePage() {
   const videoRef = useRef<HTMLVideoElement>(null)
+  const heroContentRef = useRef<HTMLDivElement>(null)
+  const [selectedService, setSelectedService] = useState<string | undefined>(undefined)
 
   useEffect(() => {
     const video = videoRef.current
-    if (video) {
-      video.playbackRate = 0.15
-      video.play().catch((error) => {
-        console.error("Video autoplay failed:", error)
+    if (!video) return
+
+    // The source clip has a brief bright/mismatched frame right at its start
+    // and end, which flashes on every native loop restart (loop jumps to
+    // exactly time 0). Rather than relying on the browser's native loop
+    // point, we preemptively seek a fraction of a second before the true
+    // end back to a fraction of a second after the true start — so playback
+    // never actually reaches either edge frame. `loop` stays on as a no-op
+    // safety net: this seek always fires first, so native looping never
+    // triggers in practice.
+    const LOOP_START = 0.3
+    const LOOP_END_BUFFER = 0.3
+
+    video.playbackRate = 0.15
+    video.play().catch((error) => {
+      console.error("Video autoplay failed:", error)
+    })
+
+    function handleTimeUpdate() {
+      if (!video || !video.duration) return
+      if (video.currentTime >= video.duration - LOOP_END_BUFFER) {
+        video.currentTime = LOOP_START
+      }
+    }
+
+    video.addEventListener("timeupdate", handleTimeUpdate)
+    return () => video.removeEventListener("timeupdate", handleTimeUpdate)
+  }, [])
+
+  // Extremely restrained desktop-only hero depth: content drifts a handful
+  // of px on initial scroll. Disabled on mobile and for reduced-motion —
+  // both checked once on mount, matching the effect's "very subtle, desktop
+  // polish only" scope rather than a effect that needs to track live resizes.
+  useEffect(() => {
+    const el = heroContentRef.current
+    if (!el) return
+    const isDesktop = window.matchMedia("(min-width: 1024px)").matches
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    if (!isDesktop || prefersReduced) return
+
+    let ticking = false
+    function onScroll() {
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(() => {
+        const offset = Math.min(window.scrollY * 0.04, 8)
+        el?.style.setProperty("--hero-depth-offset", `${offset}px`)
+        ticking = false
       })
     }
+
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
   }, [])
+
+  const scrollToContact = (service?: string) => {
+    if (service) setSelectedService(service)
+    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
+  }
 
   return (
     <div className="min-h-screen bg-white">
       <ScrollProgress />
-      <FloatingContact />
 
       <SiteHeader />
 
-      <section className="relative pt-40 pb-32 px-6 min-h-screen flex items-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
+      <main className="ion-page-enter">
+      <section className="relative pt-28 pb-20 sm:pt-32 sm:pb-24 lg:pt-40 lg:pb-32 px-6 min-h-screen flex items-center overflow-hidden">
+        <div className="absolute inset-0 z-0 bg-ion-navy">
           <video
             ref={videoRef}
             className="hero-zoom w-full h-full object-cover"
@@ -44,51 +98,78 @@ export default function HomePage() {
             loop
             playsInline
             preload="auto"
+            aria-hidden="true"
             style={{
               willChange: "transform",
               backfaceVisibility: "hidden",
+              filter: "grayscale(0.45) saturate(0.6) brightness(0.85) contrast(1.05)",
             }}
           >
             <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/18637270-hd_1920_1080_30fps%20%281%29-Q1nwQiLnflKYyfti4CC4me1eLtnMwk.mp4" type="video/mp4" />
           </video>
-          {/* Navy left-to-right gradient overlay for stronger text contrast */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0F172A]/95 via-[#0F172A]/75 to-[#0F172A]/40" />
+          {/* Flat scrim for a consistent baseline of contrast, regardless of how bright the underlying footage is */}
+          <div className="absolute inset-0 bg-ion-navy/45" />
+          {/* Directional gradient, strongest behind the copy, easing off toward the skyline on the right */}
+          <div className="absolute inset-0 bg-gradient-to-r from-ion-navy/85 via-ion-navy/55 to-ion-navy/10" />
         </div>
 
-        <div className="container mx-auto relative z-10 max-w-5xl">
-          <div className="space-y-8">
-            <h1 className="text-5xl lg:text-7xl font-bold text-white leading-[1.08] text-balance">
+        <div ref={heroContentRef} className="ion-hero-depth container mx-auto relative z-10 max-w-5xl">
+          <div className="space-y-6 sm:space-y-8">
+            <h1 className="hero-text-shadow text-5xl lg:text-6xl font-bold text-white leading-[1.08] text-balance">
               Elite talent solutions that
               <br />
-              <span className="ion-teal-gradient">transform businesses</span>
+              <span className="ion-hero-teal-accent">transform businesses</span>
             </h1>
 
-            <p className="text-xl text-white/85 max-w-2xl leading-relaxed">
-              Full-service recruitment agency placing talent across all levels and industries in Europe, Middle East,
-              and North America.
+            <p className="hero-text-shadow text-lg sm:text-xl text-white/90 max-w-2xl leading-relaxed">
+              Specialist recruitment and executive search across the GCC and UK, with international reach.
             </p>
 
-            <div className="pt-4">
+            <div className="pt-2 sm:pt-4 flex flex-col sm:flex-row gap-4">
               <Button
                 size="lg"
-                className="inline-flex items-center gap-2 bg-[#14A8A8] hover:bg-[#0F8F8F] text-white px-8 h-14 text-base rounded-xl shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl"
-                onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+                className="ion-primary-button w-full sm:w-auto gap-2 px-8 h-14 text-base rounded-xl shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl focus-visible:ring-2 focus-visible:ring-ion-teal-hover focus-visible:ring-offset-2"
+                onClick={() => scrollToContact()}
               >
-                Start Your Search
-                <ArrowRight className="h-5 w-5" />
+                Hire Talent
+                <ArrowRight className="h-5 w-5" aria-hidden="true" />
+              </Button>
+
+              <Button
+                asChild
+                size="lg"
+                className="ion-secondary-button w-full sm:w-auto gap-2 px-8 h-14 text-base rounded-xl shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
+              >
+                <Link href="/opportunities">
+                  Explore Opportunities
+                  <ArrowRight className="h-5 w-5" aria-hidden="true" />
+                </Link>
               </Button>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="py-14 md:py-20 px-6 bg-[#F8FAFC] border-t border-gray-100">
+      {/* Proof & Credibility */}
+      <section id="proof" className="scroll-mt-24 py-16 md:py-24 px-6 bg-ion-surface border-t border-gray-100">
         <div className="container mx-auto max-w-6xl">
-          <p className="text-xs font-medium text-[#6B7280] tracking-wider uppercase text-center mb-12">
-            Trusted by Industry Leaders
+          <h2 className="sr-only">Our Track Record</h2>
+          <FadeIn className="max-w-3xl mx-auto text-center mb-10">
+            <p className="text-lg text-ion-gray leading-relaxed mb-4">
+              Specialist recruitment and executive search across the GCC and UK, with international reach.
+            </p>
+            <p className="text-lg text-ion-gray leading-relaxed">
+              We specialize in permanent placements across all levels, from graduate roles to C-suite positions,
+              serving clients in technology, finance, engineering, construction, cybersecurity, and consulting
+              sectors.
+            </p>
+          </FadeIn>
+
+          <p className="text-xs font-medium text-ion-gray tracking-wider uppercase text-center mb-8">
+            Experience Across Leading Organisations
           </p>
 
-          <div className="flex flex-wrap justify-center items-center gap-x-16 gap-y-10">
+          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-6 sm:gap-x-12 md:gap-x-16 md:gap-y-10 mb-10">
             {[
               { src: "/logos/neom-logo.png", alt: "NEOM" },
               { src: "/logos/pwc-logo.png", alt: "PwC" },
@@ -100,59 +181,72 @@ export default function HomePage() {
                 key={logo.alt}
                 src={logo.src || "/placeholder.svg"}
                 alt={logo.alt}
-                className="h-8 w-auto object-contain grayscale opacity-50 transition-all duration-300 hover:grayscale-0 hover:opacity-100"
+                className="h-9 sm:h-8 w-auto object-contain grayscale opacity-60 sm:opacity-50 transition-all duration-300 hover:grayscale-0 hover:opacity-100"
               />
             ))}
           </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pt-8 border-t border-ion-border max-w-4xl mx-auto">
+            <StatCounter end={10} suffix="+" label="Years of Recruitment Experience" startDelay={0} />
+            <StatCounter end={500} suffix="+" label="Placements Delivered" startDelay={120} />
+            <StatCounter
+              end={3}
+              label="Core Markets"
+              sublabel="UAE · Saudi Arabia · UK"
+              startDelay={240}
+            />
+          </div>
+          <p className="mx-auto mt-6 max-w-md text-center text-sm text-ion-gray">
+            International search capability beyond our core markets.
+          </p>
         </div>
       </section>
 
-      <section id="services" className="py-16 md:py-24 px-6 bg-white">
+      <FeaturedJobs />
+
+      <section id="services" className="ion-section-navy scroll-mt-24 py-16 md:py-24 px-6">
         <div className="container mx-auto max-w-6xl">
           <FadeIn className="text-center mb-16 md:mb-20">
-            <h2 className="text-4xl lg:text-5xl font-bold text-[#0F172A] mb-6 tracking-tight text-balance">
+            <h2 className="text-4xl lg:text-5xl font-bold text-white mb-3 tracking-tight text-balance">
               How We Work
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto text-pretty">
+            <span className="ion-heading-underline ion-heading-underline--bright mx-auto mb-6" aria-hidden="true" />
+            <p className="ion-text-on-navy text-xl max-w-2xl mx-auto text-pretty">
               Three comprehensive recruitment solutions tailored to your hiring needs
             </p>
           </FadeIn>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-6">
             <FadeIn>
-              <Card className="group h-full relative overflow-hidden rounded-[14px] border border-gray-200 p-8 bg-white shadow-sm hover:shadow-lg hover:border-[#14A8A8]/50 hover:-translate-y-1 transition-all duration-300">
-                <div className="relative space-y-6">
-                  <div className="w-14 h-14 bg-[#0F172A] rounded-xl flex items-center justify-center">
-                    <Target className="h-7 w-7 text-[#14A8A8]" />
+              <Card className="ion-card-top-4 group h-full relative overflow-hidden rounded-[14px] p-8 lg:p-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+                <div className="relative space-y-6 lg:space-y-4">
+                  <div className="ion-icon-circle-teal w-14 h-14 lg:w-11 lg:h-11 rounded-full flex items-center justify-center">
+                    <Target className="h-7 w-7 lg:h-5 lg:w-5 text-white" />
                   </div>
 
                   <div>
-                    <h3 className="text-2xl font-bold text-[#0F172A] mb-3">Contingent</h3>
-                    <p className="text-gray-600 mb-6">Pay only when we successfully place the right candidate</p>
+                    <h3 className="text-2xl lg:text-xl font-bold text-ion-navy mb-3 lg:mb-2">Contingent</h3>
+                    <p className="text-gray-600 mb-6 lg:mb-4 lg:text-sm">Pay only when we successfully place the right candidate</p>
                   </div>
 
-                  <ul className="space-y-3 text-gray-700">
+                  <ul className="space-y-3 lg:space-y-2 text-gray-700 lg:text-sm">
                     <li className="flex items-start gap-3">
-                      <span className="text-[#14A8A8] mt-1 font-bold">✓</span>
-                      <span>No upfront fees, zero financial risk</span>
+                      <span className="ion-text-deep-teal mt-1 font-bold">✓</span>
+                      <span>Commercial terms aligned to successful delivery</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <span className="text-[#14A8A8] mt-1 font-bold">✓</span>
-                      <span>48-hour shortlist delivery</span>
+                      <span className="ion-text-deep-teal mt-1 font-bold">✓</span>
+                      <span>Replacement protection available under agreed terms</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <span className="text-[#14A8A8] mt-1 font-bold">✓</span>
-                      <span>90-day replacement guarantee</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="text-[#14A8A8] mt-1 font-bold">✓</span>
-                      <span>Perfect for volume hiring</span>
+                      <span className="ion-text-deep-teal mt-1 font-bold">✓</span>
+                      <span>Flexible support for specialist and multi-hire requirements</span>
                     </li>
                   </ul>
 
                   <Button
-                    className="w-full inline-flex items-center justify-center gap-2 bg-[#14A8A8] hover:bg-[#0F8F8F] text-white h-12 rounded-xl shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
-                    onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+                    className="ion-primary-button w-full gap-2 h-12 rounded-xl shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:ring-2 focus-visible:ring-ion-teal-hover focus-visible:ring-offset-2"
+                    onClick={() => scrollToContact("contingent")}
                   >
                     Start a Search
                     <ArrowRight className="h-4 w-4" />
@@ -162,39 +256,39 @@ export default function HomePage() {
             </FadeIn>
 
             <FadeIn delay={100}>
-              <Card className="group h-full relative overflow-hidden rounded-[14px] border border-gray-200 p-8 bg-white shadow-sm hover:shadow-lg hover:border-[#14A8A8]/50 hover:-translate-y-1 transition-all duration-300">
-                <div className="relative space-y-6">
-                  <div className="w-14 h-14 bg-[#0F172A] rounded-xl flex items-center justify-center">
-                    <Award className="h-7 w-7 text-[#14A8A8]" />
+              <Card className="ion-card-top-4 group h-full relative overflow-hidden rounded-[14px] p-8 lg:p-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+                <div className="relative space-y-6 lg:space-y-4">
+                  <div className="ion-icon-circle-teal w-14 h-14 lg:w-11 lg:h-11 rounded-full flex items-center justify-center">
+                    <Award className="h-7 w-7 lg:h-5 lg:w-5 text-white" />
                   </div>
 
                   <div>
-                    <h3 className="text-2xl font-bold text-[#0F172A] mb-3">Retained Search</h3>
-                    <p className="text-gray-600 mb-6">Premium executive search for senior and hard-to-fill roles</p>
+                    <h3 className="text-2xl lg:text-xl font-bold text-ion-navy mb-3 lg:mb-2">Retained Search</h3>
+                    <p className="text-gray-600 mb-6 lg:mb-4 lg:text-sm">Premium executive search for senior and hard-to-fill roles</p>
                   </div>
 
-                  <ul className="space-y-3 text-gray-700">
+                  <ul className="space-y-3 lg:space-y-2 text-gray-700 lg:text-sm">
                     <li className="flex items-start gap-3">
-                      <span className="text-[#14A8A8] mt-1 font-bold">✓</span>
+                      <span className="ion-text-deep-teal mt-1 font-bold">✓</span>
                       <span>Dedicated senior consultant</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <span className="text-[#14A8A8] mt-1 font-bold">✓</span>
+                      <span className="ion-text-deep-teal mt-1 font-bold">✓</span>
                       <span>Comprehensive market mapping</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <span className="text-[#14A8A8] mt-1 font-bold">✓</span>
+                      <span className="ion-text-deep-teal mt-1 font-bold">✓</span>
                       <span>Exclusive candidate access</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <span className="text-[#14A8A8] mt-1 font-bold">✓</span>
+                      <span className="ion-text-deep-teal mt-1 font-bold">✓</span>
                       <span>6-month guarantee period</span>
                     </li>
                   </ul>
 
                   <Button
-                    className="w-full inline-flex items-center justify-center gap-2 bg-[#14A8A8] hover:bg-[#0F8F8F] text-white h-12 rounded-xl shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
-                    onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+                    className="ion-primary-button w-full gap-2 h-12 rounded-xl shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:ring-2 focus-visible:ring-ion-teal-hover focus-visible:ring-offset-2"
+                    onClick={() => scrollToContact("retained")}
                   >
                     Start a Search
                     <ArrowRight className="h-4 w-4" />
@@ -204,39 +298,39 @@ export default function HomePage() {
             </FadeIn>
 
             <FadeIn delay={200}>
-              <Card className="group h-full relative overflow-hidden rounded-[14px] border border-gray-200 p-8 bg-white shadow-sm hover:shadow-lg hover:border-[#14A8A8]/50 hover:-translate-y-1 transition-all duration-300">
-                <div className="relative space-y-6">
-                  <div className="w-14 h-14 bg-[#0F172A] rounded-xl flex items-center justify-center">
-                    <Users className="h-7 w-7 text-[#14A8A8]" />
+              <Card className="ion-card-top-4 group h-full relative overflow-hidden rounded-[14px] p-8 lg:p-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+                <div className="relative space-y-6 lg:space-y-4">
+                  <div className="ion-icon-circle-teal w-14 h-14 lg:w-11 lg:h-11 rounded-full flex items-center justify-center">
+                    <Users className="h-7 w-7 lg:h-5 lg:w-5 text-white" />
                   </div>
 
                   <div>
-                    <h3 className="text-2xl font-bold text-[#0F172A] mb-3">RPO / Embedded</h3>
-                    <p className="text-gray-600 mb-6">Complete recruitment outsourcing and dedicated team solutions</p>
+                    <h3 className="text-2xl lg:text-xl font-bold text-ion-navy mb-3 lg:mb-2">RPO / Embedded</h3>
+                    <p className="text-gray-600 mb-6 lg:mb-4 lg:text-sm">Complete recruitment outsourcing and dedicated team solutions</p>
                   </div>
 
-                  <ul className="space-y-3 text-gray-700">
+                  <ul className="space-y-3 lg:space-y-2 text-gray-700 lg:text-sm">
                     <li className="flex items-start gap-3">
-                      <span className="text-[#14A8A8] mt-1 font-bold">✓</span>
+                      <span className="ion-text-deep-teal mt-1 font-bold">✓</span>
                       <span>Dedicated recruitment team</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <span className="text-[#14A8A8] mt-1 font-bold">✓</span>
+                      <span className="ion-text-deep-teal mt-1 font-bold">✓</span>
                       <span>Scalable hiring solutions</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <span className="text-[#14A8A8] mt-1 font-bold">✓</span>
+                      <span className="ion-text-deep-teal mt-1 font-bold">✓</span>
                       <span>End-to-end process ownership</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <span className="text-[#14A8A8] mt-1 font-bold">✓</span>
+                      <span className="ion-text-deep-teal mt-1 font-bold">✓</span>
                       <span>Cost-effective for volume</span>
                     </li>
                   </ul>
 
                   <Button
-                    className="w-full inline-flex items-center justify-center gap-2 bg-[#14A8A8] hover:bg-[#0F8F8F] text-white h-12 rounded-xl shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
-                    onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+                    className="ion-primary-button w-full gap-2 h-12 rounded-xl shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:ring-2 focus-visible:ring-ion-teal-hover focus-visible:ring-offset-2"
+                    onClick={() => scrollToContact("rpo")}
                   >
                     Start a Search
                     <ArrowRight className="h-4 w-4" />
@@ -248,13 +342,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="industries" className="py-16 md:py-24 px-6 bg-[#F8FAFC] border-t border-gray-100">
+      <section id="industries" className="scroll-mt-24 py-16 md:py-24 px-6 bg-ion-surface border-t border-gray-100">
         <div className="container mx-auto max-w-6xl">
           <FadeIn className="mb-16 md:mb-20">
-            <h2 className="text-4xl lg:text-5xl font-semibold text-[#0F172A] mb-4 tracking-tight text-balance">
+            <h2 className="text-4xl lg:text-5xl font-semibold text-ion-navy mb-3 tracking-tight text-balance">
               Industry Expertise
             </h2>
-            <p className="text-lg text-[#6B7280]">We recruit across all sectors and levels</p>
+            <span className="ion-heading-underline mb-4" aria-hidden="true" />
+            <p className="text-lg text-ion-gray">We recruit across all sectors and levels</p>
           </FadeIn>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -267,9 +362,12 @@ export default function HomePage() {
               { title: "Consulting", desc: "Consultants, Managers, Directors, Partners" },
             ].map((industry, i) => (
               <FadeIn key={industry.title} delay={(i % 3) * 100}>
-                <div className="h-full rounded-[14px] border border-gray-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-[#14A8A8]/50">
-                  <h3 className="text-xl font-semibold text-[#0F172A] mb-2">{industry.title}</h3>
-                  <p className="text-sm text-[#6B7280] leading-relaxed">{industry.desc}</p>
+                <div className="ion-card-left-4 h-full rounded-[14px] p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
+                  <h3 className="mb-2 flex items-center gap-2 text-xl font-semibold text-ion-navy">
+                    <span className="ion-dot-teal h-2.5 w-2.5 shrink-0 rounded-full" aria-hidden="true" />
+                    {industry.title}
+                  </h3>
+                  <p className="text-sm text-ion-gray leading-relaxed">{industry.desc}</p>
                 </div>
               </FadeIn>
             ))}
@@ -277,158 +375,87 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-16 md:py-24 px-6 bg-white border-t border-gray-100">
+      {/* Why ION Talent */}
+      <section id="approach" className="py-16 md:py-24 px-6 bg-ion-surface border-t border-gray-100">
         <div className="container mx-auto max-w-6xl">
-          <FadeIn className="mb-14 md:mb-20">
-            <h2 className="text-4xl lg:text-5xl font-semibold text-[#0F172A] mb-4 tracking-tight text-balance">
-              Client Success
+          <FadeIn className="max-w-3xl mx-auto text-center mb-14 md:mb-16">
+            <h2 className="text-4xl lg:text-5xl font-semibold text-ion-navy mb-3 tracking-tight text-balance">
+              Why ION Talent
             </h2>
-            <p className="text-lg text-[#6B7280]">What our clients say about working with us</p>
-          </FadeIn>
-
-          <FadeIn>
-            <EnhancedTestimonials />
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* Explore Opportunities */}
-      <section className="py-16 md:py-24 px-6 bg-[#0F172A] border-t border-[#E5E7EB]">
-        <div className="container mx-auto max-w-6xl">
-          <FadeIn>
-            <div className="flex flex-col items-start gap-8 md:flex-row md:items-center md:justify-between">
-              <div className="max-w-2xl">
-                <div className="inline-block px-4 py-2 bg-[#14A8A8]/15 text-[#22C6B3] text-xs font-medium tracking-wider uppercase mb-6">
-                  For Candidates
-                </div>
-                <h2 className="text-4xl lg:text-5xl font-semibold text-white mb-4 tracking-tight text-balance">
-                  Explore Opportunities
-                </h2>
-                <p className="text-lg text-slate-300 leading-relaxed">
-                  Register your interest in specialist finance, technology and leadership opportunities
-                  across the GCC and international markets.
-                </p>
-              </div>
-              <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-                <Link
-                  href="/opportunities"
-                  className="inline-flex h-12 items-center justify-center rounded-xl bg-[#14A8A8] px-7 text-sm font-medium text-white transition-colors hover:bg-[#0F8F8F] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#14A8A8] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F172A]"
-                >
-                  Explore Opportunities
-                </Link>
-                <Link
-                  href="/opportunities#register"
-                  className="inline-flex h-12 items-center justify-center rounded-xl border border-slate-500 bg-transparent px-7 text-sm font-medium text-white transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#14A8A8] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F172A]"
-                >
-                  Submit Your CV
-                </Link>
-              </div>
-            </div>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* CV Upload Section */}
-      <section className="py-32 px-6 border-t border-[#E5E7EB]">
-        <div className="container mx-auto max-w-6xl">
-          <div className="mb-16">
-            <div className="inline-block px-4 py-2 bg-[#22C6B3]/10 text-[#0F766E] text-xs font-medium tracking-wider uppercase mb-6">
-              For Candidates
-            </div>
-            <h2 className="text-4xl lg:text-5xl font-semibold text-[#0E0E0E] mb-4 tracking-tight">
-              Looking for Your Next Role?
-            </h2>
-            <p className="text-lg text-[#6B7280]">Join our talent network and get access to exclusive opportunities</p>
-          </div>
-
-          <CVUploadSection />
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section id="about" className="py-32 px-6 bg-[#FAFAFA] border-t border-[#E5E7EB]">
-        <div className="container mx-auto max-w-4xl">
-          <div className="mb-16">
-            <h2 className="text-4xl lg:text-5xl font-semibold text-[#0E0E0E] mb-4 tracking-tight">About ION Talent</h2>
-          </div>
-
-          <div className="prose prose-lg max-w-none">
-            <p className="text-lg text-[#6B7280] leading-relaxed mb-6">
-              ION Talent is a full-service recruitment agency with over 10 years of experience placing exceptional
-              talent across Europe, the Middle East, and North America.
-            </p>
-
-            <p className="text-lg text-[#6B7280] leading-relaxed mb-6">
-              We specialize in permanent placements across all levels, from graduate roles to C-suite positions, serving
-              clients in technology, finance, engineering, construction, cybersecurity, and consulting sectors.
-            </p>
-
-            <p className="text-lg text-[#6B7280] leading-relaxed">
+            <span className="ion-heading-underline mx-auto mb-6" aria-hidden="true" />
+            <p className="text-lg text-ion-gray leading-relaxed">
               Our approach combines deep industry expertise with a commitment to understanding both client needs and
               candidate aspirations, ensuring lasting placements that drive business success.
             </p>
-          </div>
+          </FadeIn>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mt-16 pt-16 border-t border-[#E5E7EB]">
-            <div>
-              <div className="text-4xl font-semibold text-[#0E0E0E] mb-2">10+</div>
-              <p className="text-sm text-[#6B7280]">Years of Excellence</p>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <FadeIn>
+              <div className="ion-card-top-3 h-full flex items-start gap-4 rounded-[14px] p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
+                <div className="ion-icon-circle-teal w-12 h-12 rounded-full flex items-center justify-center shrink-0">
+                  <UserCheck className="h-6 w-6 text-white" aria-hidden="true" />
+                </div>
+                <div className="pt-1">
+                  <h3 className="text-base font-semibold text-gray-900">Senior-Led Search</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-gray-600">
+                    Every assignment is led by experienced recruitment professionals with direct involvement from
+                    briefing through to placement.
+                  </p>
+                </div>
+              </div>
+            </FadeIn>
 
-            <div>
-              <div className="text-4xl font-semibold text-[#0E0E0E] mb-2">500+</div>
-              <p className="text-sm text-[#6B7280]">Successful Placements</p>
-            </div>
+            <FadeIn delay={100}>
+              <div className="ion-card-top-3 h-full flex items-start gap-4 rounded-[14px] p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
+                <div className="ion-icon-circle-teal w-12 h-12 rounded-full flex items-center justify-center shrink-0">
+                  <Radar className="h-6 w-6 text-white" aria-hidden="true" />
+                </div>
+                <div className="pt-1">
+                  <h3 className="text-base font-semibold text-gray-900">Market-Mapped Delivery</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-gray-600">
+                    Targeted search, live market intelligence and direct outreach focused on the people most likely
+                    to deliver.
+                  </p>
+                </div>
+              </div>
+            </FadeIn>
 
-            <div>
-              <div className="text-4xl font-semibold text-[#0E0E0E] mb-2">3</div>
-              <p className="text-sm text-[#6B7280]">Continents Served</p>
-            </div>
+            <FadeIn delay={200}>
+              <div className="ion-card-top-3 h-full flex items-start gap-4 rounded-[14px] p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
+                <div className="ion-icon-circle-teal w-12 h-12 rounded-full flex items-center justify-center shrink-0">
+                  <Globe className="h-6 w-6 text-white" aria-hidden="true" />
+                </div>
+                <div className="pt-1">
+                  <h3 className="text-base font-semibold text-gray-900">International Reach</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-gray-600">
+                    Established networks across the GCC and UK, supported by international search capability for
+                    hard-to-find talent.
+                  </p>
+                </div>
+              </div>
+            </FadeIn>
           </div>
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="py-32 px-6 border-t border-[#E5E7EB]">
+      <HomepageReferralSection />
+
+      {/* Employer Enquiry Form */}
+      <section id="contact" className="scroll-mt-24 py-16 md:py-24 px-6 border-t border-ion-border bg-white">
         <div className="container mx-auto max-w-4xl">
-          <div className="mb-16">
-            <h2 className="text-4xl lg:text-5xl font-semibold text-[#0E0E0E] mb-4 tracking-tight">Get in Touch</h2>
-            <p className="text-lg text-[#6B7280]">Ready to transform your hiring? Let's talk.</p>
+          <div className="mb-12">
+            <h2 className="text-4xl lg:text-5xl font-semibold text-ion-black mb-4 tracking-tight">
+              Tell Us What You Are Hiring For
+            </h2>
+            <p className="text-lg text-ion-gray">Ready to transform your hiring? Let&apos;s talk.</p>
           </div>
 
-          <EnhancedContactForm />
+          <EnhancedContactForm initialService={selectedService} />
         </div>
       </section>
+      </main>
 
-      <footer className="bg-gray-900 text-white py-16 px-6 border-t border-[#E5E7EB]">
-        <div className="container mx-auto max-w-6xl">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-12">
-            <div className="flex items-center">
-              <img src="/ion-talent-logo.png" alt="ION Talent" className="h-8 w-auto brightness-0 invert" />
-            </div>
-
-            <div className="flex flex-col md:flex-row gap-8 text-sm text-gray-400">
-              <Link href="#services" className="hover:text-white transition-colors">
-                Services
-              </Link>
-              <Link href="#industries" className="hover:text-white transition-colors">
-                Industries
-              </Link>
-              <Link href="#about" className="hover:text-white transition-colors">
-                About
-              </Link>
-              <Link href="#contact" className="hover:text-white transition-colors">
-                Contact
-              </Link>
-            </div>
-          </div>
-
-          <div className="pt-8 border-t border-gray-800 text-sm text-gray-500">
-            <p>&copy; 2026 ION Talent. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   )
 }

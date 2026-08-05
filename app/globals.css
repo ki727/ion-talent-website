@@ -2,18 +2,195 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ION brand palette */
+/* ION brand palette — RGB channel triplets (not hex) so Tailwind's
+   rgb(var(--x) / <alpha-value>) opacity modifiers work, e.g. bg-ion-navy/95 */
 :root {
-  --ion-navy: #0f172a;
-  --ion-teal: #14a8a8;
-  --ion-teal-hover: #0f8f8f;
-  --ion-teal-bright: #22c6b3;
-  --ion-teal-dark: #0f766e;
-  --ion-black: #0e0e0e;
-  --ion-white: #ffffff;
-  --ion-gray: #6b7280;
-  --ion-border: #e5e7eb;
-  --ion-surface: #f8fafc;
+  --ion-navy: 15 23 42; /* #0F172A */
+  --ion-teal: 15 163 161; /* #0FA3A1 */
+  --ion-teal-hover: 0 108 101; /* #006C65 */
+  --ion-teal-bright: 34 198 179; /* #22C6B3 */
+  --ion-teal-dark: 0 108 101; /* #006C65 */
+  --ion-black: 14 14 14; /* #0E0E0E */
+  --ion-white: 255 255 255; /* #FFFFFF */
+  --ion-gray: 100 116 139; /* #64748B */
+  --ion-border: 229 231 235; /* #E5E7EB */
+  --ion-surface: 241 245 249; /* #F1F5F9 */
+
+  /*
+   * One consistent motion system for every reveal/transition on the site
+   * (FadeIn, page transitions, card entrances, sticky CTA, nav underline).
+   * Restrained on purpose: short duration, small distance, no bounce.
+   */
+  --motion-duration: 400ms;
+  --motion-duration-fast: 250ms;
+  --motion-distance: 12px;
+  --motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/*
+ * Bulletproof primary-button styling for the site's critical CTAs (header,
+ * hero, employer/candidate form submits, role-page CTA). Declared outside
+ * any @layer and with !important so it always wins over the Tailwind
+ * `bg-ion-teal` utility, regardless of class order, specificity ties, or any
+ * later bg-white/bg-transparent/text-transparent/opacity utility that ends
+ * up on the same element.
+ *
+ * display/align-items/justify-content are deliberately NOT set here: this
+ * rule is compiled after `@tailwind utilities`, so an unconditional
+ * `display` here would beat Tailwind's `hidden` / `lg:inline-flex` variants
+ * at every breakpoint and break responsive show/hide (e.g. the desktop
+ * header button staying visible on mobile). Every element this class is
+ * applied to already carries `inline-flex items-center justify-center` (or
+ * equivalent) from Tailwind, so layout stays exactly as designed — only the
+ * color/background/border are force-applied here.
+ */
+.ion-primary-button {
+  background-color: #0fa3a1 !important;
+  color: #ffffff !important;
+  border: 1px solid #0fa3a1 !important;
+  min-height: 48px;
+  opacity: 1;
+}
+
+.ion-primary-button:hover:not(:disabled) {
+  background-color: #006c65 !important;
+  border-color: #006c65 !important;
+}
+
+.ion-primary-button:disabled,
+.ion-primary-button[aria-disabled="true"] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/*
+ * Secondary hero CTA (e.g. "Explore Opportunities"): restrained dark-translucent fill
+ * with a clean white border. Same bulletproof rationale as
+ * .ion-primary-button — the shadcn Button "outline" variant's base classes
+ * include `hover:text-accent-foreground`, which was leaking through and
+ * turning the label dark on hover. Declared with !important, outside any
+ * @layer, for the same reason display/layout is intentionally omitted here.
+ */
+.ion-secondary-button {
+  background-color: rgba(15, 23, 42, 0.35) !important;
+  color: #ffffff !important;
+  border: 2px solid #ffffff !important;
+  min-height: 48px;
+  opacity: 1;
+}
+
+.ion-secondary-button:hover {
+  background-color: rgba(15, 23, 42, 0.55) !important;
+  color: #ffffff !important;
+}
+
+/*
+ * Homepage brand-colour accents (Featured Roles / How We Work / Industry
+ * Expertise cards, badges, icon circles, heading underlines). Declared with
+ * literal hex values and !important on the properties that were rendering
+ * incorrectly (border colours were resolving to black/currentColor —
+ * Tailwind's `border-gray-200` shorthand was very likely winning the
+ * cascade over a directional `border-t-{color}` utility at equal
+ * specificity, since `border-color` is a shorthand that re-sets every side).
+ * Bypassing the Tailwind colour utilities entirely for these accents
+ * guarantees the result regardless of utility generation order.
+ */
+.ion-section-navy {
+  background-color: #0f172a;
+}
+
+.ion-heading-underline {
+  display: block;
+  width: 48px;
+  height: 4px;
+  background-color: #0fa3a1 !important;
+  border-radius: 9999px;
+}
+
+.ion-heading-underline--bright {
+  background-color: #22c6b3 !important;
+}
+
+.ion-badge-teal {
+  background-color: #0fa3a1 !important;
+  color: #ffffff !important;
+  border: 1px solid #0fa3a1 !important;
+}
+
+.ion-text-deep-teal {
+  color: #006c65 !important;
+}
+
+.ion-dot-teal {
+  background-color: #0fa3a1 !important;
+}
+
+.ion-icon-circle-teal {
+  background-color: #0fa3a1 !important;
+  color: #ffffff !important;
+}
+
+/* Supporting copy on the navy How We Work section — kept independent of
+   Tailwind's text-color utilities so it can't inherit a dark, low-contrast
+   value. */
+.ion-text-on-navy {
+  color: #e5e7eb !important;
+}
+
+/*
+ * box-shadow is deliberately left to Tailwind's own shadow-sm/hover:shadow-*
+ * utilities on each element (shadows were not part of the reported bug) —
+ * keeping it out of these unlayered rules avoids those utilities losing the
+ * cascade (unlayered normal declarations always beat layered ones, so an
+ * unlayered box-shadow here would permanently block hover:shadow-lg).
+ */
+
+/* Featured Roles cards — 3px top accent */
+.ion-card-top-3 {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-top-width: 3px;
+  border-top-color: #0fa3a1 !important;
+}
+
+.ion-card-top-3:hover {
+  background-color: #f1f5f9;
+  border-top-color: #22c6b3 !important;
+}
+
+/* How We Work cards — 4px top accent, sit on the navy section background */
+.ion-card-top-4 {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-top-width: 4px;
+  border-top-color: #0fa3a1 !important;
+}
+
+/* Opportunities listing cards — 2px top accent, intensifies to bright teal on hover/focus */
+.ion-card-top-2 {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-top-width: 2px;
+  border-top-color: #0fa3a1 !important;
+}
+
+.ion-card-top-2:hover,
+.ion-card-top-2:focus-within {
+  background-color: #f1f5f9;
+  border-top-color: #22c6b3 !important;
+}
+
+/* Industry Expertise cards — 4px left accent */
+.ion-card-left-4 {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-left-width: 4px;
+  border-left-color: #0fa3a1 !important;
+}
+
+.ion-card-left-4:hover {
+  background-color: #ffffff;
+  border-left-color: #006c65 !important;
 }
 
 @layer base {
@@ -67,24 +244,6 @@
   image-rendering: crisp-edges;
 }
 
-/* Custom animations */
-@keyframes scroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-.animate-scroll {
-  animation: scroll 30s linear infinite;
-}
-
-.animate-scroll:hover {
-  animation-play-state: paused;
-}
-
 /* Animation delays for staggered effects */
 .animation-delay-200 {
   animation-delay: 0.2s;
@@ -136,8 +295,8 @@
 /* Fade-up on scroll entry (used by <FadeIn />) */
 .fade-up {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 400ms ease-out, transform 400ms ease-out;
+  transform: translateY(var(--motion-distance));
+  transition: opacity var(--motion-duration) var(--motion-ease), transform var(--motion-duration) var(--motion-ease);
   will-change: opacity, transform;
 }
 
@@ -146,12 +305,103 @@
   transform: translateY(0);
 }
 
-/* Subtle teal gradient for highlighted hero words */
-.ion-teal-gradient {
-  background-image: linear-gradient(90deg, #2dd4bf 0%, #14a8a8 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+/* Brief content-wrapper transition on route change (see components/page-transition.tsx).
+   Opacity + a few px of translateY only — never wraps the fixed header, so it can't
+   interfere with its positioning. */
+@keyframes ion-page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(var(--motion-distance));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ion-page-enter {
+  animation: ion-page-enter var(--motion-duration) var(--motion-ease) both;
+}
+
+/* New cards entering the filtered opportunities grid */
+@keyframes ion-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ion-card-enter {
+  animation: ion-card-enter var(--motion-duration-fast) var(--motion-ease) both;
+}
+
+/* Sticky role-application CTA appearing/leaving */
+@keyframes ion-sticky-enter {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ion-sticky-cta-enter {
+  animation: ion-sticky-enter var(--motion-duration-fast) var(--motion-ease) both;
+}
+
+/* Desktop nav underline — expands from the left on hover/focus/active,
+   restrained scaleX so it never shifts surrounding layout. */
+.ion-nav-link {
+  position: relative;
+}
+
+.ion-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 2px;
+  border-radius: 9999px;
+  background-color: #0fa3a1;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--motion-duration-fast) var(--motion-ease);
+}
+
+.ion-nav-link:hover::after,
+.ion-nav-link:focus-visible::after,
+.ion-nav-link[data-active="true"]::after {
+  transform: scaleX(1);
+}
+
+/* Restrained desktop-only hero depth (see app/page.tsx) — a JS scroll
+   listener sets --hero-depth-offset; intentionally no transition here so
+   the translation tracks the scroll position directly instead of lagging. */
+.ion-hero-depth {
+  transform: translateY(var(--hero-depth-offset, 0px));
+}
+
+/* Subtle shadow to keep hero copy readable over brighter parts of the video.
+   Kept tight and light — a large soft blur was muddying the bright-teal
+   highlight span below. */
+.hero-text-shadow {
+  text-shadow: 0 1px 3px rgba(15, 23, 42, 0.35);
+}
+
+/* Highlighted hero words — solid ION bright teal, no gradient, no opacity,
+   no filter. Declared with !important, unlayered, for the same reason as
+   the other bulletproof accent classes in this file: this exact span
+   previously used off-palette colours (#2DD4BF/#14A8A8) via a text-clip
+   gradient, which also interacted badly with the shadow above. */
+.ion-hero-teal-accent {
+  color: #22c6b3 !important;
 }
 
 /* Very slow, subtle hero zoom — desktop only */
@@ -180,7 +430,17 @@
   .hero-zoom {
     animation: none !important;
   }
-  .animate-scroll {
+  .ion-page-enter,
+  .ion-card-enter,
+  .ion-sticky-cta-enter {
     animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .ion-nav-link::after {
+    transition: none !important;
+  }
+  .ion-hero-depth {
+    transform: none !important;
   }
 }

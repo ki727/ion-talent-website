@@ -24,13 +24,6 @@ export type OpportunityFunction =
   | "Supply Chain and Procurement"
   | "Transformation and Strategy"
 
-export type OpportunityLocation =
-  | "UAE"
-  | "Saudi Arabia"
-  | "Qatar"
-  | "Wider GCC"
-  | "International"
-
 export type EmploymentType = "Permanent" | "Contract" | "Executive Search"
 
 export interface Opportunity {
@@ -39,10 +32,8 @@ export interface Opportunity {
   title: string
   status: OpportunityStatus
   function: OpportunityFunction
-  /** Human-readable location label shown on the card. */
+  /** Single primary city where this role is based. */
   locationLabel: string
-  /** Normalised locations used for filtering. */
-  locations: OpportunityLocation[]
   employmentLabel: string
   employmentTypes: EmploymentType[]
   seniority: string
@@ -50,8 +41,6 @@ export interface Opportunity {
   description: string
   /** Indicative market salary range — market guidance only. */
   salaryRange: string
-  /** Workplace type: Remote, Hybrid, On-site */
-  workplaceType: string
   /** Sector or discipline shown on card. */
   sector: string
   /** Detailed overview shown in the role panel. */
@@ -77,14 +66,6 @@ export const FUNCTIONS: OpportunityFunction[] = [
   "Legal and Compliance",
   "Supply Chain and Procurement",
   "Transformation and Strategy",
-]
-
-export const LOCATIONS: OpportunityLocation[] = [
-  "UAE",
-  "Saudi Arabia",
-  "Qatar",
-  "Wider GCC",
-  "International",
 ]
 
 export const EMPLOYMENT_TYPES: EmploymentType[] = [
@@ -113,13 +94,11 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Finance",
     sector: "Finance",
-    locationLabel: "Dubai, Riyadh and Doha",
-    locations: ["UAE", "Saudi Arabia", "Qatar"],
+    locationLabel: "Abu Dhabi",
     employmentLabel: "Permanent · Executive Search",
     employmentTypes: ["Permanent", "Executive Search"],
     seniority: "C-Suite / Executive",
     salaryRange: "AED 500,000 – 900,000 per annum",
-    workplaceType: "On-site",
     description:
       "Senior finance leadership opportunities for CFOs and Finance Directors across high-growth and enterprise organisations in the GCC.",
     overview:
@@ -148,17 +127,15 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Finance",
     sector: "Finance",
-    locationLabel: "Dubai and Riyadh",
-    locations: ["UAE", "Saudi Arabia"],
+    locationLabel: "London",
     employmentLabel: "Permanent",
     employmentTypes: ["Permanent"],
     seniority: "Director",
     salaryRange: "AED 280,000 – 480,000 per annum",
-    workplaceType: "Hybrid",
     description:
-      "Financial control, consolidation and governance leadership roles across multinational and regional businesses in the UAE and Saudi Arabia.",
+      "Financial control, consolidation and governance leadership roles across multinational and regional businesses in London.",
     overview:
-      "ION Talent is placing Financial Controllers for clients undergoing growth, transformation and consolidation across the UAE and Saudi Arabia. Candidates with Big Four backgrounds and in-house controller experience in complex, multi-entity environments are particularly sought after.",
+      "ION Talent is building a network of experienced Financial Controllers for current and upcoming opportunities in London. Clients are undergoing growth, transformation and consolidation, and candidates with Big Four backgrounds and in-house controller experience in complex, multi-entity environments are particularly sought after.",
     responsibilities: [
       "Lead month-end close, group consolidation and statutory reporting",
       "Own internal controls, governance and audit relationships",
@@ -174,7 +151,7 @@ export const opportunities: Opportunity[] = [
       "GCC experience preferred; MENA market knowledge an advantage",
     ],
     packageNotes:
-      "Packages include base salary, annual bonus, housing allowance and medical cover. Total compensation benchmarked against current UAE and KSA market rates.",
+      "Packages include base salary, annual bonus, housing allowance and medical cover. Total compensation benchmarked against current London market rates.",
   },
   {
     id: "fpa-manager-director",
@@ -183,13 +160,11 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Finance",
     sector: "Finance",
-    locationLabel: "Dubai, Abu Dhabi and Riyadh",
-    locations: ["UAE", "Saudi Arabia"],
+    locationLabel: "London",
     employmentLabel: "Permanent",
     employmentTypes: ["Permanent"],
     seniority: "Director",
     salaryRange: "AED 240,000 – 420,000 per annum",
-    workplaceType: "Hybrid",
     description:
       "Commercial finance, planning and senior business partnering roles with high-growth regional and international organisations.",
     overview:
@@ -218,19 +193,17 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Finance",
     sector: "Finance",
-    locationLabel: "UAE and Saudi Arabia",
-    locations: ["UAE", "Saudi Arabia"],
+    locationLabel: "Riyadh",
     employmentLabel: "Permanent",
     employmentTypes: ["Permanent"],
     seniority: "Senior Manager",
     salaryRange: "AED 200,000 – 360,000 per annum",
-    workplaceType: "On-site",
     description:
       "VAT, corporate tax, internal audit and financial risk and compliance roles across the GCC as regulatory complexity increases.",
     overview:
       "The introduction of corporate tax in the UAE and evolving tax regimes across Saudi Arabia and Qatar are generating sustained demand for tax, audit and compliance professionals. ION Talent places specialists in in-house roles and advisory-facing positions across financial services, technology and energy clients.",
     responsibilities: [
-      "Manage UAE and KSA corporate tax compliance, filings and planning",
+      "Manage KSA corporate tax compliance, filings and planning",
       "Lead or support internal audit programmes and control frameworks",
       "Own regulatory reporting, VAT and indirect tax obligations",
       "Engage external auditors and tax advisers",
@@ -239,7 +212,7 @@ export const opportunities: Opportunity[] = [
     requirements: [
       "CTA, ADIT, ACA or equivalent tax or audit qualification",
       "5+ years in tax, audit or financial compliance in the GCC",
-      "Strong knowledge of UAE CT, VAT and KSA ZATCA regulations",
+      "Strong knowledge of KSA ZATCA, VAT and corporate tax regulations",
       "Big Four or major advisory firm background preferred",
     ],
     packageNotes:
@@ -254,13 +227,11 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Cybersecurity",
     sector: "Cybersecurity",
-    locationLabel: "Dubai and Riyadh",
-    locations: ["UAE", "Saudi Arabia"],
+    locationLabel: "Riyadh",
     employmentLabel: "Permanent · Executive Search",
     employmentTypes: ["Permanent", "Executive Search"],
     seniority: "VP / Head of",
     salaryRange: "AED 420,000 – 750,000 per annum",
-    workplaceType: "Hybrid",
     description:
       "CISO and Head of Cybersecurity leadership roles for organisations investing in security transformation, resilience and governance across the GCC.",
     overview:
@@ -289,17 +260,15 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Cybersecurity",
     sector: "Cybersecurity",
-    locationLabel: "Dubai, Riyadh and Abu Dhabi",
-    locations: ["UAE", "Saudi Arabia"],
+    locationLabel: "Amsterdam",
     employmentLabel: "Permanent · Contract",
     employmentTypes: ["Permanent", "Contract"],
     seniority: "Senior Specialist",
     salaryRange: "AED 280,000 – 480,000 per annum",
-    workplaceType: "Hybrid",
     description:
       "Enterprise and cloud security architecture roles for specialists who can design and implement robust security frameworks at scale.",
     overview:
-      "ION Talent is sourcing experienced cybersecurity architects for clients undergoing cloud migration, data centre builds and digital transformation programmes across the UAE and Saudi Arabia. Both permanent and contract opportunities exist for professionals with deep architecture skills and vendor-neutral design experience.",
+      "ION Talent is building a network of experienced cybersecurity architects for current and upcoming opportunities in Amsterdam, supporting clients undergoing cloud migration, data centre builds and digital transformation programmes. Both permanent and contract opportunities exist for professionals with deep architecture skills and vendor-neutral design experience.",
     responsibilities: [
       "Design and own security architecture for enterprise and cloud environments",
       "Develop security standards, patterns and reference architectures",
@@ -324,17 +293,15 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Cybersecurity",
     sector: "Cybersecurity",
-    locationLabel: "Dubai and Riyadh",
-    locations: ["UAE", "Saudi Arabia"],
+    locationLabel: "Riyadh",
     employmentLabel: "Permanent",
     employmentTypes: ["Permanent"],
     seniority: "Manager",
     salaryRange: "AED 200,000 – 320,000 per annum",
-    workplaceType: "Hybrid",
     description:
       "Governance, risk and compliance professionals to build and manage information security programmes across regulated industries.",
     overview:
-      "Regulatory pressure across ADGM, DFSA, NCA Saudi and the UAE IA is creating consistent demand for GRC and information security management professionals. ION Talent places GRC Managers and Analysts across financial services, government and technology clients in the UAE and Saudi Arabia.",
+      "Regulatory pressure from NCA Saudi and other regional frameworks is creating consistent demand for GRC and information security management professionals. ION Talent is building a network of GRC Managers and Analysts for current and upcoming opportunities in Riyadh, across financial services, government and technology clients.",
     responsibilities: [
       "Own the information security risk register and control framework",
       "Lead ISO 27001, NIST CSF and regulatory compliance programmes",
@@ -360,13 +327,11 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Cloud and Infrastructure",
     sector: "Cloud and Infrastructure",
-    locationLabel: "Dubai and Riyadh",
-    locations: ["UAE", "Saudi Arabia"],
+    locationLabel: "Dubai",
     employmentLabel: "Permanent · Contract",
     employmentTypes: ["Permanent", "Contract"],
     seniority: "Senior Specialist",
     salaryRange: "AED 300,000 – 520,000 per annum",
-    workplaceType: "Hybrid",
     description:
       "Cloud architecture and infrastructure transformation roles across hyperscaler, hybrid and sovereign cloud environments in the GCC.",
     overview:
@@ -395,17 +360,15 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Cloud and Infrastructure",
     sector: "Cloud and Infrastructure",
-    locationLabel: "Dubai, Riyadh and Abu Dhabi",
-    locations: ["UAE", "Saudi Arabia"],
+    locationLabel: "Abu Dhabi",
     employmentLabel: "Permanent",
     employmentTypes: ["Permanent"],
     seniority: "Director",
     salaryRange: "AED 380,000 – 620,000 per annum",
-    workplaceType: "On-site",
     description:
       "Senior infrastructure and data centre leadership roles as the GCC invests billions in hyperscale, colocation and sovereign data centre capacity.",
     overview:
-      "ION Talent is working with hyperscale operators, national data centre programmes and major colocation providers to source experienced infrastructure and data centre leaders. Demand is concentrated in the UAE and Saudi Arabia but extends across the broader GCC.",
+      "ION Talent is working with hyperscale operators, national data centre programmes and major colocation providers to source experienced infrastructure and data centre leaders. Demand is concentrated in the UAE, with sovereign and hyperscale investment extending across the broader GCC.",
     responsibilities: [
       "Lead end-to-end delivery of large-scale data centre construction or expansion",
       "Manage critical facilities including power, cooling and physical security",
@@ -432,13 +395,11 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Data and AI",
     sector: "Data and AI",
-    locationLabel: "Dubai and Riyadh",
-    locations: ["UAE", "Saudi Arabia"],
+    locationLabel: "Dubai",
     employmentLabel: "Permanent · Contract",
     employmentTypes: ["Permanent", "Contract"],
     seniority: "Senior Manager",
     salaryRange: "AED 320,000 – 540,000 per annum",
-    workplaceType: "Hybrid",
     description:
       "Data engineering and analytics leadership roles at the intersection of modern data platforms, BI and AI readiness.",
     overview:
@@ -458,7 +419,7 @@ export const opportunities: Opportunity[] = [
       "Knowledge of data mesh, DataOps and data governance best practices",
     ],
     packageNotes:
-      "Packages reflect strong market demand. Senior remote-eligible roles available for international candidates.",
+      "Packages reflect strong market demand, with strong interest from international candidates.",
   },
   {
     id: "ai-ml-engineering-lead",
@@ -467,13 +428,11 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Data and AI",
     sector: "Data and AI",
-    locationLabel: "Dubai, Riyadh and Amsterdam",
-    locations: ["UAE", "Saudi Arabia", "International"],
+    locationLabel: "London",
     employmentLabel: "Permanent",
     employmentTypes: ["Permanent"],
     seniority: "Senior Manager",
     salaryRange: "AED 380,000 – 640,000 per annum",
-    workplaceType: "Hybrid",
     description:
       "AI and machine learning engineering leadership roles for specialists building production ML systems and LLM-powered applications.",
     overview:
@@ -504,13 +463,11 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Enterprise Technology",
     sector: "Enterprise Technology / ERP",
-    locationLabel: "Riyadh and Abu Dhabi",
-    locations: ["Saudi Arabia", "UAE"],
+    locationLabel: "Riyadh",
     employmentLabel: "Permanent · Contract",
     employmentTypes: ["Permanent", "Contract"],
     seniority: "Director",
     salaryRange: "AED 420,000 – 680,000 per annum",
-    workplaceType: "On-site",
     description:
       "SAP S/4HANA transformation and programme leadership roles for large-scale enterprise implementations across government and energy clients.",
     overview:
@@ -539,13 +496,11 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Enterprise Technology",
     sector: "Enterprise Technology / ERP",
-    locationLabel: "Dubai and Riyadh",
-    locations: ["UAE", "Saudi Arabia"],
+    locationLabel: "Dubai",
     employmentLabel: "Permanent · Contract",
     employmentTypes: ["Permanent", "Contract"],
     seniority: "Senior Specialist",
     salaryRange: "AED 320,000 – 520,000 per annum",
-    workplaceType: "Hybrid",
     description:
       "Oracle Fusion, EBS and Cloud implementation and architecture roles for regional and multinational enterprise clients.",
     overview:
@@ -574,20 +529,18 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Technology Sales",
     sector: "Technology Sales",
-    locationLabel: "Dubai and Riyadh",
-    locations: ["UAE", "Saudi Arabia"],
+    locationLabel: "Dubai",
     employmentLabel: "Permanent",
     employmentTypes: ["Permanent"],
     seniority: "Director",
     salaryRange: "AED 350,000 – 600,000 OTE per annum",
-    workplaceType: "Hybrid",
     description:
       "Enterprise software sales leadership roles for high-growth SaaS vendors scaling commercial operations across the GCC.",
     overview:
       "ION Talent works with a growing number of enterprise SaaS, cloud and cybersecurity vendors building out their GCC sales organisations. We place Sales Directors and VP Sales candidates who can operate at the C-suite level, manage complex multi-stakeholder deals and build regional teams from the ground up.",
     responsibilities: [
       "Own regional new business revenue targets for enterprise software or cloud products",
-      "Develop and execute territory and account strategies for UAE and KSA markets",
+      "Develop and execute territory and account strategies for the UAE market",
       "Manage full enterprise sales cycles from prospecting to close",
       "Build and lead a high-performing regional sales team",
       "Represent the company at CxO level and at regional industry events",
@@ -609,17 +562,15 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Technology Sales",
     sector: "Technology Sales",
-    locationLabel: "Dubai and Riyadh",
-    locations: ["UAE", "Saudi Arabia"],
+    locationLabel: "London",
     employmentLabel: "Permanent",
     employmentTypes: ["Permanent"],
     seniority: "Senior Specialist",
     salaryRange: "AED 240,000 – 420,000 OTE per annum",
-    workplaceType: "Hybrid",
     description:
       "Pre-sales and solutions consulting roles bridging technical capability and commercial value for enterprise technology vendors.",
     overview:
-      "Enterprise technology vendors across cloud, cybersecurity, data and SaaS are competing hard for experienced pre-sales talent in the GCC. ION Talent places Pre-Sales Consultants and Solutions Architects who combine deep technical knowledge with strong commercial awareness and executive communication skills.",
+      "Enterprise technology vendors across cloud, cybersecurity, data and SaaS are competing hard for experienced pre-sales talent. ION Talent is building a network of Pre-Sales Consultants and Solutions Architects for current and upcoming opportunities in London, combining deep technical knowledge with strong commercial awareness and executive communication skills.",
     responsibilities: [
       "Lead technical discovery, demonstrations and proof-of-concept engagements",
       "Produce proposals, RFP responses and technical architecture documents",
@@ -644,13 +595,11 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Project and Programme Management",
     sector: "Programme Delivery",
-    locationLabel: "Dubai, Riyadh and Doha",
-    locations: ["UAE", "Saudi Arabia", "Qatar"],
+    locationLabel: "Riyadh",
     employmentLabel: "Permanent · Contract",
     employmentTypes: ["Permanent", "Contract"],
     seniority: "Director",
     salaryRange: "AED 420,000 – 700,000 per annum",
-    workplaceType: "On-site",
     description:
       "Digital transformation and technology programme leadership for large-scale GCC delivery programmes spanning enterprise technology, cloud and operational change.",
     overview:
@@ -678,13 +627,11 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Project and Programme Management",
     sector: "Programme Delivery",
-    locationLabel: "Dubai and Riyadh",
-    locations: ["UAE", "Saudi Arabia"],
+    locationLabel: "Riyadh",
     employmentLabel: "Permanent",
     employmentTypes: ["Permanent"],
     seniority: "Senior Manager",
     salaryRange: "AED 280,000 – 460,000 per annum",
-    workplaceType: "Hybrid",
     description:
       "PMO establishment and leadership roles for organisations building or maturing their project and portfolio management capabilities.",
     overview:
@@ -713,17 +660,15 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Engineering and Operations",
     sector: "Energy and Oil and Gas",
-    locationLabel: "Riyadh, Abu Dhabi and Dammam",
-    locations: ["Saudi Arabia", "UAE"],
+    locationLabel: "Dammam",
     employmentLabel: "Permanent · Executive Search",
     employmentTypes: ["Permanent", "Executive Search"],
     seniority: "C-Suite / Executive",
     salaryRange: "USD 200,000 – 350,000 per annum",
-    workplaceType: "On-site",
     description:
       "Senior operations and engineering leadership for upstream, midstream and downstream oil and gas clients across the Arabian Peninsula.",
     overview:
-      "ION Talent partners with NOCs, IOCs and oilfield services companies across Saudi Arabia and the UAE to place experienced operations and engineering directors. Candidates with Arabian Gulf, deepwater or large-scale refinery experience are consistently in demand.",
+      "ION Talent partners with NOCs, IOCs and oilfield services companies across Saudi Arabia to place experienced operations and engineering directors. Candidates with Arabian Gulf, deepwater or large-scale refinery experience are consistently in demand.",
     responsibilities: [
       "Oversee upstream, midstream or downstream operations and production targets",
       "Lead HSE performance, operational integrity and asset management",
@@ -747,15 +692,13 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Engineering and Operations",
     sector: "Engineering and Infrastructure",
-    locationLabel: "Dubai, Abu Dhabi and Riyadh",
-    locations: ["UAE", "Saudi Arabia"],
+    locationLabel: "Abu Dhabi",
     employmentLabel: "Permanent · Contract",
     employmentTypes: ["Permanent", "Contract"],
     seniority: "Senior Manager",
     salaryRange: "AED 280,000 – 480,000 per annum",
-    workplaceType: "On-site",
     description:
-      "Engineering project management roles across energy, infrastructure and industrial sectors in the UAE and Saudi Arabia.",
+      "Engineering project management roles across energy, infrastructure and industrial sectors in the UAE.",
     overview:
       "ION Talent places experienced Engineering Project Managers for clients delivering capital infrastructure, utilities, energy and industrial projects across the GCC. Demand is strong for candidates with EPCM experience and familiarity with GCC project delivery environments.",
     responsibilities: [
@@ -782,13 +725,11 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Supply Chain and Procurement",
     sector: "Supply Chain and Logistics",
-    locationLabel: "Dubai and Riyadh",
-    locations: ["UAE", "Saudi Arabia"],
+    locationLabel: "Dammam",
     employmentLabel: "Permanent",
     employmentTypes: ["Permanent"],
     seniority: "Director",
     salaryRange: "AED 380,000 – 620,000 per annum",
-    workplaceType: "Hybrid",
     description:
       "Senior supply chain and logistics leadership roles for retail, FMCG, industrial and healthcare clients across the GCC.",
     overview:
@@ -818,13 +759,11 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "HR and People",
     sector: "HR and People",
-    locationLabel: "Dubai, Riyadh and London",
-    locations: ["UAE", "Saudi Arabia", "International"],
+    locationLabel: "Dubai",
     employmentLabel: "Permanent · Executive Search",
     employmentTypes: ["Permanent", "Executive Search"],
     seniority: "C-Suite / Executive",
     salaryRange: "AED 480,000 – 780,000 per annum",
-    workplaceType: "Hybrid",
     description:
       "Chief People Officer and HR Director roles for technology-led and high-growth organisations building modern people functions.",
     overview:
@@ -853,13 +792,11 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Legal and Compliance",
     sector: "Legal and Compliance",
-    locationLabel: "Dubai and Riyadh",
-    locations: ["UAE", "Saudi Arabia"],
+    locationLabel: "Dubai",
     employmentLabel: "Permanent · Executive Search",
     employmentTypes: ["Permanent", "Executive Search"],
     seniority: "C-Suite / Executive",
     salaryRange: "AED 500,000 – 850,000 per annum",
-    workplaceType: "Hybrid",
     description:
       "General Counsel and Head of Legal roles for regional businesses requiring senior in-house legal leadership with strong commercial focus.",
     overview:
@@ -888,13 +825,11 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Transformation and Strategy",
     sector: "Digital Transformation",
-    locationLabel: "Dubai and Riyadh",
-    locations: ["UAE", "Saudi Arabia"],
+    locationLabel: "Riyadh",
     employmentLabel: "Permanent · Executive Search",
     employmentTypes: ["Permanent", "Executive Search"],
     seniority: "C-Suite / Executive",
     salaryRange: "AED 600,000 – 1,000,000 per annum",
-    workplaceType: "Hybrid",
     description:
       "CDO and Head of Digital roles for organisations accelerating digital transformation, platform modernisation and AI adoption.",
     overview:
@@ -923,13 +858,11 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Transformation and Strategy",
     sector: "Transformation and Change",
-    locationLabel: "Dubai and Riyadh",
-    locations: ["UAE", "Saudi Arabia"],
+    locationLabel: "Riyadh",
     employmentLabel: "Permanent · Contract",
     employmentTypes: ["Permanent", "Contract"],
     seniority: "Director",
     salaryRange: "AED 380,000 – 620,000 per annum",
-    workplaceType: "On-site",
     description:
       "Business transformation and operating model change leadership for organisations undergoing restructuring, growth or technology-driven change.",
     overview:
@@ -958,13 +891,11 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "HR and People",
     sector: "HR and People",
-    locationLabel: "Dubai and Riyadh",
-    locations: ["UAE", "Saudi Arabia"],
+    locationLabel: "Dubai",
     employmentLabel: "Permanent",
     employmentTypes: ["Permanent"],
     seniority: "VP / Head of",
     salaryRange: "AED 320,000 – 520,000 per annum",
-    workplaceType: "Hybrid",
     description:
       "Talent acquisition leadership roles for fast-growing technology and regional businesses building best-in-class hiring capability.",
     overview:
@@ -982,7 +913,7 @@ export const opportunities: Opportunity[] = [
       "Strong knowledge of GCC labour markets and localisation requirements",
       "ATS implementation and TA technology experience",
     ],
-    packageNotes: "Packages reflect market demand. Saudisation bonus schemes available for KSA-based roles.",
+    packageNotes: "Packages reflect current UAE market demand.",
   },
   {
     id: "treasury-corporate-finance",
@@ -991,13 +922,11 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Finance",
     sector: "Finance",
-    locationLabel: "Dubai and Abu Dhabi",
-    locations: ["UAE"],
+    locationLabel: "Dubai",
     employmentLabel: "Permanent",
     employmentTypes: ["Permanent"],
     seniority: "Senior Manager",
     salaryRange: "AED 240,000 – 400,000 per annum",
-    workplaceType: "Hybrid",
     description:
       "Treasury, funding and corporate finance roles for banks, corporates and sovereign entities across the UAE.",
     overview:
@@ -1023,17 +952,15 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Cloud and Infrastructure",
     sector: "Cloud and Infrastructure",
-    locationLabel: "Dubai and London",
-    locations: ["UAE", "International"],
+    locationLabel: "London",
     employmentLabel: "Permanent · Contract",
     employmentTypes: ["Permanent", "Contract"],
     seniority: "Senior Specialist",
     salaryRange: "AED 240,000 – 420,000 per annum",
-    workplaceType: "Hybrid",
     description:
       "DevOps and platform engineering roles for technology companies and enterprises building cloud-native delivery capability.",
     overview:
-      "ION Talent places experienced DevOps and Platform Engineers for clients modernising their software delivery pipeline, implementing GitOps practices and building internal developer platforms. Both Dubai-based and remote-eligible roles are available.",
+      "ION Talent places experienced DevOps and Platform Engineers for clients modernising their software delivery pipeline, implementing GitOps practices and building internal developer platforms.",
     responsibilities: [
       "Design and maintain CI/CD pipelines, IaC and cloud infrastructure",
       "Build and operate Kubernetes-based platform services",
@@ -1046,7 +973,7 @@ export const opportunities: Opportunity[] = [
       "Experience with GitHub Actions, GitLab CI or equivalent",
       "Cloud certifications (AWS, Azure or GCP) preferred",
     ],
-    packageNotes: "Permanent and contract options. Remote-eligible roles available for international candidates.",
+    packageNotes: "Permanent and contract options, with strong interest from international candidates.",
   },
   {
     id: "head-of-risk-compliance",
@@ -1055,13 +982,11 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Legal and Compliance",
     sector: "Risk and Compliance",
-    locationLabel: "Dubai and Riyadh",
-    locations: ["UAE", "Saudi Arabia"],
+    locationLabel: "Abu Dhabi",
     employmentLabel: "Permanent",
     employmentTypes: ["Permanent"],
     seniority: "VP / Head of",
     salaryRange: "AED 380,000 – 620,000 per annum",
-    workplaceType: "Hybrid",
     description:
       "Enterprise risk and compliance leadership roles for financial services, technology and regulated industry clients in the GCC.",
     overview:
@@ -1083,3 +1008,42 @@ export const opportunities: Opportunity[] = [
       "Packages reflect regulatory expertise premium in the GCC financial services market.",
   },
 ]
+
+/** Every distinct primary city currently in use, derived from the data itself. */
+export const LOCATIONS: string[] = Array.from(new Set(opportunities.map((o) => o.locationLabel))).sort()
+
+/*
+ * roleType / shareable — deliberately derived from the existing `status`
+ * field rather than stored as separate data. `status` already encodes the
+ * exact same distinction ("Live Opportunity" is the one and only trigger
+ * ION Talent uses to promote a role out of the network pipeline), so a
+ * second field would just be one more place for the two to drift out of
+ * sync. Every helper a page needs — the badge label, the CTA label, and
+ * whether sharing/JobPosting markup is allowed — goes through here so the
+ * logic lives in one place instead of being repeated at each call site.
+ *
+ * Safety default: unless a role's status is explicitly "Live Opportunity",
+ * it is treated as a network/pipeline role and is never shareable.
+ */
+
+/** True only for a role ION Talent has explicitly promoted to a confirmed, live vacancy. */
+export function isLiveVacancy(opportunity: Opportunity): boolean {
+  return opportunity.status === "Live Opportunity"
+}
+
+/** Only genuine live vacancies may be shared publicly or receive JobPosting structured data. */
+export function isShareable(opportunity: Opportunity): boolean {
+  return isLiveVacancy(opportunity)
+}
+
+/** Badge text shown on cards and role-detail pages. */
+export function getRoleTypeLabel(opportunity: Opportunity): string {
+  if (opportunity.status === "Live Opportunity") return "Live Vacancy"
+  if (opportunity.status === "Paused") return "Paused"
+  return "ION Talent Network"
+}
+
+/** Primary CTA / submit-button label — matches across the top CTA, sticky CTA and application form. */
+export function getApplyCtaLabel(opportunity: Opportunity): string {
+  return isLiveVacancy(opportunity) ? "Apply for this Role" : "Submit CV / Register Interest"
+}

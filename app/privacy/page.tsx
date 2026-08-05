@@ -2,13 +2,31 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
+import { SITE_URL } from "@/lib/site-config"
+
+const TITLE = "Candidate Privacy Notice | ION Talent"
+const DESCRIPTION =
+  "How ION Talent collects, uses and protects personal data submitted by candidates through our website and talent network."
 
 export const metadata: Metadata = {
-  title: "Candidate Privacy Notice | ION Talent",
-  description:
-    "How ION Talent collects, uses and protects personal data submitted by candidates through our website and talent network.",
+  title: TITLE,
+  description: DESCRIPTION,
   alternates: {
-    canonical: "https://www.iontalentgroup.com/privacy",
+    canonical: `${SITE_URL}/privacy`,
+  },
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    type: "website",
+    url: `${SITE_URL}/privacy`,
+    siteName: "ION Talent",
+    images: [`${SITE_URL}/opengraph-image`],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+    images: [`${SITE_URL}/opengraph-image`],
   },
 }
 

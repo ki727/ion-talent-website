@@ -2,13 +2,14 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { ArrowRight, AlertCircle } from "lucide-react"
 import { LoadingSpinner } from "./loading-spinner"
 import { SuccessMessage } from "./success-message"
+import { trackEvent } from "@/lib/analytics"
 
 interface FormData {
   name: string
@@ -25,21 +26,43 @@ interface FormErrors {
   [key: string]: string
 }
 
-export function EnhancedContactForm() {
+interface EnhancedContactFormProps {
+  /** Preselects the Service Interest dropdown, e.g. when arriving from a specific service CTA. */
+  initialService?: string
+}
+
+const SERVICE_LABELS: Record<string, string> = {
+  contingent: "Contingent Recruitment",
+  retained: "Executive Search",
+  rpo: "RPO / Embedded Solutions",
+  consulting: "Talent Consulting",
+  general: "General Inquiry",
+}
+
+export function EnhancedContactForm({ initialService }: EnhancedContactFormProps = {}) {
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     company: "",
     phone: "",
-    service: "contingent",
+    service: initialService ?? "contingent",
     message: "",
     budget: "",
     timeline: "asap",
   })
+  // Honeypot — left blank by real visitors, often filled in by bots.
+  const [companyWebsite, setCompanyWebsite] = useState("")
 
   const [errors, setErrors] = useState<FormErrors>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [submitError, setSubmitError] = useState("")
+
+  useEffect(() => {
+    if (initialService) {
+      setFormData((prev) => ({ ...prev, service: initialService }))
+    }
+  }, [initialService])
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {}
@@ -61,49 +84,58 @@ export function EnhancedContactForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
+    if (isSubmitting) return
     if (!validateForm()) return
 
     setIsSubmitting(true)
+    setSubmitError("")
 
     try {
-      // Send form data to your backend endpoint
-      const response = await fetch("/api/contact", {
+      const response = await fetch("/api/hiring-enquiry", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          ...formData,
-          type: "contact_inquiry",
-          timestamp: new Date().toISOString(),
+          fullName: formData.name,
+          businessEmail: formData.email,
+          company: formData.company,
+          phone: formData.phone,
+          serviceInterest: SERVICE_LABELS[formData.service] ?? formData.service,
+          timeline: formData.timeline,
+          projectDetails: formData.message,
+          pageUrl: typeof window !== "undefined" ? window.location.href : "",
+          companyWebsite,
         }),
       })
 
-      if (!response.ok) {
-        throw new Error("Failed to send message")
+      const result = await response.json().catch(() => null)
+
+      if (!response.ok || !result?.success) {
+        throw new Error("We couldn't send your submission. Please try again.")
       }
 
+      trackEvent("hiring_enquiry_success")
       setIsSubmitting(false)
       setIsSubmitted(true)
 
-      // Reset form after success
-      setTimeout(() => {
-        setIsSubmitted(false)
-        setFormData({
-          name: "",
-          email: "",
-          company: "",
-          phone: "",
-          service: "contingent",
-          message: "",
-          budget: "",
-          timeline: "asap",
-        })
-      }, 5000)
+      // Clear the form now that a genuine success has been confirmed.
+      setFormData({
+        name: "",
+        email: "",
+        company: "",
+        phone: "",
+        service: initialService ?? "contingent",
+        message: "",
+        budget: "",
+        timeline: "asap",
+      })
     } catch (error) {
-      console.error("Error submitting form:", error)
+      console.error("Error submitting hiring enquiry:", error)
       setIsSubmitting(false)
-      // You could add error handling here
+      setSubmitError(
+        error instanceof Error ? error.message : "We couldn't send your submission. Please try again.",
+      )
     }
   }
 
@@ -115,11 +147,28 @@ export function EnhancedContactForm() {
   }
 
   if (isSubmitted) {
-    return <SuccessMessage />
+    return (
+      <SuccessMessage
+        title="Hiring enquiry sent successfully"
+        message="Thanks. Your enquiry has been sent to ION Talent. We'll review the details and get back to you shortly."
+      />
+    )
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+      {/* Honeypot field — hidden from real visitors and assistive tech, left blank by them */}
+      <input
+        type="text"
+        name="companyWebsite"
+        value={companyWebsite}
+        onChange={(e) => setCompanyWebsite(e.target.value)}
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="hidden"
+      />
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label htmlFor="name" className="block text-sm font-semibold text-[#1a1a1a] mb-2">
@@ -128,12 +177,13 @@ export function EnhancedContactForm() {
           <Input
             id="name"
             type="text"
+            autoComplete="name"
             value={formData.name}
             onChange={(e) => handleChange("name", e.target.value)}
             className={`border-2 transition-all duration-200 ${
               errors.name
                 ? "border-red-300 focus:border-red-500 focus:ring-red-500"
-                : "border-gray-200 focus:border-[#2DD4BF] focus:ring-[#2DD4BF]"
+                : "border-gray-200 focus:border-ion-teal focus:ring-ion-teal"
             }`}
             placeholder="Enter your full name"
           />
@@ -152,12 +202,14 @@ export function EnhancedContactForm() {
           <Input
             id="email"
             type="email"
+            autoComplete="email"
+            inputMode="email"
             value={formData.email}
             onChange={(e) => handleChange("email", e.target.value)}
             className={`border-2 transition-all duration-200 ${
               errors.email
                 ? "border-red-300 focus:border-red-500 focus:ring-red-500"
-                : "border-gray-200 focus:border-[#2DD4BF] focus:ring-[#2DD4BF]"
+                : "border-gray-200 focus:border-ion-teal focus:ring-ion-teal"
             }`}
             placeholder="your.email@company.com"
           />
@@ -178,12 +230,13 @@ export function EnhancedContactForm() {
           <Input
             id="company"
             type="text"
+            autoComplete="organization"
             value={formData.company}
             onChange={(e) => handleChange("company", e.target.value)}
             className={`border-2 transition-all duration-200 ${
               errors.company
                 ? "border-red-300 focus:border-red-500 focus:ring-red-500"
-                : "border-gray-200 focus:border-[#2DD4BF] focus:ring-[#2DD4BF]"
+                : "border-gray-200 focus:border-ion-teal focus:ring-ion-teal"
             }`}
             placeholder="Your company name"
           />
@@ -202,9 +255,11 @@ export function EnhancedContactForm() {
           <Input
             id="phone"
             type="tel"
+            autoComplete="tel"
+            inputMode="tel"
             value={formData.phone}
             onChange={(e) => handleChange("phone", e.target.value)}
-            className="border-2 border-gray-200 focus:border-[#2DD4BF] focus:ring-[#2DD4BF] transition-all duration-200"
+            className="border-2 border-gray-200 focus:border-ion-teal focus:ring-ion-teal transition-all duration-200"
             placeholder="+971 50 123 4567"
           />
         </div>
@@ -219,10 +274,11 @@ export function EnhancedContactForm() {
             id="service"
             value={formData.service}
             onChange={(e) => handleChange("service", e.target.value)}
-            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2DD4BF] focus:border-[#2DD4BF] transition-all duration-200"
+            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-ion-teal focus:border-ion-teal transition-all duration-200"
           >
             <option value="contingent">Contingent Recruitment</option>
             <option value="retained">Executive Search</option>
+            <option value="rpo">RPO / Embedded Solutions</option>
             <option value="consulting">Talent Consulting</option>
             <option value="general">General Inquiry</option>
           </select>
@@ -236,7 +292,7 @@ export function EnhancedContactForm() {
             id="timeline"
             value={formData.timeline}
             onChange={(e) => handleChange("timeline", e.target.value)}
-            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2DD4BF] focus:border-[#2DD4BF] transition-all duration-200"
+            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-ion-teal focus:border-ion-teal transition-all duration-200"
           >
             <option value="asap">ASAP</option>
             <option value="1month">Within 1 month</option>
@@ -259,7 +315,7 @@ export function EnhancedContactForm() {
           className={`border-2 transition-all duration-200 ${
             errors.message
               ? "border-red-300 focus:border-red-500 focus:ring-red-500"
-              : "border-gray-200 focus:border-[#2DD4BF] focus:ring-[#2DD4BF]"
+              : "border-gray-200 focus:border-ion-teal focus:ring-ion-teal"
           }`}
           placeholder="Tell us about your hiring needs, specific roles, team size, industry requirements, or any other details that would help us understand your project better..."
         />
@@ -274,22 +330,33 @@ export function EnhancedContactForm() {
 
       <div className="bg-gray-50 p-4 rounded-lg">
         <p className="text-sm text-[#6a6a6a] leading-relaxed">
-          <strong>What happens next?</strong> I'll personally review your requirements and contact you within 24 hours
-          to discuss your project in detail. All information is kept strictly confidential.
+          <strong>What happens next?</strong> We&apos;ll review your requirements and contact you within 24 hours to
+          discuss your hiring needs. All information is kept strictly confidential.
         </p>
       </div>
+
+      {submitError && (
+        <div
+          className="flex items-start gap-2 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+          role="alert"
+        >
+          <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" aria-hidden="true" />
+          <span>{submitError}</span>
+        </div>
+      )}
 
       <Button
         type="submit"
         disabled={isSubmitting}
+        aria-disabled={isSubmitting}
         size="lg"
-        className="w-full bg-[#2DD4BF] hover:bg-[#14B8A6] text-white font-semibold py-4 rounded-full text-lg shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="ion-primary-button w-full whitespace-normal text-center font-semibold py-4 rounded-full text-lg shadow-lg hover:shadow-xl transition-all duration-300 disabled:cursor-not-allowed disabled:hover:shadow-lg focus-visible:ring-2 focus-visible:ring-ion-teal-hover focus-visible:ring-offset-2"
       >
         {isSubmitting ? (
           <LoadingSpinner />
         ) : (
           <>
-            Send Message
+            Send Hiring Enquiry
             <ArrowRight className="ml-2 h-5 w-5" />
           </>
         )}

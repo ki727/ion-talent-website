@@ -65,6 +65,18 @@ const config = {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        ion: {
+          navy: "rgb(var(--ion-navy) / <alpha-value>)",
+          teal: "rgb(var(--ion-teal) / <alpha-value>)",
+          "teal-hover": "rgb(var(--ion-teal-hover) / <alpha-value>)",
+          "teal-bright": "rgb(var(--ion-teal-bright) / <alpha-value>)",
+          "teal-dark": "rgb(var(--ion-teal-dark) / <alpha-value>)",
+          black: "rgb(var(--ion-black) / <alpha-value>)",
+          white: "rgb(var(--ion-white) / <alpha-value>)",
+          gray: "rgb(var(--ion-gray) / <alpha-value>)",
+          border: "rgb(var(--ion-border) / <alpha-value>)",
+          surface: "rgb(var(--ion-surface) / <alpha-value>)",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

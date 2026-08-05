@@ -2,20 +2,21 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Menu, X, ArrowRight } from "lucide-react"
 
 const NAV_LINKS = [
   { label: "Services", href: "/#services" },
   { label: "Industries", href: "/#industries" },
-  { label: "Opportunities", href: "/opportunities" },
-  { label: "About", href: "/#about" },
+  { label: "About", href: "/about" },
   { label: "Contact", href: "/#contact" },
 ]
 
 export function SiteHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const pathname = usePathname()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12)
@@ -23,6 +24,17 @@ export function SiteHeader() {
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
+
+  // Prevent awkward background scrolling behind the fixed header while the
+  // mobile menu is open.
+  useEffect(() => {
+    if (!mobileMenuOpen) return
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = "hidden"
+    return () => {
+      document.body.style.overflow = previousOverflow
+    }
+  }, [mobileMenuOpen])
 
   return (
     <header
@@ -32,40 +44,57 @@ export function SiteHeader() {
     >
       <div className="container mx-auto px-6 lg:px-12">
         <div className="flex items-center h-20 gap-4">
-          {/* Wordmark — fixed minimum width prevents it from colliding with nav */}
-          <Link href="/" className="flex shrink-0 items-center gap-2.5" aria-label="ION Talent home">
-            <img src="/ion-logo.svg" alt="" aria-hidden="true" className="h-8 w-8 shrink-0" />
-            <img src="/ion-talent-logo.png" alt="ION Talent" className="h-6 w-auto max-w-[120px]" />
+          {/* Official ION Talent wordmark — web-optimised derivative of public/brand/logo-primary-2026-08-04.svg */}
+          <Link href="/" className="flex shrink-0 items-center" aria-label="ION Talent home">
+            <img src="/brand/logo-primary-web.svg" alt="ION Talent" className="h-8 sm:h-9 md:h-10 w-auto" />
           </Link>
 
           {/* Spacer */}
           <div className="flex-1" />
 
           <nav className="hidden lg:flex items-center gap-8" aria-label="Primary">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="whitespace-nowrap text-gray-700 hover:text-gray-900 transition-colors text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#14A8A8] focus-visible:ring-offset-2 rounded-sm"
-              >
-                {link.label}
-              </Link>
-            ))}
+            {NAV_LINKS.map((link) => {
+              const isActive = link.href.startsWith("/") && !link.href.includes("#") && pathname === link.href
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  aria-current={isActive ? "page" : undefined}
+                  data-active={isActive ? "true" : undefined}
+                  className="ion-nav-link whitespace-nowrap text-gray-700 hover:text-gray-900 transition-colors text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2 rounded-sm"
+                >
+                  {link.label}
+                </Link>
+              )
+            })}
           </nav>
 
-          <Button
-            asChild
-            className="hidden lg:inline-flex items-center gap-2 bg-[#14A8A8] hover:bg-[#0F8F8F] text-white text-sm px-5 h-10 rounded-xl shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md shrink-0"
-          >
-            <Link href="/#contact">
-              Get Started
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </Button>
+          <div className="hidden lg:flex items-center gap-3 shrink-0">
+            <Button
+              asChild
+              variant="outline"
+              className="gap-2 text-sm px-5 rounded-xl border-2 border-ion-teal bg-white text-ion-teal-dark shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-teal-50 hover:text-ion-teal-dark hover:shadow-md focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2"
+            >
+              <Link href="/opportunities">
+                Explore Opportunities
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+
+            <Button
+              asChild
+              className="ion-primary-button gap-2 text-sm px-5 rounded-xl shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:ring-2 focus-visible:ring-ion-teal-hover focus-visible:ring-offset-2"
+            >
+              <Link href="/#contact">
+                Hire Talent
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden w-10 h-10 flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#14A8A8] rounded-lg"
+            className="lg:hidden w-11 h-11 flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal rounded-lg"
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileMenuOpen}
           >
@@ -81,19 +110,30 @@ export function SiteHeader() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-gray-700 hover:text-gray-900 transition-colors text-sm font-medium"
+                  className="flex min-h-[44px] w-full items-center text-gray-700 hover:text-gray-900 transition-colors text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2 rounded-sm"
                 >
                   {link.label}
                 </Link>
               ))}
-              <Link
-                href="/#contact"
-                onClick={() => setMobileMenuOpen(false)}
-                className="inline-flex items-center gap-2 bg-[#14A8A8] hover:bg-[#0F8F8F] text-white text-sm px-6 h-11 rounded-xl w-fit"
-              >
-                Get Started
-                <ArrowRight className="h-4 w-4" />
-              </Link>
+
+              <div className="mt-2 flex flex-col gap-3">
+                <Link
+                  href="/opportunities"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl border-2 border-ion-teal bg-white px-6 text-sm font-medium text-ion-teal-dark transition-colors hover:bg-teal-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2"
+                >
+                  Explore Opportunities
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link
+                  href="/#contact"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="ion-primary-button flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl px-6 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal-hover focus-visible:ring-offset-2"
+                >
+                  Hire Talent
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
             </nav>
           </div>
         )}

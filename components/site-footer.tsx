@@ -1,34 +1,48 @@
 import Link from "next/link"
+import { LinkedinFollowLink } from "@/components/linkedin-follow-link"
 
 const FOOTER_LINKS = [
-  { label: "Services", href: "/#services" },
-  { label: "Industries", href: "/#industries" },
   { label: "Opportunities", href: "/opportunities" },
-  { label: "About", href: "/#about" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Hire Talent", href: "/#contact" },
+  { label: "Refer a Hiring Company", href: "/refer" },
   { label: "Privacy", href: "/privacy" },
+  { label: "Terms", href: "/referral-terms" },
 ]
 
 export function SiteFooter() {
   return (
-    <footer className="bg-gray-900 text-white py-16 px-6 border-t border-[#E5E7EB]">
+    <footer className="bg-gray-900 text-white py-16 px-6 border-t border-ion-border">
       <div className="container mx-auto max-w-6xl">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-12">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-8">
           <Link href="/" className="flex items-center" aria-label="ION Talent home">
-            <img src="/ion-talent-logo.png" alt="ION Talent" className="h-8 w-auto brightness-0 invert" />
+            <img src="/brand/logo-white-web.svg" alt="ION Talent" className="h-7 w-auto" />
           </Link>
 
-          <div className="flex flex-col md:flex-row gap-8 text-sm text-gray-400">
+          <nav className="flex flex-col md:flex-row md:flex-wrap gap-6 md:gap-8 text-sm text-gray-400">
             {FOOTER_LINKS.map((link) => (
               <Link key={link.href} href={link.href} className="hover:text-white transition-colors">
                 {link.label}
               </Link>
             ))}
-          </div>
+          </nav>
+        </div>
+
+        <div className="mb-8">
+          <LinkedinFollowLink
+            source="footer"
+            iconClassName="h-5 w-5 text-[#0A66C2]"
+            className="inline-flex h-11 items-center gap-2.5 rounded-lg border border-white/15 px-4 text-sm font-medium text-white transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A66C2] focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
+          />
         </div>
 
         <div className="pt-8 border-t border-gray-800 text-sm text-gray-500">
           <p>&copy; 2026 ION Talent. All rights reserved.</p>
+          <p className="mt-1">
+            Contact:{" "}
+            <a href="mailto:info@iontalentgroup.com" className="hover:text-white transition-colors">
+              info@iontalentgroup.com
+            </a>
+          </p>
         </div>
       </div>
     </footer>
