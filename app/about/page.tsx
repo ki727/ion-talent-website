@@ -133,7 +133,7 @@ export default function AboutPage() {
               <span className="ion-heading-underline mt-2 mb-4" aria-hidden="true" />
               <p className="text-base leading-relaxed text-gray-600">
                 We combine targeted market mapping and live market intelligence with direct outreach to
-                the people most likely to deliver — rather than relying on inbound applications alone.
+                the people most likely to deliver, rather than relying on inbound applications alone.
                 The result is a shortlist built around fit and capability, not just availability.
               </p>
             </FadeIn>

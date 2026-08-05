@@ -121,6 +121,14 @@
   color: #006c65 !important;
 }
 
+/* Statistic values (StatCounter) — same bulletproof rationale as the other
+   .ion-text-* classes: the plain Tailwind `text-ion-teal` utility was losing
+   the cascade to the unlayered `body { color }` base rule, rendering the
+   numbers black instead of teal. */
+.ion-text-teal {
+  color: #0fa3a1 !important;
+}
+
 .ion-dot-teal {
   background-color: #0fa3a1 !important;
 }

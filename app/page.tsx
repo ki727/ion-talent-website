@@ -151,16 +151,16 @@ export default function HomePage() {
       </section>
 
       {/* Proof & Credibility */}
-      <section id="proof" className="scroll-mt-24 py-16 md:py-24 px-6 bg-ion-surface border-t border-gray-100">
+      <section id="proof" className="scroll-mt-[100px] py-16 md:py-24 px-6 bg-ion-surface border-t border-gray-100">
         <div className="container mx-auto max-w-6xl">
           <h2 className="sr-only">Our Track Record</h2>
           <FadeIn className="max-w-3xl mx-auto text-center mb-10">
             <p className="text-lg text-ion-gray leading-relaxed mb-4">
               Specialist recruitment and executive search across the GCC and UK, with international reach.
             </p>
-            <p className="text-lg text-ion-gray leading-relaxed">
-              We specialize in permanent placements across all levels, from graduate roles to C-suite positions,
-              serving clients in technology, finance, engineering, construction, cybersecurity, and consulting
+            <p className="mx-auto max-w-2xl text-lg text-ion-gray leading-relaxed">
+              We specialise in permanent placements across all levels, from graduate roles to C-suite positions,
+              serving clients in technology, finance, engineering, construction, cybersecurity and consulting
               sectors.
             </p>
           </FadeIn>
@@ -169,7 +169,7 @@ export default function HomePage() {
             Experience Across Leading Organisations
           </p>
 
-          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-6 sm:gap-x-12 md:gap-x-16 md:gap-y-10 mb-10">
+          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-6 sm:gap-x-12 md:gap-x-16 md:gap-y-10 mb-10 md:mb-16">
             {[
               { src: "/logos/neom-logo.png", alt: "NEOM" },
               { src: "/logos/pwc-logo.png", alt: "PwC" },
@@ -181,12 +181,12 @@ export default function HomePage() {
                 key={logo.alt}
                 src={logo.src || "/placeholder.svg"}
                 alt={logo.alt}
-                className="h-9 sm:h-8 w-auto object-contain grayscale opacity-60 sm:opacity-50 transition-all duration-300 hover:grayscale-0 hover:opacity-100"
+                className="h-9 sm:h-8 w-auto object-contain grayscale opacity-70 sm:opacity-60 transition-all duration-300 hover:grayscale-0 hover:opacity-100"
               />
             ))}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pt-8 border-t border-ion-border max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pt-8 border-t border-gray-100 max-w-4xl mx-auto">
             <StatCounter end={10} suffix="+" label="Years of Recruitment Experience" startDelay={0} />
             <StatCounter end={500} suffix="+" label="Placements Delivered" startDelay={120} />
             <StatCounter
@@ -204,7 +204,7 @@ export default function HomePage() {
 
       <FeaturedJobs />
 
-      <section id="services" className="ion-section-navy scroll-mt-24 py-16 md:py-24 px-6">
+      <section id="services" className="ion-section-navy scroll-mt-[100px] py-16 md:py-24 px-6">
         <div className="container mx-auto max-w-6xl">
           <FadeIn className="text-center mb-16 md:mb-20">
             <h2 className="text-4xl lg:text-5xl font-bold text-white mb-3 tracking-tight text-balance">
@@ -282,7 +282,7 @@ export default function HomePage() {
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="ion-text-deep-teal mt-1 font-bold">✓</span>
-                      <span>6-month guarantee period</span>
+                      <span>Agreed delivery and replacement terms</span>
                     </li>
                   </ul>
 
@@ -342,9 +342,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="industries" className="scroll-mt-24 py-16 md:py-24 px-6 bg-ion-surface border-t border-gray-100">
+      <section id="industries" className="scroll-mt-[100px] py-16 md:py-24 px-6 bg-ion-surface border-t border-gray-100">
         <div className="container mx-auto max-w-6xl">
-          <FadeIn className="mb-16 md:mb-20">
+          <FadeIn className="mb-10 md:mb-12">
             <h2 className="text-4xl lg:text-5xl font-semibold text-ion-navy mb-3 tracking-tight text-balance">
               Industry Expertise
             </h2>
@@ -441,7 +441,7 @@ export default function HomePage() {
       <HomepageReferralSection />
 
       {/* Employer Enquiry Form */}
-      <section id="contact" className="scroll-mt-24 py-16 md:py-24 px-6 border-t border-ion-border bg-white">
+      <section id="contact" className="scroll-mt-[100px] py-16 md:py-24 px-6 border-t border-ion-border bg-white">
         <div className="container mx-auto max-w-4xl">
           <div className="mb-12">
             <h2 className="text-4xl lg:text-5xl font-semibold text-ion-black mb-4 tracking-tight">

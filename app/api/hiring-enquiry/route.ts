@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
     const serviceInterest =
       typeof data.serviceInterest === "string" && data.serviceInterest.trim()
         ? data.serviceInterest.trim()
-        : "General Inquiry"
+        : "General Enquiry"
     const timeline = typeof data.timeline === "string" ? data.timeline.trim() : undefined
     const phone = typeof data.phone === "string" ? data.phone.trim() : undefined
     const pageUrl = typeof data.pageUrl === "string" ? data.pageUrl.trim() : ""

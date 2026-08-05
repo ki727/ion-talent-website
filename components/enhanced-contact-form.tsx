@@ -36,7 +36,7 @@ const SERVICE_LABELS: Record<string, string> = {
   retained: "Executive Search",
   rpo: "RPO / Embedded Solutions",
   consulting: "Talent Consulting",
-  general: "General Inquiry",
+  general: "General Enquiry",
 }
 
 export function EnhancedContactForm({ initialService }: EnhancedContactFormProps = {}) {
@@ -280,7 +280,7 @@ export function EnhancedContactForm({ initialService }: EnhancedContactFormProps
             <option value="retained">Executive Search</option>
             <option value="rpo">RPO / Embedded Solutions</option>
             <option value="consulting">Talent Consulting</option>
-            <option value="general">General Inquiry</option>
+            <option value="general">General Enquiry</option>
           </select>
         </div>
 

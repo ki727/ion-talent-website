@@ -118,15 +118,17 @@ const FEATURED_ROLES = selectFeaturedRoles()
 
 export function FeaturedJobs() {
   return (
-    <section className="py-16 md:py-24 px-6 bg-white border-t border-ion-border">
+    <section className="pt-16 md:pt-24 pb-10 md:pb-14 px-6 bg-white border-t border-ion-border">
       <div className="container mx-auto max-w-6xl">
         <FadeIn className="mb-16 md:mb-20 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <div>
             <h2 className="text-4xl lg:text-5xl font-semibold text-ion-navy mb-3 tracking-tight text-balance">
-              Featured Roles
+              Featured Opportunities
             </h2>
             <span className="ion-heading-underline mb-4" aria-hidden="true" />
-            <p className="text-lg text-ion-gray">A sample of the opportunities we&apos;re currently recruiting for</p>
+            <p className="text-lg text-ion-gray">
+              A sample of current and upcoming opportunities across the ION Talent Network.
+            </p>
           </div>
           <Link
             href="/opportunities"

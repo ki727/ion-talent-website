@@ -69,7 +69,16 @@ export function StatCounter({
               const start = performance.now()
               const step = (now: number) => {
                 const progress = Math.min((now - start) / duration, 1)
-                const eased = 1 - Math.pow(1 - progress, 3)
+                // Ease-out quad rather than cubic: cubic's steep initial rise
+                // means a low-value counter (e.g. end=3 or end=10) rounds to
+                // its final integer around 45-65% of the way through
+                // `duration`, so it visually "snaps" to the finished number
+                // well before the animation is meant to finish. Quad spreads
+                // that same deceleration further across the full duration
+                // (final value lands around 75-80% through instead), which
+                // reads as smooth motion across the whole ~1400ms for every
+                // counter regardless of how few integer steps it has.
+                const eased = 1 - Math.pow(1 - progress, 2)
                 setCount(Math.round(eased * end))
                 if (progress < 1) requestAnimationFrame(step)
               }
@@ -97,13 +106,13 @@ export function StatCounter({
   return (
     <div ref={ref} className="text-center">
       <div className="inline-flex flex-col items-center">
-        <div className="text-4xl font-semibold text-ion-navy">
+        <div className="ion-text-teal text-4xl font-semibold tabular-nums">
           {count}
-          {suffix && <span className="text-ion-teal">{suffix}</span>}
+          {suffix && <span className="ion-text-teal">{suffix}</span>}
         </div>
         <span className="mt-2 h-0.5 w-8 rounded-full bg-ion-teal" aria-hidden="true" />
       </div>
-      <p className="mt-3 text-sm text-ion-gray">{label}</p>
+      <p className="mt-3 text-sm text-ion-navy">{label}</p>
       {sublabel && <p className="mt-1 text-xs text-ion-gray/80">{sublabel}</p>}
     </div>
   )
