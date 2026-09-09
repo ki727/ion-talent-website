@@ -16,6 +16,7 @@ export type OpportunityFunction =
   | "Cloud and Infrastructure"
   | "Data and AI"
   | "Enterprise Technology"
+  | "Technology"
   | "Technology Sales"
   | "Project and Programme Management"
   | "Engineering and Operations"
@@ -59,6 +60,7 @@ export const FUNCTIONS: OpportunityFunction[] = [
   "Cloud and Infrastructure",
   "Data and AI",
   "Enterprise Technology",
+  "Technology",
   "Technology Sales",
   "Project and Programme Management",
   "Engineering and Operations",
@@ -1006,6 +1008,49 @@ export const opportunities: Opportunity[] = [
     ],
     packageNotes:
       "Packages reflect regulatory expertise premium in the GCC financial services market.",
+  },
+
+  // ── Technology ────────────────────────────────────────────────────────────
+  {
+    id: "chief-information-officer-dubai",
+    slug: "chief-information-officer-dubai",
+    title: "CIO / Chief Information Officer",
+    status: "Talent Network",
+    function: "Technology",
+    sector: "Technology",
+    locationLabel: "Dubai",
+    employmentLabel: "Permanent · Executive Search",
+    employmentTypes: ["Permanent", "Executive Search"],
+    seniority: "C-Suite / Executive",
+    salaryRange: "Competitive executive package",
+    description:
+      "Senior technology leadership opportunity for an experienced CIO to lead enterprise transformation, digital strategy and technology modernisation for a large, established organisation in Dubai.",
+    overview:
+      "ION Talent is supporting a large, established local conglomerate in Dubai with the appointment of a Chief Information Officer. The CIO will lead the organisation's enterprise technology strategy and transformation agenda across a complex, diversified operating environment. The mandate will cover enterprise applications, cloud and infrastructure, cybersecurity, data and AI, architecture and technology operations, with responsibility for ensuring technology investment supports business growth, operational resilience and long-term transformation. The successful candidate will work closely with the executive leadership team and lead technology strategy across multiple business units.",
+    responsibilities: [
+      "Define and execute enterprise technology and digital strategy aligned with wider business objectives",
+      "Advise the CEO, board and executive leadership team on technology investment, transformation and risk",
+      "Lead large-scale technology transformation, modernisation and enterprise architecture programmes",
+      "Oversee enterprise applications, cloud, infrastructure, cybersecurity, data, AI and technology operations",
+      "Lead ERP and core platform transformation across environments such as SAP, Oracle and Microsoft",
+      "Establish strong technology governance, cybersecurity, resilience and business continuity frameworks",
+      "Manage strategic technology vendors, outsourced partners and significant technology budgets",
+      "Build and develop high-performing technology leadership teams across multiple functions and geographies",
+    ],
+    requirements: [
+      "Minimum 15 years of progressive technology leadership experience within large or complex organisations",
+      "At least 5 years operating as a CIO, CTO, Group Technology Director or equivalent senior technology executive",
+      "Proven experience delivering large-scale digital transformation and enterprise technology programmes",
+      "Strong leadership experience across cloud, infrastructure, enterprise applications, cybersecurity, data and architecture",
+      "Experience overseeing major enterprise platforms such as SAP and/or Oracle and cloud environments such as Microsoft Azure and/or AWS",
+      "Strong understanding of enterprise data platforms, analytics, AI, automation and modern technology operating models",
+      "Experience managing significant technology budgets, major vendors, transformation portfolios and multidisciplinary technology teams",
+      "Bachelor's degree in Computer Science, Information Technology, Engineering, Business or a related discipline; MBA or relevant postgraduate qualification advantageous",
+      "Relevant exposure to frameworks/certifications such as TOGAF, ITIL, CISSP, CISM or major cloud certifications would be beneficial",
+      "GCC or MENA experience highly preferred, although strong international candidates may also be considered",
+    ],
+    packageNotes:
+      "Compensation and benefits will be discussed with shortlisted candidates and aligned with experience, scope of mandate and market benchmarks.",
   },
 ]
 
