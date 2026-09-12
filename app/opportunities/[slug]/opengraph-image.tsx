@@ -27,7 +27,7 @@ export default async function Image() {
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={logoSrc} alt="ION Talent" width="800" height="164" style={{ objectFit: "contain" }} />
+        <img src={logoSrc} alt="ION Talent" width="960" height="197" style={{ objectFit: "contain" }} />
       </div>
     ),
     { ...size },
