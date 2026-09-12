@@ -1,35 +1,46 @@
 import { ImageResponse } from "next/og"
-import { opportunities, isShareable } from "@/lib/opportunities"
+import { opportunities, type Opportunity } from "@/lib/opportunities"
 
 export const runtime = "edge"
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
+export const alt = "ION Talent opportunity"
 
 const NAVY = "#0F172A"
 const TEAL = "#0FA3A1"
-const TEAL_BRIGHT = "#22C6B3"
 
 interface Props {
   params: { slug: string }
 }
 
-export async function generateImageMetadata({ params }: Props) {
-  const opportunity = opportunities.find((o) => o.slug === params.slug)
-  const alt = opportunity && isShareable(opportunity)
-    ? `${opportunity.title} — ${opportunity.locationLabel} — ION Talent`
-    : "Join the ION Talent Network — Specialist and leadership opportunities across the GCC and UK"
-  return [{ id: "role", size, contentType, alt }]
+function getSocialTitle(title: string) {
+  return title.split(" / ").at(-1) ?? title
 }
 
-/**
- * Role-detail social preview. Network/pipeline roles (every current role)
- * always render the generic network image — never the role title — so a
- * shared link can never look like a confirmed vacancy. Only a genuine
- * live + shareable role gets a role-specific image.
- */
-export default function Image({ params }: Props) {
-  const opportunity = opportunities.find((o) => o.slug === params.slug)
-  const shareable = opportunity ? isShareable(opportunity) : false
+function getEmploymentType(opportunity: Opportunity) {
+  return opportunity.employmentTypes
+    .filter((type) => type !== "Executive Search")
+    .join(" · ")
+}
+
+/** Minimal role thumbnail shared by every opportunity detail route. */
+export default async function Image({ params }: Props) {
+  const opportunity = opportunities.find((item) => item.slug === params.slug)
+  const title = opportunity ? getSocialTitle(opportunity.title) : "Opportunity"
+  const location = opportunity?.locationLabel ?? "International"
+  const employmentType = opportunity ? getEmploymentType(opportunity) : ""
+  const logoSvg = await fetch(
+    new URL("../../../public/brand/logo-primary-web.svg", import.meta.url),
+  ).then((response) => response.text())
+  const logoBytes = new TextEncoder().encode(logoSvg)
+  const logoBase64 = btoa(Array.from(logoBytes, (byte) => String.fromCharCode(byte)).join(""))
+  const logoSrc = `data:image/svg+xml;base64,${logoBase64}`
+  const fontData = await fetch(
+    new URL(
+      "../../../node_modules/next/dist/compiled/@vercel/og/noto-sans-v27-latin-regular.ttf",
+      import.meta.url,
+    ),
+  ).then((response) => response.arrayBuffer())
 
   return new ImageResponse(
     (
@@ -41,38 +52,51 @@ export default function Image({ params }: Props) {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: NAVY,
-          padding: "0 80px",
+          backgroundColor: "#FFFFFF",
+          color: NAVY,
+          padding: "70px 80px",
           textAlign: "center",
+          fontFamily: "ION Sans",
         }}
       >
-        {shareable && opportunity ? (
-          <>
-            <div style={{ display: "flex", fontSize: 28, fontWeight: 600, color: TEAL_BRIGHT, letterSpacing: 2, textTransform: "uppercase" }}>
-              Live Vacancy
-            </div>
-            <div style={{ display: "flex", marginTop: 24, fontSize: 56, fontWeight: 700, color: "#FFFFFF", lineHeight: 1.2 }}>
-              {opportunity.title}
-            </div>
-            <div style={{ display: "flex", marginTop: 20, fontSize: 32, color: TEAL }}>{opportunity.locationLabel}</div>
-            <div style={{ display: "flex", marginTop: 32, fontSize: 26, color: "#E5E7EB" }}>ION Talent</div>
-          </>
-        ) : (
-          <>
-            <div style={{ display: "flex", alignItems: "baseline", fontSize: 72, fontWeight: 700 }}>
-              <span style={{ color: "#FFFFFF" }}>ION</span>
-              <span style={{ color: TEAL, marginLeft: 16 }}>Talent</span>
-            </div>
-            <div style={{ display: "flex", marginTop: 28, fontSize: 44, fontWeight: 700, color: "#FFFFFF" }}>
-              Join the ION Talent Network
-            </div>
-            <div style={{ display: "flex", marginTop: 20, fontSize: 28, color: "#E5E7EB", maxWidth: 800 }}>
-              Specialist and leadership opportunities across the GCC and UK, with international reach
-            </div>
-          </>
-        )}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={logoSrc} alt="ION Talent" width="500" height="103" style={{ objectFit: "contain" }} />
+
+        <div
+          style={{
+            display: "flex",
+            maxWidth: 1040,
+            marginTop: 52,
+            fontSize: title.length > 38 ? 56 : 64,
+            fontWeight: 600,
+            lineHeight: 1.08,
+            letterSpacing: -1.5,
+          }}
+        >
+          {title}
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            marginTop: 24,
+            color: "#475569",
+            fontSize: 30,
+            fontWeight: 400,
+          }}
+        >
+          <span style={{ color: TEAL }}>{location}</span>
+          {employmentType && <span style={{ margin: "0 14px", color: "#94A3B8" }}>|</span>}
+          {employmentType && <span>{employmentType}</span>}
+        </div>
       </div>
     ),
-    { ...size },
+    {
+      ...size,
+      fonts: [
+        { name: "ION Sans", data: fontData, weight: 400 },
+        { name: "ION Sans", data: fontData, weight: 600 },
+      ],
+    },
   )
 }

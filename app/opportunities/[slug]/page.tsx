@@ -10,7 +10,6 @@ import { RoleShareControls } from "@/components/role-share-controls"
 import { opportunities, isLiveVacancy, isShareable, getRoleTypeLabel, getApplyCtaLabel } from "@/lib/opportunities"
 import { SITE_URL } from "@/lib/site-config"
 
-const NETWORK_OG_TITLE = "Join the ION Talent Network | ION Talent"
 const NETWORK_OG_DESCRIPTION =
   "Specialist and leadership opportunities across the GCC and UK, with international reach."
 
@@ -22,6 +21,10 @@ function getOpportunity(slug: string) {
   return opportunities.find((o) => o.slug === slug)
 }
 
+function getSocialRoleTitle(title: string) {
+  return title.split(" / ").at(-1) ?? title
+}
+
 export function generateMetadata({ params }: RolePageProps): Metadata {
   const opportunity = getOpportunity(params.slug)
   if (!opportunity) {
@@ -30,6 +33,7 @@ export function generateMetadata({ params }: RolePageProps): Metadata {
 
   const pageTitle = `${opportunity.title} | ION Talent`
   const canonical = `${SITE_URL}/opportunities/${opportunity.slug}`
+  const socialTitle = `${getSocialRoleTitle(opportunity.title)} – ${opportunity.locationLabel} | ION Talent`
 
   // Network/pipeline roles must never look like a confirmed vacancy when
   // shared or previewed on social platforms — only a genuine, explicitly
@@ -40,7 +44,7 @@ export function generateMetadata({ params }: RolePageProps): Metadata {
       description: NETWORK_OG_DESCRIPTION,
       alternates: { canonical },
       openGraph: {
-        title: NETWORK_OG_TITLE,
+        title: socialTitle,
         description: NETWORK_OG_DESCRIPTION,
         type: "website",
         url: canonical,
@@ -48,19 +52,18 @@ export function generateMetadata({ params }: RolePageProps): Metadata {
       },
       twitter: {
         card: "summary_large_image",
-        title: NETWORK_OG_TITLE,
+        title: socialTitle,
         description: NETWORK_OG_DESCRIPTION,
       },
     }
   }
 
-  const ogTitle = `${opportunity.title} | ${opportunity.locationLabel} | ION Talent`
   return {
     title: pageTitle,
     description: opportunity.description,
     alternates: { canonical },
     openGraph: {
-      title: ogTitle,
+      title: socialTitle,
       description: opportunity.description,
       type: "website",
       url: canonical,
@@ -68,7 +71,7 @@ export function generateMetadata({ params }: RolePageProps): Metadata {
     },
     twitter: {
       card: "summary_large_image",
-      title: ogTitle,
+      title: socialTitle,
       description: opportunity.description,
     },
   }
