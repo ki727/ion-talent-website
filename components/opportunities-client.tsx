@@ -127,7 +127,10 @@ export function OpportunitiesClient() {
   return (
     <>
       {/* ── Filters ── */}
-      <section aria-label="Opportunity filters" className="mb-6">
+      <section
+        aria-label="Opportunity filters"
+        className="mb-8 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm md:p-6"
+      >
         <div className="mb-4">
           <label htmlFor="filter-search" className="mb-1.5 block text-sm font-medium text-gray-900">
             Search
@@ -299,7 +302,7 @@ export function OpportunitiesClient() {
       >
         <div className="mx-auto max-w-3xl">
           <div className="mb-8 text-center">
-            <h2 id="register-heading" className="text-3xl font-bold text-gray-900 text-balance">
+            <h2 id="register-heading" className="font-display text-3xl font-bold text-gray-900 text-balance">
               Register Your Interest
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-gray-600 leading-relaxed">
@@ -307,7 +310,10 @@ export function OpportunitiesClient() {
               opportunities.
             </p>
           </div>
-          <CandidateRegistrationForm selectedRole={selectedRole} />
+          <div className="relative overflow-hidden rounded-[20px] border border-gray-200 bg-white p-6 shadow-md sm:p-8">
+            <div className="ion-gradient-rule absolute top-0 left-0 right-0 opacity-70" aria-hidden="true" />
+            <CandidateRegistrationForm selectedRole={selectedRole} />
+          </div>
         </div>
       </section>
     </>

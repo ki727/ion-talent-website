@@ -140,27 +140,18 @@ export function FeaturedJobs() {
         </FadeIn>
 
         <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {FEATURED_ROLES.map((role, i) => {
-            // Restrained, position-based lilac cue (not tied to role content)
-            // so exactly one of the six featured cards carries the secondary
-            // accent — a recurring thread rather than a one-off.
-            const isAccentCard = i === 2
-            return (
+          {FEATURED_ROLES.map((role, i) => (
             <FadeIn key={role.id} delay={(i % 3) * 100}>
               <Link
                 href={`/opportunities/${role.slug}`}
                 aria-label={`${role.title} — view role details`}
-                className={`${isAccentCard ? "ion-card-top-3-violet" : "ion-card-top-3"} group flex h-full flex-col rounded-2xl p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2`}
+                className="ion-card-hairline group relative flex h-full flex-col overflow-hidden rounded-2xl p-6 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2"
               >
-                <span
-                  className={`${isAccentCard ? "ion-badge-violet" : "ion-badge-teal"} mb-3 inline-block w-fit rounded-full px-2.5 py-0.5 text-xs font-semibold`}
-                >
+                <span className="ion-badge-teal mb-3 inline-block w-fit rounded-full px-2.5 py-0.5 text-xs font-semibold">
                   {getRoleTypeLabel(role)}
                 </span>
-                <h3 className="text-base font-semibold text-ion-navy leading-snug mb-1">{role.title}</h3>
-                <p className={`${isAccentCard ? "ion-text-deep-violet" : "ion-text-deep-teal"} text-xs font-medium mb-4`}>
-                  {role.sector}
-                </p>
+                <h3 className="text-base font-bold text-ion-navy leading-snug mb-1.5">{role.title}</h3>
+                <p className="ion-card-eyebrow mb-3">{role.sector}</p>
                 <dl className="flex flex-col gap-1.5 text-sm text-gray-600">
                   <div className="flex items-center gap-1.5">
                     <MapPin className="h-3.5 w-3.5 shrink-0 text-gray-400" aria-hidden="true" />
@@ -175,8 +166,7 @@ export function FeaturedJobs() {
                 </dl>
               </Link>
             </FadeIn>
-            )
-          })}
+          ))}
         </div>
       </div>
     </section>

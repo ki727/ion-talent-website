@@ -73,7 +73,7 @@ export function SiteHeader() {
             <Button
               asChild
               variant="outline"
-              className="gap-2 text-sm px-5 rounded-xl border-2 border-ion-teal bg-white text-ion-teal-dark shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-teal-50 hover:text-ion-teal-dark hover:shadow-md focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2"
+              className="ion-outline-button gap-2 text-sm px-5 rounded-xl shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2"
             >
               <Link href="/opportunities">
                 Explore Opportunities
@@ -120,7 +120,7 @@ export function SiteHeader() {
                 <Link
                   href="/opportunities"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl border-2 border-ion-teal bg-white px-6 text-sm font-medium text-ion-teal-dark transition-colors hover:bg-teal-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2"
+                  className="ion-outline-button flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl px-6 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2"
                 >
                   Explore Opportunities
                   <ArrowRight className="h-4 w-4" />

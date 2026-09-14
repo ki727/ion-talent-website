@@ -304,30 +304,75 @@
   border-bottom: 2px solid rgba(102, 87, 232, 0.55);
 }
 
-/* Second-pass distribution of the lilac thread: a violet counterpart to
-   .ion-card-top-3 / .ion-badge-teal / .ion-text-deep-teal, used on exactly
-   one card in the Featured Opportunities grid (by position, not content) so
-   lilac reads as a recurring part of the system rather than a one-off. */
-.ion-card-top-3-violet {
+/*
+ * Third-pass correction: the second pass gave one Featured Opportunity card
+ * a violet accent purely by grid position, which read as an arbitrary
+ * "special job" rather than a brand cue. Replaced with one coherent card
+ * system, shared by the Featured Opportunities grid and the Opportunities
+ * index cards, so lilac reads as a structural part of every card (a hairline
+ * that leans teal→lilac) rather than a one-off highlight on a single item.
+ * Needs `position:relative; overflow:hidden` on the card element itself so
+ * the top hairline clips to its rounded corners.
+ */
+.ion-card-hairline {
+  position: relative;
   background-color: #ffffff;
   border: 1px solid #e5e7eb;
-  border-top-width: 3px;
-  border-top-color: #6657e8 !important;
 }
 
-.ion-card-top-3-violet:hover {
-  background-color: #f1f5f9;
-  border-top-color: #5645c4 !important;
+.ion-card-hairline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #0fa3a1 0%, #0fa3a1 62%, #6657e8 100%);
+  opacity: 0.75;
+  transition: opacity 0.2s ease;
 }
 
-.ion-badge-violet {
-  background-color: #6657e8 !important;
-  color: #ffffff !important;
-  border: 1px solid #6657e8 !important;
+.ion-card-hairline:hover {
+  border-color: #cbd5e1;
 }
 
-.ion-text-deep-violet {
-  color: #5645c4 !important;
+.ion-card-hairline:hover::before {
+  opacity: 1;
+}
+
+/* Reusable micro-label (the salary guide's "eyebrow") for a role's
+   sector/discipline on a card — set apart from the title and from the plain
+   grey meta/body text beneath it, sharpening the title -> discipline ->
+   meta hierarchy on both card grids. */
+.ion-card-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #006c65;
+}
+
+/* Softened outline button for the site header's secondary nav CTA — a
+   lighter single hairline with a faint teal wash instead of a hard 2px
+   outline, so it reads as a restrained secondary action rather than a
+   harsh cut-out box. */
+.ion-outline-button {
+  background-color: rgba(15, 163, 161, 0.04);
+  border: 1px solid rgba(15, 163, 161, 0.45) !important;
+  color: #006c65 !important;
+}
+
+.ion-outline-button:hover {
+  background-color: rgba(15, 163, 161, 0.1);
+  border-color: rgba(15, 163, 161, 0.7) !important;
+}
+
+/* Tapered variant of .ion-gradient-rule — fades out at both ends instead of
+   running edge-to-edge, so it reads as a deliberate signature mark at a
+   section seam rather than a decorative stripe. */
+.ion-gradient-rule--fade {
+  mask-image: linear-gradient(90deg, transparent 0%, black 15%, black 85%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 15%, black 85%, transparent 100%);
 }
 
 /* Gradient top accent for the third "How We Work" card — the same signature

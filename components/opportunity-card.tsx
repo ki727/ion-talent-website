@@ -15,15 +15,15 @@ const STATUS_STYLES: Record<OpportunityStatus, string> = {
 /** Compact, LinkedIn-style role preview. Links straight to the dedicated role page. */
 export function OpportunityCard({ opportunity }: OpportunityCardProps) {
   return (
-    <article className="ion-card-top-2 ion-card-enter flex flex-col rounded-2xl p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md motion-reduce:hover:translate-y-0">
+    <article className="ion-card-hairline ion-card-enter relative flex flex-col overflow-hidden rounded-2xl p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md motion-reduce:hover:translate-y-0">
       <span
         className={`mb-2 inline-block w-fit rounded-full px-2.5 py-0.5 text-xs font-medium ${STATUS_STYLES[opportunity.status]}`}
       >
         {getRoleTypeLabel(opportunity)}
       </span>
 
-      <h3 className="mb-1 text-base font-semibold leading-snug text-pretty text-gray-900">{opportunity.title}</h3>
-      <p className="mb-2 text-xs font-medium text-ion-teal-dark">{opportunity.sector}</p>
+      <h3 className="mb-1 text-base font-bold leading-snug text-pretty text-gray-900">{opportunity.title}</h3>
+      <p className="ion-card-eyebrow mb-2">{opportunity.sector}</p>
 
       <dl className="mb-2 flex flex-col gap-1 text-sm text-gray-600">
         <div className="flex items-center gap-1.5">

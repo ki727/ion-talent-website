@@ -151,7 +151,10 @@ export default function HomePage() {
 
         {/* Restrained signature transition into the section below — the same
             teal → lilac accent used as the salary guide's page spine. */}
-        <div className="ion-gradient-rule absolute bottom-0 left-0 right-0 z-10 w-full opacity-90" aria-hidden="true" />
+        <div
+          className="ion-gradient-rule ion-gradient-rule--fade absolute bottom-0 left-0 right-0 z-10 w-full opacity-90"
+          aria-hidden="true"
+        />
       </section>
 
       {/* Proof & Credibility */}
@@ -462,7 +465,10 @@ export default function HomePage() {
       <HomepageReferralSection />
 
       {/* Employer Enquiry Form */}
-      <section id="contact" className="scroll-mt-[100px] py-16 md:py-24 px-6 border-t border-ion-border bg-white">
+      <section
+        id="contact"
+        className="ion-surface-tonal scroll-mt-[100px] py-16 md:py-24 px-6 border-t border-ion-border"
+      >
         <div className="container mx-auto max-w-4xl">
           <div className="mb-12">
             <h2 className="font-display text-4xl lg:text-5xl font-semibold text-ion-black mb-4 tracking-tight">
@@ -471,7 +477,7 @@ export default function HomePage() {
             <p className="text-lg text-ion-gray">Ready to transform your hiring? Let&apos;s talk.</p>
           </div>
 
-          <div className="relative overflow-hidden rounded-[20px] border border-gray-200 bg-white p-6 shadow-sm sm:p-8 md:p-10">
+          <div className="relative overflow-hidden rounded-[20px] border border-gray-200 bg-white p-6 shadow-md sm:p-8 md:p-10">
             <div className="ion-gradient-rule absolute top-0 left-0 right-0 opacity-70" aria-hidden="true" />
             <EnhancedContactForm initialService={selectedService} />
           </div>

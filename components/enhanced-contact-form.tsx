@@ -328,10 +328,10 @@ export function EnhancedContactForm({ initialService }: EnhancedContactFormProps
         <div className="text-right text-sm text-gray-500 mt-1">{formData.message.length}/500</div>
       </div>
 
-      <div className="bg-gray-50 p-4 rounded-lg">
-        <p className="text-sm text-[#6a6a6a] leading-relaxed">
-          <strong>What happens next?</strong> We&apos;ll review your requirements and contact you within 24 hours to
-          discuss your hiring needs. All information is kept strictly confidential.
+      <div className="rounded-lg border border-ion-teal/15 bg-ion-teal/5 p-4">
+        <p className="text-sm leading-relaxed text-[#3f4b5a]">
+          <strong className="text-ion-navy">What happens next?</strong> We&apos;ll review your requirements and
+          contact you within 24 hours to discuss your hiring needs. All information is kept strictly confidential.
         </p>
       </div>
 

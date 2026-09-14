@@ -92,8 +92,10 @@ export default function RolePage({ params }: RolePageProps) {
       <SiteHeader />
 
       <main className="ion-page-enter pt-20">
-        {/* Header: identity, quick facts, primary CTA — all near the top */}
-        <section className="border-b border-gray-100 bg-gray-50/60 px-6 py-8 md:py-10 lg:px-12">
+        {/* Header: identity, quick facts, primary CTA — grouped into one
+            coherent editorial surface near the top */}
+        <section className="relative overflow-hidden border-b border-gray-100 bg-white px-6 py-8 md:py-10 lg:px-12">
+          <div className="ion-gradient-rule absolute top-0 left-0 right-0 opacity-60" aria-hidden="true" />
           <div className="container mx-auto max-w-3xl">
             <Link
               href="/opportunities"
@@ -103,42 +105,45 @@ export default function RolePage({ params }: RolePageProps) {
               All opportunities
             </Link>
 
-            <p className="mt-5 text-xs font-semibold uppercase tracking-[0.2em] text-ion-teal-dark">
-              {opportunity.sector}
-            </p>
-            <h1 className="mt-2 text-3xl font-bold text-gray-900 md:text-4xl text-balance">{opportunity.title}</h1>
+            <p className="ion-card-eyebrow mt-5">{opportunity.sector}</p>
+            <h1 className="font-display mt-2 text-3xl font-bold text-gray-900 md:text-4xl text-balance">
+              {opportunity.title}
+            </h1>
+            <span className="ion-heading-underline ion-heading-underline--gradient mt-3" aria-hidden="true" />
 
-            <dl className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm text-gray-600">
-              <div className="flex items-center gap-1.5">
-                <MapPin className="h-4 w-4 text-gray-400" aria-hidden="true" />
-                <dt className="sr-only">Location</dt>
-                <dd>{opportunity.locationLabel}</dd>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <Briefcase className="h-4 w-4 text-gray-400" aria-hidden="true" />
-                <dt className="sr-only">Employment type</dt>
-                <dd>{opportunity.employmentLabel}</dd>
-              </div>
-              {opportunity.seniority && (
+            <div className="mt-6 rounded-2xl border border-gray-200 bg-ion-surface p-5 md:p-6">
+              <dl className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-gray-600">
                 <div className="flex items-center gap-1.5">
-                  <TrendingUp className="h-4 w-4 text-gray-400" aria-hidden="true" />
-                  <dt className="sr-only">Seniority</dt>
-                  <dd>{opportunity.seniority}</dd>
+                  <MapPin className="h-4 w-4 text-gray-400" aria-hidden="true" />
+                  <dt className="sr-only">Location</dt>
+                  <dd>{opportunity.locationLabel}</dd>
                 </div>
-              )}
-            </dl>
+                <div className="flex items-center gap-1.5">
+                  <Briefcase className="h-4 w-4 text-gray-400" aria-hidden="true" />
+                  <dt className="sr-only">Employment type</dt>
+                  <dd>{opportunity.employmentLabel}</dd>
+                </div>
+                {opportunity.seniority && (
+                  <div className="flex items-center gap-1.5">
+                    <TrendingUp className="h-4 w-4 text-gray-400" aria-hidden="true" />
+                    <dt className="sr-only">Seniority</dt>
+                    <dd>{opportunity.seniority}</dd>
+                  </div>
+                )}
+              </dl>
 
-            <a
-              id="top-apply-cta"
-              href="#apply"
-              className="ion-primary-button mt-8 inline-flex h-12 w-full sm:w-auto items-center justify-center gap-2 rounded-xl px-8 text-sm font-medium shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal-hover focus-visible:ring-offset-2"
-            >
-              {ctaLabel}
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </a>
+              <a
+                id="top-apply-cta"
+                href="#apply"
+                className="ion-primary-button mt-5 inline-flex h-12 w-full sm:w-auto items-center justify-center gap-2 rounded-xl px-8 text-sm font-medium shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal-hover focus-visible:ring-offset-2"
+              >
+                {ctaLabel}
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </a>
 
-            {/* Only a genuine, explicitly shareable live vacancy gets public share controls. */}
-            {isShareable(opportunity) && <RoleShareControls roleUrl={roleUrl} />}
+              {/* Only a genuine, explicitly shareable live vacancy gets public share controls. */}
+              {isShareable(opportunity) && <RoleShareControls roleUrl={roleUrl} />}
+            </div>
           </div>
         </section>
 
@@ -185,16 +190,19 @@ export default function RolePage({ params }: RolePageProps) {
           />
         )}
 
-        {/* Body: overview, responsibilities, requirements — no repeated metadata */}
-        <section className="px-6 pt-8 pb-6 md:pt-10 md:pb-8 lg:px-12">
-          <div className="container mx-auto max-w-3xl space-y-8">
+        {/* Body: overview, responsibilities, requirements — no repeated
+            metadata. Each section gets its own label colour and a hairline
+            divider above it (from the second section on) so the copy reads
+            as distinct blocks rather than one continuous stretch of text. */}
+        <section className="px-6 pt-10 pb-6 md:pt-12 md:pb-8 lg:px-12">
+          <div className="container mx-auto max-w-3xl space-y-10">
             <section>
-              <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-gray-900">Overview</h2>
+              <h2 className="ion-card-eyebrow mb-3">Overview</h2>
               <p className="text-base leading-relaxed text-gray-600">{opportunity.overview}</p>
             </section>
 
-            <section>
-              <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-gray-900">Responsibilities</h2>
+            <section className="border-t border-gray-100 pt-10">
+              <h2 className="ion-card-eyebrow mb-3">Responsibilities</h2>
               <ul className="space-y-2">
                 {opportunity.responsibilities.map((item, i) => (
                   <li key={i} className="flex items-start gap-2.5 text-base text-gray-600">
@@ -205,12 +213,12 @@ export default function RolePage({ params }: RolePageProps) {
               </ul>
             </section>
 
-            <section>
-              <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-gray-900">Requirements</h2>
+            <section className="border-t border-gray-100 pt-10">
+              <h2 className="ion-card-eyebrow mb-3">Requirements</h2>
               <ul className="space-y-2">
                 {opportunity.requirements.map((item, i) => (
                   <li key={i} className="flex items-start gap-2.5 text-base text-gray-600">
-                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-ion-teal" aria-hidden="true" />
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-ion-violet" aria-hidden="true" />
                     {item}
                   </li>
                 ))}
@@ -219,24 +227,33 @@ export default function RolePage({ params }: RolePageProps) {
           </div>
         </section>
 
-        {/* Application form — the one working candidate flow for this role */}
-        <section id="apply" className="scroll-mt-28 border-t border-gray-100 bg-gray-50/60 px-6 pt-6 pb-12 md:pt-8 md:pb-14 lg:px-12">
+        {/* Application form — the one working candidate flow for this role.
+            A distinct tinted section + elevated white card mark this out as
+            the conversion zone, clearly separated from the job description
+            above. */}
+        <section
+          id="apply"
+          className="ion-surface-tonal scroll-mt-28 border-t border-gray-100 px-6 pt-10 pb-12 md:pt-12 md:pb-14 lg:px-12"
+        >
           <div className="container mx-auto max-w-3xl">
             <div className="mb-6 text-center">
-              <h2 className="text-2xl font-bold text-gray-900 text-balance md:text-3xl">
+              <h2 className="font-display text-2xl font-bold text-gray-900 text-balance md:text-3xl">
                 {ctaLabel} for {opportunity.title}
               </h2>
               <p className="mx-auto mt-3 max-w-xl text-gray-600 leading-relaxed">
                 Share your details and CV — ION Talent will review your application and be in touch.
               </p>
             </div>
-            <RoleApplicationForm
-              roleTitle={opportunity.title}
-              roleUrl={roleUrl}
-              roleCategory={opportunity.sector}
-              roleLocation={opportunity.locationLabel}
-              roleType={roleType}
-            />
+            <div className="relative overflow-hidden rounded-[20px] border border-gray-200 bg-white p-6 shadow-md sm:p-8">
+              <div className="ion-gradient-rule absolute top-0 left-0 right-0 opacity-70" aria-hidden="true" />
+              <RoleApplicationForm
+                roleTitle={opportunity.title}
+                roleUrl={roleUrl}
+                roleCategory={opportunity.sector}
+                roleLocation={opportunity.locationLabel}
+                roleType={roleType}
+              />
+            </div>
           </div>
         </section>
       </main>
