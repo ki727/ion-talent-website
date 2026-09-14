@@ -395,6 +395,45 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Salary Guide — single homepage entry point to the gated resource */}
+      <section className="py-16 md:py-20 px-6 bg-white border-t border-gray-100">
+        <div className="container mx-auto max-w-6xl">
+          <FadeIn>
+            <div className="ion-card-hairline relative overflow-hidden rounded-[20px] p-8 shadow-sm transition-all duration-300 hover:shadow-md md:p-10">
+              <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-[auto_1fr_auto]">
+                <img
+                  src="/resources/salary-guide-cover.webp"
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  width={800}
+                  height={1130}
+                  className="mx-auto hidden w-28 rounded-lg shadow-md ring-1 ring-black/5 sm:block md:w-32"
+                />
+                <div>
+                  <p className="ion-card-eyebrow mb-2">2026 Salary &amp; Hiring Guide</p>
+                  <h2 className="font-display text-2xl font-bold text-ion-navy mb-2 text-balance md:text-3xl">
+                    UAE &amp; Saudi Arabia Salary &amp; Hiring Guide 2026
+                  </h2>
+                  <p className="text-ion-gray leading-relaxed max-w-xl">
+                    Explore salary benchmarks and hiring insight across key specialist and leadership functions.
+                  </p>
+                </div>
+                <Button
+                  asChild
+                  className="ion-primary-button gap-2 h-12 px-8 rounded-xl shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:ring-2 focus-visible:ring-ion-teal-hover focus-visible:ring-offset-2 shrink-0 w-full md:w-auto"
+                >
+                  <Link href="/salary-guide">
+                    Get the Guide
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* Why ION Talent */}
       <section id="approach" className="py-16 md:py-24 px-6 bg-ion-surface border-t border-gray-100">
         <div className="container mx-auto max-w-6xl">

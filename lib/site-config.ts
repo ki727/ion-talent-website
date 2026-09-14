@@ -20,3 +20,11 @@ export const CALENDLY_URL = "https://calendly.com/ki-iontalentgroup/ion-talent-s
 /** Fixed referral-reward messaging, reused verbatim across the homepage section, the referral page and sharing actions. */
 export const REFERRAL_REWARD_MESSAGE =
   "Know a company that's hiring? ION Talent offers referral rewards of up to US$5,000 when a genuine introduction becomes a new client and leads to a successful placement."
+
+/** Gated salary guide landing page. */
+export const SALARY_GUIDE_PAGE_PATH = "/salary-guide"
+export const SALARY_GUIDE_PAGE_URL = `${SITE_URL}${SALARY_GUIDE_PAGE_PATH}`
+
+/** Public, static PDF asset — served directly, never proxied through an API route. */
+export const SALARY_GUIDE_PDF_PATH = "/resources/ion-talent-uae-saudi-salary-hiring-guide-2026.pdf"
+export const SALARY_GUIDE_PDF_URL = `${SITE_URL}${SALARY_GUIDE_PDF_PATH}`

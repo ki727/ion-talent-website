@@ -21,6 +21,9 @@ export type AnalyticsEvent =
   | "role_copy_link"
   | "candidate_application_success"
   | "hiring_enquiry_success"
+  | "salary_guide_submit_success"
+  | "salary_guide_submit_error"
+  | "salary_guide_download_click"
 
 /**
  * Only safe, non-identifying primitives — page, action, roleType and similar.

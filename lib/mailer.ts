@@ -1,9 +1,11 @@
 import nodemailer from "nodemailer"
+import { SALARY_GUIDE_PDF_URL } from "@/lib/site-config"
 
 /**
- * SMTP transport for the two live submission flows: employer hiring enquiries
- * and candidate applications. Google Workspace SMTP, authenticated with an
- * app password — never the account password.
+ * SMTP transport for the live submission flows: employer hiring enquiries,
+ * candidate applications, client referrals and salary-guide lead capture.
+ * Google Workspace SMTP, authenticated with an app password — never the
+ * account password.
  *
  * Required environment variables (server-only, never exposed to the browser):
  *
@@ -15,6 +17,7 @@ import nodemailer from "nodemailer"
  *   HIRING_ENQUIRY_TO     recipient for employer enquiries
  *   APPLICATION_TO        recipient for candidate applications
  *   REFERRAL_TO           recipient for client referrals
+ *   SALARY_GUIDE_TO       recipient for salary guide download leads
  *
  * Optional (local development only):
  *
@@ -251,5 +254,90 @@ export async function sendReferralEmail(data: ReferralEmailData) {
       ["Submission Page", data.pageUrl],
       ["Submitted", data.submittedAt],
     ]),
+  })
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Salary guide lead capture (/salary-guide)  →  SALARY_GUIDE_TO             */
+/* -------------------------------------------------------------------------- */
+
+export interface SalaryGuideLeadData {
+  firstName: string
+  lastName: string
+  workEmail: string
+  company: string
+  jobTitle: string
+  marketingOptIn: boolean
+  pageUrl: string
+  submittedAt: string
+}
+
+/** Branded downloader email — links to the PDF, never attaches it. */
+function buildSalaryGuideDownloadEmail(firstName: string, downloadUrl: string): string {
+  return `<!doctype html>
+<html>
+  <body style="margin:0;padding:24px;background:#F8FAFC;font-family:Arial,Helvetica,sans-serif;">
+    <table role="presentation" cellpadding="0" cellspacing="0" style="max-width:600px;margin:0 auto;background:#FFFFFF;border:1px solid ${BORDER};border-radius:14px;overflow:hidden;">
+      <tr>
+        <td style="background:${NAVY};padding:32px 24px;">
+          <p style="margin:0;color:${TEAL};font-size:11px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;">ION Talent</p>
+          <h1 style="margin:10px 0 0;color:#FFFFFF;font-size:22px;font-weight:700;">Your 2026 Salary &amp; Hiring Guide</h1>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:28px 24px;">
+          <p style="margin:0 0 16px;font-size:15px;color:#334155;line-height:1.6;">Hi ${esc(firstName)},</p>
+          <p style="margin:0 0 16px;font-size:15px;color:#334155;line-height:1.6;">Thanks for downloading the ION Talent UAE &amp; Saudi Arabia Salary &amp; Hiring Guide 2026.</p>
+          <p style="margin:0 0 24px;font-size:15px;color:#334155;line-height:1.6;">Your guide is ready below.</p>
+          <table role="presentation" cellpadding="0" cellspacing="0">
+            <tr>
+              <td style="border-radius:10px;background:${TEAL};">
+                <a href="${downloadUrl}" style="display:inline-block;padding:14px 28px;color:#FFFFFF;font-size:15px;font-weight:700;text-decoration:none;">Download the Guide &rarr;</a>
+              </td>
+            </tr>
+          </table>
+          <p style="margin:28px 0 0;font-size:14px;color:#334155;line-height:1.6;">If you&rsquo;re hiring across the UAE or Saudi Arabia and would like to discuss the market, feel free to get in touch.</p>
+          <p style="margin:16px 0 0;font-size:14px;color:#334155;">ION Talent</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:16px 24px;background:#F8FAFC;">
+          <p style="margin:0;color:#94A3B8;font-size:12px;">Sent automatically from iontalentgroup.com</p>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>`
+}
+
+export async function sendSalaryGuideLeadEmail(data: SalaryGuideLeadData) {
+  const transporter = getTransporter()
+  const from = requireEnv("EMAIL_FROM")
+  const fullName = `${data.firstName} ${data.lastName}`
+
+  // Internal notification → SALARY_GUIDE_TO
+  await transporter.sendMail({
+    from,
+    to: requireEnv("SALARY_GUIDE_TO"),
+    replyTo: data.workEmail,
+    subject: `ION Salary Guide Lead — ${data.company}`,
+    html: buildEmail("New Salary Guide Download", `${fullName} — ${data.company}`, [
+      ["First Name", data.firstName],
+      ["Last Name", data.lastName],
+      ["Work Email", data.workEmail],
+      ["Company", data.company],
+      ["Job Title", data.jobTitle],
+      ["Marketing Opt-in", data.marketingOptIn ? "Yes" : "No"],
+      ["Page URL", data.pageUrl],
+      ["Submitted", data.submittedAt],
+    ]),
+  })
+
+  // Downloader email — link only, no attachment
+  await transporter.sendMail({
+    from,
+    to: data.workEmail,
+    subject: "Your ION Talent 2026 Salary & Hiring Guide",
+    html: buildSalaryGuideDownloadEmail(data.firstName, SALARY_GUIDE_PDF_URL),
   })
 }
