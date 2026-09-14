@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer"
-import { SALARY_GUIDE_PDF_URL } from "@/lib/site-config"
+import { LINKEDIN_COMPANY_URL, SALARY_GUIDE_PDF_PATH, SITE_URL } from "@/lib/site-config"
 
 /**
  * SMTP transport for the live submission flows: employer hiring enquiries,
@@ -272,16 +272,38 @@ export interface SalaryGuideLeadData {
   submittedAt: string
 }
 
+/**
+ * Origin used only for links/images inside transactional emails — never for
+ * SEO canonical/OG URLs (those always use the fixed SITE_URL). On a genuine
+ * production deploy this resolves to the canonical custom domain; on a
+ * Vercel Preview deployment it resolves to that deployment's own URL, so a
+ * salary-guide email sent from a preview branch links to assets that
+ * actually exist there instead of 404ing against production before merge.
+ * VERCEL_ENV/VERCEL_URL are Vercel's own system environment variables —
+ * always present at runtime, nothing to configure.
+ */
+function getEmailAssetOrigin(): string {
+  if (process.env.VERCEL_ENV === "production") return SITE_URL
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`
+  return SITE_URL
+}
+
+/** Pulls the bare address out of an EMAIL_FROM value that may or may not already carry a display name. */
+function extractEmailAddress(fromValue: string): string {
+  const match = fromValue.match(/<([^>]+)>/)
+  return match ? match[1] : fromValue.trim()
+}
+
 /** Branded downloader email — links to the PDF, never attaches it. */
-function buildSalaryGuideDownloadEmail(firstName: string, downloadUrl: string): string {
+function buildSalaryGuideDownloadEmail(firstName: string, downloadUrl: string, logoUrl: string): string {
   return `<!doctype html>
 <html>
   <body style="margin:0;padding:24px;background:#F8FAFC;font-family:Arial,Helvetica,sans-serif;">
     <table role="presentation" cellpadding="0" cellspacing="0" style="max-width:600px;margin:0 auto;background:#FFFFFF;border:1px solid ${BORDER};border-radius:14px;overflow:hidden;">
       <tr>
         <td style="background:${NAVY};padding:32px 24px;">
-          <p style="margin:0;color:${TEAL};font-size:11px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;">ION Talent</p>
-          <h1 style="margin:10px 0 0;color:#FFFFFF;font-size:22px;font-weight:700;">Your 2026 Salary &amp; Hiring Guide</h1>
+          <img src="${logoUrl}" width="160" height="36" alt="ION Talent" style="display:block;width:160px;height:auto;border:0;outline:none;" />
+          <h1 style="margin:18px 0 0;color:#FFFFFF;font-size:22px;font-weight:700;">Your 2026 Salary &amp; Hiring Guide</h1>
         </td>
       </tr>
       <tr>
@@ -298,6 +320,9 @@ function buildSalaryGuideDownloadEmail(firstName: string, downloadUrl: string): 
           </table>
           <p style="margin:28px 0 0;font-size:14px;color:#334155;line-height:1.6;">If you&rsquo;re hiring across the UAE or Saudi Arabia and would like to discuss the market, feel free to get in touch.</p>
           <p style="margin:16px 0 0;font-size:14px;color:#334155;">ION Talent</p>
+          <p style="margin:24px 0 0;padding-top:20px;border-top:1px solid ${BORDER};">
+            <a href="${LINKEDIN_COMPANY_URL}" style="font-size:12px;color:#64748B;text-decoration:none;font-weight:600;">Follow ION Talent on LinkedIn &rarr;</a>
+          </p>
         </td>
       </tr>
       <tr>
@@ -333,11 +358,21 @@ export async function sendSalaryGuideLeadEmail(data: SalaryGuideLeadData) {
     ]),
   })
 
-  // Downloader email — link only, no attachment
+  // Downloader email — link only, no attachment. Sent from the same
+  // already-authenticated address as every other ION Talent email (zero
+  // deliverability risk), with the display name forced to "ION Talent" and
+  // replies routed to the published info@ inbox rather than the
+  // authenticated mailbox.
+  const emailOrigin = getEmailAssetOrigin()
   await transporter.sendMail({
-    from,
+    from: { name: "ION Talent", address: extractEmailAddress(from) },
     to: data.workEmail,
+    replyTo: "info@iontalentgroup.com",
     subject: "Your ION Talent 2026 Salary & Hiring Guide",
-    html: buildSalaryGuideDownloadEmail(data.firstName, SALARY_GUIDE_PDF_URL),
+    html: buildSalaryGuideDownloadEmail(
+      data.firstName,
+      `${emailOrigin}${SALARY_GUIDE_PDF_PATH}`,
+      `${emailOrigin}/brand/logo-primary-email.png`,
+    ),
   })
 }
