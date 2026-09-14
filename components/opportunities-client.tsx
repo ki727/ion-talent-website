@@ -129,8 +129,9 @@ export function OpportunitiesClient() {
       {/* ── Filters ── */}
       <section
         aria-label="Opportunity filters"
-        className="mb-8 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm md:p-6"
+        className="relative mb-8 overflow-hidden rounded-2xl border border-gray-200 bg-ion-surface p-5 shadow-sm md:p-6"
       >
+        <div className="ion-gradient-rule absolute top-0 left-0 right-0 opacity-60" aria-hidden="true" />
         <div className="mb-4">
           <label htmlFor="filter-search" className="mb-1.5 block text-sm font-medium text-gray-900">
             Search
@@ -230,11 +231,11 @@ export function OpportunitiesClient() {
             <button
               type="button"
               onClick={clearFilters}
-              className="flex items-center gap-1.5 h-11 px-4 rounded-lg border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#14A8A8] shrink-0"
+              className="ion-outline-button flex items-center gap-1.5 h-11 px-4 rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal shrink-0"
             >
               <X className="h-4 w-4" aria-hidden="true" />
               Clear all
-              <span className="ml-0.5 rounded-full bg-[#14A8A8] text-white text-xs w-5 h-5 flex items-center justify-center font-semibold">
+              <span className="ml-0.5 rounded-full bg-ion-teal text-white text-xs w-5 h-5 flex items-center justify-center font-semibold">
                 {chips.length}
               </span>
             </button>
@@ -285,7 +286,7 @@ export function OpportunitiesClient() {
             <button
               type="button"
               onClick={clearFilters}
-              className="mt-6 inline-flex h-11 items-center justify-center rounded-xl border border-gray-300 bg-white px-6 text-sm font-medium text-gray-900 transition-colors hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#14A8A8] focus-visible:ring-offset-2"
+              className="ion-outline-button mt-6 inline-flex h-11 items-center justify-center rounded-xl px-6 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2"
             >
               Clear all filters
             </button>
@@ -294,11 +295,14 @@ export function OpportunitiesClient() {
       </section>
 
       {/* ── Candidate registration ── */}
+      {/* A soft tinted zone (not just a white form floating on the page
+          canvas) so this reads as "you've finished browsing, here's the
+          next action" rather than another neutral block. */}
       <section
         id="register"
         ref={registerRef}
         aria-labelledby="register-heading"
-        className="scroll-mt-28"
+        className="scroll-mt-28 rounded-[28px] bg-ion-surface px-6 py-10 md:px-10 md:py-14"
       >
         <div className="mx-auto max-w-3xl">
           <div className="mb-8 text-center">

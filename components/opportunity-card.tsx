@@ -15,7 +15,7 @@ const STATUS_STYLES: Record<OpportunityStatus, string> = {
 /** Compact, LinkedIn-style role preview. Links straight to the dedicated role page. */
 export function OpportunityCard({ opportunity }: OpportunityCardProps) {
   return (
-    <article className="ion-card-hairline ion-card-enter relative flex flex-col overflow-hidden rounded-2xl p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md motion-reduce:hover:translate-y-0">
+    <article className="ion-card-hairline ion-card-enter relative flex flex-col overflow-hidden rounded-2xl p-4 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md motion-reduce:hover:translate-y-0">
       <span
         className={`mb-2 inline-block w-fit rounded-full px-2.5 py-0.5 text-xs font-medium ${STATUS_STYLES[opportunity.status]}`}
       >
@@ -45,7 +45,7 @@ export function OpportunityCard({ opportunity }: OpportunityCardProps) {
       <Link
         href={`/opportunities/${opportunity.slug}`}
         aria-label={`View details for ${opportunity.title}`}
-        className="mt-3 inline-flex h-9 items-center justify-center gap-1.5 rounded-lg border border-ion-teal text-sm font-medium text-ion-teal-dark transition-colors hover:bg-ion-teal hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2"
+        className="mt-3 inline-flex h-9 items-center justify-center gap-1.5 rounded-lg border border-ion-teal bg-ion-teal/5 text-sm font-medium text-ion-teal-dark transition-colors hover:bg-ion-teal hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2"
       >
         View Role
         <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />

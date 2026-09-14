@@ -352,10 +352,17 @@
   color: #006c65;
 }
 
-/* Softened outline button for the site header's secondary nav CTA — a
-   lighter single hairline with a faint teal wash instead of a hard 2px
-   outline, so it reads as a restrained secondary action rather than a
-   harsh cut-out box. */
+/* Very light neutral canvas for the Opportunities/job-detail journey — a
+   shade paler than .ion-surface, giving white cards and panels somewhere
+   restful to sit without the page reading as flat white or as grey. */
+.ion-page-canvas {
+  background-color: #f8fafc;
+}
+
+/* Softened secondary-action button, reused across the opportunities journey
+   (site header nav CTA, "View Role"-adjacent utility actions, "Clear all
+   filters", "Make an Introduction") — a single hairline with a faint teal
+   wash instead of a hard, harsh-reading outline. */
 .ion-outline-button {
   background-color: rgba(15, 163, 161, 0.04);
   border: 1px solid rgba(15, 163, 161, 0.45) !important;

@@ -43,7 +43,7 @@ const breadcrumbJsonLd = {
 
 export default function OpportunitiesPage() {
   return (
-    <div className="min-h-screen bg-ion-surface">
+    <div className="ion-page-canvas min-h-screen">
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger
@@ -55,7 +55,7 @@ export default function OpportunitiesPage() {
         {/* Hero — an editorial header surface (micro-label / title / lede)
             rather than a flat band, tied to the rest of the site with the
             same signature gradient rule. */}
-        <section className="relative overflow-hidden border-b border-gray-100 bg-white px-6 py-10 md:py-14 lg:px-12">
+        <section className="relative z-10 overflow-hidden border-b border-gray-100 bg-white px-6 py-10 shadow-sm md:py-14 lg:px-12">
           <div className="ion-gradient-rule absolute top-0 left-0 right-0 opacity-60" aria-hidden="true" />
           <div className="container mx-auto max-w-4xl text-center">
             <p className="ion-card-eyebrow">ION Talent Opportunities</p>
@@ -71,7 +71,7 @@ export default function OpportunitiesPage() {
         </section>
 
         {/* Filters, cards and registration form */}
-        <section className="px-6 pt-6 pb-10 md:pt-8 md:pb-14 lg:px-12">
+        <section className="px-6 pt-10 pb-10 md:pt-14 md:pb-14 lg:px-12">
           <div className="container mx-auto max-w-6xl">
             <Suspense fallback={null}>
               <OpportunitiesClient />
@@ -79,11 +79,15 @@ export default function OpportunitiesPage() {
           </div>
         </section>
 
-        {/* Secondary referral section - intentionally smaller than registration */}
+        {/* Secondary referral section - intentionally quieter than the
+            registration conversion zone above: a pale teal wash rather than
+            an elevated white card, so it reads as a lower-emphasis CTA. */}
         <section aria-labelledby="referral-cta-heading" className="px-6 pb-14 lg:px-12">
           <div className="container mx-auto max-w-3xl">
-            <div className="rounded-2xl border border-gray-200 bg-white px-6 py-8 text-center shadow-sm md:px-10">
-              <h2 id="referral-cta-heading" className="text-xl font-semibold text-gray-900">
+            <div className="relative overflow-hidden rounded-2xl border border-ion-teal/15 bg-ion-teal/[0.04] px-6 py-8 text-center md:px-10">
+              <div className="ion-gradient-rule absolute top-0 left-0 right-0 opacity-40" aria-hidden="true" />
+              <p className="ion-card-eyebrow">ION Talent Referrals</p>
+              <h2 id="referral-cta-heading" className="mt-2 text-xl font-semibold text-gray-900">
                 Know a company that&apos;s hiring?
               </h2>
               <p className="mx-auto mt-2 max-w-lg text-sm leading-relaxed text-gray-600">
@@ -92,7 +96,7 @@ export default function OpportunitiesPage() {
               </p>
               <Link
                 href="/refer"
-                className="mt-5 inline-flex h-11 items-center justify-center rounded-xl border border-ion-teal bg-white px-6 text-sm font-medium text-ion-teal-dark transition-colors hover:bg-teal-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2"
+                className="ion-outline-button mt-5 inline-flex h-11 items-center justify-center rounded-xl px-6 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2"
               >
                 Make an Introduction
               </Link>

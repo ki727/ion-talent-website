@@ -403,7 +403,7 @@ export function CandidateRegistrationForm({ selectedRole = "" }: CandidateRegist
         <button
           type="submit"
           disabled={status === "submitting"}
-          className="inline-flex h-12 w-full sm:w-auto items-center justify-center gap-2 rounded-xl bg-[#14A8A8] px-8 text-sm font-medium text-white transition-colors hover:bg-[#0F8F8F] disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#14A8A8] focus-visible:ring-offset-2"
+          className="ion-primary-button inline-flex h-12 w-full sm:w-auto items-center justify-center gap-2 rounded-xl px-8 text-sm font-medium transition-colors disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal-hover focus-visible:ring-offset-2"
         >
           {status === "submitting" && (
             <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />

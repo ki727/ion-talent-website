@@ -94,7 +94,7 @@ export default function RolePage({ params }: RolePageProps) {
       <main className="ion-page-enter pt-20">
         {/* Header: identity, quick facts, primary CTA — grouped into one
             coherent editorial surface near the top */}
-        <section className="relative overflow-hidden border-b border-gray-100 bg-white px-6 py-8 md:py-10 lg:px-12">
+        <section className="ion-page-canvas relative overflow-hidden border-b border-gray-100 px-6 py-8 md:py-10 lg:px-12">
           <div className="ion-gradient-rule absolute top-0 left-0 right-0 opacity-60" aria-hidden="true" />
           <div className="container mx-auto max-w-3xl">
             <Link
@@ -111,7 +111,7 @@ export default function RolePage({ params }: RolePageProps) {
             </h1>
             <span className="ion-heading-underline ion-heading-underline--gradient mt-3" aria-hidden="true" />
 
-            <div className="mt-6 rounded-2xl border border-gray-200 bg-ion-surface p-5 md:p-6">
+            <div className="mt-6 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm md:p-6">
               <dl className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-gray-600">
                 <div className="flex items-center gap-1.5">
                   <MapPin className="h-4 w-4 text-gray-400" aria-hidden="true" />
