@@ -36,11 +36,18 @@ export function HomepageReferralSection() {
     <section className="scroll-mt-24 py-16 md:py-20 px-6 bg-ion-surface border-t border-gray-100">
       <div className="container mx-auto max-w-5xl">
         <FadeIn>
-          <div ref={viewRef} className="ion-section-navy rounded-[24px] px-6 py-10 text-center shadow-lg md:px-14 md:py-14">
+          <div
+            ref={viewRef}
+            className="ion-section-navy relative overflow-hidden rounded-[24px] px-6 py-10 text-center shadow-lg md:px-14 md:py-14"
+          >
+            {/* Signature teal → lilac transition as a top accent, giving this
+                campaign block more visual presence without adding colour to
+                its content. */}
+            <div className="ion-gradient-rule absolute top-0 left-0 right-0 opacity-80" aria-hidden="true" />
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ion-teal-bright">
               ION Talent Referrals
             </p>
-            <h2 className="mt-3 text-3xl font-bold text-white text-balance md:text-4xl">
+            <h2 className="font-display mt-3 text-3xl font-bold text-white text-balance md:text-4xl">
               Know a business planning to hire?
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed ion-text-on-navy md:text-lg">

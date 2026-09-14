@@ -115,8 +115,8 @@ export default function HomePage() {
 
         <div ref={heroContentRef} className="ion-hero-depth container mx-auto relative z-10 max-w-5xl">
           <div className="space-y-6 sm:space-y-8">
-            <h1 className="hero-text-shadow text-5xl lg:text-6xl font-bold text-white leading-[1.08] text-balance">
-              Elite talent solutions that
+            <h1 className="font-display hero-text-shadow text-5xl lg:text-6xl font-bold text-white leading-[1.08] text-balance">
+              Specialist talent solutions that
               <br />
               <span className="ion-hero-teal-accent">transform businesses</span>
             </h1>
@@ -148,10 +148,17 @@ export default function HomePage() {
             </div>
           </div>
         </div>
+
+        {/* Restrained signature transition into the section below — the same
+            teal → lilac accent used as the salary guide's page spine. */}
+        <div className="ion-gradient-rule absolute bottom-0 left-0 right-0 z-10 w-full opacity-70" aria-hidden="true" />
       </section>
 
       {/* Proof & Credibility */}
-      <section id="proof" className="scroll-mt-[100px] py-16 md:py-24 px-6 bg-ion-surface border-t border-gray-100">
+      <section
+        id="proof"
+        className="ion-surface-tonal scroll-mt-[100px] py-16 md:py-24 px-6 border-t border-transparent"
+      >
         <div className="container mx-auto max-w-6xl">
           <h2 className="sr-only">Our Track Record</h2>
           <FadeIn className="max-w-3xl mx-auto text-center mb-10">
@@ -207,7 +214,7 @@ export default function HomePage() {
       <section id="services" className="ion-section-navy scroll-mt-[100px] py-16 md:py-24 px-6">
         <div className="container mx-auto max-w-6xl">
           <FadeIn className="text-center mb-16 md:mb-20">
-            <h2 className="text-4xl lg:text-5xl font-bold text-white mb-3 tracking-tight text-balance">
+            <h2 className="font-display text-4xl lg:text-5xl font-bold text-white mb-3 tracking-tight text-balance">
               How We Work
             </h2>
             <span className="ion-heading-underline ion-heading-underline--bright mx-auto mb-6" aria-hidden="true" />
@@ -256,9 +263,9 @@ export default function HomePage() {
             </FadeIn>
 
             <FadeIn delay={100}>
-              <Card className="ion-card-top-4 group h-full relative overflow-hidden rounded-[14px] p-8 lg:p-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+              <Card className="ion-card-top-4-violet group h-full relative overflow-hidden rounded-[14px] p-8 lg:p-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
                 <div className="relative space-y-6 lg:space-y-4">
-                  <div className="ion-icon-circle-teal w-14 h-14 lg:w-11 lg:h-11 rounded-full flex items-center justify-center">
+                  <div className="ion-icon-circle-violet w-14 h-14 lg:w-11 lg:h-11 rounded-full flex items-center justify-center">
                     <Award className="h-7 w-7 lg:h-5 lg:w-5 text-white" />
                   </div>
 
@@ -345,7 +352,7 @@ export default function HomePage() {
       <section id="industries" className="scroll-mt-[100px] py-16 md:py-24 px-6 bg-ion-surface border-t border-gray-100">
         <div className="container mx-auto max-w-6xl">
           <FadeIn className="mb-10 md:mb-12">
-            <h2 className="text-4xl lg:text-5xl font-semibold text-ion-navy mb-3 tracking-tight text-balance">
+            <h2 className="font-display text-4xl lg:text-5xl font-semibold text-ion-navy mb-3 tracking-tight text-balance">
               Industry Expertise
             </h2>
             <span className="ion-heading-underline mb-4" aria-hidden="true" />
@@ -359,12 +366,19 @@ export default function HomePage() {
               { title: "Engineering", desc: "Engineers, Managers, Directors, VPs" },
               { title: "Construction", desc: "Site Managers, Project Managers, Directors" },
               { title: "Cybersecurity", desc: "Analysts, Managers, Directors, CISOs" },
-              { title: "Consulting", desc: "Consultants, Managers, Directors, Partners" },
+              { title: "Consulting", desc: "Consultants, Managers, Directors, Partners", accent: "violet" },
             ].map((industry, i) => (
               <FadeIn key={industry.title} delay={(i % 3) * 100}>
-                <div className="ion-card-left-4 h-full rounded-[14px] p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
+                <div
+                  className={`${
+                    industry.accent === "violet" ? "ion-card-left-4-violet" : "ion-card-left-4"
+                  } h-full rounded-[14px] p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md`}
+                >
                   <h3 className="mb-2 flex items-center gap-2 text-xl font-semibold text-ion-navy">
-                    <span className="ion-dot-teal h-2.5 w-2.5 shrink-0 rounded-full" aria-hidden="true" />
+                    <span
+                      className={`${industry.accent === "violet" ? "ion-dot-violet" : "ion-dot-teal"} h-2.5 w-2.5 shrink-0 rounded-full`}
+                      aria-hidden="true"
+                    />
                     {industry.title}
                   </h3>
                   <p className="text-sm text-ion-gray leading-relaxed">{industry.desc}</p>
@@ -379,10 +393,10 @@ export default function HomePage() {
       <section id="approach" className="py-16 md:py-24 px-6 bg-ion-surface border-t border-gray-100">
         <div className="container mx-auto max-w-6xl">
           <FadeIn className="max-w-3xl mx-auto text-center mb-14 md:mb-16">
-            <h2 className="text-4xl lg:text-5xl font-semibold text-ion-navy mb-3 tracking-tight text-balance">
+            <h2 className="font-display text-4xl lg:text-5xl font-semibold text-ion-navy mb-3 tracking-tight text-balance">
               Why ION Talent
             </h2>
-            <span className="ion-heading-underline mx-auto mb-6" aria-hidden="true" />
+            <span className="ion-heading-underline ion-heading-underline--gradient mx-auto mb-6" aria-hidden="true" />
             <p className="text-lg text-ion-gray leading-relaxed">
               Our approach combines deep industry expertise with a commitment to understanding both client needs and
               candidate aspirations, ensuring lasting placements that drive business success.
@@ -391,13 +405,13 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <FadeIn>
-              <div className="ion-card-top-3 h-full flex items-start gap-4 rounded-[14px] p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
+              <div className="ion-viewcard h-full flex items-start gap-4 rounded-[14px] p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
                 <div className="ion-icon-circle-teal w-12 h-12 rounded-full flex items-center justify-center shrink-0">
                   <UserCheck className="h-6 w-6 text-white" aria-hidden="true" />
                 </div>
                 <div className="pt-1">
-                  <h3 className="text-base font-semibold text-gray-900">Senior-Led Search</h3>
-                  <p className="mt-1 text-sm leading-relaxed text-gray-600">
+                  <h3 className="text-base font-semibold text-white">Senior-Led Search</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-[#C7D2DC]">
                     Every assignment is led by experienced recruitment professionals with direct involvement from
                     briefing through to placement.
                   </p>
@@ -406,13 +420,13 @@ export default function HomePage() {
             </FadeIn>
 
             <FadeIn delay={100}>
-              <div className="ion-card-top-3 h-full flex items-start gap-4 rounded-[14px] p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
+              <div className="ion-viewcard h-full flex items-start gap-4 rounded-[14px] p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
                 <div className="ion-icon-circle-teal w-12 h-12 rounded-full flex items-center justify-center shrink-0">
                   <Radar className="h-6 w-6 text-white" aria-hidden="true" />
                 </div>
                 <div className="pt-1">
-                  <h3 className="text-base font-semibold text-gray-900">Market-Mapped Delivery</h3>
-                  <p className="mt-1 text-sm leading-relaxed text-gray-600">
+                  <h3 className="text-base font-semibold text-white">Market-Mapped Delivery</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-[#C7D2DC]">
                     Targeted search, live market intelligence and direct outreach focused on the people most likely
                     to deliver.
                   </p>
@@ -421,13 +435,13 @@ export default function HomePage() {
             </FadeIn>
 
             <FadeIn delay={200}>
-              <div className="ion-card-top-3 h-full flex items-start gap-4 rounded-[14px] p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
+              <div className="ion-viewcard h-full flex items-start gap-4 rounded-[14px] p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
                 <div className="ion-icon-circle-teal w-12 h-12 rounded-full flex items-center justify-center shrink-0">
                   <Globe className="h-6 w-6 text-white" aria-hidden="true" />
                 </div>
                 <div className="pt-1">
-                  <h3 className="text-base font-semibold text-gray-900">International Reach</h3>
-                  <p className="mt-1 text-sm leading-relaxed text-gray-600">
+                  <h3 className="text-base font-semibold text-white">International Reach</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-[#C7D2DC]">
                     Established networks across the GCC and UK, supported by international search capability for
                     hard-to-find talent.
                   </p>
@@ -444,13 +458,15 @@ export default function HomePage() {
       <section id="contact" className="scroll-mt-[100px] py-16 md:py-24 px-6 border-t border-ion-border bg-white">
         <div className="container mx-auto max-w-4xl">
           <div className="mb-12">
-            <h2 className="text-4xl lg:text-5xl font-semibold text-ion-black mb-4 tracking-tight">
+            <h2 className="font-display text-4xl lg:text-5xl font-semibold text-ion-black mb-4 tracking-tight">
               Tell Us What You Are Hiring For
             </h2>
             <p className="text-lg text-ion-gray">Ready to transform your hiring? Let&apos;s talk.</p>
           </div>
 
-          <EnhancedContactForm initialService={selectedService} />
+          <div className="rounded-[20px] border border-gray-200 bg-white p-6 shadow-sm sm:p-8 md:p-10">
+            <EnhancedContactForm initialService={selectedService} />
+          </div>
         </div>
       </section>
       </main>

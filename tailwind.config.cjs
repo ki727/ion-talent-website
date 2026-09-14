@@ -13,6 +13,7 @@ const config = {
     extend: {
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "-apple-system", "sans-serif"],
+        display: ["var(--font-raleway)", "var(--font-inter)", "system-ui", "sans-serif"],
       },
       colors: {
         background: "hsl(var(--background))",
@@ -71,6 +72,8 @@ const config = {
           "teal-hover": "rgb(var(--ion-teal-hover) / <alpha-value>)",
           "teal-bright": "rgb(var(--ion-teal-bright) / <alpha-value>)",
           "teal-dark": "rgb(var(--ion-teal-dark) / <alpha-value>)",
+          violet: "rgb(var(--ion-violet) / <alpha-value>)",
+          "violet-deep": "rgb(var(--ion-violet-deep) / <alpha-value>)",
           black: "rgb(var(--ion-black) / <alpha-value>)",
           white: "rgb(var(--ion-white) / <alpha-value>)",
           gray: "rgb(var(--ion-gray) / <alpha-value>)",

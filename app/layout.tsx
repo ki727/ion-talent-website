@@ -1,20 +1,24 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Inter, Raleway } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { LINKEDIN_COMPANY_URL, SITE_URL } from "@/lib/site-config"
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
+// Raleway — headings/display font per the 2026 Salary & Hiring Guide design
+// system. Only the weights used for display headings are loaded.
+const raleway = Raleway({ subsets: ["latin"], weight: ["600", "700", "800"], variable: "--font-raleway" })
 
 const SITE_NAME = "ION Talent"
 const SITE_DESCRIPTION =
   "ION Talent provides executive search and specialist recruitment across the GCC and UK, with international reach."
+const SITE_TITLE = "ION Talent | Executive Search & Specialist Recruitment"
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "ION Talent - Premium Recruitment Solutions",
+    default: SITE_TITLE,
     template: "%s",
   },
   description: SITE_DESCRIPTION,
@@ -26,7 +30,7 @@ export const metadata: Metadata = {
     canonical: SITE_URL,
   },
   openGraph: {
-    title: "ION Talent - Premium Recruitment Solutions",
+    title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     type: "website",
     url: SITE_URL,
@@ -34,7 +38,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "ION Talent - Premium Recruitment Solutions",
+    title: SITE_TITLE,
     description: SITE_DESCRIPTION,
   },
 }
@@ -62,7 +66,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${inter.variable} ${raleway.variable}`}>
       <body>
         <script
           type="application/ld+json"

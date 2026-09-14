@@ -15,6 +15,13 @@
   --ion-gray: 100 116 139; /* #64748B */
   --ion-border: 229 231 235; /* #E5E7EB */
   --ion-surface: 241 245 249; /* #F1F5F9 */
+  --ion-surface-pale: 248 250 252; /* #F8FAFC — palest neutral, salary-guide "--surface" */
+
+  /* Approved secondary accent (lilac/violet) — restrained use only, per the
+     2026 Salary & Hiring Guide design system. Teal remains the primary
+     accent; violet is reserved for isolated premium/comparison moments. */
+  --ion-violet: 102 87 232; /* #6657E8 */
+  --ion-violet-deep: 86 69 196; /* #5645C4 */
 
   /*
    * One consistent motion system for every reveal/transition on the site
@@ -199,6 +206,89 @@
 .ion-card-left-4:hover {
   background-color: #ffffff;
   border-left-color: #006c65 !important;
+}
+
+/* Selective violet variants of the accent cards above — used on exactly one
+   card per grid (the premium/executive tier) to translate the salary guide's
+   restrained lilac micro-accent without making every card colourful. */
+.ion-card-top-4-violet {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-top-width: 4px;
+  border-top-color: #6657e8 !important;
+}
+
+.ion-icon-circle-violet {
+  background-color: #6657e8 !important;
+  color: #ffffff !important;
+}
+
+.ion-card-left-4-violet {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-left-width: 4px;
+  border-left-color: #6657e8 !important;
+}
+
+.ion-card-left-4-violet:hover {
+  background-color: #ffffff;
+  border-left-color: #5645c4 !important;
+}
+
+.ion-dot-violet {
+  background-color: #6657e8 !important;
+}
+
+/*
+ * Signature teal → lilac transition, translated from the salary guide's
+ * vertical gradient page-spine into a horizontal accent for the website.
+ * Used sparingly — only at section boundaries that earn a moment of
+ * distinction, never as a decorative default.
+ */
+.ion-gradient-rule {
+  height: 3px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #0fa3a1 0%, #0fa3a1 46%, #6657e8 54%, #6657e8 100%);
+}
+
+.ion-heading-underline--gradient {
+  background-color: transparent !important;
+  background-image: linear-gradient(90deg, #0fa3a1 0%, #0fa3a1 46%, #6657e8 54%, #6657e8 100%);
+}
+
+/* Thin gradient hairline at the top of a section — the same signature
+   transition used as a restrained section-boundary accent. */
+.ion-section-divider {
+  position: relative;
+}
+
+.ion-section-divider::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(15, 163, 161, 0.6) 0%, rgba(15, 163, 161, 0.6) 46%, rgba(102, 87, 232, 0.6) 54%, rgba(102, 87, 232, 0.6) 100%);
+}
+
+/* Subtle tonal wash (the salary guide's two palest neutral surfaces) rather
+   than a single flat fill — used where a section needs separation from
+   plain white without introducing colour. */
+.ion-surface-tonal {
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+}
+
+/* Dark navy "ION Talent View" feature card — translated from the salary
+   guide's .viewcard treatment. Reserved for the single section the brief
+   calls out for stronger distinction (Why ION Talent). */
+.ion-viewcard {
+  background-color: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ion-viewcard:hover {
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 @layer base {

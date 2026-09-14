@@ -122,7 +122,7 @@ export function FeaturedJobs() {
       <div className="container mx-auto max-w-6xl">
         <FadeIn className="mb-16 md:mb-20 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <div>
-            <h2 className="text-4xl lg:text-5xl font-semibold text-ion-navy mb-3 tracking-tight text-balance">
+            <h2 className="font-display text-4xl lg:text-5xl font-semibold text-ion-navy mb-3 tracking-tight text-balance">
               Featured Opportunities
             </h2>
             <span className="ion-heading-underline mb-4" aria-hidden="true" />
