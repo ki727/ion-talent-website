@@ -15,7 +15,7 @@ export const REFERRAL_PAGE_URL = `${SITE_URL}${REFERRAL_PAGE_PATH}`
 export const LINKEDIN_COMPANY_URL = "https://www.linkedin.com/company/iontalent"
 
 /** Verified single-event Calendly booking link — the only Calendly URL used anywhere on the site. */
-export const CALENDLY_URL = "https://calendly.com/ki-iontalentgroup/hiring-introduction"
+export const CALENDLY_URL = "https://calendly.com/ki-iontalentgroup/ion-talent-search-discussion"
 
 /** Fixed referral-reward messaging, reused verbatim across the homepage section, the referral page and sharing actions. */
 export const REFERRAL_REWARD_MESSAGE =
