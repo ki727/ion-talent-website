@@ -45,7 +45,7 @@ export function OpportunityCard({ opportunity }: OpportunityCardProps) {
       <Link
         href={`/opportunities/${opportunity.slug}`}
         aria-label={`View details for ${opportunity.title}`}
-        className="mt-3 inline-flex h-9 items-center justify-center gap-1.5 rounded-lg border border-ion-teal bg-ion-teal/5 text-sm font-medium text-ion-teal-dark transition-colors hover:bg-ion-teal hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2"
+        className="ion-candidate-outline-button mt-3 inline-flex h-9 items-center justify-center gap-1.5 rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-violet focus-visible:ring-offset-2"
       >
         View Role
         <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />

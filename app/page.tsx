@@ -270,9 +270,9 @@ export default function HomePage() {
             </FadeIn>
 
             <FadeIn delay={100}>
-              <Card className="ion-card-top-4-violet group h-full relative overflow-hidden rounded-[14px] p-8 lg:p-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+              <Card className="ion-card-top-4 group h-full relative overflow-hidden rounded-[14px] p-8 lg:p-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
                 <div className="relative space-y-6 lg:space-y-4">
-                  <div className="ion-icon-circle-violet w-14 h-14 lg:w-11 lg:h-11 rounded-full flex items-center justify-center">
+                  <div className="ion-icon-circle-teal w-14 h-14 lg:w-11 lg:h-11 rounded-full flex items-center justify-center">
                     <Award className="h-7 w-7 lg:h-5 lg:w-5 text-white" />
                   </div>
 
@@ -312,7 +312,7 @@ export default function HomePage() {
             </FadeIn>
 
             <FadeIn delay={200}>
-              <Card className="ion-card-top-4-gradient group h-full relative overflow-hidden rounded-[14px] p-8 lg:p-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+              <Card className="ion-card-top-4 group h-full relative overflow-hidden rounded-[14px] p-8 lg:p-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
                 <div className="relative space-y-6 lg:space-y-4">
                   <div className="ion-icon-circle-teal w-14 h-14 lg:w-11 lg:h-11 rounded-full flex items-center justify-center">
                     <Users className="h-7 w-7 lg:h-5 lg:w-5 text-white" />
@@ -372,23 +372,19 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               { title: "Technology", desc: "Developers, Engineers, Product Managers, CTOs" },
-              { title: "Finance", desc: "Analysts, Managers, Directors, CFOs", accent: "violet" },
+              { title: "Finance", desc: "Analysts, Managers, Directors, CFOs" },
               { title: "Engineering", desc: "Engineers, Managers, Directors, VPs" },
               { title: "Construction", desc: "Site Managers, Project Managers, Directors" },
               { title: "Cybersecurity", desc: "Analysts, Managers, Directors, CISOs" },
-              { title: "Consulting", desc: "Consultants, Managers, Directors, Partners", accent: "violet" },
+              { title: "Consulting", desc: "Consultants, Managers, Directors, Partners" },
             ].map((industry, i) => (
               <FadeIn key={industry.title} delay={(i % 3) * 100}>
-                <div
-                  className={`${
-                    industry.accent === "violet" ? "ion-card-left-4-violet" : "ion-card-left-4"
-                  } h-full rounded-[14px] p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md`}
-                >
+                {/* One shared card family (the same teal->lilac hairline used
+                    on Featured Opportunities / job cards) — no sector-specific
+                    colour coding, since sector isn't a semantic signal. */}
+                <div className="ion-card-hairline relative h-full overflow-hidden rounded-[14px] p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
                   <h3 className="mb-2 flex items-center gap-2 text-xl font-semibold text-ion-navy">
-                    <span
-                      className={`${industry.accent === "violet" ? "ion-dot-violet" : "ion-dot-teal"} h-2.5 w-2.5 shrink-0 rounded-full`}
-                      aria-hidden="true"
-                    />
+                    <span className="ion-dot-teal h-2.5 w-2.5 shrink-0 rounded-full" aria-hidden="true" />
                     {industry.title}
                   </h3>
                   <p className="text-sm text-ion-gray leading-relaxed">{industry.desc}</p>

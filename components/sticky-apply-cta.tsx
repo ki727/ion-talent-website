@@ -77,7 +77,7 @@ export function StickyApplyCta({ label, targetId, topCtaId }: StickyApplyCtaProp
         <a
           href={`#${targetId}`}
           onClick={handleClick}
-          className="ion-primary-button flex h-12 w-full items-center justify-center gap-2 rounded-xl px-6 text-sm font-medium sm:w-auto"
+          className="ion-candidate-button flex h-12 w-full items-center justify-center gap-2 rounded-xl px-6 text-sm font-medium sm:w-auto"
         >
           {label}
           <ArrowRight className="h-4 w-4" aria-hidden="true" />

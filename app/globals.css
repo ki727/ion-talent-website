@@ -7,9 +7,9 @@
 :root {
   --ion-navy: 15 23 42; /* #0F172A */
   --ion-teal: 15 163 161; /* #0FA3A1 */
-  --ion-teal-hover: 0 108 101; /* #006C65 */
+  --ion-teal-hover: 0 108 133; /* #006c85 */
   --ion-teal-bright: 34 198 179; /* #22C6B3 */
-  --ion-teal-dark: 0 108 101; /* #006C65 */
+  --ion-teal-dark: 0 108 133; /* #006c85 */
   --ion-black: 14 14 14; /* #0E0E0E */
   --ion-white: 255 255 255; /* #FFFFFF */
   --ion-gray: 100 116 139; /* #64748B */
@@ -60,8 +60,8 @@
 }
 
 .ion-primary-button:hover:not(:disabled) {
-  background-color: #006c65 !important;
-  border-color: #006c65 !important;
+  background-color: #006c85 !important;
+  border-color: #006c85 !important;
 }
 
 .ion-primary-button:disabled,
@@ -86,8 +86,104 @@
   opacity: 1;
 }
 
+/*
+ * Hover is a translucent violet glass rather than a deeper navy wash — the
+ * one approved spot where the candidate/opportunity accent (lilac) appears
+ * over photography. Stays translucent on purpose so the video/image is
+ * still visible through the button; text/border stay white throughout so
+ * contrast never depends on the image underneath.
+ */
 .ion-secondary-button:hover {
-  background-color: rgba(15, 23, 42, 0.55) !important;
+  background-color: rgba(102, 87, 232, 0.28) !important;
+  color: #ffffff !important;
+}
+
+.ion-secondary-button:hover svg {
+  color: #ffffff !important;
+}
+
+/*
+ * Employer-journey navy CTA — used only for the site header's "Hire Talent"
+ * (the hero's own "Hire Talent" stays solid teal via .ion-primary-button;
+ * the two contexts are deliberately different). Text is explicitly white in
+ * every state so it can never fade into the navy fill.
+ */
+.ion-primary-button-navy {
+  background-color: #0f172a !important;
+  color: #ffffff !important;
+  border: 1px solid #0f172a !important;
+  opacity: 1;
+}
+
+.ion-primary-button-navy svg {
+  color: #ffffff !important;
+}
+
+.ion-primary-button-navy:hover:not(:disabled) {
+  background-color: #1e293b !important;
+  border-color: #1e293b !important;
+}
+
+.ion-primary-button-navy:disabled,
+.ion-primary-button-navy[aria-disabled="true"] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/*
+ * Candidate/opportunity-journey solid CTA (Register Interest, Apply, Submit
+ * CV) — the lilac/violet counterpart to .ion-primary-button, same shape and
+ * same "always-explicit" text/icon colour so it can never disappear on
+ * hover: only the fill deepens (violet -> deep violet), colour is never
+ * re-derived from something that could fade.
+ */
+.ion-candidate-button {
+  background-color: #6657e8 !important;
+  color: #ffffff !important;
+  border: 1px solid #6657e8 !important;
+  min-height: 48px;
+  opacity: 1;
+}
+
+.ion-candidate-button svg {
+  color: #ffffff !important;
+}
+
+.ion-candidate-button:hover:not(:disabled) {
+  background-color: #5645c4 !important;
+  border-color: #5645c4 !important;
+}
+
+.ion-candidate-button:disabled,
+.ion-candidate-button[aria-disabled="true"] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/*
+ * Candidate/opportunity-journey secondary action ("Explore Opportunities"
+ * in the light header, "View Role" on every job card) — pale lilac surface
+ * by default, filling solid violet with explicit white text+icon on hover.
+ * Every state sets colour explicitly (never inherited) so text/arrow can
+ * never fade or disappear on hover.
+ */
+.ion-candidate-outline-button {
+  background-color: rgba(102, 87, 232, 0.08) !important;
+  border: 1px solid rgba(102, 87, 232, 0.55) !important;
+  color: #5645c4 !important;
+}
+
+.ion-candidate-outline-button svg {
+  color: #5645c4 !important;
+}
+
+.ion-candidate-outline-button:hover {
+  background-color: #6657e8 !important;
+  border-color: #6657e8 !important;
+  color: #ffffff !important;
+}
+
+.ion-candidate-outline-button:hover svg {
   color: #ffffff !important;
 }
 
@@ -125,7 +221,7 @@
 }
 
 .ion-text-deep-teal {
-  color: #006c65 !important;
+  color: #006c85 !important;
 }
 
 /* Statistic values (StatCounter) — same bulletproof rationale as the other
@@ -205,38 +301,18 @@
 
 .ion-card-left-4:hover {
   background-color: #ffffff;
-  border-left-color: #006c65 !important;
+  border-left-color: #006c85 !important;
 }
 
-/* Selective violet variants of the accent cards above — used on exactly one
-   card per grid (the premium/executive tier) to translate the salary guide's
-   restrained lilac micro-accent without making every card colourful. */
-.ion-card-top-4-violet {
-  background-color: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-top-width: 4px;
-  border-top-color: #6657e8 !important;
-}
-
+/* Violet icon-circle — kept for the one deliberate rhythm beat in the
+   brand-general "Why ION Talent" cards (not employer/candidate specific, so
+   outside the semantic colour system below). The equivalent card-border
+   variants that used to key lilac off grid position/sector have been
+   removed as exactly the "arbitrary colour" pattern the brand system
+   corrects. */
 .ion-icon-circle-violet {
   background-color: #6657e8 !important;
   color: #ffffff !important;
-}
-
-.ion-card-left-4-violet {
-  background-color: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-left-width: 4px;
-  border-left-color: #6657e8 !important;
-}
-
-.ion-card-left-4-violet:hover {
-  background-color: #ffffff;
-  border-left-color: #5645c4 !important;
-}
-
-.ion-dot-violet {
-  background-color: #6657e8 !important;
 }
 
 /*
@@ -349,7 +425,7 @@
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #006c65;
+  color: #006c85;
 }
 
 /* Very light neutral canvas for the Opportunities/job-detail journey — a
@@ -366,7 +442,7 @@
 .ion-outline-button {
   background-color: rgba(15, 163, 161, 0.04);
   border: 1px solid rgba(15, 163, 161, 0.45) !important;
-  color: #006c65 !important;
+  color: #006c85 !important;
 }
 
 .ion-outline-button:hover {
@@ -380,28 +456,6 @@
 .ion-gradient-rule--fade {
   mask-image: linear-gradient(90deg, transparent 0%, black 15%, black 85%, transparent 100%);
   -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 15%, black 85%, transparent 100%);
-}
-
-/* Gradient top accent for the third "How We Work" card — the same signature
-   transition used as an intentional third beat in the teal / violet /
-   gradient rhythm across the three service cards, rather than a plain teal
-   repeat. Border-top stays transparent at the same width as the other two
-   cards so card heights and spacing are unaffected. */
-.ion-card-top-4-gradient {
-  background-color: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-top: 4px solid transparent;
-  position: relative;
-}
-
-.ion-card-top-4-gradient::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #0fa3a1 0%, #0fa3a1 46%, #6657e8 54%, #6657e8 100%);
 }
 
 @layer base {
