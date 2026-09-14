@@ -151,7 +151,7 @@ export default function HomePage() {
 
         {/* Restrained signature transition into the section below — the same
             teal → lilac accent used as the salary guide's page spine. */}
-        <div className="ion-gradient-rule absolute bottom-0 left-0 right-0 z-10 w-full opacity-70" aria-hidden="true" />
+        <div className="ion-gradient-rule absolute bottom-0 left-0 right-0 z-10 w-full opacity-90" aria-hidden="true" />
       </section>
 
       {/* Proof & Credibility */}
@@ -193,7 +193,11 @@ export default function HomePage() {
             ))}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pt-8 border-t border-gray-100 max-w-4xl mx-auto">
+          {/* Restrained teal → lilac micro-detail connecting this section to
+              the wider system — the divider above the stats, not the numbers
+              themselves. */}
+          <div className="ion-gradient-rule mx-auto mb-8 w-16 opacity-80" aria-hidden="true" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-4xl mx-auto">
             <StatCounter end={10} suffix="+" label="Years of Recruitment Experience" startDelay={0} />
             <StatCounter end={500} suffix="+" label="Placements Delivered" startDelay={120} />
             <StatCounter
@@ -305,7 +309,7 @@ export default function HomePage() {
             </FadeIn>
 
             <FadeIn delay={200}>
-              <Card className="ion-card-top-4 group h-full relative overflow-hidden rounded-[14px] p-8 lg:p-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+              <Card className="ion-card-top-4-gradient group h-full relative overflow-hidden rounded-[14px] p-8 lg:p-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
                 <div className="relative space-y-6 lg:space-y-4">
                   <div className="ion-icon-circle-teal w-14 h-14 lg:w-11 lg:h-11 rounded-full flex items-center justify-center">
                     <Users className="h-7 w-7 lg:h-5 lg:w-5 text-white" />
@@ -349,7 +353,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="industries" className="scroll-mt-[100px] py-16 md:py-24 px-6 bg-ion-surface border-t border-gray-100">
+      <section
+        id="industries"
+        className="ion-section-divider scroll-mt-[100px] py-16 md:py-24 px-6 bg-ion-surface border-t border-transparent"
+      >
         <div className="container mx-auto max-w-6xl">
           <FadeIn className="mb-10 md:mb-12">
             <h2 className="font-display text-4xl lg:text-5xl font-semibold text-ion-navy mb-3 tracking-tight text-balance">
@@ -362,7 +369,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               { title: "Technology", desc: "Developers, Engineers, Product Managers, CTOs" },
-              { title: "Finance", desc: "Analysts, Managers, Directors, CFOs" },
+              { title: "Finance", desc: "Analysts, Managers, Directors, CFOs", accent: "violet" },
               { title: "Engineering", desc: "Engineers, Managers, Directors, VPs" },
               { title: "Construction", desc: "Site Managers, Project Managers, Directors" },
               { title: "Cybersecurity", desc: "Analysts, Managers, Directors, CISOs" },
@@ -405,7 +412,7 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <FadeIn>
-              <div className="ion-viewcard h-full flex items-start gap-4 rounded-[14px] p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
+              <div className="ion-viewcard ion-viewcard-edge-teal h-full flex items-start gap-4 rounded-[14px] p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
                 <div className="ion-icon-circle-teal w-12 h-12 rounded-full flex items-center justify-center shrink-0">
                   <UserCheck className="h-6 w-6 text-white" aria-hidden="true" />
                 </div>
@@ -420,8 +427,8 @@ export default function HomePage() {
             </FadeIn>
 
             <FadeIn delay={100}>
-              <div className="ion-viewcard h-full flex items-start gap-4 rounded-[14px] p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
-                <div className="ion-icon-circle-teal w-12 h-12 rounded-full flex items-center justify-center shrink-0">
+              <div className="ion-viewcard ion-viewcard-edge-violet h-full flex items-start gap-4 rounded-[14px] p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
+                <div className="ion-icon-circle-violet w-12 h-12 rounded-full flex items-center justify-center shrink-0">
                   <Radar className="h-6 w-6 text-white" aria-hidden="true" />
                 </div>
                 <div className="pt-1">
@@ -435,7 +442,7 @@ export default function HomePage() {
             </FadeIn>
 
             <FadeIn delay={200}>
-              <div className="ion-viewcard h-full flex items-start gap-4 rounded-[14px] p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
+              <div className="ion-viewcard ion-viewcard-edge-teal h-full flex items-start gap-4 rounded-[14px] p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
                 <div className="ion-icon-circle-teal w-12 h-12 rounded-full flex items-center justify-center shrink-0">
                   <Globe className="h-6 w-6 text-white" aria-hidden="true" />
                 </div>
@@ -464,7 +471,8 @@ export default function HomePage() {
             <p className="text-lg text-ion-gray">Ready to transform your hiring? Let&apos;s talk.</p>
           </div>
 
-          <div className="rounded-[20px] border border-gray-200 bg-white p-6 shadow-sm sm:p-8 md:p-10">
+          <div className="relative overflow-hidden rounded-[20px] border border-gray-200 bg-white p-6 shadow-sm sm:p-8 md:p-10">
+            <div className="ion-gradient-rule absolute top-0 left-0 right-0 opacity-70" aria-hidden="true" />
             <EnhancedContactForm initialService={selectedService} />
           </div>
         </div>

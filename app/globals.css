@@ -246,7 +246,7 @@
  * distinction, never as a decorative default.
  */
 .ion-gradient-rule {
-  height: 3px;
+  height: 4px;
   border-radius: 9999px;
   background: linear-gradient(90deg, #0fa3a1 0%, #0fa3a1 46%, #6657e8 54%, #6657e8 100%);
 }
@@ -289,6 +289,67 @@
 
 .ion-viewcard:hover {
   border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Thin bottom-edge accents for .ion-viewcard — declared after .ion-viewcard
+   so these longhand border-bottom declarations win over its shorthand
+   `border`, without disturbing the other three sides. Used to make the
+   teal/lilac pairing across the "Why ION Talent" cards legible as one
+   deliberate rhythm rather than a single isolated accent. */
+.ion-viewcard-edge-teal {
+  border-bottom: 2px solid rgba(15, 163, 161, 0.55);
+}
+
+.ion-viewcard-edge-violet {
+  border-bottom: 2px solid rgba(102, 87, 232, 0.55);
+}
+
+/* Second-pass distribution of the lilac thread: a violet counterpart to
+   .ion-card-top-3 / .ion-badge-teal / .ion-text-deep-teal, used on exactly
+   one card in the Featured Opportunities grid (by position, not content) so
+   lilac reads as a recurring part of the system rather than a one-off. */
+.ion-card-top-3-violet {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-top-width: 3px;
+  border-top-color: #6657e8 !important;
+}
+
+.ion-card-top-3-violet:hover {
+  background-color: #f1f5f9;
+  border-top-color: #5645c4 !important;
+}
+
+.ion-badge-violet {
+  background-color: #6657e8 !important;
+  color: #ffffff !important;
+  border: 1px solid #6657e8 !important;
+}
+
+.ion-text-deep-violet {
+  color: #5645c4 !important;
+}
+
+/* Gradient top accent for the third "How We Work" card — the same signature
+   transition used as an intentional third beat in the teal / violet /
+   gradient rhythm across the three service cards, rather than a plain teal
+   repeat. Border-top stays transparent at the same width as the other two
+   cards so card heights and spacing are unaffected. */
+.ion-card-top-4-gradient {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-top: 4px solid transparent;
+  position: relative;
+}
+
+.ion-card-top-4-gradient::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #0fa3a1 0%, #0fa3a1 46%, #6657e8 54%, #6657e8 100%);
 }
 
 @layer base {

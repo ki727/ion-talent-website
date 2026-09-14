@@ -43,7 +43,7 @@ export function HomepageReferralSection() {
             {/* Signature teal → lilac transition as a top accent, giving this
                 campaign block more visual presence without adding colour to
                 its content. */}
-            <div className="ion-gradient-rule absolute top-0 left-0 right-0 opacity-80" aria-hidden="true" />
+            <div className="ion-gradient-rule absolute top-0 left-0 right-0 opacity-90" aria-hidden="true" />
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ion-teal-bright">
               ION Talent Referrals
             </p>
