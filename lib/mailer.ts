@@ -1,5 +1,7 @@
+import fs from "node:fs"
+import path from "node:path"
 import nodemailer from "nodemailer"
-import { LINKEDIN_COMPANY_URL, SALARY_GUIDE_PDF_PATH, SITE_URL } from "@/lib/site-config"
+import { LINKEDIN_COMPANY_URL, SALARY_GUIDE_PDF_URL } from "@/lib/site-config"
 
 /**
  * SMTP transport for the live submission flows: employer hiring enquiries,
@@ -273,36 +275,43 @@ export interface SalaryGuideLeadData {
 }
 
 /**
- * Origin used only for links/images inside transactional emails — never for
- * SEO canonical/OG URLs (those always use the fixed SITE_URL). On a genuine
- * production deploy this resolves to the canonical custom domain; on a
- * Vercel Preview deployment it resolves to that deployment's own URL, so a
- * salary-guide email sent from a preview branch links to assets that
- * actually exist there instead of 404ing against production before merge.
- * VERCEL_ENV/VERCEL_URL are Vercel's own system environment variables —
- * always present at runtime, nothing to configure.
+ * The downloader email's logo and LinkedIn icon are embedded as CID
+ * attachments (read from public/brand at send time) rather than linked as
+ * remote images. This is deliberate: a remote image URL pointed at a Vercel
+ * Preview deployment is behind Vercel's deployment-protection login, so
+ * Outlook/Gmail simply show a broken-image placeholder when a lead opens the
+ * email from a preview send. Embedding the bytes directly means the images
+ * render correctly regardless of which environment sent the email.
  */
-function getEmailAssetOrigin(): string {
-  if (process.env.VERCEL_ENV === "production") return SITE_URL
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`
-  return SITE_URL
+const LOGO_CID = "ion-talent-logo"
+const LINKEDIN_ICON_CID = "ion-linkedin-icon"
+
+let cachedLogoBuffer: Buffer | null = null
+let cachedLinkedInIconBuffer: Buffer | null = null
+
+function readBrandAsset(filename: string): Buffer {
+  return fs.readFileSync(path.join(process.cwd(), "public", "brand", filename))
 }
 
-/** Pulls the bare address out of an EMAIL_FROM value that may or may not already carry a display name. */
-function extractEmailAddress(fromValue: string): string {
-  const match = fromValue.match(/<([^>]+)>/)
-  return match ? match[1] : fromValue.trim()
+function getLogoBuffer(): Buffer {
+  if (!cachedLogoBuffer) cachedLogoBuffer = readBrandAsset("logo-primary-email.png")
+  return cachedLogoBuffer
 }
 
-/** Branded downloader email — links to the PDF, never attaches it. */
-function buildSalaryGuideDownloadEmail(firstName: string, downloadUrl: string, logoUrl: string): string {
+function getLinkedInIconBuffer(): Buffer {
+  if (!cachedLinkedInIconBuffer) cachedLinkedInIconBuffer = readBrandAsset("linkedin-icon-email.png")
+  return cachedLinkedInIconBuffer
+}
+
+/** Branded downloader email — links to the PDF, never attaches it. Logo/icon are CID-embedded, not remote. */
+function buildSalaryGuideDownloadEmail(firstName: string, downloadUrl: string): string {
   return `<!doctype html>
 <html>
   <body style="margin:0;padding:24px;background:#F8FAFC;font-family:Arial,Helvetica,sans-serif;">
     <table role="presentation" cellpadding="0" cellspacing="0" style="max-width:600px;margin:0 auto;background:#FFFFFF;border:1px solid ${BORDER};border-radius:14px;overflow:hidden;">
       <tr>
         <td style="background:${NAVY};padding:32px 24px;">
-          <img src="${logoUrl}" width="160" height="36" alt="ION Talent" style="display:block;width:160px;height:auto;border:0;outline:none;" />
+          <img src="cid:${LOGO_CID}" width="136" height="31" alt="ION Talent" style="display:block;width:136px;height:31px;border:0;outline:none;" />
           <h1 style="margin:18px 0 0;color:#FFFFFF;font-size:22px;font-weight:700;">Your 2026 Salary &amp; Hiring Guide</h1>
         </td>
       </tr>
@@ -320,9 +329,16 @@ function buildSalaryGuideDownloadEmail(firstName: string, downloadUrl: string, l
           </table>
           <p style="margin:28px 0 0;font-size:14px;color:#334155;line-height:1.6;">If you&rsquo;re hiring across the UAE or Saudi Arabia and would like to discuss the market, feel free to get in touch.</p>
           <p style="margin:16px 0 0;font-size:14px;color:#334155;">ION Talent</p>
-          <p style="margin:24px 0 0;padding-top:20px;border-top:1px solid ${BORDER};">
-            <a href="${LINKEDIN_COMPANY_URL}" style="font-size:12px;color:#64748B;text-decoration:none;font-weight:600;">Follow ION Talent on LinkedIn &rarr;</a>
-          </p>
+          <table role="presentation" cellpadding="0" cellspacing="0" style="margin:24px 0 0;border-top:1px solid ${BORDER};width:100%;">
+            <tr>
+              <td style="padding:20px 0 0;vertical-align:middle;">
+                <a href="${LINKEDIN_COMPANY_URL}" style="text-decoration:none;">
+                  <img src="cid:${LINKEDIN_ICON_CID}" width="16" height="16" alt="" style="display:inline-block;width:16px;height:16px;vertical-align:middle;border:0;outline:none;margin-right:6px;" />
+                  <span style="font-size:12px;color:#64748B;font-weight:600;vertical-align:middle;">Follow ION Talent on LinkedIn &rarr;</span>
+                </a>
+              </td>
+            </tr>
+          </table>
         </td>
       </tr>
       <tr>
@@ -358,21 +374,25 @@ export async function sendSalaryGuideLeadEmail(data: SalaryGuideLeadData) {
     ]),
   })
 
-  // Downloader email — link only, no attachment. Sent from the same
-  // already-authenticated address as every other ION Talent email (zero
-  // deliverability risk), with the display name forced to "ION Talent" and
-  // replies routed to the published info@ inbox rather than the
-  // authenticated mailbox.
-  const emailOrigin = getEmailAssetOrigin()
+  // Downloader email — link only, no PDF attachment. Sent from the
+  // authenticated SMTP mailbox itself (Gmail's SMTP relay rewrites the From
+  // address to the authenticated account for any address it doesn't
+  // recognise as that account or a verified Send-As alias, silently
+  // dropping a display name set on a mismatched address) with the display
+  // name forced to "ION Talent" and replies routed to the published info@
+  // inbox rather than the authenticated mailbox. The PDF link always points
+  // at the permanent production URL — never a Vercel Preview origin, which
+  // is protected behind Vercel's own login and would send external
+  // recipients to a Vercel auth page instead of the guide.
   await transporter.sendMail({
-    from: { name: "ION Talent", address: extractEmailAddress(from) },
+    from: { name: "ION Talent", address: requireEnv("SMTP_USER") },
     to: data.workEmail,
     replyTo: "info@iontalentgroup.com",
     subject: "Your ION Talent 2026 Salary & Hiring Guide",
-    html: buildSalaryGuideDownloadEmail(
-      data.firstName,
-      `${emailOrigin}${SALARY_GUIDE_PDF_PATH}`,
-      `${emailOrigin}/brand/logo-primary-email.png`,
-    ),
+    html: buildSalaryGuideDownloadEmail(data.firstName, SALARY_GUIDE_PDF_URL),
+    attachments: [
+      { filename: "ion-talent-logo.png", content: getLogoBuffer(), cid: LOGO_CID },
+      { filename: "linkedin-icon.png", content: getLinkedInIconBuffer(), cid: LINKEDIN_ICON_CID },
+    ],
   })
 }
