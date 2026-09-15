@@ -378,18 +378,15 @@ export async function sendSalaryGuideLeadEmail(data: SalaryGuideLeadData) {
     ]),
   })
 
-  // Downloader email — link only, no PDF attachment. Sent from the
-  // authenticated SMTP mailbox itself (Gmail's SMTP relay rewrites the From
-  // address to the authenticated account for any address it doesn't
-  // recognise as that account or a verified Send-As alias, silently
-  // dropping a display name set on a mismatched address) with the display
-  // name forced to "ION Talent" and replies routed to the published info@
-  // inbox rather than the authenticated mailbox. The PDF link always points
-  // at the permanent production URL — never a Vercel Preview origin, which
-  // is protected behind Vercel's own login and would send external
-  // recipients to a Vercel auth page instead of the guide.
+  // Downloader email — link only, no PDF attachment. Sent as the verified
+  // Google Workspace Send As identity info@iontalentgroup.com (confirmed
+  // configured on the SMTP_USER mailbox), not the raw authenticated
+  // mailbox address, with replies routed to the same info@ inbox. The PDF
+  // link always points at the permanent production URL — never a Vercel
+  // Preview origin, which is protected behind Vercel's own login and would
+  // send external recipients to a Vercel auth page instead of the guide.
   await transporter.sendMail({
-    from: { name: "ION Talent", address: requireEnv("SMTP_USER") },
+    from: { name: "ION Talent", address: "info@iontalentgroup.com" },
     to: data.workEmail,
     replyTo: "info@iontalentgroup.com",
     subject: "Your ION Talent 2026 Salary & Hiring Guide",
