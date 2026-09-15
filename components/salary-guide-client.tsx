@@ -111,7 +111,11 @@ export function SalaryGuideClient() {
               </FadeIn>
 
               <FadeIn delay={120}>
-                <div className="relative mx-auto w-full max-w-sm">
+                {/* Compact preview on phones (below sm) so the cover reads as
+                    a document thumbnail rather than dominating the viewport;
+                    unchanged from sm upward (tablet and the lg two-column
+                    layout keep their original size). */}
+                <div className="relative mx-auto w-full max-w-[220px] sm:max-w-sm">
                   <div className="ion-gradient-rule absolute -top-3 left-6 right-6 opacity-90" aria-hidden="true" />
                   <img
                     src="/resources/salary-guide-cover.webp"

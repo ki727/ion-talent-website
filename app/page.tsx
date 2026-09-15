@@ -395,29 +395,36 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Salary Guide — single homepage entry point to the gated resource */}
+      {/* Salary Guide — single homepage entry point to the gated resource.
+          Mobile keeps a small cover thumbnail beside the title/copy (a
+          "display:contents" wrapper below md dissolves at md+ so the image,
+          text and button fall back to exactly the original 3-column grid on
+          tablet/desktop, unchanged) instead of hiding the cover and
+          stretching into a tall text-only card. */}
       <section className="py-16 md:py-20 px-6 bg-white border-t border-gray-100">
         <div className="container mx-auto max-w-6xl">
           <FadeIn>
-            <div className="ion-card-hairline relative overflow-hidden rounded-[20px] p-8 shadow-sm transition-all duration-300 hover:shadow-md md:p-10">
-              <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-[auto_1fr_auto]">
-                <img
-                  src="/resources/salary-guide-cover.webp"
-                  alt=""
-                  aria-hidden="true"
-                  loading="lazy"
-                  width={800}
-                  height={1130}
-                  className="mx-auto hidden w-28 rounded-lg shadow-md ring-1 ring-black/5 sm:block md:w-32"
-                />
-                <div>
-                  <p className="ion-card-eyebrow mb-2">2026 Salary &amp; Hiring Guide</p>
-                  <h2 className="font-display text-2xl font-bold text-ion-navy mb-2 text-balance md:text-3xl">
-                    UAE &amp; Saudi Arabia Salary &amp; Hiring Guide 2026
-                  </h2>
-                  <p className="text-ion-gray leading-relaxed max-w-xl">
-                    Explore salary benchmarks and hiring insight across key specialist and leadership functions.
-                  </p>
+            <div className="ion-card-hairline relative overflow-hidden rounded-[20px] p-5 shadow-sm transition-all duration-300 hover:shadow-md sm:p-6 md:p-10">
+              <div className="grid grid-cols-1 items-center gap-5 sm:gap-6 md:grid-cols-[auto_1fr_auto] md:gap-8">
+                <div className="flex items-center gap-4 sm:gap-5 md:contents">
+                  <img
+                    src="/resources/salary-guide-cover.webp"
+                    alt=""
+                    aria-hidden="true"
+                    loading="lazy"
+                    width={800}
+                    height={1130}
+                    className="w-20 shrink-0 rounded-lg shadow-md ring-1 ring-black/5 sm:w-24 md:w-32"
+                  />
+                  <div className="min-w-0">
+                    <p className="ion-card-eyebrow mb-1.5 md:mb-2">2026 Salary &amp; Hiring Guide</p>
+                    <h2 className="font-display text-lg font-bold text-ion-navy mb-1 text-balance sm:text-2xl md:mb-2 md:text-3xl">
+                      UAE &amp; Saudi Arabia Salary &amp; Hiring Guide 2026
+                    </h2>
+                    <p className="text-sm text-ion-gray leading-relaxed sm:text-base md:max-w-xl">
+                      Explore salary benchmarks and hiring insight across key specialist and leadership functions.
+                    </p>
+                  </div>
                 </div>
                 <Button
                   asChild
