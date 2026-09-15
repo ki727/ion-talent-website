@@ -307,8 +307,12 @@ function getLinkedInIconBuffer(): Buffer {
 function buildSalaryGuideDownloadEmail(firstName: string, downloadUrl: string): string {
   return `<!doctype html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
   <body style="margin:0;padding:24px;background:#F8FAFC;font-family:Arial,Helvetica,sans-serif;">
-    <table role="presentation" cellpadding="0" cellspacing="0" style="max-width:600px;margin:0 auto;background:#FFFFFF;border:1px solid ${BORDER};border-radius:14px;overflow:hidden;">
+    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="width:100%;max-width:600px;margin:0 auto;background:#FFFFFF;border:1px solid ${BORDER};border-radius:14px;overflow:hidden;">
       <tr>
         <td style="background:${NAVY};padding:32px 24px;">
           <img src="cid:${LOGO_CID}" width="136" height="31" alt="ION Talent" style="display:block;width:136px;height:31px;border:0;outline:none;" />
