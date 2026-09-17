@@ -17,6 +17,14 @@
   --ion-surface: 241 245 249; /* #F1F5F9 */
   --ion-surface-pale: 248 250 252; /* #F8FAFC — palest neutral, salary-guide "--surface" */
 
+  /* Corrective art-direction pass — pale tonal surfaces that let each
+     homepage chapter read as a distinct zone (candidate/lilac-leaning vs.
+     industry/teal-leaning) instead of the same one or two neutrals
+     repeating everywhere. Kept extremely pale — these are zoning cues, not
+     colour statements. */
+  --ion-surface-lilac: 246 245 252; /* #F6F5FC */
+  --ion-surface-teal-pale: 238 248 247; /* #EEF8F7 */
+
   /* Approved secondary accent (lilac/violet) — restrained use only, per the
      2026 Salary & Hiring Guide design system. Teal remains the primary
      accent; violet is reserved for isolated premium/comparison moments. */
@@ -71,30 +79,43 @@
 }
 
 /*
- * Secondary hero CTA (e.g. "Explore Opportunities"): restrained dark-translucent fill
- * with a clean white border. Same bulletproof rationale as
+ * Secondary hero CTA (e.g. "Explore Opportunities"): a restrained glass
+ * treatment — translucent white fill, soft lilac border/icon — so it reads
+ * as deliberately different from the solid-teal primary CTA beside it
+ * rather than a second teal button. Text stays white in every state (never
+ * re-derived from the image underneath) for guaranteed contrast; the lilac
+ * accent lives on the border and icon only. Same bulletproof rationale as
  * .ion-primary-button — the shadcn Button "outline" variant's base classes
  * include `hover:text-accent-foreground`, which was leaking through and
  * turning the label dark on hover. Declared with !important, outside any
  * @layer, for the same reason display/layout is intentionally omitted here.
  */
 .ion-secondary-button {
-  background-color: rgba(15, 23, 42, 0.35) !important;
+  background-color: rgba(255, 255, 255, 0.08) !important;
   color: #ffffff !important;
-  border: 2px solid #ffffff !important;
+  border: 1.5px solid rgba(199, 194, 247, 0.75) !important;
   min-height: 48px;
   opacity: 1;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.ion-secondary-button svg {
+  color: #c7c2f7 !important;
 }
 
 /*
- * Hover is a translucent violet glass rather than a deeper navy wash — the
- * one approved spot where the candidate/opportunity accent (lilac) appears
- * over photography. Stays translucent on purpose so the video/image is
- * still visible through the button; text/border stay white throughout so
- * contrast never depends on the image underneath.
+ * Hover is a translucent violet glass — the candidate/opportunity accent
+ * strengthening on interaction. Stays translucent on purpose so the
+ * video/image is still visible through the button.
  */
 .ion-secondary-button:hover {
-  background-color: rgba(102, 87, 232, 0.28) !important;
+  background-color: rgba(102, 87, 232, 0.26) !important;
+  border-color: rgba(102, 87, 232, 0.9) !important;
+  color: #ffffff !important;
+}
+
+.ion-secondary-button:hover svg {
   color: #ffffff !important;
 }
 
@@ -462,6 +483,108 @@
 .ion-gradient-rule--fade {
   mask-image: linear-gradient(90deg, transparent 0%, black 15%, black 85%, transparent 100%);
   -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 15%, black 85%, transparent 100%);
+}
+
+/* =========================================================================
+ * CORRECTIVE ART-DIRECTION PASS — colour-hierarchy rebalance.
+ *
+ * Teal had become the default answer for every accent (icons, buttons,
+ * labels, bullets), which read as repetitive. These additions give lilac a
+ * more confident, deliberate role (candidate/opportunity journeys,
+ * international/editorial moments) and add pale tonal surfaces so homepage
+ * sections read as distinct chapters instead of a run of white cards.
+ * ========================================================================= */
+
+/* Pale zoning surfaces — each homepage "chapter" gets a surface that fits
+   its journey (lilac-leaning for candidate/opportunity content, teal-pale
+   for the industry-expertise chapter) instead of reusing the same one or
+   two neutrals everywhere. Kept extremely pale on purpose: zoning cues, not
+   colour statements. */
+.ion-surface-lilac {
+  background-color: rgb(var(--ion-surface-lilac));
+}
+
+.ion-surface-teal-pale {
+  background-color: rgb(var(--ion-surface-teal-pale));
+}
+
+.ion-surface-tonal-lilac {
+  background: linear-gradient(180deg, #ffffff 0%, rgb(var(--ion-surface-lilac)) 100%);
+}
+
+/* Hero headline accent — replaces the previous large solid-teal treatment.
+   A soft lilac-white keeps the emphasis restrained rather than turning the
+   headline into a saturated brand-colour block, while staying light enough
+   to hold contrast over the video's navy scrim. */
+.ion-hero-lilac-accent {
+  color: #e3dffb !important;
+}
+
+/* Violet counterpart to .ion-badge-teal — candidate/opportunity signals
+   (role-type labels) moving toward the lilac family so they read as
+   distinct from the site's many teal accents. */
+.ion-badge-violet {
+  background-color: #6657e8 !important;
+  color: #ffffff !important;
+  border: 1px solid #6657e8 !important;
+}
+
+/* Soft tonal icon "rings" — an alternative to the solid-fill icon circle
+   for places where three consecutive solid-teal circles read as
+   repetitive (How We Work). Glass-like rather than a flat colour block. */
+.ion-icon-ring-teal {
+  background-color: rgba(15, 163, 161, 0.1);
+  border: 1.5px solid rgba(15, 163, 161, 0.5);
+}
+
+.ion-icon-ring-teal svg {
+  color: #0fa3a1 !important;
+}
+
+.ion-icon-ring-violet {
+  background-color: rgba(102, 87, 232, 0.1);
+  border: 1.5px solid rgba(102, 87, 232, 0.5);
+}
+
+.ion-icon-ring-violet svg {
+  color: #6657e8 !important;
+}
+
+/* Violet variants of the existing top-accent card and checkmark classes —
+   used on exactly one "selected" card/item per group (never all of them),
+   so lilac reads as a deliberate highlight rather than decoration. */
+.ion-card-top-4--violet {
+  border-top-color: #6657e8 !important;
+}
+
+.ion-card-top-4--violet:hover {
+  border-top-color: #5645c4 !important;
+}
+
+.ion-card-top-3--violet {
+  border-top-color: #6657e8 !important;
+}
+
+.ion-card-top-3--violet:hover {
+  background-color: #f1f5f9;
+  border-top-color: #5645c4 !important;
+}
+
+.ion-text-deep-violet {
+  color: #5645c4 !important;
+}
+
+/* Small colour-accent modifiers for .ion-primary-button-navy's icon only —
+   lets the shared premium dark CTA carry a teal or lilac interaction
+   detail per context without a giant solid-colour button. Declared after
+   the base .ion-primary-button-navy svg rule so they win at equal
+   specificity. */
+.ion-primary-button-navy--teal-accent svg {
+  color: #22c6b3 !important;
+}
+
+.ion-primary-button-navy--violet-accent svg {
+  color: #b7aef7 !important;
 }
 
 @layer base {

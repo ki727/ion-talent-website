@@ -223,8 +223,8 @@ export default function AboutPage() {
                   Established networks across the GCC and UK.
                 </p>
               </div>
-              <div className="ion-card-top-3 rounded-[14px] p-6 shadow-sm">
-                <div className="ion-icon-circle-teal flex h-10 w-10 items-center justify-center rounded-full">
+              <div className="ion-card-top-3 ion-card-top-3--violet rounded-[14px] p-6 shadow-sm">
+                <div className="ion-icon-circle-violet flex h-10 w-10 items-center justify-center rounded-full">
                   <Globe className="h-5 w-5 text-white" aria-hidden="true" />
                 </div>
                 <h3 className="mt-4 text-base font-semibold text-gray-900">International Reach</h3>

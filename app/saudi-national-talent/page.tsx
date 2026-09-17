@@ -78,20 +78,22 @@ export default function SaudiNationalTalentPage() {
       <SiteHeader />
 
       <main className="ion-page-enter">
-        {/* Hero — full-bleed editorial architecture image, same overlay
-            treatment as the homepage hero video (flat scrim + directional
-            gradient) so the two hero moments read as one system. */}
+        {/* Hero — full-bleed Riyadh skyline, same overlay treatment as the
+            homepage hero video (flat scrim + directional gradient) so the
+            two hero moments read as one system. Saturation/brightness pulled
+            down well below the source to tame its warm sunset sky into the
+            site's cool navy mood rather than leaving an orange cast. */}
         <section className="relative flex min-h-[70vh] items-center overflow-hidden px-6 pt-28 pb-16 sm:pt-32 lg:pt-36">
           <div className="absolute inset-0 z-0 bg-ion-navy">
             <img
-              src="/photography/saudi-kafd-geometry.webp"
+              src="/photography/saudi-kingdom-centre.webp"
               alt=""
               aria-hidden="true"
               className="h-full w-full object-cover"
-              style={{ filter: "saturate(0.85) contrast(1.08) brightness(0.8)" }}
+              style={{ objectPosition: "center 25%", filter: "saturate(0.55) contrast(1.1) brightness(0.75)" }}
             />
-            <div className="absolute inset-0 bg-ion-navy/50" />
-            <div className="absolute inset-0 bg-gradient-to-r from-ion-navy/90 via-ion-navy/60 to-ion-navy/20" />
+            <div className="absolute inset-0 bg-ion-navy/60" />
+            <div className="absolute inset-0 bg-gradient-to-r from-ion-navy/90 via-ion-navy/65 to-ion-navy/30" />
           </div>
 
           <div className="container relative z-10 mx-auto max-w-4xl">
@@ -163,8 +165,8 @@ export default function SaudiNationalTalentPage() {
               {EMPLOYER_POINTS.map((point, i) => (
                 <FadeIn key={point.title} delay={(i % 2) * 100}>
                   <div className="ion-card-top-3 h-full rounded-[14px] p-6 shadow-sm">
-                    <div className="ion-icon-circle-teal flex h-10 w-10 items-center justify-center rounded-full">
-                      <point.icon className="h-5 w-5 text-white" aria-hidden="true" />
+                    <div className="ion-icon-ring-teal flex h-10 w-10 items-center justify-center rounded-full">
+                      <point.icon className="h-5 w-5" aria-hidden="true" />
                     </div>
                     <h3 className="mt-4 text-base font-semibold text-gray-900">{point.title}</h3>
                     <p className="mt-1.5 text-sm leading-relaxed text-gray-600">{point.body}</p>
@@ -182,6 +184,30 @@ export default function SaudiNationalTalentPage() {
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </CalendlyButton>
             </FadeIn>
+          </div>
+        </section>
+
+        {/* Bridging editorial moment — a second, distinct visual beat (the
+            hero already used the skyline) rather than recycling the same
+            image, with a short statement carrying the section transition. */}
+        <section className="relative overflow-hidden">
+          <div className="relative h-64 sm:h-80 md:h-96">
+            <img
+              src="/photography/saudi-kafd-geometry.webp"
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              className="absolute inset-0 h-full w-full object-cover"
+              style={{ filter: "saturate(0.85) contrast(1.08) brightness(0.85)" }}
+            />
+            <div className="absolute inset-0 bg-ion-navy/60" />
+            <div className="absolute inset-0 flex items-center justify-center px-6">
+              <FadeIn>
+                <p className="font-display max-w-2xl text-balance text-center text-xl font-semibold text-white sm:text-2xl">
+                  Building the structures that let Saudi national talent lead, not just participate.
+                </p>
+              </FadeIn>
+            </div>
           </div>
         </section>
 
