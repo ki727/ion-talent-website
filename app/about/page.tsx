@@ -93,8 +93,44 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Who We Are / What We Recruit / Where We Work / Our Approach */}
+        {/* Editorial workplace imagery, paired with a short delivery-focused
+            statement rather than a full-bleed slab — restrained to a single
+            image per the site's photography system. */}
         <section className="px-6 py-14 md:py-20 lg:px-12">
+          <div className="container mx-auto max-w-5xl">
+            <FadeIn>
+              <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-5 md:gap-12">
+                <div className="relative overflow-hidden rounded-[20px] shadow-md md:col-span-3">
+                  <img
+                    src="/photography/about-office.webp"
+                    alt=""
+                    aria-hidden="true"
+                    loading="lazy"
+                    className="aspect-[4/3] w-full object-cover sm:aspect-[16/10]"
+                    style={{ filter: "saturate(0.88) contrast(1.04) brightness(0.97)" }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ion-navy/25 via-transparent to-transparent" />
+                </div>
+                <div className="md:col-span-2">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ion-teal">
+                    Built for Delivery
+                  </p>
+                  <h2 className="mt-3 text-2xl font-bold text-ion-navy md:text-3xl text-balance">
+                    Specialist teams, working at pace
+                  </h2>
+                  <p className="mt-4 text-base leading-relaxed text-gray-600">
+                    Every search is run by consultants embedded in the sectors they recruit for —
+                    close enough to the market to move quickly, and disciplined enough to protect
+                    quality under pressure.
+                  </p>
+                </div>
+              </div>
+            </FadeIn>
+          </div>
+        </section>
+
+        {/* Who We Are / What We Recruit / Where We Work / Our Approach */}
+        <section className="px-6 py-14 md:py-20 lg:px-12 border-t border-gray-100">
           <div className="container mx-auto max-w-4xl space-y-12">
             <FadeIn>
               <h2 className="text-sm font-semibold uppercase tracking-wide text-ion-navy">Who We Are</h2>

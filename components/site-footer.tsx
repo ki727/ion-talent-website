@@ -3,6 +3,8 @@ import { LinkedinFollowLink } from "@/components/linkedin-follow-link"
 
 const FOOTER_LINKS = [
   { label: "Opportunities", href: "/opportunities" },
+  { label: "Salary Guide", href: "/salary-guide" },
+  { label: "Saudi National Talent", href: "/saudi-national-talent" },
   { label: "Hire Talent", href: "/#contact" },
   { label: "Refer a Hiring Company", href: "/refer" },
   { label: "Privacy", href: "/privacy" },

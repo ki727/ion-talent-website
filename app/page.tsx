@@ -395,6 +395,52 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Saudi National Talent — one editorial image/copy pairing, the
+          homepage's single dedicated entry point into the new page. Kept to
+          one restrained image, paired with copy rather than a full-bleed
+          slab, per the site's photography system. */}
+      <section className="py-16 md:py-20 px-6 bg-white border-t border-gray-100">
+        <div className="container mx-auto max-w-6xl">
+          <FadeIn>
+            <div className="ion-card-hairline relative overflow-hidden rounded-[20px] shadow-sm transition-all duration-300 hover:shadow-md">
+              <div className="grid grid-cols-1 md:grid-cols-2">
+                <div className="relative h-56 sm:h-72 md:h-full md:min-h-[320px]">
+                  <img
+                    src="/photography/saudi-kafd-geometry.webp"
+                    alt=""
+                    aria-hidden="true"
+                    loading="lazy"
+                    className="absolute inset-0 h-full w-full object-cover"
+                    style={{ filter: "saturate(0.85) contrast(1.08) brightness(0.92)" }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ion-navy/55 via-ion-navy/5 to-transparent md:bg-gradient-to-r md:from-transparent md:via-transparent md:to-ion-navy/10" />
+                </div>
+                <div className="flex flex-col justify-center p-6 sm:p-8 md:p-10">
+                  <p className="ion-card-eyebrow mb-2">Saudi Arabia</p>
+                  <h2 className="font-display text-2xl sm:text-3xl font-bold text-ion-navy mb-3 text-balance">
+                    Saudi National Talent
+                  </h2>
+                  <p className="text-base text-ion-gray leading-relaxed mb-6 max-w-md">
+                    Strategic, long-term hiring of Saudi nationals into key roles, planned early rather
+                    than left to chance. See how we support employers with workforce planning, and how
+                    candidates can explore current opportunities.
+                  </p>
+                  <div>
+                    <Link
+                      href="/saudi-national-talent"
+                      className="ion-primary-button inline-flex h-12 items-center justify-center gap-2 rounded-xl px-8 text-sm font-medium shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal-hover focus-visible:ring-offset-2"
+                    >
+                      Learn More
+                      <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* Salary Guide — single homepage entry point to the gated resource.
           Mobile keeps a small cover thumbnail beside the title/copy (a
           "display:contents" wrapper below md dissolves at md+ so the image,
