@@ -70,11 +70,14 @@ export function SiteHeader() {
             })}
           </nav>
 
+          {/* Same two-button system as the hero: outline "explore", solid
+              teal "convert" — so the header and hero read as one system
+              rather than two different colour languages. */}
           <div className="hidden lg:flex items-center gap-3 shrink-0">
             <Button
               asChild
               variant="outline"
-              className="ion-candidate-outline-button gap-2 text-sm px-5 rounded-xl shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:ring-2 focus-visible:ring-ion-violet focus-visible:ring-offset-2"
+              className="ion-outline-button-navy gap-2 text-sm px-5 rounded-xl transition-all duration-200 hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2"
             >
               <Link href="/opportunities">
                 Explore Opportunities
@@ -82,15 +85,13 @@ export function SiteHeader() {
               </Link>
             </Button>
 
-            {/* Employer-journey CTA — navy fill (distinct from the hero's
-                teal "Hire Talent") with a small teal accent on the arrow. */}
             <Button
               asChild
-              className="ion-primary-button-navy gap-2 text-sm px-5 rounded-xl shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:ring-2 focus-visible:ring-ion-teal-hover focus-visible:ring-offset-2"
+              className="ion-primary-button gap-2 text-sm px-5 rounded-xl shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:ring-2 focus-visible:ring-ion-teal-hover focus-visible:ring-offset-2"
             >
               <Link href="/#contact">
                 Hire Talent
-                <ArrowRight className="h-4 w-4 text-ion-teal" />
+                <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
           </div>
@@ -123,7 +124,7 @@ export function SiteHeader() {
                 <Link
                   href="/opportunities"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="ion-candidate-outline-button flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl px-6 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-violet focus-visible:ring-offset-2"
+                  className="ion-outline-button-navy flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl px-6 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2"
                 >
                   Explore Opportunities
                   <ArrowRight className="h-4 w-4" />
@@ -131,10 +132,10 @@ export function SiteHeader() {
                 <Link
                   href="/#contact"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="ion-primary-button-navy flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl px-6 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal-hover focus-visible:ring-offset-2"
+                  className="ion-primary-button flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl px-6 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal-hover focus-visible:ring-offset-2"
                 >
                   Hire Talent
-                  <ArrowRight className="h-4 w-4 text-ion-teal" />
+                  <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
             </nav>

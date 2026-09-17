@@ -58,7 +58,7 @@ export function HomepageReferralSection() {
             <div className="ion-gradient-rule absolute top-0 left-0 right-0 z-10 opacity-90" aria-hidden="true" />
 
             <div className="relative z-10">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ion-teal-bright">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/50">
                 ION Talent Referrals
               </p>
               <h2 className="font-display mt-3 text-3xl font-bold text-white text-balance md:text-4xl">

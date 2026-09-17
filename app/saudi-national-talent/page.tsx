@@ -149,7 +149,7 @@ export default function SaudiNationalTalentPage() {
         <section className="px-6 py-16 md:py-24 lg:px-12">
           <div className="container mx-auto max-w-5xl">
             <FadeIn className="mx-auto mb-12 max-w-2xl text-center md:mb-16">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ion-teal">For Employers</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ion-gray">For Employers</p>
               <h2 className="font-display mt-3 text-3xl font-bold text-ion-navy md:text-4xl text-balance">
                 Plan Saudi National Hiring Like It Matters — Because It Does
               </h2>
@@ -215,13 +215,13 @@ export default function SaudiNationalTalentPage() {
         <section className="ion-surface-tonal px-6 py-16 md:py-24 lg:px-12 border-t border-gray-100">
           <div className="container mx-auto max-w-3xl text-center">
             <FadeIn>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ion-violet">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ion-gray">
                 For Saudi National Candidates
               </p>
               <h2 className="font-display mt-3 text-3xl font-bold text-ion-navy md:text-4xl text-balance">
                 Your Experience Belongs at the Centre of Saudi Arabia&apos;s Growth
               </h2>
-              <span className="ion-heading-underline ion-heading-underline--violet mx-auto mt-5" aria-hidden="true" />
+              <span className="ion-heading-underline mx-auto mt-5" aria-hidden="true" />
               <p className="mt-5 text-lg leading-relaxed text-ion-gray">
                 Saudi national talent is central to the organisations shaping the Kingdom&apos;s
                 fastest-moving sectors — technology, cybersecurity, cloud, data, engineering and
@@ -232,7 +232,7 @@ export default function SaudiNationalTalentPage() {
               <div className="mt-8">
                 <Link
                   href="/opportunities"
-                  className="ion-candidate-button inline-flex h-12 items-center justify-center gap-2 rounded-xl px-8 text-sm font-medium shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-violet focus-visible:ring-offset-2"
+                  className="ion-outline-button-navy inline-flex h-12 items-center justify-center gap-2 rounded-xl px-8 text-sm font-medium transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2"
                 >
                   Explore Current Opportunities
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />

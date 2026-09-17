@@ -118,21 +118,21 @@ const FEATURED_ROLES = selectFeaturedRoles()
 
 export function FeaturedJobs() {
   return (
-    <section className="ion-surface-tonal-lilac pt-16 md:pt-24 pb-10 md:pb-14 px-6 border-t border-ion-border">
+    <section className="ion-surface-tonal pt-16 md:pt-24 pb-10 md:pb-14 px-6 border-t border-ion-border">
       <div className="container mx-auto max-w-6xl">
         <FadeIn className="mb-16 md:mb-20 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <div>
             <h2 className="font-display text-4xl lg:text-5xl font-semibold text-ion-navy mb-3 tracking-tight text-balance">
               Featured Opportunities
             </h2>
-            <span className="ion-heading-underline ion-heading-underline--violet mb-4" aria-hidden="true" />
+            <span className="ion-heading-underline mb-4" aria-hidden="true" />
             <p className="text-lg text-ion-gray">
               A sample of current and upcoming opportunities across the ION Talent Network.
             </p>
           </div>
           <Link
             href="/opportunities"
-            className="inline-flex items-center gap-2 text-sm font-medium text-ion-violet-deep hover:underline shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-violet focus-visible:ring-offset-2 rounded-sm"
+            className="inline-flex items-center gap-2 text-sm font-medium text-ion-navy hover:text-ion-teal-dark shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2 rounded-sm"
           >
             View All Opportunities
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -145,9 +145,9 @@ export function FeaturedJobs() {
               <Link
                 href={`/opportunities/${role.slug}`}
                 aria-label={`${role.title} — view role details`}
-                className="ion-card-hairline group relative flex h-full flex-col overflow-hidden rounded-2xl bg-white p-6 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-violet focus-visible:ring-offset-2"
+                className="ion-card-hairline group relative flex h-full flex-col overflow-hidden rounded-2xl bg-white p-6 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2"
               >
-                <span className="ion-badge-violet mb-3 inline-block w-fit rounded-full px-2.5 py-0.5 text-xs font-semibold">
+                <span className="ion-badge-neutral mb-3 inline-block w-fit rounded-full px-2.5 py-0.5 text-xs font-semibold">
                   {getRoleTypeLabel(role)}
                 </span>
                 <h3 className="text-base font-bold text-ion-navy leading-snug mb-1.5">{role.title}</h3>

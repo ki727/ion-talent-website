@@ -1,18 +1,58 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
 import { EnhancedContactForm } from "@/components/enhanced-contact-form"
 import { ScrollProgress } from "@/components/scroll-progress"
 import { FadeIn } from "@/components/fade-in"
 import { FeaturedJobs } from "@/components/featured-jobs"
 import { StatCounter } from "@/components/stat-counter"
 import { HomepageReferralSection } from "@/components/homepage-referral-section"
-import { Target, Award, Users, ArrowRight, UserCheck, Radar, Globe } from "lucide-react"
+import { Target, Award, Users, ArrowRight, UserCheck, Radar, Globe, Check } from "lucide-react"
 import Link from "next/link"
 import { useRef, useEffect, useState } from "react"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
+
+/* Three parallel service tiers — presented with total visual parity
+   (same card, same icon treatment, same CTA) since they're options to
+   compare, not a ranked "flagship vs. the rest" comparison. */
+const SERVICES = [
+  {
+    icon: Target,
+    title: "Contingent",
+    tagline: "Pay only when we successfully place the right candidate",
+    formValue: "contingent",
+    points: [
+      "Commercial terms aligned to successful delivery",
+      "Replacement protection available under agreed terms",
+      "Flexible support for specialist and multi-hire requirements",
+    ],
+  },
+  {
+    icon: Award,
+    title: "Retained Search",
+    tagline: "Premium executive search for senior and hard-to-fill roles",
+    formValue: "retained",
+    points: [
+      "Dedicated senior consultant",
+      "Comprehensive market mapping",
+      "Exclusive candidate access",
+      "Agreed delivery and replacement terms",
+    ],
+  },
+  {
+    icon: Users,
+    title: "RPO / Embedded",
+    tagline: "Complete recruitment outsourcing and dedicated team solutions",
+    formValue: "rpo",
+    points: [
+      "Dedicated recruitment team",
+      "Scalable hiring solutions",
+      "End-to-end process ownership",
+      "Cost-effective for volume",
+    ],
+  },
+]
 
 export default function HomePage() {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -118,7 +158,7 @@ export default function HomePage() {
             <h1 className="font-display hero-text-shadow text-5xl lg:text-6xl font-bold text-white leading-[1.08] text-balance">
               Specialist talent solutions that
               <br />
-              <span className="ion-hero-lilac-accent">transform businesses</span>
+              <span className="ion-hero-underline-accent">transform businesses</span>
             </h1>
 
             <p className="hero-text-shadow text-lg sm:text-xl text-white/90 max-w-2xl leading-relaxed">
@@ -230,140 +270,47 @@ export default function HomePage() {
             </p>
           </FadeIn>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-6">
-            <FadeIn>
-              <Card className="ion-card-top-4 group h-full relative overflow-hidden rounded-[14px] p-8 lg:p-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
-                <div className="relative space-y-6 lg:space-y-4">
-                  <div className="ion-icon-ring-teal w-14 h-14 lg:w-11 lg:h-11 rounded-full flex items-center justify-center">
-                    <Target className="h-6 w-6 lg:h-5 lg:w-5" />
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {SERVICES.map((service, i) => (
+              <FadeIn key={service.title} delay={i * 100}>
+                <div className="ion-glass-card-navy group h-full rounded-[16px] p-8 lg:p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5">
+                    <service.icon className="h-5 w-5 text-white/80" aria-hidden="true" />
                   </div>
 
-                  <div>
-                    <h3 className="text-2xl lg:text-xl font-bold text-ion-navy mb-3 lg:mb-2">Contingent</h3>
-                    <p className="text-gray-600 mb-6 lg:mb-4 lg:text-sm">Pay only when we successfully place the right candidate</p>
-                  </div>
+                  <h3 className="mt-6 text-xl font-bold text-white">{service.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-[#C7D2DC]">{service.tagline}</p>
 
-                  <ul className="space-y-3 lg:space-y-2 text-gray-700 lg:text-sm">
-                    <li className="flex items-start gap-3">
-                      <span className="ion-text-deep-teal mt-1 font-bold">✓</span>
-                      <span>Commercial terms aligned to successful delivery</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="ion-text-deep-teal mt-1 font-bold">✓</span>
-                      <span>Replacement protection available under agreed terms</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="ion-text-deep-teal mt-1 font-bold">✓</span>
-                      <span>Flexible support for specialist and multi-hire requirements</span>
-                    </li>
+                  <ul className="mt-6 space-y-2.5">
+                    {service.points.map((point) => (
+                      <li key={point} className="flex items-start gap-2.5 text-sm text-[#C7D2DC]">
+                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-ion-teal-bright" aria-hidden="true" />
+                        <span>{point}</span>
+                      </li>
+                    ))}
                   </ul>
 
-                  <Button
-                    className="ion-primary-button-navy ion-primary-button-navy--teal-accent w-full gap-2 h-12 rounded-xl shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:ring-2 focus-visible:ring-ion-teal-hover focus-visible:ring-offset-2"
-                    onClick={() => scrollToContact("contingent")}
+                  <button
+                    type="button"
+                    className="ion-secondary-button mt-8 inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-ion-navy"
+                    onClick={() => scrollToContact(service.formValue)}
                   >
                     Start a Search
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </button>
                 </div>
-              </Card>
-            </FadeIn>
-
-            {/* Retained Search — the flagship premium service, the one
-                deliberate place in this section where lilac carries the
-                accent instead of teal, per the site's colour hierarchy. */}
-            <FadeIn delay={100}>
-              <Card className="ion-card-top-4 ion-card-top-4--violet group h-full relative overflow-hidden rounded-[14px] p-8 lg:p-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
-                <div className="relative space-y-6 lg:space-y-4">
-                  <div className="ion-icon-ring-violet w-14 h-14 lg:w-11 lg:h-11 rounded-full flex items-center justify-center">
-                    <Award className="h-6 w-6 lg:h-5 lg:w-5" />
-                  </div>
-
-                  <div>
-                    <h3 className="text-2xl lg:text-xl font-bold text-ion-navy mb-3 lg:mb-2">Retained Search</h3>
-                    <p className="text-gray-600 mb-6 lg:mb-4 lg:text-sm">Premium executive search for senior and hard-to-fill roles</p>
-                  </div>
-
-                  <ul className="space-y-3 lg:space-y-2 text-gray-700 lg:text-sm">
-                    <li className="flex items-start gap-3">
-                      <span className="ion-text-deep-violet mt-1 font-bold">✓</span>
-                      <span>Dedicated senior consultant</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="ion-text-deep-violet mt-1 font-bold">✓</span>
-                      <span>Comprehensive market mapping</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="ion-text-deep-violet mt-1 font-bold">✓</span>
-                      <span>Exclusive candidate access</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="ion-text-deep-violet mt-1 font-bold">✓</span>
-                      <span>Agreed delivery and replacement terms</span>
-                    </li>
-                  </ul>
-
-                  <Button
-                    className="ion-primary-button-navy ion-primary-button-navy--violet-accent w-full gap-2 h-12 rounded-xl shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:ring-2 focus-visible:ring-ion-violet focus-visible:ring-offset-2"
-                    onClick={() => scrollToContact("retained")}
-                  >
-                    Start a Search
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                </div>
-              </Card>
-            </FadeIn>
-
-            <FadeIn delay={200}>
-              <Card className="ion-card-top-4 group h-full relative overflow-hidden rounded-[14px] p-8 lg:p-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
-                <div className="relative space-y-6 lg:space-y-4">
-                  <div className="ion-icon-ring-teal w-14 h-14 lg:w-11 lg:h-11 rounded-full flex items-center justify-center">
-                    <Users className="h-6 w-6 lg:h-5 lg:w-5" />
-                  </div>
-
-                  <div>
-                    <h3 className="text-2xl lg:text-xl font-bold text-ion-navy mb-3 lg:mb-2">RPO / Embedded</h3>
-                    <p className="text-gray-600 mb-6 lg:mb-4 lg:text-sm">Complete recruitment outsourcing and dedicated team solutions</p>
-                  </div>
-
-                  <ul className="space-y-3 lg:space-y-2 text-gray-700 lg:text-sm">
-                    <li className="flex items-start gap-3">
-                      <span className="ion-text-deep-teal mt-1 font-bold">✓</span>
-                      <span>Dedicated recruitment team</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="ion-text-deep-teal mt-1 font-bold">✓</span>
-                      <span>Scalable hiring solutions</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="ion-text-deep-teal mt-1 font-bold">✓</span>
-                      <span>End-to-end process ownership</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="ion-text-deep-teal mt-1 font-bold">✓</span>
-                      <span>Cost-effective for volume</span>
-                    </li>
-                  </ul>
-
-                  <Button
-                    className="ion-primary-button-navy ion-primary-button-navy--teal-accent w-full gap-2 h-12 rounded-xl shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:ring-2 focus-visible:ring-ion-teal-hover focus-visible:ring-offset-2"
-                    onClick={() => scrollToContact("rpo")}
-                  >
-                    Start a Search
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                </div>
-              </Card>
-            </FadeIn>
+              </FadeIn>
+            ))}
           </div>
         </div>
       </section>
 
-      <section
-        id="industries"
-        className="ion-section-divider ion-surface-teal-pale scroll-mt-[100px] py-16 md:py-24 px-6 border-t border-transparent"
-      >
-        <div className="container mx-auto max-w-6xl">
+      {/* Industry Expertise — an editorial list rather than a sixth card
+          grid on the page. A plain divided list reads as a specialism
+          manifest (closer to a consultancy capability statement) instead
+          of a repeat of the card-grid template used elsewhere. */}
+      <section id="industries" className="scroll-mt-[100px] bg-white py-16 md:py-24 px-6 border-t border-gray-100">
+        <div className="container mx-auto max-w-3xl">
           <FadeIn className="mb-10 md:mb-12">
             <h2 className="font-display text-4xl lg:text-5xl font-semibold text-ion-navy mb-3 tracking-tight text-balance">
               Industry Expertise
@@ -372,7 +319,7 @@ export default function HomePage() {
             <p className="text-lg text-ion-gray">We recruit across all sectors and levels</p>
           </FadeIn>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="divide-y divide-gray-200 border-y border-gray-200">
             {[
               { title: "Technology", desc: "Developers, Engineers, Product Managers, CTOs" },
               { title: "Finance", desc: "Analysts, Managers, Directors, CFOs" },
@@ -381,13 +328,10 @@ export default function HomePage() {
               { title: "Cybersecurity", desc: "Analysts, Managers, Directors, CISOs" },
               { title: "Consulting", desc: "Consultants, Managers, Directors, Partners" },
             ].map((industry, i) => (
-              <FadeIn key={industry.title} delay={(i % 3) * 100}>
-                {/* One shared card family — the teal->lilac hairline itself
-                    carries the section's identity, so no per-card dot or
-                    sector-specific colour coding is needed on top of it. */}
-                <div className="ion-card-hairline relative h-full overflow-hidden rounded-[14px] bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
-                  <h3 className="mb-2 text-xl font-semibold text-ion-navy">{industry.title}</h3>
-                  <p className="text-sm text-ion-gray leading-relaxed">{industry.desc}</p>
+              <FadeIn key={industry.title} delay={(i % 3) * 80}>
+                <div className="flex flex-col gap-1 py-5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
+                  <h3 className="shrink-0 text-lg font-semibold text-ion-navy sm:w-56">{industry.title}</h3>
+                  <p className="text-sm text-ion-gray sm:text-right">{industry.desc}</p>
                 </div>
               </FadeIn>
             ))}
@@ -450,7 +394,7 @@ export default function HomePage() {
           title/copy (a "display:contents" wrapper below md dissolves at
           md+ so the image, text and button fall back to exactly the
           original 3-column grid on tablet/desktop, unchanged). */}
-      <section className="ion-surface-lilac py-16 md:py-24 px-6 border-t border-gray-100">
+      <section className="ion-surface-tonal py-16 md:py-24 px-6 border-t border-gray-100">
         <div className="container mx-auto max-w-6xl">
           <FadeIn>
             <div className="relative overflow-hidden rounded-[20px] bg-white p-5 shadow-lg transition-all duration-300 hover:shadow-xl sm:p-6 md:p-10">
@@ -491,103 +435,63 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Why ION Talent — the homepage's strongest editorial moment: an
-          asymmetric image/copy composition (image ~40%, copy ~60%) rather
-          than a heading over three identical boxed cards. The inset second
-          image stands in for "international reach" without a separate
-          section. */}
-      <section id="approach" className="relative overflow-hidden bg-ion-navy px-6 py-20 md:py-28 border-t border-gray-100">
-        <div className="container mx-auto max-w-6xl">
-          <div className="grid grid-cols-1 items-center gap-14 md:grid-cols-5 md:gap-12">
-            <FadeIn className="md:col-span-2">
-              <div className="relative mx-auto max-w-sm md:max-w-none">
-                <div className="relative aspect-[4/5] overflow-hidden rounded-[20px] shadow-xl">
-                  <img
-                    src="/photography/human-blue-blur.webp"
-                    alt=""
-                    aria-hidden="true"
-                    loading="lazy"
-                    className="h-full w-full object-cover"
-                    style={{ filter: "saturate(0.95) contrast(1.05) brightness(0.95)" }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-ion-navy/45 via-transparent to-transparent" />
-                </div>
-                {/* International reach — a small inset image rather than a
-                    separate section, tied to the "International Reach"
-                    value proposition opposite. */}
-                <div className="absolute -bottom-6 -right-6 hidden w-28 overflow-hidden rounded-[14px] shadow-lg ring-4 ring-ion-navy sm:block md:w-32">
-                  <img
-                    src="/photography/london-canary-wharf.webp"
-                    alt=""
-                    aria-hidden="true"
-                    loading="lazy"
-                    className="aspect-[3/4] w-full object-cover"
-                    style={{ filter: "saturate(0.85) contrast(1.08) brightness(0.92)" }}
-                  />
-                </div>
+      {/* Why ION Talent — a confident, photo-free editorial moment on navy.
+          No stock photography here: after review, the abstract human image
+          didn't say anything specific about ION, and a forced inset-thumbnail
+          collage read as decoration rather than substance. A large statement
+          plus a plain numbered list carries the section on typography and
+          space alone — a deliberate contrast to the image-led sections either
+          side of it. */}
+      <section id="approach" className="bg-ion-navy px-6 py-20 md:py-28 border-t border-gray-100">
+        <div className="container mx-auto max-w-5xl">
+          <FadeIn className="max-w-2xl">
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold text-white mb-4 tracking-tight text-balance">
+              Why ION Talent
+            </h2>
+            <span className="ion-heading-underline ion-heading-underline--gradient mb-6" aria-hidden="true" />
+            <p className="ion-text-on-navy text-lg leading-relaxed max-w-xl">
+              Our approach combines deep industry expertise with a commitment to understanding both
+              client needs and candidate aspirations, ensuring lasting placements that drive business
+              success.
+            </p>
+          </FadeIn>
+
+          <div className="mt-14 grid grid-cols-1 gap-10 border-t border-white/10 pt-12 md:grid-cols-3 md:gap-12">
+            <FadeIn delay={0}>
+              <div className="flex items-center gap-2 text-white/35">
+                <UserCheck className="h-4 w-4" aria-hidden="true" />
+                <span className="text-xs font-semibold tracking-[0.2em]">01</span>
               </div>
+              <h3 className="mt-4 text-lg font-semibold text-white">Senior-Led Search</h3>
+              <p className="mt-2 text-sm leading-relaxed text-[#C7D2DC]">
+                Every assignment is led by experienced recruitment professionals with direct
+                involvement from briefing through to placement.
+              </p>
             </FadeIn>
 
-            <div className="md:col-span-3">
-              <FadeIn>
-                <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold text-white mb-4 tracking-tight text-balance">
-                  Why ION Talent
-                </h2>
-                <span className="ion-heading-underline ion-heading-underline--gradient mb-6" aria-hidden="true" />
-                <p className="ion-text-on-navy text-lg leading-relaxed mb-10 max-w-xl">
-                  Our approach combines deep industry expertise with a commitment to understanding both
-                  client needs and candidate aspirations, ensuring lasting placements that drive business
-                  success.
-                </p>
-              </FadeIn>
-
-              <div className="max-w-xl space-y-6">
-                <FadeIn delay={0}>
-                  <div className="flex items-start gap-4 border-t border-white/10 pt-6">
-                    <div className="ion-icon-ring-teal flex h-11 w-11 shrink-0 items-center justify-center rounded-full">
-                      <UserCheck className="h-5 w-5" aria-hidden="true" />
-                    </div>
-                    <div>
-                      <h3 className="text-base font-semibold text-white">Senior-Led Search</h3>
-                      <p className="mt-1 text-sm leading-relaxed text-[#C7D2DC]">
-                        Every assignment is led by experienced recruitment professionals with direct
-                        involvement from briefing through to placement.
-                      </p>
-                    </div>
-                  </div>
-                </FadeIn>
-
-                <FadeIn delay={100}>
-                  <div className="flex items-start gap-4 border-t border-white/10 pt-6">
-                    <div className="ion-icon-ring-teal flex h-11 w-11 shrink-0 items-center justify-center rounded-full">
-                      <Radar className="h-5 w-5" aria-hidden="true" />
-                    </div>
-                    <div>
-                      <h3 className="text-base font-semibold text-white">Market-Mapped Delivery</h3>
-                      <p className="mt-1 text-sm leading-relaxed text-[#C7D2DC]">
-                        Targeted search, live market intelligence and direct outreach focused on the
-                        people most likely to deliver.
-                      </p>
-                    </div>
-                  </div>
-                </FadeIn>
-
-                <FadeIn delay={200}>
-                  <div className="flex items-start gap-4 border-t border-white/10 pt-6">
-                    <div className="ion-icon-ring-violet flex h-11 w-11 shrink-0 items-center justify-center rounded-full">
-                      <Globe className="h-5 w-5" aria-hidden="true" />
-                    </div>
-                    <div>
-                      <h3 className="text-base font-semibold text-white">International Reach</h3>
-                      <p className="mt-1 text-sm leading-relaxed text-[#C7D2DC]">
-                        Established networks across the GCC and UK, supported by international search
-                        capability for hard-to-find talent.
-                      </p>
-                    </div>
-                  </div>
-                </FadeIn>
+            <FadeIn delay={100}>
+              <div className="flex items-center gap-2 text-white/35">
+                <Radar className="h-4 w-4" aria-hidden="true" />
+                <span className="text-xs font-semibold tracking-[0.2em]">02</span>
               </div>
-            </div>
+              <h3 className="mt-4 text-lg font-semibold text-white">Market-Mapped Delivery</h3>
+              <p className="mt-2 text-sm leading-relaxed text-[#C7D2DC]">
+                Targeted search, live market intelligence and direct outreach focused on the people
+                most likely to deliver.
+              </p>
+            </FadeIn>
+
+            <FadeIn delay={200}>
+              <div className="flex items-center gap-2 text-white/35">
+                <Globe className="h-4 w-4" aria-hidden="true" />
+                <span className="text-xs font-semibold tracking-[0.2em]">03</span>
+              </div>
+              <h3 className="mt-4 text-lg font-semibold text-white">International Reach</h3>
+              <p className="mt-2 text-sm leading-relaxed text-[#C7D2DC]">
+                Established networks across the GCC and UK, supported by international search
+                capability for hard-to-find talent.
+              </p>
+            </FadeIn>
           </div>
         </div>
       </section>
