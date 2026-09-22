@@ -11,6 +11,8 @@ interface StatCounterProps {
   duration?: number
   /** Optional small delay (ms) before this counter starts — for a subtle stagger across a row of stats. */
   startDelay?: number
+  /** Keeps the compact homepage credibility band free of repeated decorative rules. */
+  showAccent?: boolean
 }
 
 /** One-time count-up on viewport entry. Respects prefers-reduced-motion by rendering the final value immediately. */
@@ -21,6 +23,7 @@ export function StatCounter({
   sublabel,
   duration = 1400,
   startDelay = 0,
+  showAccent = true,
 }: StatCounterProps) {
   const ref = useRef<HTMLDivElement>(null)
   const [count, setCount] = useState(0)
@@ -110,7 +113,7 @@ export function StatCounter({
           {count}
           {suffix && <span className="ion-text-teal">{suffix}</span>}
         </div>
-        <span className="mt-2 h-0.5 w-8 rounded-full bg-ion-teal" aria-hidden="true" />
+        {showAccent && <span className="mt-2 h-0.5 w-8 rounded-full bg-ion-teal" aria-hidden="true" />}
       </div>
       <p className="mt-3 text-sm text-ion-navy">{label}</p>
       {sublabel && <p className="mt-1 text-xs text-ion-gray/80">{sublabel}</p>}

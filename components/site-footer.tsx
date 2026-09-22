@@ -13,9 +13,9 @@ const FOOTER_LINKS = [
 
 export function SiteFooter() {
   return (
-    <footer className="bg-gray-900 text-white py-16 px-6 border-t border-ion-border">
+    <footer className="border-t border-ion-border bg-gray-900 px-6 py-12 text-white">
       <div className="container mx-auto max-w-6xl">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-8">
+        <div className="mb-6 flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
           <Link href="/" className="flex items-center" aria-label="ION Talent home">
             <img src="/brand/logo-white-web.svg" alt="ION Talent" className="h-7 w-auto" />
           </Link>
@@ -29,7 +29,7 @@ export function SiteFooter() {
           </nav>
         </div>
 
-        <div className="mb-8">
+        <div className="mb-6">
           <LinkedinFollowLink
             source="footer"
             iconClassName="h-5 w-5 text-[#0A66C2]"
@@ -37,7 +37,7 @@ export function SiteFooter() {
           />
         </div>
 
-        <div className="pt-8 border-t border-gray-800 text-sm text-gray-500">
+        <div className="border-t border-gray-800 pt-6 text-sm text-gray-500">
           <p>&copy; 2026 ION Talent. All rights reserved.</p>
           <p className="mt-1">
             Contact:{" "}

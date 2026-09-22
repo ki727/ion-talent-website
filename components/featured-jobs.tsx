@@ -1,7 +1,8 @@
 "use client"
 
 import Link from "next/link"
-import { MapPin, Briefcase, ArrowRight } from "lucide-react"
+import { useEffect, useRef, useState } from "react"
+import { MapPin, Briefcase, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react"
 import { opportunities, getRoleTypeLabel, type Opportunity } from "@/lib/opportunities"
 import { FadeIn } from "@/components/fade-in"
 
@@ -117,10 +118,47 @@ function selectFeaturedRoles(): Opportunity[] {
 const FEATURED_ROLES = selectFeaturedRoles()
 
 export function FeaturedJobs() {
+  const railRef = useRef<HTMLDivElement>(null)
+  const [canScrollLeft, setCanScrollLeft] = useState(false)
+  const [canScrollRight, setCanScrollRight] = useState(true)
+
+  useEffect(() => {
+    const rail = railRef.current
+    if (!rail) return
+
+    const updateControls = () => {
+      setCanScrollLeft(rail.scrollLeft > 4)
+      setCanScrollRight(rail.scrollLeft < rail.scrollWidth - rail.clientWidth - 4)
+    }
+
+    updateControls()
+    rail.addEventListener("scroll", updateControls, { passive: true })
+    const resizeObserver = new ResizeObserver(updateControls)
+    resizeObserver.observe(rail)
+
+    return () => {
+      rail.removeEventListener("scroll", updateControls)
+      resizeObserver.disconnect()
+    }
+  }, [])
+
+  const moveRail = (direction: -1 | 1) => {
+    const rail = railRef.current
+    const firstCard = rail?.firstElementChild as HTMLElement | null
+    if (!rail || !firstCard) return
+
+    const gap = Number.parseFloat(window.getComputedStyle(rail).columnGap) || 0
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    rail.scrollBy({
+      left: direction * (firstCard.offsetWidth + gap),
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+    })
+  }
+
   return (
-    <section className="pt-16 md:pt-24 pb-10 md:pb-14 px-6 bg-white border-t border-ion-border">
+    <section className="border-t border-ion-border bg-white px-6 py-14 md:py-16">
       <div className="container mx-auto max-w-6xl">
-        <FadeIn className="mb-16 md:mb-20 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+        <FadeIn className="mb-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
             <h2 className="font-display text-4xl lg:text-5xl font-semibold text-ion-navy mb-3 tracking-tight text-balance">
               Featured Opportunities
@@ -130,22 +168,47 @@ export function FeaturedJobs() {
               A sample of current and upcoming opportunities across the ION Talent Network.
             </p>
           </div>
-          <Link
-            href="/opportunities"
-            className="inline-flex items-center gap-2 text-sm font-medium text-ion-teal-dark hover:underline shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2 rounded-sm"
-          >
-            View All Opportunities
-            <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </Link>
+          <div className="flex items-center justify-between gap-4 md:justify-end">
+            <div className="flex items-center gap-2" aria-label="Browse featured opportunities">
+              <button
+                type="button"
+                onClick={() => moveRail(-1)}
+                disabled={!canScrollLeft}
+                aria-label="Previous featured opportunity"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-ion-navy/15 text-ion-navy transition-colors hover:border-ion-teal hover:text-ion-teal disabled:cursor-not-allowed disabled:opacity-30"
+              >
+                <ChevronLeft className="h-4 w-4" aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                onClick={() => moveRail(1)}
+                disabled={!canScrollRight}
+                aria-label="Next featured opportunity"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-ion-navy/15 text-ion-navy transition-colors hover:border-ion-teal hover:text-ion-teal disabled:cursor-not-allowed disabled:opacity-30"
+              >
+                <ChevronRight className="h-4 w-4" aria-hidden="true" />
+              </button>
+            </div>
+            <Link
+              href="/opportunities"
+              className="inline-flex shrink-0 items-center gap-2 rounded-sm text-sm font-medium text-ion-teal-dark hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2"
+            >
+              View All Opportunities
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </div>
         </FadeIn>
 
-        <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div
+          ref={railRef}
+          className="ion-role-rail grid snap-x snap-mandatory grid-flow-col auto-cols-[100%] gap-4 overflow-x-auto pb-3 sm:auto-cols-[calc((100%-1rem)/2)] lg:auto-cols-[calc((100%-2rem)/3)]"
+        >
           {FEATURED_ROLES.map((role, i) => (
-            <FadeIn key={role.id} delay={(i % 3) * 100}>
+            <FadeIn key={role.id} delay={(i % 3) * 100} className="h-full snap-start">
               <Link
                 href={`/opportunities/${role.slug}`}
                 aria-label={`${role.title} — view role details`}
-                className="ion-card-hairline group relative flex h-full flex-col overflow-hidden rounded-2xl p-6 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2"
+                className="ion-card-hairline group relative flex h-full min-h-[13rem] flex-col overflow-hidden rounded-2xl p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2"
               >
                 <span className="ion-badge-teal mb-3 inline-block w-fit rounded-full px-2.5 py-0.5 text-xs font-semibold">
                   {getRoleTypeLabel(role)}

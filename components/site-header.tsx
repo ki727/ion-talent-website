@@ -18,6 +18,7 @@ export function SiteHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
+  const overHomeHero = pathname === "/" && !scrolled && !mobileMenuOpen
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12)
@@ -39,15 +40,21 @@ export function SiteHeader() {
 
   return (
     <header
-      className={`fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 transition-all duration-300 ${
-        scrolled ? "border-b border-gray-200/80 shadow-sm" : "border-b border-transparent"
+      className={`fixed top-0 z-50 w-full px-6 transition-all duration-300 ${
+        overHomeHero
+          ? "border-b border-white/10 bg-ion-navy/10 text-white backdrop-blur-sm"
+          : "border-b border-gray-200/80 bg-white/90 text-ion-navy shadow-sm backdrop-blur-md"
       }`}
     >
-      <div className="container mx-auto px-6 lg:px-12">
-        <div className="flex items-center h-20 gap-4">
+      <div className="mx-auto w-full max-w-6xl">
+        <div className="flex h-[4.5rem] items-center gap-4">
           {/* Official ION Talent wordmark — web-optimised derivative of public/brand/logo-primary-2026-08-04.svg */}
           <Link href="/" className="flex shrink-0 items-center" aria-label="ION Talent home">
-            <img src="/brand/logo-primary-web.svg" alt="ION Talent" className="h-8 sm:h-9 md:h-10 w-auto" />
+            <img
+              src={overHomeHero ? "/brand/logo-white-web.svg" : "/brand/logo-primary-web.svg"}
+              alt="ION Talent"
+              className="h-8 w-auto sm:h-9 md:h-[2.3rem]"
+            />
           </Link>
 
           {/* Spacer */}
@@ -62,7 +69,9 @@ export function SiteHeader() {
                   href={link.href}
                   aria-current={isActive ? "page" : undefined}
                   data-active={isActive ? "true" : undefined}
-                  className="ion-nav-link whitespace-nowrap text-gray-700 hover:text-gray-900 transition-colors text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2 rounded-sm"
+                  className={`ion-nav-link whitespace-nowrap rounded-sm text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2 ${
+                    overHomeHero ? "text-white/85 hover:text-white focus-visible:ring-offset-ion-navy" : "text-gray-700 hover:text-gray-900"
+                  }`}
                 >
                   {link.label}
                 </Link>
@@ -74,7 +83,7 @@ export function SiteHeader() {
             <Button
               asChild
               variant="outline"
-              className="ion-candidate-outline-button gap-2 text-sm px-5 rounded-xl shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:ring-2 focus-visible:ring-ion-violet focus-visible:ring-offset-2"
+              className={`${overHomeHero ? "ion-header-secondary-dark" : "ion-candidate-outline-button"} gap-2 rounded-xl px-5 text-sm shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:ring-2 focus-visible:ring-ion-violet focus-visible:ring-offset-2`}
             >
               <Link href="/opportunities">
                 Explore Opportunities
@@ -86,18 +95,20 @@ export function SiteHeader() {
                 teal "Hire Talent") with a small teal accent on the arrow. */}
             <Button
               asChild
-              className="ion-primary-button-navy gap-2 text-sm px-5 rounded-xl shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:ring-2 focus-visible:ring-ion-teal-hover focus-visible:ring-offset-2"
+              className={`${overHomeHero ? "ion-primary-button" : "ion-primary-button-navy"} gap-2 rounded-xl px-5 text-sm shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:ring-2 focus-visible:ring-ion-teal-hover focus-visible:ring-offset-2`}
             >
               <Link href="/#contact">
                 Hire Talent
-                <ArrowRight className="h-4 w-4 text-ion-teal" />
+                <ArrowRight className={`h-4 w-4 ${overHomeHero ? "text-white" : "text-ion-teal"}`} />
               </Link>
             </Button>
           </div>
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden w-11 h-11 flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal rounded-lg"
+            className={`flex h-11 w-11 items-center justify-center rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal lg:hidden ${
+              overHomeHero ? "text-white" : "text-ion-navy"
+            }`}
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileMenuOpen}
           >

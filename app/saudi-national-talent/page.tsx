@@ -11,7 +11,7 @@ const SOURCE = "saudi_national_talent"
 
 const TITLE = "Saudi National Talent | ION Talent"
 const DESCRIPTION =
-  "Strategic guidance for employers building Saudi national talent pipelines, and a home for Saudi national candidates exploring specialist and leadership opportunities across the Kingdom."
+  "Strategic guidance for employers building Saudi national talent pipelines and a home for Saudi national candidates exploring specialist and leadership opportunities across the Kingdom."
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -78,16 +78,16 @@ export default function SaudiNationalTalentPage() {
       <SiteHeader />
 
       <main className="ion-page-enter">
-        {/* Hero — full-bleed editorial architecture image, same overlay
+        {/* Hero: full-bleed editorial architecture image, same overlay
             treatment as the homepage hero video (flat scrim + directional
             gradient) so the two hero moments read as one system. */}
         <section className="relative flex min-h-[70vh] items-center overflow-hidden px-6 pt-28 pb-16 sm:pt-32 lg:pt-36">
-          <div className="absolute inset-0 z-0 bg-ion-navy">
+          <div className="pointer-events-none absolute inset-0 z-0 bg-ion-navy" aria-hidden="true">
             <img
-              src="/photography/saudi-kafd-geometry.webp"
+              src="/photography/saudi-kingdom-centre.jpg"
               alt=""
               aria-hidden="true"
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover object-[center_42%]"
               style={{ filter: "saturate(0.85) contrast(1.08) brightness(0.8)" }}
             />
             <div className="absolute inset-0 bg-ion-navy/50" />
@@ -102,7 +102,7 @@ export default function SaudiNationalTalentPage() {
               Saudi National Talent
             </h1>
             <p className="hero-text-shadow mt-5 max-w-2xl text-lg leading-relaxed text-white/90 sm:text-xl">
-              Strategic hiring, built for the long term — helping employers plan ahead and Saudi
+              Strategic hiring, built for the long term. We help employers plan ahead and Saudi
               national candidates find roles that match their ambition.
             </p>
 
@@ -126,7 +126,7 @@ export default function SaudiNationalTalentPage() {
           </div>
 
           <div
-            className="ion-gradient-rule ion-gradient-rule--fade absolute bottom-0 left-0 right-0 z-10 w-full opacity-90"
+            className="ion-gradient-rule ion-gradient-rule--fade pointer-events-none absolute bottom-0 left-0 right-0 z-10 w-full opacity-90"
             aria-hidden="true"
           />
         </section>
@@ -135,9 +135,9 @@ export default function SaudiNationalTalentPage() {
         <section className="ion-surface-tonal px-6 py-14 md:py-16 lg:px-12">
           <div className="container mx-auto max-w-3xl text-center">
             <p className="text-lg leading-relaxed text-ion-gray sm:text-xl">
-              Saudi national hiring is not a compliance requirement to manage — it is one of the most
+              Saudi national hiring is not a compliance requirement to manage. It is one of the most
               important workforce decisions an organisation in the Kingdom will make. Done well, it
-              builds leadership pipelines, strengthens institutional knowledge, and shapes how a
+              builds leadership pipelines, strengthens institutional knowledge and shapes how a
               business performs for the next decade.
             </p>
           </div>
@@ -149,12 +149,12 @@ export default function SaudiNationalTalentPage() {
             <FadeIn className="mx-auto mb-12 max-w-2xl text-center md:mb-16">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ion-teal">For Employers</p>
               <h2 className="font-display mt-3 text-3xl font-bold text-ion-navy md:text-4xl text-balance">
-                Plan Saudi National Hiring Like It Matters — Because It Does
+                Plan Saudi National Hiring Like It Matters. Because It Does
               </h2>
               <span className="ion-heading-underline mx-auto mt-5" aria-hidden="true" />
               <p className="mt-5 text-lg leading-relaxed text-ion-gray">
                 The organisations that get the most from Saudi national hiring treat it as a strategic
-                priority, not a reporting line — planning early, mapping the market properly, and
+                priority, not a reporting line. That means planning early, mapping the market properly and
                 building pipelines before the need becomes urgent.
               </p>
             </FadeIn>
@@ -186,37 +186,50 @@ export default function SaudiNationalTalentPage() {
         </section>
 
         {/* For Saudi National Candidates */}
-        <section className="ion-surface-tonal px-6 py-16 md:py-24 lg:px-12 border-t border-gray-100">
-          <div className="container mx-auto max-w-3xl text-center">
-            <FadeIn>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ion-violet">
-                For Saudi National Candidates
-              </p>
-              <h2 className="font-display mt-3 text-3xl font-bold text-ion-navy md:text-4xl text-balance">
-                Your Experience Belongs at the Centre of Saudi Arabia&apos;s Growth
-              </h2>
-              <span className="ion-heading-underline ion-heading-underline--violet mx-auto mt-5" aria-hidden="true" />
-              <p className="mt-5 text-lg leading-relaxed text-ion-gray">
-                Saudi national talent is central to the organisations shaping the Kingdom&apos;s
-                fastest-moving sectors — technology, cybersecurity, cloud, data, engineering and
-                beyond. Whether you&apos;re building specialist expertise or stepping into leadership,
-                we want to help you find a role that matches your ambition.
-              </p>
+        <section className="ion-surface-tonal border-t border-gray-100 px-6 py-16 md:py-20 lg:px-12">
+          <div className="container mx-auto max-w-6xl">
+            <FadeIn className="grid overflow-hidden rounded-[20px] border border-ion-navy/10 bg-white shadow-sm md:grid-cols-[0.85fr_1.15fr]">
+              <div className="relative h-72 md:h-full md:min-h-[360px]">
+                <img
+                  src="/photography/saudi-kafd-aerial.jpg"
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover object-center"
+                  style={{ filter: "saturate(0.82) contrast(1.06) brightness(0.92)" }}
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ion-navy/30 via-transparent to-transparent md:bg-gradient-to-r md:from-transparent md:to-ion-navy/10" />
+              </div>
+              <div className="flex flex-col justify-center p-7 text-center sm:p-9 md:p-10 md:text-left">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ion-violet">
+                  For Saudi National Candidates
+                </p>
+                <h2 className="font-display mt-3 text-3xl font-bold text-ion-navy md:text-4xl text-balance">
+                  Your Experience Belongs at the Centre of Saudi Arabia&apos;s Growth
+                </h2>
+                <span className="ion-heading-underline ion-heading-underline--violet mx-auto mt-5 md:mx-0" aria-hidden="true" />
+                <p className="mt-5 text-lg leading-relaxed text-ion-gray">
+                  Saudi national talent is central to the organisations shaping the Kingdom&apos;s
+                  fastest-moving sectors: technology, cybersecurity, cloud, data, engineering and
+                  beyond. Whether you&apos;re building specialist expertise or stepping into leadership,
+                  we want to help you find a role that matches your ambition.
+                </p>
 
-              <div className="mt-8">
-                <Link
-                  href="/opportunities"
-                  className="ion-candidate-button inline-flex h-12 items-center justify-center gap-2 rounded-xl px-8 text-sm font-medium shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-violet focus-visible:ring-offset-2"
-                >
-                  Explore Current Opportunities
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </Link>
+                <div className="mt-8">
+                  <Link
+                    href="/opportunities"
+                    className="ion-candidate-button inline-flex h-12 items-center justify-center gap-2 rounded-xl px-8 text-sm font-medium shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-violet focus-visible:ring-offset-2"
+                  >
+                    Explore Current Opportunities
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </Link>
+                </div>
               </div>
             </FadeIn>
           </div>
         </section>
 
-        {/* Closing CTA band — same navy panel treatment as the homepage
+        {/* Closing CTA band: same navy panel treatment as the homepage
             referral section, restating both journeys together. */}
         <section className="px-6 py-16 md:py-20 lg:px-12">
           <div className="container mx-auto max-w-5xl">

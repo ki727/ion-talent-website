@@ -33,12 +33,12 @@ export function HomepageReferralSection() {
   }, [])
 
   return (
-    <section className="scroll-mt-24 py-16 md:py-20 px-6 bg-ion-surface border-t border-gray-100">
+    <section className="scroll-mt-24 border-t border-gray-100 bg-ion-surface px-6 py-16 md:py-14">
       <div className="container mx-auto max-w-5xl">
         <FadeIn>
           <div
             ref={viewRef}
-            className="ion-section-navy relative overflow-hidden rounded-[24px] px-6 py-10 text-center shadow-lg md:px-14 md:py-14"
+            className="ion-section-navy relative overflow-hidden rounded-[24px] px-6 py-10 text-center shadow-lg md:px-12 md:py-10"
           >
             {/* Signature teal → lilac transition as a top accent, giving this
                 campaign block more visual presence without adding colour to
