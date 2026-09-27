@@ -1,6 +1,5 @@
 import type { Metadata } from "next"
-import Link from "next/link"
-import { ArrowRight, Search, Globe, Compass } from "lucide-react"
+import { Search, Globe, Compass } from "lucide-react"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { FadeIn } from "@/components/fade-in"
@@ -52,7 +51,7 @@ const CLIENT_LOGOS = [
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="ion-about-page min-h-screen bg-white">
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger
@@ -60,47 +59,30 @@ export default function AboutPage() {
       />
       <SiteHeader />
 
-      <main className="ion-page-enter pt-20">
+      <main className="ion-header-offset ion-page-enter pt-20">
         {/* Hero */}
-        <section className="border-b border-gray-100 bg-gray-50/60 px-6 py-14 md:py-20 lg:px-12">
+        <section className="ion-density-section-tight border-b border-gray-100 bg-gray-50/60 px-6 py-10 md:py-12 lg:px-12 xl:py-7">
           <div className="container mx-auto max-w-3xl text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ion-teal">ION Talent</p>
-            <h1 className="mt-3 text-4xl font-bold text-ion-navy md:text-5xl text-balance">
+            <h1 className="ion-density-page-title mt-3 text-4xl font-bold text-ion-navy md:text-5xl xl:text-[2.35rem] text-balance">
               Specialist Search. International Reach.
             </h1>
-            <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-gray-600">
+            <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-gray-600 xl:mt-4">
               ION Talent is a specialist recruitment and executive search firm supporting organisations
               across the GCC and UK with hard-to-fill specialist, leadership and business-critical
               appointments.
             </p>
-
-            <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Link
-                href="/opportunities"
-                className="inline-flex h-12 w-full items-center justify-center rounded-xl border border-ion-teal bg-white px-8 text-sm font-medium text-ion-teal-dark transition-colors hover:bg-teal-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2 sm:w-auto"
-              >
-                Explore Opportunities
-                <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-              </Link>
-              <Link
-                href="/#contact"
-                className="ion-primary-button inline-flex h-12 w-full items-center justify-center rounded-xl px-8 text-sm font-medium shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal-hover focus-visible:ring-offset-2 sm:w-auto"
-              >
-                Hire Talent
-                <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-              </Link>
-            </div>
           </div>
         </section>
 
         {/* Editorial workplace imagery, paired with a short delivery-focused
             statement rather than a full-bleed slab — restrained to a single
             image per the site's photography system. */}
-        <section className="px-6 py-14 md:py-20 lg:px-12">
+        <section className="ion-density-section px-6 py-10 md:py-14 lg:px-12 xl:py-8">
           <div className="container mx-auto max-w-5xl">
             <FadeIn>
-              <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-5 md:gap-12">
-                <div className="relative overflow-hidden rounded-[20px] shadow-md md:col-span-3">
+            <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-5 md:gap-12 xl:gap-8">
+                <div className="ion-about-image relative overflow-hidden rounded-[20px] shadow-md md:col-span-3">
                   <img
                     src="/photography/about-office.webp"
                     alt=""
@@ -115,7 +97,7 @@ export default function AboutPage() {
                   <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ion-teal">
                     Built for Delivery
                   </p>
-                  <h2 className="mt-3 text-2xl font-bold text-ion-navy md:text-3xl text-balance">
+              <h2 className="ion-density-section-heading-small mt-3 text-2xl font-bold text-ion-navy md:text-3xl xl:text-2xl text-balance">
                     Specialist teams, working at pace
                   </h2>
                   <p className="mt-4 text-base leading-relaxed text-gray-600">
@@ -130,8 +112,8 @@ export default function AboutPage() {
         </section>
 
         {/* Who We Are / What We Recruit / Where We Work / Our Approach */}
-        <section className="px-6 py-14 md:py-20 lg:px-12 border-t border-gray-100">
-          <div className="container mx-auto max-w-4xl space-y-12">
+        <section className="ion-density-section-roomy px-6 py-14 md:py-20 lg:px-12 xl:py-11 border-t border-gray-100">
+          <div className="ion-about-narrative container mx-auto grid max-w-5xl gap-6 md:grid-cols-2">
             <FadeIn>
               <h2 className="text-sm font-semibold uppercase tracking-wide text-ion-navy">Who We Are</h2>
               <span className="ion-heading-underline mt-2 mb-4" aria-hidden="true" />
@@ -177,7 +159,7 @@ export default function AboutPage() {
         </section>
 
         {/* Reused proof elements — logos and headline stats, not a duplicate of the homepage section */}
-        <section className="border-t border-gray-100 bg-ion-surface px-6 py-14 md:py-16 lg:px-12">
+        <section className="ion-density-section border-t border-gray-100 bg-ion-surface px-6 py-14 md:py-16 lg:px-12 xl:py-10">
           <div className="container mx-auto max-w-5xl">
             <p className="text-xs font-medium tracking-wider text-ion-gray uppercase text-center mb-8">
               Experience Across Leading Organisations
@@ -202,10 +184,10 @@ export default function AboutPage() {
         </section>
 
         {/* Positioning summary */}
-        <section className="px-6 py-14 md:py-16 lg:px-12">
+        <section className="ion-density-section px-6 py-14 md:py-16 lg:px-12 xl:py-10">
           <div className="container mx-auto max-w-4xl">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-              <div className="ion-card-top-3 rounded-[14px] p-6 shadow-sm">
+              <div className="ion-density-card ion-card-top-3 rounded-[14px] p-6 shadow-sm xl:p-[1.125rem]">
                 <div className="ion-icon-circle-teal flex h-10 w-10 items-center justify-center rounded-full">
                   <Search className="h-5 w-5 text-white" aria-hidden="true" />
                 </div>
@@ -214,7 +196,7 @@ export default function AboutPage() {
                   Technology, cybersecurity, cloud, data, digital, engineering and corporate functions.
                 </p>
               </div>
-              <div className="ion-card-top-3 rounded-[14px] p-6 shadow-sm">
+              <div className="ion-density-card ion-card-top-3 rounded-[14px] p-6 shadow-sm xl:p-[1.125rem]">
                 <div className="ion-icon-circle-teal flex h-10 w-10 items-center justify-center rounded-full">
                   <Compass className="h-5 w-5 text-white" aria-hidden="true" />
                 </div>
@@ -223,7 +205,7 @@ export default function AboutPage() {
                   Established networks across the GCC and UK.
                 </p>
               </div>
-              <div className="ion-card-top-3 rounded-[14px] p-6 shadow-sm">
+              <div className="ion-density-card ion-card-top-3 rounded-[14px] p-6 shadow-sm xl:p-[1.125rem]">
                 <div className="ion-icon-circle-teal flex h-10 w-10 items-center justify-center rounded-full">
                   <Globe className="h-5 w-5 text-white" aria-hidden="true" />
                 </div>

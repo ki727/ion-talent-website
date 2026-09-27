@@ -139,7 +139,7 @@ export function SalaryGuideForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+    <form onSubmit={handleSubmit} className="ion-density-form space-y-6" noValidate>
       {/* Honeypot field — hidden from real visitors and assistive tech, left blank by them */}
       <input
         type="text"
@@ -152,7 +152,7 @@ export function SalaryGuideForm() {
         className="hidden"
       />
 
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <div className="ion-density-form-grid grid grid-cols-1 gap-6 sm:grid-cols-2">
         <div>
           <label htmlFor="sg-firstName" className={labelClass}>
             First Name *
@@ -224,7 +224,7 @@ export function SalaryGuideForm() {
         )}
       </div>
 
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <div className="ion-density-form-grid grid grid-cols-1 gap-6 sm:grid-cols-2">
         <div>
           <label htmlFor="sg-company" className={labelClass}>
             Company *

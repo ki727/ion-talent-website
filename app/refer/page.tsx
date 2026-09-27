@@ -35,16 +35,16 @@ export const metadata: Metadata = {
 
 export default function ReferPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="ion-refer-page min-h-screen bg-white">
       <SiteHeader />
 
-      <main className="pt-20">
-        <section className="border-b border-gray-100 bg-gray-50/60 px-6 py-12 md:py-16 lg:px-12">
+      <main className="ion-header-offset ion-page-enter pt-20">
+        <section className="ion-density-section-tight border-b border-gray-100 bg-gray-50/60 px-6 py-12 md:py-16 lg:px-12">
           <div className="container mx-auto max-w-2xl text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ion-teal">
               ION Talent Referrals
             </p>
-            <h1 className="mt-3 text-4xl font-bold text-gray-900 md:text-5xl text-balance">
+            <h1 className="ion-density-page-title mt-3 text-4xl font-bold text-gray-900 md:text-5xl text-balance">
               Refer a Hiring Company
             </h1>
             <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-gray-600">

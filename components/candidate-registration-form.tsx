@@ -130,7 +130,7 @@ export function CandidateRegistrationForm({ selectedRole = "" }: CandidateRegist
   return (
     <form
       onSubmit={handleSubmit}
-      className="rounded-2xl border border-gray-200 bg-white p-6 md:p-8"
+      className="ion-density-form-card rounded-2xl border border-gray-200 bg-white p-6 md:p-8"
       noValidate
     >
       {selectedRole && (
@@ -140,7 +140,7 @@ export function CandidateRegistrationForm({ selectedRole = "" }: CandidateRegist
         </div>
       )}
 
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+      <div className="ion-density-form-grid grid grid-cols-1 gap-5 md:grid-cols-2">
         {/* Full name */}
         <div className="md:col-span-2">
           <label htmlFor="reg-full-name" className={labelClass}>
@@ -355,41 +355,6 @@ export function CandidateRegistrationForm({ selectedRole = "" }: CandidateRegist
         />
       </div>
 
-      {/* Consents */}
-      <div className="mt-6 flex flex-col gap-3">
-        <label className="flex items-start gap-3 text-sm text-gray-700">
-          <input
-            type="checkbox"
-            name="consent"
-            value="true"
-            required
-            className="mt-0.5 h-4 w-4 shrink-0 rounded border-gray-300 accent-[#14A8A8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#14A8A8]"
-          />
-          <span>
-            I consent to ION Talent storing and processing my information for recruitment purposes in
-            accordance with the{" "}
-            <Link
-              href="/privacy"
-              className="underline underline-offset-2 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#14A8A8] rounded-sm"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              candidate privacy notice
-            </Link>
-            . <span aria-hidden="true">*</span>
-          </span>
-        </label>
-        <label className="flex items-start gap-3 text-sm text-gray-700">
-          <input
-            type="checkbox"
-            name="marketingOptIn"
-            value="true"
-            className="mt-0.5 h-4 w-4 shrink-0 rounded border-gray-300 accent-[#14A8A8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#14A8A8]"
-          />
-          <span>I would like to receive relevant job and market updates from ION Talent.</span>
-        </label>
-      </div>
-
       {status === "error" && (
         <div
           className="mt-5 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
@@ -414,6 +379,17 @@ export function CandidateRegistrationForm({ selectedRole = "" }: CandidateRegist
           Fields marked <span aria-hidden="true">*</span> are required.
         </p>
       </div>
+      <p className="mt-4 text-xs leading-relaxed text-gray-500">
+        By registering, you acknowledge that ION Talent will process your information for recruitment
+        purposes in accordance with our{" "}
+        <Link
+          href="/privacy"
+          className="font-medium text-gray-700 underline underline-offset-2 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#14A8A8] rounded-sm"
+        >
+          Candidate Privacy Notice
+        </Link>
+        .
+      </p>
     </form>
   )
 }

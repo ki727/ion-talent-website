@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { sendApplicationEmail } from "@/lib/mailer"
-import { isDuplicateSubmission } from "@/lib/dedupe"
+import { isDuplicateSubmission, releaseSubmission } from "@/lib/dedupe"
 
 // Kept comfortably under Vercel's serverless function request-body limit
 // (4.5 MB total, including all other form fields and multipart overhead).
@@ -18,6 +18,7 @@ const ACCEPTED_MIME = [
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export async function POST(request: NextRequest) {
+  let submissionKey: string | undefined
   try {
     const formData = await request.formData()
 
@@ -72,7 +73,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Best-effort de-dupe: a double-click on submit shouldn't send two emails.
-    if (isDuplicateSubmission(`application:${email.toLowerCase()}:${roleTitle}`)) {
+    submissionKey = `application:${email.toLowerCase()}:${roleTitle}`
+    if (isDuplicateSubmission(submissionKey)) {
       return NextResponse.json({ success: true, message: "Application already received." })
     }
 
@@ -96,6 +98,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true, message: "Application sent." })
   } catch (error) {
+    if (submissionKey) releaseSubmission(submissionKey)
     console.error("[ION] applications error:", error)
     return NextResponse.json(
       { success: false, message: "We couldn't submit your application. Please try again in a moment." },

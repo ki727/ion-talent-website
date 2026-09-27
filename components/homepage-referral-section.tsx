@@ -33,12 +33,12 @@ export function HomepageReferralSection() {
   }, [])
 
   return (
-    <section className="scroll-mt-24 border-t border-gray-100 bg-ion-surface px-6 py-16 md:py-14">
+    <section className="ion-density-section scroll-mt-24 border-t border-gray-100 bg-ion-surface px-6 py-14 md:py-12 xl:py-10">
       <div className="container mx-auto max-w-5xl">
         <FadeIn>
           <div
             ref={viewRef}
-            className="ion-section-navy relative overflow-hidden rounded-[24px] px-6 py-10 text-center shadow-lg md:px-12 md:py-10"
+          className="ion-density-panel ion-section-navy relative overflow-hidden rounded-[24px] px-6 py-10 text-center shadow-lg md:px-12 md:py-10 xl:py-8"
           >
             {/* Signature teal → lilac transition as a top accent, giving this
                 campaign block more visual presence without adding colour to
@@ -47,7 +47,7 @@ export function HomepageReferralSection() {
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ion-teal-bright">
               ION Talent Referrals
             </p>
-            <h2 className="font-display mt-3 text-3xl font-bold text-white text-balance md:text-4xl">
+          <h2 className="ion-density-section-heading-small font-display mt-3 text-3xl font-bold text-white text-balance md:text-4xl xl:text-[2rem]">
               Know a business planning to hire?
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed ion-text-on-navy md:text-lg">
@@ -56,7 +56,7 @@ export function HomepageReferralSection() {
               <span className="font-semibold text-ion-teal-bright">US$5,000</span>.
             </p>
 
-            <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row xl:mt-6">
               <ReferralDrawer
                 source={SOURCE}
                 trigger={

@@ -1,6 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { sendReferralEmail } from "@/lib/email"
-import { DEFAULT_REFERRAL_STATUS } from "@/lib/referrals"
+import { sendReferralEmail } from "@/lib/mailer"
 
 const REQUIRED_FIELDS = [
   "referrerName",
@@ -10,7 +9,7 @@ const REQUIRED_FIELDS = [
   "companyLocation",
   "contactName",
   "contactJobTitle",
-  "contactDetails",
+  "contactEmail",
   "rolesHiring",
   "relationship",
 ] as const
@@ -45,22 +44,25 @@ export async function POST(request: NextRequest) {
     await sendReferralEmail({
       referrerName: data.referrerName.trim(),
       referrerEmail: data.referrerEmail.trim(),
-      referrerPhone: data.referrerPhone.trim(),
       companyName: data.companyName.trim(),
-      companyLocation: data.companyLocation.trim(),
       contactName: data.contactName.trim(),
-      contactJobTitle: data.contactJobTitle.trim(),
-      contactDetails: data.contactDetails.trim(),
-      rolesHiring: data.rolesHiring.trim(),
-      relationship: data.relationship.trim(),
-      additionalContext:
-        typeof data.additionalContext === "string" && data.additionalContext.trim()
-          ? data.additionalContext.trim()
+      contactEmail: data.contactEmail.trim(),
+      contactLinkedin:
+        typeof data.contactLinkedin === "string" && data.contactLinkedin.trim()
+          ? data.contactLinkedin.trim()
           : undefined,
-      genuineIntroduction: true,
-      termsAcknowledged: true,
-      status: DEFAULT_REFERRAL_STATUS,
-      timestamp: new Date().toISOString(),
+      hiringNote: [
+        `Referrer phone: ${data.referrerPhone.trim()}`,
+        `Company location: ${data.companyLocation.trim()}`,
+        `Contact job title: ${data.contactJobTitle.trim()}`,
+        `Roles hiring: ${data.rolesHiring.trim()}`,
+        `Relationship: ${data.relationship.trim()}`,
+        typeof data.additionalContext === "string" && data.additionalContext.trim()
+          ? `Additional context: ${data.additionalContext.trim()}`
+          : "",
+      ].filter(Boolean).join("\n"),
+      pageUrl: "/refer",
+      submittedAt: new Date().toISOString(),
     })
 
     return NextResponse.json({

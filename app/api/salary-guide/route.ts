@@ -1,10 +1,11 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { sendSalaryGuideLeadEmail } from "@/lib/mailer"
-import { isDuplicateSubmission } from "@/lib/dedupe"
+import { isDuplicateSubmission, releaseSubmission } from "@/lib/dedupe"
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export async function POST(request: NextRequest) {
+  let submissionKey: string | undefined
   try {
     const data = await request.json()
 
@@ -38,7 +39,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Best-effort de-dupe: a double-click on submit shouldn't send two emails.
-    if (isDuplicateSubmission(`salary-guide:${workEmail.toLowerCase()}`)) {
+    submissionKey = `salary-guide:${workEmail.toLowerCase()}`
+    if (isDuplicateSubmission(submissionKey)) {
       return NextResponse.json({ success: true, message: "Guide already sent." })
     }
 
@@ -55,6 +57,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true, message: "Guide sent." })
   } catch (error) {
+    if (submissionKey) releaseSubmission(submissionKey)
     console.error("[ION] salary-guide error:", error)
     return NextResponse.json(
       { success: false, message: "We couldn't process your request. Please try again in a moment." },

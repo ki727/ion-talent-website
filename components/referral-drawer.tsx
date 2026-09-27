@@ -11,10 +11,6 @@ import { trackEvent } from "@/lib/analytics"
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const URL_RE = /^(https?:\/\/)?([\w-]+\.)+[a-z]{2,}(\/\S*)?$/i
 
-function isValidContactDetails(value: string): boolean {
-  return EMAIL_RE.test(value) || URL_RE.test(value)
-}
-
 const inputClass =
   "w-full h-11 rounded-lg border border-gray-300 bg-white px-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-ion-teal focus:border-transparent"
 const labelClass = "block text-sm font-medium text-gray-900 mb-1.5"
@@ -24,7 +20,8 @@ const EMPTY_FORM = {
   referrerEmail: "",
   companyName: "",
   contactName: "",
-  contactDetails: "",
+  contactEmail: "",
+  contactLinkedin: "",
   hiringNote: "",
 }
 
@@ -39,7 +36,8 @@ export function ReferralDrawer({ trigger, source }: ReferralDrawerProps) {
   const [form, setForm] = useState(EMPTY_FORM)
   const [companyWebsite, setCompanyWebsite] = useState("") // honeypot
   const [permissionConfirmed, setPermissionConfirmed] = useState(false)
-  const [contactError, setContactError] = useState("")
+  const [contactEmailError, setContactEmailError] = useState("")
+  const [contactLinkedinError, setContactLinkedinError] = useState("")
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle")
   const [errorMessage, setErrorMessage] = useState("")
 
@@ -52,7 +50,8 @@ export function ReferralDrawer({ trigger, source }: ReferralDrawerProps) {
       setForm(EMPTY_FORM)
       setCompanyWebsite("")
       setPermissionConfirmed(false)
-      setContactError("")
+      setContactEmailError("")
+      setContactLinkedinError("")
       setStatus("idle")
       setErrorMessage("")
     }
@@ -60,12 +59,13 @@ export function ReferralDrawer({ trigger, source }: ReferralDrawerProps) {
 
   function updateField(field: keyof typeof form, value: string) {
     setForm((prev) => ({ ...prev, [field]: value }))
-    if (field === "contactDetails" && contactError) setContactError("")
+    if (field === "contactEmail" && contactEmailError) setContactEmailError("")
+    if (field === "contactLinkedin" && contactLinkedinError) setContactLinkedinError("")
   }
 
-  function handleContactBlur() {
-    if (form.contactDetails.trim() && !isValidContactDetails(form.contactDetails.trim())) {
-      setContactError("Enter a valid email address or LinkedIn/web URL.")
+  function handleLinkedinBlur() {
+    if (form.contactLinkedin.trim() && !URL_RE.test(form.contactLinkedin.trim())) {
+      setContactLinkedinError("Enter a valid LinkedIn URL.")
     }
   }
 
@@ -73,9 +73,14 @@ export function ReferralDrawer({ trigger, source }: ReferralDrawerProps) {
     e.preventDefault()
     if (status === "submitting") return
 
-    const contactDetails = form.contactDetails.trim()
-    if (!isValidContactDetails(contactDetails)) {
-      setContactError("Enter a valid email address or LinkedIn/web URL.")
+    const contactEmail = form.contactEmail.trim()
+    const contactLinkedin = form.contactLinkedin.trim()
+    if (!EMAIL_RE.test(contactEmail)) {
+      setContactEmailError("Enter a valid hiring contact email address.")
+      return
+    }
+    if (contactLinkedin && !URL_RE.test(contactLinkedin)) {
+      setContactLinkedinError("Enter a valid LinkedIn URL.")
       return
     }
     if (!permissionConfirmed) {
@@ -96,7 +101,8 @@ export function ReferralDrawer({ trigger, source }: ReferralDrawerProps) {
           referrerEmail: form.referrerEmail.trim(),
           companyName: form.companyName.trim(),
           contactName: form.contactName.trim(),
-          contactDetails,
+          contactEmail,
+          contactLinkedin: contactLinkedin || undefined,
           hiringNote: form.hiringNote.trim() || undefined,
           permissionConfirmed: true,
           companyWebsite,
@@ -229,23 +235,45 @@ export function ReferralDrawer({ trigger, source }: ReferralDrawerProps) {
               </div>
 
               <div>
-                <label htmlFor="ref-drawer-contact-details" className={labelClass}>
-                  Hiring contact&apos;s email or LinkedIn <span aria-hidden="true">*</span>
+                <label htmlFor="ref-drawer-contact-email" className={labelClass}>
+                  Hiring contact&apos;s email <span aria-hidden="true">*</span>
                 </label>
                 <input
-                  id="ref-drawer-contact-details"
+                  id="ref-drawer-contact-email"
+                  type="email"
                   required
-                  placeholder="Email address or LinkedIn profile URL"
-                  value={form.contactDetails}
-                  onChange={(e) => updateField("contactDetails", e.target.value)}
-                  onBlur={handleContactBlur}
-                  aria-invalid={contactError ? true : undefined}
-                  aria-describedby={contactError ? "ref-drawer-contact-error" : undefined}
+                  inputMode="email"
+                  value={form.contactEmail}
+                  onChange={(e) => updateField("contactEmail", e.target.value)}
+                  aria-invalid={contactEmailError ? true : undefined}
+                  aria-describedby={contactEmailError ? "ref-drawer-contact-email-error" : undefined}
                   className={inputClass}
                 />
-                {contactError && (
-                  <p id="ref-drawer-contact-error" className="mt-1.5 text-xs font-medium text-red-600" role="alert">
-                    {contactError}
+                {contactEmailError && (
+                  <p id="ref-drawer-contact-email-error" className="mt-1.5 text-xs font-medium text-red-600" role="alert">
+                    {contactEmailError}
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <label htmlFor="ref-drawer-contact-linkedin" className={labelClass}>
+                  Hiring contact&apos;s LinkedIn <span className="font-normal text-gray-500">(optional)</span>
+                </label>
+                <input
+                  id="ref-drawer-contact-linkedin"
+                  type="url"
+                  placeholder="https://linkedin.com/in/profile"
+                  value={form.contactLinkedin}
+                  onChange={(e) => updateField("contactLinkedin", e.target.value)}
+                  onBlur={handleLinkedinBlur}
+                  aria-invalid={contactLinkedinError ? true : undefined}
+                  aria-describedby={contactLinkedinError ? "ref-drawer-contact-linkedin-error" : undefined}
+                  className={inputClass}
+                />
+                {contactLinkedinError && (
+                  <p id="ref-drawer-contact-linkedin-error" className="mt-1.5 text-xs font-medium text-red-600" role="alert">
+                    {contactLinkedinError}
                   </p>
                 )}
               </div>

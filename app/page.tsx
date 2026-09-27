@@ -88,7 +88,7 @@ export default function HomePage() {
       <SiteHeader />
 
       <main className="ion-page-enter">
-      <section className="ion-home-hero relative flex items-center overflow-hidden px-6 pb-20 pt-28 sm:pb-24 sm:pt-32 lg:pb-20 lg:pt-28">
+      <section className="ion-home-hero relative flex items-center overflow-hidden px-6 pb-16 pt-24 sm:pb-20 sm:pt-28 lg:pb-14 lg:pt-24">
         <div className="pointer-events-none absolute inset-0 z-0 bg-ion-navy" aria-hidden="true">
           <video
             ref={videoRef}
@@ -102,7 +102,7 @@ export default function HomePage() {
             style={{
               willChange: "transform",
               backfaceVisibility: "hidden",
-              filter: "grayscale(0.38) saturate(0.68) brightness(0.72) contrast(1.08)",
+              filter: "grayscale(0.18) saturate(0.84) brightness(0.88) contrast(1.03)",
             }}
           >
             <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/18637270-hd_1920_1080_30fps%20%281%29-Q1nwQiLnflKYyfti4CC4me1eLtnMwk.mp4" type="video/mp4" />
@@ -112,21 +112,21 @@ export default function HomePage() {
         </div>
 
         <div ref={heroContentRef} className="ion-hero-depth pointer-events-auto container relative z-10 mx-auto max-w-6xl">
-          <div className="space-y-6 sm:space-y-8">
+          <div className="ion-home-hero-copy space-y-5 sm:space-y-6">
             <h1 className="ion-display ion-home-hero-title ion-hero-reveal ion-hero-reveal--1 hero-text-shadow font-bold text-white text-balance">
               Specialist talent solutions that
               <br />
               <span className="ion-hero-teal-accent">transform businesses</span>
             </h1>
 
-            <p className="ion-hero-reveal ion-hero-reveal--2 hero-text-shadow max-w-2xl text-lg leading-relaxed text-white/90 sm:text-xl">
+            <p className="ion-home-hero-lede ion-hero-reveal ion-hero-reveal--2 hero-text-shadow max-w-2xl text-lg leading-relaxed text-white/90 sm:text-xl">
               Specialist recruitment and executive search across the GCC and UK, with international reach.
             </p>
 
-            <div className="ion-hero-reveal ion-hero-reveal--3 flex flex-col gap-4 pt-2 sm:flex-row sm:pt-4">
+            <div className="ion-home-hero-actions ion-hero-reveal ion-hero-reveal--3 flex flex-col gap-4 pt-1 sm:flex-row sm:pt-2">
               <Button
                 size="lg"
-                className="ion-primary-button ion-hero-button h-14 w-full gap-2 rounded-xl px-8 text-base shadow-[0_14px_38px_rgba(15,163,161,0.24)] focus-visible:ring-2 focus-visible:ring-ion-teal-hover focus-visible:ring-offset-2 sm:w-auto"
+                className="ion-primary-button ion-hero-button ion-hero-button--primary h-14 w-full gap-2 rounded-xl px-8 text-base focus-visible:ring-2 focus-visible:ring-ion-teal-bright focus-visible:ring-offset-2 focus-visible:ring-offset-ion-navy sm:w-auto"
                 onClick={() => scrollToContact()}
               >
                 Hire Talent
@@ -158,54 +158,49 @@ export default function HomePage() {
       {/* Proof & Credibility */}
       <section
         id="proof"
-        className="ion-surface-tonal scroll-mt-[100px] border-t border-transparent px-6 py-16 md:py-10"
+        className="ion-home-proof ion-surface-tonal scroll-mt-[100px] border-t border-transparent px-6 py-8 md:py-7 xl:py-[1.375rem]"
       >
         <div className="container mx-auto max-w-6xl">
           <h2 className="sr-only">Our Track Record</h2>
-          <FadeIn className="mx-auto mb-6 max-w-3xl text-center">
-            <p className="mb-2 text-base leading-relaxed text-ion-gray">
-              Specialist recruitment and executive search across the GCC and UK, with international reach.
-            </p>
-            <p className="mx-auto max-w-2xl text-base leading-relaxed text-ion-gray">
-              We specialise in permanent placements across all levels, from graduate roles to C-suite positions,
-              serving clients in technology, finance, engineering, construction, cybersecurity and consulting
-              sectors.
-            </p>
-          </FadeIn>
-
-          <p className="mb-4 text-center text-xs font-medium uppercase tracking-wider text-ion-gray">
+          <p className="mb-2.5 text-center text-xs font-medium uppercase tracking-wider text-ion-gray">
             Experience Across Leading Organisations
           </p>
 
-          <div className="mb-6 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 sm:gap-x-12 md:mb-5 md:gap-x-14">
+          <div className="mb-3 flex min-h-10 flex-wrap items-center justify-center gap-x-8 gap-y-3 sm:gap-x-11 md:gap-x-14 xl:mb-2.5">
             {[
-              { src: "/logos/neom-logo.png", alt: "NEOM" },
-              { src: "/logos/pwc-logo.png", alt: "PwC" },
-              { src: "/logos/bechtel-logo.png", alt: "Bechtel" },
-              { src: "/logos/siemens-logo.png", alt: "Siemens" },
-              { src: "/logos/atos-logo.png", alt: "Atos" },
+              { src: "/logos/neom-logo.png", alt: "NEOM", size: "h-10" },
+              { src: "/logos/pwc-logo.png", alt: "PwC", size: "h-9" },
+              { src: "/logos/bechtel-logo.png", alt: "Bechtel", size: "h-10" },
+              { src: "/logos/siemens-logo.png", alt: "Siemens", size: "h-6" },
+              { src: "/logos/atos-logo.png", alt: "Atos", size: "h-7" },
             ].map((logo) => (
               <img
                 key={logo.alt}
                 src={logo.src || "/placeholder.svg"}
                 alt={logo.alt}
-                className="h-7 w-auto object-contain grayscale opacity-70 transition-all duration-300 hover:grayscale-0 hover:opacity-100 sm:h-8 sm:opacity-60"
+                className={`${logo.size} w-auto object-contain grayscale opacity-60 transition-opacity duration-300 hover:opacity-80`}
               />
             ))}
           </div>
 
-          <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 border-t border-ion-navy/10 pt-5 md:grid-cols-3 md:gap-6">
-            <StatCounter end={10} suffix="+" label="Years of Recruitment Experience" startDelay={0} showAccent={false} />
-            <StatCounter end={500} suffix="+" label="Placements Delivered" startDelay={120} showAccent={false} />
-            <StatCounter
-              end={3}
-              label="Core Markets"
-              sublabel="UAE · Saudi Arabia · UK"
-              startDelay={240}
-              showAccent={false}
-            />
+          <div className="mx-auto grid max-w-5xl grid-cols-1 gap-5 border-t border-ion-navy/10 pt-4 md:grid-cols-3 md:gap-0 xl:pt-3.5">
+            <div className="md:px-6">
+              <StatCounter end={10} suffix="+" label="Years of Recruitment Experience" startDelay={0} showAccent={false} />
+            </div>
+            <div className="md:border-l md:border-ion-navy/10 md:px-6">
+              <StatCounter end={500} suffix="+" label="Placements Delivered" startDelay={120} showAccent={false} />
+            </div>
+            <div className="[&_p]:leading-tight md:border-l md:border-ion-navy/10 md:px-6">
+              <StatCounter
+                end={3}
+                label="Core Markets"
+                sublabel="UAE · Saudi Arabia · UK"
+                startDelay={240}
+                showAccent={false}
+              />
+            </div>
           </div>
-          <p className="mx-auto mt-2 max-w-md text-center text-sm text-ion-gray">
+          <p className="mx-auto mt-1.5 max-w-md text-center text-sm text-ion-gray xl:mt-1">
             International search capability beyond our core markets.
           </p>
         </div>
@@ -213,10 +208,10 @@ export default function HomePage() {
 
       <FeaturedJobs />
 
-      <section id="services" className="ion-section-navy scroll-mt-[100px] px-6 py-16 md:py-20">
+      <section id="services" className="ion-density-section ion-section-navy scroll-mt-[100px] px-6 py-14 md:py-[4.5rem] xl:py-14">
         <div className="container mx-auto max-w-6xl">
-          <FadeIn className="mb-10 text-center md:mb-12">
-            <h2 className="font-display text-4xl lg:text-5xl font-bold text-white mb-3 tracking-tight text-balance">
+          <FadeIn className="mb-8 text-center md:mb-10">
+            <h2 className="ion-density-section-heading font-display text-4xl lg:text-5xl xl:text-[2.65rem] font-bold text-white mb-3 tracking-tight text-balance">
               How We Work
             </h2>
             <span className="ion-heading-underline ion-heading-underline--bright mx-auto mb-4" aria-hidden="true" />
@@ -225,9 +220,9 @@ export default function HomePage() {
             </p>
           </FadeIn>
 
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          <div className="ion-density-grid grid grid-cols-1 gap-6 lg:grid-cols-3">
             <FadeIn className="h-full">
-              <Card className="ion-card-top-4 group relative h-full overflow-hidden rounded-[14px] p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
+              <Card className="ion-density-card ion-card-top-4 group relative h-full overflow-hidden rounded-[14px] p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md xl:p-5">
                 <div className="relative flex h-full flex-col gap-4">
                   <div className="ion-icon-circle-teal w-14 h-14 lg:w-11 lg:h-11 rounded-full flex items-center justify-center">
                     <Target className="h-7 w-7 lg:h-5 lg:w-5 text-white" />
@@ -265,7 +260,7 @@ export default function HomePage() {
             </FadeIn>
 
             <FadeIn delay={100} className="h-full">
-              <Card className="ion-card-top-4 group relative h-full overflow-hidden rounded-[14px] p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
+              <Card className="ion-density-card ion-card-top-4 group relative h-full overflow-hidden rounded-[14px] p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md xl:p-5">
                 <div className="relative flex h-full flex-col gap-4">
                   <div className="ion-icon-circle-teal w-14 h-14 lg:w-11 lg:h-11 rounded-full flex items-center justify-center">
                     <Award className="h-7 w-7 lg:h-5 lg:w-5 text-white" />
@@ -307,7 +302,7 @@ export default function HomePage() {
             </FadeIn>
 
             <FadeIn delay={200} className="h-full">
-              <Card className="ion-card-top-4 group relative h-full overflow-hidden rounded-[14px] p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
+              <Card className="ion-density-card ion-card-top-4 group relative h-full overflow-hidden rounded-[14px] p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md xl:p-5">
                 <div className="relative flex h-full flex-col gap-4">
                   <div className="ion-icon-circle-teal w-14 h-14 lg:w-11 lg:h-11 rounded-full flex items-center justify-center">
                     <Users className="h-7 w-7 lg:h-5 lg:w-5 text-white" />
@@ -355,12 +350,12 @@ export default function HomePage() {
           Mobile keeps a small cover thumbnail beside the title/copy (a
           "display:contents" wrapper below md dissolves at md+ so the image,
           text and button fall back to exactly the original 3-column grid on
-          tablet/desktop, unchanged) instead of hiding the cover and
+          tablet/desktop) instead of hiding the cover and
           stretching into a tall text-only card. */}
-      <section className="border-t border-gray-100 bg-white px-6 py-12 md:py-14">
+      <section id="salary-guide-feature" className="ion-density-section border-t border-ion-violet/10 bg-[#F8F7FF] px-6 py-12 md:py-14 xl:py-11">
         <div className="container mx-auto max-w-6xl">
           <FadeIn>
-            <div className="ion-card-hairline relative overflow-hidden rounded-[20px] p-5 shadow-sm transition-all duration-300 hover:shadow-md sm:p-6 md:p-7">
+            <div className="ion-density-card ion-card-hairline relative overflow-hidden rounded-[20px] p-5 shadow-sm transition-all duration-300 hover:shadow-md sm:p-6 md:p-7 xl:p-6">
               <div className="grid grid-cols-1 items-center gap-5 sm:gap-6 md:grid-cols-[auto_1fr_auto] md:gap-8">
                 <div className="flex items-center gap-4 sm:gap-5 md:contents">
                   <img
@@ -370,11 +365,11 @@ export default function HomePage() {
                     loading="lazy"
                     width={800}
                     height={1130}
-                    className="w-20 shrink-0 rounded-lg shadow-md ring-1 ring-black/5 sm:w-24 md:w-32"
+                    className="ion-home-salary-cover w-20 shrink-0 rounded-lg shadow-md ring-1 ring-black/5 sm:w-24 md:w-[140px] xl:w-32"
                   />
                   <div className="min-w-0">
                     <p className="ion-card-eyebrow mb-1.5 md:mb-2">2026 Salary &amp; Hiring Guide</p>
-                    <h2 className="font-display text-lg font-bold text-ion-navy mb-1 text-balance sm:text-2xl md:mb-2 md:text-3xl">
+                    <h2 className="ion-density-section-heading-small font-display text-lg font-bold text-ion-navy mb-1 text-balance sm:text-2xl md:mb-2 md:text-3xl">
                       UAE &amp; Saudi Arabia Salary &amp; Hiring Guide 2026
                     </h2>
                     <p className="text-sm text-ion-gray leading-relaxed sm:text-base md:max-w-xl">
@@ -399,11 +394,11 @@ export default function HomePage() {
 
       <section
         id="industries"
-        className="ion-section-divider scroll-mt-[100px] border-t border-transparent bg-ion-surface px-6 py-16 md:py-12"
+        className="ion-density-section ion-section-divider scroll-mt-[100px] border-t border-transparent bg-ion-surface px-6 py-16 md:py-12 xl:py-10"
       >
         <div className="container mx-auto max-w-6xl">
           <FadeIn className="mb-7 md:mb-6">
-            <h2 className="font-display text-4xl lg:text-5xl font-semibold text-ion-navy mb-3 tracking-tight text-balance">
+            <h2 className="ion-density-section-heading font-display text-4xl lg:text-5xl xl:text-[2.65rem] font-semibold text-ion-navy mb-3 tracking-tight text-balance">
               Industry Expertise
             </h2>
             <span className="ion-heading-underline mb-3" aria-hidden="true" />
@@ -420,9 +415,9 @@ export default function HomePage() {
               { title: "Consulting", desc: "Consultants, Managers, Directors, Partners" },
             ].map((industry, i) => (
               <FadeIn key={industry.title} delay={(i % 3) * 100} className="h-full">
-                <div className="h-full border-b border-ion-navy/15 py-4">
-                  <h3 className="mb-1.5 flex items-center gap-2 text-lg font-semibold text-ion-navy">
-                    <span className="ion-dot-teal h-2.5 w-2.5 shrink-0 rounded-full" aria-hidden="true" />
+                <div className="group h-full border-b border-ion-navy/15 py-4 transition-transform duration-200 hover:translate-x-0.5 xl:py-3.5">
+                  <h3 className="mb-1.5 flex items-center gap-2 text-lg font-semibold text-ion-navy transition-colors duration-200 group-hover:text-ion-teal-dark">
+                    <span className="ion-dot-teal h-2.5 w-2.5 shrink-0 rounded-full transition-transform duration-200 group-hover:scale-125" aria-hidden="true" />
                     {industry.title}
                   </h3>
                   <p className="text-sm text-ion-gray leading-relaxed">{industry.desc}</p>
@@ -437,14 +432,14 @@ export default function HomePage() {
           homepage's single dedicated entry point into the new page. Kept to
           one restrained image, paired with copy rather than a full-bleed
           slab, per the site's photography system. */}
-      <section className="border-t border-gray-100 bg-white px-6 py-16 md:py-14">
+      <section className="ion-density-section border-t border-gray-100 bg-white px-6 py-14 md:py-12 xl:py-10">
         <div className="container mx-auto max-w-6xl">
           <FadeIn>
             <div className="ion-card-hairline relative overflow-hidden rounded-[20px] shadow-sm transition-all duration-300 hover:shadow-md">
               <div className="grid grid-cols-1 md:grid-cols-2">
-                <div className="relative h-56 sm:h-72 md:h-full md:min-h-[250px]">
+                <div className="ion-home-saudi-image relative h-56 sm:h-72 md:h-full md:min-h-[250px] xl:min-h-[235px]">
                   <img
-                    src="/photography/saudi-kingdom-centre.jpg"
+                    src="/photography/saudi-kingdom-centre-lilac.jpg"
                     alt=""
                     aria-hidden="true"
                     loading="lazy"
@@ -453,9 +448,9 @@ export default function HomePage() {
                   />
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ion-navy/55 via-ion-navy/5 to-transparent md:bg-gradient-to-r md:from-transparent md:via-transparent md:to-ion-navy/10" />
                 </div>
-                <div className="flex flex-col justify-center p-6 sm:p-8 md:p-8">
+                <div className="flex flex-col justify-center p-6 sm:p-8 md:p-8 xl:p-7">
                   <p className="ion-card-eyebrow mb-2">Saudi Arabia</p>
-                  <h2 className="font-display text-2xl sm:text-3xl font-bold text-ion-navy mb-3 text-balance">
+                  <h2 className="ion-density-section-heading-small font-display text-2xl sm:text-3xl font-bold text-ion-navy mb-3 text-balance">
                     Saudi National Talent
                   </h2>
                   <p className="text-base text-ion-gray leading-relaxed mb-6 max-w-md">
@@ -480,10 +475,10 @@ export default function HomePage() {
       </section>
 
       {/* Why ION Talent */}
-      <section id="approach" className="border-t border-gray-100 bg-ion-surface px-6 py-16 md:py-16">
+      <section id="approach" className="ion-density-section border-t border-gray-100 bg-ion-surface px-6 py-14 md:py-14 xl:py-12">
         <div className="container mx-auto max-w-6xl">
-          <FadeIn className="mx-auto mb-10 max-w-3xl text-center md:mb-10">
-            <h2 className="font-display text-4xl lg:text-5xl font-semibold text-ion-navy mb-3 tracking-tight text-balance">
+          <FadeIn className="mx-auto mb-10 max-w-3xl text-center md:mb-10 xl:mb-8">
+            <h2 className="ion-density-section-heading font-display text-4xl lg:text-5xl xl:text-[2.65rem] font-semibold text-ion-navy mb-3 tracking-tight text-balance">
               Why ION Talent
             </h2>
             <span className="ion-heading-underline ion-heading-underline--gradient mx-auto mb-6" aria-hidden="true" />
@@ -493,9 +488,9 @@ export default function HomePage() {
             </p>
           </FadeIn>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="ion-density-grid grid grid-cols-1 md:grid-cols-3 gap-6">
             <FadeIn>
-              <div className="ion-viewcard ion-viewcard-edge-teal flex h-full items-start gap-4 rounded-[14px] p-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
+              <div className="ion-density-card ion-viewcard ion-viewcard-edge-teal flex h-full items-start gap-4 rounded-[14px] p-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
                 <div className="ion-icon-circle-teal w-12 h-12 rounded-full flex items-center justify-center shrink-0">
                   <UserCheck className="h-6 w-6 text-white" aria-hidden="true" />
                 </div>
@@ -510,7 +505,7 @@ export default function HomePage() {
             </FadeIn>
 
             <FadeIn delay={100}>
-              <div className="ion-viewcard ion-viewcard-edge-violet flex h-full items-start gap-4 rounded-[14px] p-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
+              <div className="ion-density-card ion-viewcard ion-viewcard-edge-violet flex h-full items-start gap-4 rounded-[14px] p-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
                 <div className="ion-icon-circle-violet w-12 h-12 rounded-full flex items-center justify-center shrink-0">
                   <Radar className="h-6 w-6 text-white" aria-hidden="true" />
                 </div>
@@ -525,7 +520,7 @@ export default function HomePage() {
             </FadeIn>
 
             <FadeIn delay={200}>
-              <div className="ion-viewcard ion-viewcard-edge-teal flex h-full items-start gap-4 rounded-[14px] p-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
+              <div className="ion-density-card ion-viewcard ion-viewcard-edge-teal flex h-full items-start gap-4 rounded-[14px] p-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
                 <div className="ion-icon-circle-teal w-12 h-12 rounded-full flex items-center justify-center shrink-0">
                   <Globe className="h-6 w-6 text-white" aria-hidden="true" />
                 </div>
@@ -547,17 +542,17 @@ export default function HomePage() {
       {/* Employer Enquiry Form */}
       <section
         id="contact"
-        className="ion-surface-tonal scroll-mt-[100px] border-t border-ion-border px-6 py-16 md:py-16"
+        className="ion-density-section-roomy ion-surface-tonal scroll-mt-[100px] border-t border-ion-border px-6 py-14 md:py-16 xl:py-12"
       >
-        <div className="container mx-auto max-w-4xl">
-          <div className="mb-8">
-            <h2 className="font-display text-4xl lg:text-5xl font-semibold text-ion-black mb-4 tracking-tight">
+        <div className="container mx-auto max-w-6xl lg:grid lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] lg:items-start lg:gap-12 xl:gap-10">
+          <div className="mb-8 lg:sticky lg:top-28 lg:mb-0 lg:pt-5">
+            <h2 className="ion-density-section-heading font-display text-4xl lg:text-5xl xl:text-[2.65rem] font-semibold text-ion-black mb-4 tracking-tight">
               Tell Us What You Are Hiring For
             </h2>
             <p className="text-lg text-ion-gray">Ready to transform your hiring? Let&apos;s talk.</p>
           </div>
 
-          <div className="relative overflow-hidden rounded-[20px] border border-gray-200 bg-white p-6 shadow-md sm:p-8 md:p-8">
+          <div className="ion-density-card relative overflow-hidden rounded-[20px] border border-gray-200 bg-white p-6 shadow-md sm:p-8 md:p-8 xl:p-7">
             <div className="ion-gradient-rule absolute top-0 left-0 right-0 opacity-70" aria-hidden="true" />
             <EnhancedContactForm initialService={selectedService} />
           </div>

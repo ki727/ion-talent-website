@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { sendContactEmail } from "@/lib/email"
+import { sendHiringEnquiryEmail } from "@/lib/mailer"
 
 export async function POST(request: NextRequest) {
   try {
@@ -10,15 +10,16 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, message: "Missing required fields" }, { status: 400 })
     }
 
-    await sendContactEmail({
-      name: data.name,
-      email: data.email,
+    await sendHiringEnquiryEmail({
+      fullName: data.name,
+      businessEmail: data.email,
       company: data.company,
       phone: data.phone,
-      service: data.service,
-      message: data.message,
+      serviceInterest: data.service || "General Enquiry",
+      projectDetails: data.message,
       timeline: data.timeline,
-      timestamp: data.timestamp,
+      pageUrl: data.pageUrl || "",
+      submittedAt: data.timestamp || new Date().toISOString(),
     })
 
     return NextResponse.json({

@@ -188,15 +188,33 @@
 }
 
 .ion-header-secondary-dark {
-  background: rgba(9, 17, 31, 0.2) !important;
-  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  background: linear-gradient(135deg, rgba(185, 155, 255, 0.46), rgba(125, 105, 225, 0.34)) !important;
+  border: 1.5px solid rgba(225, 210, 255, 0.92) !important;
   color: #ffffff !important;
-  backdrop-filter: blur(10px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24), 0 0 20px rgba(175, 140, 255, 0.18), 0 8px 24px rgba(0, 0, 0, 0.11);
+  backdrop-filter: blur(16px) saturate(145%);
+  -webkit-backdrop-filter: blur(16px) saturate(145%);
 }
 
 .ion-header-secondary-dark:hover {
-  background: rgba(255, 255, 255, 0.12) !important;
-  border-color: rgba(255, 255, 255, 0.8) !important;
+  background: linear-gradient(135deg, rgba(192, 164, 255, 0.55), rgba(131, 111, 231, 0.42)) !important;
+  border-color: rgba(238, 228, 255, 1) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 23px rgba(175, 140, 255, 0.23), 0 9px 26px rgba(0, 0, 0, 0.12);
+}
+
+.ion-header-primary-dark {
+  background: linear-gradient(135deg, rgba(0, 210, 195, 0.58), rgba(0, 150, 165, 0.46)) !important;
+  border: 1.5px solid rgba(100, 255, 240, 0.88) !important;
+  color: #ffffff !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), 0 0 22px rgba(0, 220, 205, 0.21), 0 8px 26px rgba(0, 0, 0, 0.13);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+}
+
+.ion-header-primary-dark:hover {
+  background: linear-gradient(135deg, rgba(0, 218, 202, 0.67), rgba(0, 158, 173, 0.55)) !important;
+  border-color: rgba(122, 255, 243, 1) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32), 0 0 26px rgba(0, 220, 205, 0.27), 0 9px 28px rgba(0, 0, 0, 0.14);
 }
 
 /*
@@ -453,6 +471,235 @@
   background-color: #f8fafc;
 }
 
+/* OpenHero-derived atmosphere for the opportunities journey only. The
+   donor video is kept deliberately quiet beneath a near-white ION wash. */
+.ion-liquid-hero {
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 16% 18%, rgba(15, 163, 161, 0.16), transparent 34%),
+    radial-gradient(circle at 82% 24%, rgba(102, 87, 232, 0.19), transparent 38%),
+    linear-gradient(135deg, #ffffff 0%, #f8f7ff 52%, #f3fbfb 100%);
+}
+
+.ion-liquid-atmosphere {
+  --ion-liquid-x: 72%;
+  --ion-liquid-y: 42%;
+  --ion-liquid-shift: 0px;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ion-liquid-atmosphere__portal {
+  position: absolute;
+  inset: -65% -10% -80% 24%;
+  transform: translate3d(0, var(--ion-liquid-shift), 0) rotate(-5deg) scale(1.08);
+  transform-origin: center;
+  opacity: 0.48;
+  will-change: transform;
+}
+
+.ion-liquid-atmosphere--compact .ion-liquid-atmosphere__portal {
+  inset: -90% -8% -105% 32%;
+  opacity: 0.4;
+}
+
+.ion-liquid-atmosphere__portal::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(118deg, #0fa3a1 0%, #22c6b3 38%, #a78bfa 70%, #6657e8 100%);
+  mix-blend-mode: color;
+  opacity: 0.92;
+  pointer-events: none;
+}
+
+.ion-liquid-atmosphere__portal video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  filter: grayscale(1) brightness(1.18) contrast(1.2);
+  transition: opacity 1.25s linear;
+}
+
+.ion-liquid-atmosphere__portal video[data-active="true"] {
+  opacity: 1;
+}
+
+.ion-liquid-atmosphere__wash {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.78) 0%, rgba(255, 255, 255, 0.3) 46%, rgba(248, 247, 255, 0.14) 100%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(248, 250, 252, 0.32));
+}
+
+.ion-liquid-atmosphere__highlight {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    420px circle at var(--ion-liquid-x) var(--ion-liquid-y),
+    rgba(15, 163, 161, 0.22),
+    rgba(167, 139, 250, 0.16) 34%,
+    transparent 68%
+  );
+  transition: background-position 500ms var(--motion-ease);
+}
+
+/* OpenHero-derived pointer depth and entrance easing. Motion is capped at a
+   four-pixel translation and 1.01 scale to keep the cards corporate. */
+.ion-interactive-surface {
+  --ion-card-x: 50%;
+  --ion-card-y: 50%;
+  --ion-card-tx: 0px;
+  --ion-card-ty: 0px;
+  opacity: 0;
+  transform: translate3d(0, 14px, 0) scale(0.992);
+  transition:
+    opacity 650ms var(--motion-ease),
+    transform 450ms var(--motion-ease),
+    border-color 300ms ease,
+    box-shadow 450ms var(--motion-ease);
+  will-change: transform, opacity;
+}
+
+.ion-interactive-surface[data-visible="true"] {
+  opacity: 1;
+  transform: translate3d(var(--ion-card-tx), var(--ion-card-ty), 0) scale(1);
+}
+
+.ion-interactive-surface::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    360px circle at var(--ion-card-x) var(--ion-card-y),
+    rgba(15, 163, 161, 0.14),
+    rgba(102, 87, 232, 0.1) 38%,
+    rgba(167, 139, 250, 0.055) 56%,
+    transparent 74%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 350ms ease;
+}
+
+.ion-interactive-surface:hover,
+.ion-interactive-surface:focus-within {
+  border-color: rgba(15, 163, 161, 0.5);
+  box-shadow:
+    0 20px 44px rgba(15, 23, 42, 0.14),
+    0 8px 24px rgba(102, 87, 232, 0.08);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ion-interactive-surface:hover,
+  .ion-interactive-surface:focus-within {
+    transform: translate3d(var(--ion-card-tx), var(--ion-card-ty), 0) scale(1.01);
+  }
+}
+
+.ion-interactive-surface:hover::after,
+.ion-interactive-surface:focus-within::after {
+  opacity: 1;
+}
+
+.ion-interactive-surface > * {
+  position: relative;
+  z-index: 1;
+}
+
+.ion-opportunity-card {
+  background:
+    linear-gradient(145deg, rgba(15, 163, 161, 0.025), rgba(102, 87, 232, 0.04)),
+    #ffffff;
+  border-color: rgba(78, 91, 121, 0.26);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 9px 24px rgba(15, 23, 42, 0.075);
+}
+
+.ion-opportunity-card.ion-card-hairline::before {
+  z-index: 2;
+  height: 4px;
+  background: linear-gradient(90deg, #008f91 0%, #22c6b3 48%, #9679ef 76%, #5645c4 100%);
+  opacity: 1;
+  pointer-events: none;
+}
+
+.ion-opportunity-card:hover,
+.ion-opportunity-card:focus-within {
+  border-color: rgba(51, 157, 165, 0.58);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 20px 42px rgba(38, 55, 82, 0.15),
+    0 8px 22px rgba(102, 87, 232, 0.08);
+}
+
+.ion-opportunity-card .ion-candidate-outline-button {
+  background-color: rgba(102, 87, 232, 0.2) !important;
+  border-color: rgba(102, 87, 232, 0.78) !important;
+  color: #4f3bb5 !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+}
+
+.ion-opportunity-card .ion-candidate-outline-button svg {
+  color: #4f3bb5 !important;
+}
+
+.ion-opportunity-card .ion-candidate-outline-button:hover,
+.ion-opportunity-card .ion-candidate-outline-button:focus-visible {
+  background-color: rgba(102, 87, 232, 0.3) !important;
+  border-color: rgba(86, 69, 196, 0.96) !important;
+  color: #4430a7 !important;
+}
+
+.ion-opportunity-card .ion-candidate-outline-button:hover svg,
+.ion-opportunity-card .ion-candidate-outline-button:focus-visible svg {
+  color: #4430a7 !important;
+}
+
+.ion-job-meta-card {
+  overflow: hidden;
+  background:
+    linear-gradient(145deg, rgba(15, 163, 161, 0.025), rgba(102, 87, 232, 0.04)),
+    #ffffff;
+  border: 1px solid rgba(78, 91, 121, 0.27);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 14px 34px rgba(31, 45, 70, 0.11);
+}
+
+.ion-job-meta-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 2;
+  height: 3px;
+  background: linear-gradient(90deg, #008f91 0%, #22c6b3 46%, #a78bfa 74%, #5645c4 100%);
+  pointer-events: none;
+}
+
+.ion-job-meta-card .ion-candidate-button {
+  transition:
+    transform 250ms var(--motion-ease),
+    background-color 250ms ease,
+    box-shadow 250ms ease;
+}
+
+.ion-job-meta-card .ion-candidate-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 9px 22px rgba(102, 87, 232, 0.2);
+}
+
 /* Softened secondary-action button, reused across the opportunities journey
    (site header nav CTA, "View Role"-adjacent utility actions, "Clear all
    filters", "Make an Introduction") — a single hairline with a faint teal
@@ -678,13 +925,28 @@
   text-shadow: 0 1px 3px rgba(15, 23, 42, 0.35);
 }
 
-/* Highlighted hero words — solid ION bright teal, no gradient, no opacity,
+/* Highlighted hero words — solid ION teal, no gradient, no opacity,
    no filter. Declared with !important, unlayered, for the same reason as
    the other bulletproof accent classes in this file: this exact span
    previously used off-palette colours (#2DD4BF/#14A8A8) via a text-clip
    gradient, which also interacted badly with the shadow above. */
 .ion-hero-teal-accent {
-  color: #d8d3ff !important;
+  color: rgb(var(--ion-teal-bright)) !important;
+}
+
+@keyframes ion-salary-guide-prompt-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ion-salary-guide-prompt {
+  animation: ion-salary-guide-prompt-enter 320ms var(--motion-ease) both;
 }
 
 /* Very slow, subtle hero zoom — desktop only */
@@ -726,6 +988,268 @@
   .ion-hero-depth {
     transform: none !important;
   }
+  .ion-salary-guide-prompt {
+    animation: none !important;
+  }
+}
+
+/* Compact desktop system. The fine-pointer guard protects touch tablets while
+   the 1100px threshold catches ordinary Windows desktop CSS viewports. */
+@media (min-width: 1100px) and (pointer: fine) {
+  .ion-site-header-row {
+    height: 4.5rem !important;
+    gap: 1rem;
+  }
+
+  .ion-site-header-logo {
+    width: auto !important;
+    height: 2.3rem !important;
+  }
+
+  .ion-site-header-nav {
+    gap: 2rem !important;
+  }
+
+  .ion-site-header-nav .ion-nav-link {
+    font-size: 0.875rem;
+  }
+
+  .ion-site-header-actions {
+    gap: 0.75rem !important;
+  }
+
+  .ion-site-header-cta {
+    height: 2.5rem !important;
+    padding-inline: 1.25rem !important;
+    font-size: 0.875rem !important;
+    border-radius: 0.75rem !important;
+  }
+
+  .ion-site-header-cta svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .ion-header-offset {
+    padding-top: 4.5rem !important;
+  }
+
+  .ion-density-page-title {
+    font-size: 2.25rem !important;
+    line-height: 1.08 !important;
+  }
+
+  .ion-density-feature-title {
+    font-size: 2.5rem !important;
+    line-height: 1.08 !important;
+  }
+
+  .ion-density-job-title {
+    font-size: 2.25rem !important;
+    line-height: 1.12 !important;
+  }
+
+  .ion-density-section-heading {
+    font-size: 1.5rem !important;
+    line-height: 1.12 !important;
+  }
+
+  .ion-density-section-heading-small {
+    font-size: 1.375rem !important;
+    line-height: 1.15 !important;
+  }
+
+  .ion-density-section {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  .ion-density-section-tight {
+    padding-top: 1.75rem !important;
+    padding-bottom: 1.75rem !important;
+  }
+
+  .ion-density-section-roomy {
+    padding-top: 2.5rem !important;
+    padding-bottom: 2.5rem !important;
+  }
+
+  .ion-density-card {
+    padding: 0.875rem !important;
+  }
+
+  .ion-density-panel {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+
+  .ion-density-form.space-y-6 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0.75rem !important;
+  }
+
+  .ion-density-form-grid {
+    gap: 0.75rem !important;
+  }
+
+  .ion-density-form-card {
+    padding: 1rem !important;
+  }
+
+  .ion-density-form input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+  .ion-density-form select,
+  .ion-density-form-card input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+  .ion-density-form-card select {
+    min-height: 2.5rem !important;
+  }
+
+  .ion-density-form textarea,
+  .ion-density-form-card textarea {
+    min-height: 5.5rem !important;
+  }
+
+  .ion-opportunities-hero {
+    min-height: 12.5rem;
+    display: flex;
+    align-items: center;
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+
+  .ion-opportunities-hero .ion-density-lede {
+    margin-top: 0.625rem !important;
+    max-width: 50rem !important;
+    font-size: 1rem !important;
+    line-height: 1.55;
+  }
+
+  .ion-opportunities-filter {
+    margin-bottom: 1rem !important;
+    padding: 1rem !important;
+    border-radius: 0.75rem !important;
+  }
+
+  .ion-opportunities-filter input,
+  .ion-opportunities-filter select,
+  .ion-opportunities-filter > div button {
+    height: 2.25rem !important;
+  }
+
+  .ion-opportunities-filter label,
+  .ion-opportunities-filter > p {
+    font-size: 0.8125rem !important;
+  }
+
+  .ion-opportunities-filter label {
+    margin-bottom: 0.25rem !important;
+  }
+
+  .ion-opportunity-card {
+    padding: 0.875rem !important;
+    border-radius: 0.75rem !important;
+  }
+
+  .ion-opportunity-card h3 {
+    font-size: 0.9375rem !important;
+  }
+
+  .ion-opportunity-card .ion-card-eyebrow,
+  .ion-opportunity-card dd,
+  .ion-opportunity-card > p {
+    font-size: 0.75rem !important;
+  }
+
+  .ion-opportunity-card .ion-candidate-outline-button {
+    height: 2.25rem !important;
+    margin-top: 0.625rem !important;
+    font-size: 0.8125rem !important;
+  }
+
+  .ion-job-hero {
+    min-height: 11.75rem;
+    display: flex;
+    align-items: center;
+    padding-top: 1rem !important;
+    padding-bottom: 1.25rem !important;
+  }
+
+  .ion-job-hero .ion-card-eyebrow {
+    margin-top: 0.5rem !important;
+  }
+
+  .ion-job-meta-card {
+    padding: 1rem !important;
+  }
+
+  .ion-job-hero .container,
+  .ion-job-meta-region > .container {
+    max-width: 60rem !important;
+  }
+
+  .ion-job-body > .container {
+    max-width: 58rem !important;
+  }
+
+  .ion-job-meta-card dl {
+    gap: 0.375rem 1rem !important;
+    font-size: 0.8125rem !important;
+  }
+
+  .ion-job-meta-card dl svg {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+
+  .ion-job-meta-card .ion-candidate-button {
+    height: 2.25rem !important;
+    margin-top: 0.625rem !important;
+    padding-inline: 1.25rem !important;
+    font-size: 0.75rem !important;
+  }
+
+  .ion-job-body {
+    padding-top: 0 !important;
+  }
+
+  .ion-job-body > div {
+    gap: 1rem !important;
+  }
+
+  .ion-job-body section.border-t {
+    padding-top: 1rem !important;
+  }
+
+  .ion-site-footer {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  .ion-site-footer-row,
+  .ion-site-footer-social {
+    margin-bottom: 1rem !important;
+  }
+
+  .ion-site-footer-row {
+    gap: 1rem !important;
+  }
+
+  .ion-site-footer-logo {
+    height: 1.4rem !important;
+  }
+
+  .ion-site-footer-nav {
+    gap: 1.125rem !important;
+    font-size: 0.75rem !important;
+  }
+
+  .ion-site-footer-social-link {
+    height: 2.25rem !important;
+    font-size: 0.75rem !important;
+  }
+
+  .ion-site-footer-meta {
+    padding-top: 1rem !important;
+    font-size: 0.75rem !important;
+  }
 }
 
 /* Homepage hero editorial polish. Intentionally scoped to the opening hero
@@ -761,8 +1285,8 @@
   z-index: 1;
   pointer-events: none;
   background:
-    linear-gradient(90deg, rgba(9, 17, 31, 0.93) 0%, rgba(9, 17, 31, 0.74) 44%, rgba(9, 17, 31, 0.26) 76%, rgba(9, 17, 31, 0.14) 100%),
-    linear-gradient(180deg, rgba(9, 17, 31, 0.38) 0%, transparent 28%, rgba(9, 17, 31, 0.34) 100%);
+    linear-gradient(90deg, rgba(9, 17, 31, 0.78) 0%, rgba(9, 17, 31, 0.54) 44%, rgba(9, 17, 31, 0.12) 76%, rgba(9, 17, 31, 0.03) 100%),
+    linear-gradient(180deg, rgba(9, 17, 31, 0.2) 0%, transparent 32%, rgba(9, 17, 31, 0.18) 100%);
 }
 
 /* Fine texture is deliberately low-contrast and fades before the lower edge. */
@@ -878,19 +1402,50 @@
   transform: translateX(3px);
 }
 
+.ion-hero-button--primary {
+  background: linear-gradient(135deg, rgba(0, 210, 195, 0.64), rgba(0, 150, 165, 0.52)) !important;
+  border: 1.5px solid rgba(100, 255, 240, 0.9) !important;
+  color: #ffffff !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 24px rgba(0, 220, 205, 0.24), 0 8px 28px rgba(0, 0, 0, 0.14);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+}
+
+.ion-hero-button--primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, rgba(0, 218, 202, 0.72), rgba(0, 158, 173, 0.61)) !important;
+  border-color: rgba(122, 255, 243, 1) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.34), 0 0 28px rgba(0, 220, 205, 0.3), 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
 .ion-hero-button--secondary {
-  background: rgba(255, 255, 255, 0.06) !important;
-  border: 1px solid rgba(255, 255, 255, 0.48) !important;
-  box-shadow: inset 0 1px rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(12px);
+  background: linear-gradient(135deg, rgba(185, 155, 255, 0.5), rgba(125, 105, 225, 0.38)) !important;
+  border: 1.5px solid rgba(225, 210, 255, 0.95) !important;
+  color: #ffffff !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.26), 0 0 22px rgba(175, 140, 255, 0.22), 0 8px 28px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(16px) saturate(145%);
+  -webkit-backdrop-filter: blur(16px) saturate(145%);
 }
 
 .ion-hero-button--secondary:hover {
-  background: rgba(255, 255, 255, 0.13) !important;
-  border-color: rgba(255, 255, 255, 0.72) !important;
+  background: linear-gradient(135deg, rgba(192, 164, 255, 0.59), rgba(131, 111, 231, 0.47)) !important;
+  border-color: rgba(240, 230, 255, 1) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.31), 0 0 26px rgba(175, 140, 255, 0.28), 0 10px 30px rgba(0, 0, 0, 0.13);
 }
 
 @media (max-width: 767px) {
+  .ion-liquid-atmosphere__portal {
+    inset: -55% -55% -70% 5%;
+    opacity: 0.38;
+  }
+
+  .ion-liquid-atmosphere--compact .ion-liquid-atmosphere__portal {
+    opacity: 0.33;
+  }
+
+  .ion-liquid-atmosphere__wash {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.78), rgba(248, 247, 255, 0.28));
+  }
+
   .ion-home-hero {
     min-height: 100svh;
   }
@@ -910,11 +1465,29 @@
 
 @media (min-width: 1024px) {
   .ion-home-hero {
-    min-height: 83svh;
+    min-height: 100svh;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .ion-liquid-atmosphere__portal,
+  .ion-interactive-surface,
+  .ion-interactive-surface:hover,
+  .ion-interactive-surface:focus-within,
+  .ion-job-meta-card .ion-candidate-button,
+  .ion-job-meta-card .ion-candidate-button:hover {
+    transition: none !important;
+    transform: none !important;
+  }
+
+  .ion-interactive-surface {
+    opacity: 1 !important;
+  }
+
+  .ion-interactive-surface::after {
+    display: none;
+  }
+
   .ion-home-hero-atmosphere,
   .ion-hero-reveal {
     animation: none !important;
@@ -930,5 +1503,314 @@
 
   .ion-role-rail {
     scroll-behavior: auto;
+  }
+}
+
+/* Page-level refinements within the same 1100px compact body system. This
+   block follows the protected homepage hero styles so it only addresses the
+   page body and never changes that cinematic opening composition. */
+@media (min-width: 1100px) and (pointer: fine) {
+  .ion-home-hero-title {
+    font-size: clamp(3.75rem, 4.65vw, 5.25rem);
+  }
+
+  .ion-home-proof {
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+  }
+
+  .ion-home-proof > div > p:first-of-type {
+    margin-bottom: 0.375rem !important;
+  }
+
+  .ion-density-grid {
+    gap: 0.875rem !important;
+  }
+
+  #services > .container > :first-child,
+  #approach > .container > :first-child {
+    margin-bottom: 1rem !important;
+  }
+
+  #services {
+    padding-top: 2.25rem !important;
+    padding-bottom: 2.25rem !important;
+  }
+
+  #services > .container {
+    max-width: 70rem !important;
+  }
+
+  #services h2 {
+    font-size: 2rem !important;
+  }
+
+  #services .ion-density-card {
+    padding: 1.125rem !important;
+  }
+
+  #services .ion-icon-circle-teal {
+    width: 2.75rem !important;
+    height: 2.75rem !important;
+  }
+
+  #services .ion-density-card h3 {
+    font-size: 1.375rem !important;
+  }
+
+  .ion-featured-jobs > .container > :first-child {
+    margin-bottom: 0.75rem !important;
+  }
+
+  .ion-featured-jobs .ion-role-rail {
+    gap: 0.75rem !important;
+  }
+
+  .ion-featured-jobs .ion-card-hairline {
+    min-height: 7.75rem !important;
+  }
+
+  .ion-home-salary-cover {
+    width: 5.25rem !important;
+  }
+
+  .ion-home-saudi-image {
+    min-height: 9.5rem !important;
+  }
+
+  .ion-about-image img {
+    aspect-ratio: 2.35 / 1 !important;
+  }
+
+  .ion-salary-hero {
+    padding-top: 6.5rem !important;
+    padding-bottom: 1.75rem !important;
+  }
+
+  .ion-salary-cover {
+    max-width: 11rem !important;
+  }
+
+  .ion-saudi-hero {
+    min-height: 17rem !important;
+    padding-top: 5.75rem !important;
+    padding-bottom: 1.25rem !important;
+  }
+
+  .ion-saudi-candidate-image {
+    min-height: 12rem !important;
+  }
+
+  .ion-privacy-section {
+    margin-bottom: 1.25rem !important;
+  }
+
+  .ion-home-proof .ion-text-teal,
+  .ion-about-page .ion-text-teal {
+    font-size: 1.5rem !important;
+  }
+
+  .ion-home-proof .grid p,
+  .ion-about-page .grid p {
+    margin-top: 0.5rem !important;
+    font-size: 0.75rem !important;
+  }
+
+  .ion-about-page .space-y-12 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0 !important;
+  }
+
+  .ion-about-page section > .container > p.mb-8,
+  .ion-about-page section > .container > div.mb-10 {
+    margin-bottom: 1rem !important;
+  }
+
+  .ion-salary-page #whats-inside > .container > :first-child,
+  .ion-salary-page #lead-form > .container > :first-child,
+  .ion-saudi-page section > .container > :first-child.mb-12 {
+    margin-bottom: 1rem !important;
+  }
+
+  .ion-about-narrative > * {
+    border-top: 1px solid rgb(var(--ion-border));
+    padding-top: 1rem;
+  }
+
+  .ion-about-narrative .ion-heading-underline {
+    margin-bottom: 0.75rem !important;
+  }
+
+  #services .ion-density-card {
+    min-height: 0 !important;
+  }
+
+  #services .ion-density-card > div {
+    gap: 0.75rem !important;
+  }
+
+  #services .ion-density-card h3,
+  #services .ion-density-card p,
+  #services .ion-density-card ul {
+    margin-bottom: 0.5rem !important;
+  }
+
+  #services .ion-primary-button,
+  #contact button[type="submit"] {
+    min-height: 2.5rem !important;
+    height: 2.5rem !important;
+    padding-block: 0 !important;
+    font-size: 0.875rem !important;
+  }
+
+  #industries .group {
+    padding-top: 0.625rem !important;
+    padding-bottom: 0.625rem !important;
+  }
+
+  #industries h3 {
+    font-size: 0.9375rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  #contact > .container {
+    gap: 2rem !important;
+    max-width: 70rem !important;
+    grid-template-columns: minmax(0, 0.34fr) minmax(0, 0.66fr) !important;
+  }
+
+  #contact {
+    padding-top: 2.25rem !important;
+    padding-bottom: 2.25rem !important;
+  }
+
+  #contact h2 {
+    font-size: 2rem !important;
+  }
+
+  #contact .ion-density-card {
+    padding: 1.125rem !important;
+  }
+
+  #contact .ion-density-form-grid,
+  #contact form .grid {
+    gap: 0.75rem !important;
+  }
+
+  #contact form label {
+    margin-bottom: 0.25rem !important;
+  }
+
+  #contact form input,
+  #contact form select {
+    min-height: 2.5rem !important;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+
+  #contact form textarea {
+    min-height: 6.25rem !important;
+    padding-top: 0.625rem !important;
+    padding-bottom: 0.625rem !important;
+  }
+
+  #contact form > div.rounded-lg {
+    padding: 0.625rem !important;
+  }
+
+  #contact form > p:last-child {
+    margin-top: 0.5rem !important;
+  }
+
+  .ion-opportunities-hero + .ion-density-section-tight {
+    padding-top: 1rem !important;
+  }
+
+  .ion-opportunities-hero + .ion-density-section-tight > .container {
+    max-width: 70rem !important;
+  }
+
+  .ion-salary-page #lead-form {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  .ion-salary-page #lead-form > .container {
+    max-width: 54rem !important;
+  }
+
+  .ion-salary-page #lead-form h2 {
+    font-size: 2rem !important;
+  }
+
+  .ion-salary-page #lead-form > .container > :first-child {
+    margin-bottom: 1rem !important;
+  }
+
+  .ion-salary-page #lead-form .ion-density-card {
+    padding: 1.25rem !important;
+  }
+
+  .ion-salary-page #lead-form form button[type="submit"] {
+    height: 2.625rem !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    font-size: 0.9375rem !important;
+  }
+
+  .ion-salary-page #lead-form form > p:last-child {
+    margin-top: 0.5rem !important;
+  }
+
+  .ion-salary-page #whats-inside .ion-density-card,
+  .ion-saudi-page .ion-density-card {
+    padding: 0.875rem !important;
+  }
+
+  .ion-salary-hero .ion-density-feature-title,
+  .ion-saudi-hero .ion-density-feature-title {
+    margin-top: 0.625rem !important;
+  }
+
+  .ion-salary-hero p.mt-6,
+  .ion-saudi-hero p.mt-5 {
+    margin-top: 0.75rem !important;
+    font-size: 1rem !important;
+    line-height: 1.55 !important;
+  }
+
+  .ion-salary-hero .mt-8,
+  .ion-saudi-hero .mt-8 {
+    margin-top: 1rem !important;
+  }
+
+  .ion-salary-hero a,
+  .ion-saudi-hero a,
+  .ion-saudi-hero button {
+    height: 2.5rem !important;
+    padding-inline: 1.25rem !important;
+    font-size: 0.875rem !important;
+  }
+
+  .ion-refer-page main > section {
+    padding-top: 1.75rem !important;
+    padding-bottom: 1.75rem !important;
+  }
+
+  .ion-refer-page main > section p.text-lg {
+    font-size: 1rem !important;
+  }
+
+  .ion-refer-page main > section .mt-8,
+  .ion-refer-page main > section .mt-10 {
+    margin-top: 1rem !important;
+  }
+
+  .ion-legal-page article > .container > p:first-child {
+    margin-bottom: 1.25rem !important;
+  }
+
+  .ion-saudi-page .ion-density-section-roomy .mt-10,
+  .ion-saudi-page .ion-density-section-roomy .mt-8 {
+    margin-top: 1rem !important;
   }
 }

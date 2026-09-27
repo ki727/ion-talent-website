@@ -69,7 +69,7 @@ const EMPLOYER_POINTS = [
 
 export default function SaudiNationalTalentPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="ion-saudi-page min-h-screen bg-white">
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger
@@ -81,7 +81,7 @@ export default function SaudiNationalTalentPage() {
         {/* Hero: full-bleed editorial architecture image, same overlay
             treatment as the homepage hero video (flat scrim + directional
             gradient) so the two hero moments read as one system. */}
-        <section className="relative flex min-h-[70vh] items-center overflow-hidden px-6 pt-28 pb-16 sm:pt-32 lg:pt-36">
+        <section className="ion-saudi-hero relative flex min-h-[56vh] items-center overflow-hidden px-6 pb-12 pt-24 sm:pt-[6.5rem] lg:pt-28 xl:min-h-[44vh] xl:pb-8 xl:pt-20">
           <div className="pointer-events-none absolute inset-0 z-0 bg-ion-navy" aria-hidden="true">
             <img
               src="/photography/saudi-kingdom-centre.jpg"
@@ -98,15 +98,15 @@ export default function SaudiNationalTalentPage() {
             <p className="hero-text-shadow text-xs font-semibold uppercase tracking-[0.2em] text-ion-teal-bright">
               Saudi Arabia
             </p>
-            <h1 className="font-display hero-text-shadow mt-4 text-4xl font-bold text-white leading-[1.1] md:text-5xl lg:text-6xl text-balance">
+            <h1 className="ion-density-feature-title font-display hero-text-shadow mt-4 text-4xl font-bold text-white leading-[1.1] md:text-5xl lg:text-6xl xl:text-[2.8rem] text-balance">
               Saudi National Talent
             </h1>
-            <p className="hero-text-shadow mt-5 max-w-2xl text-lg leading-relaxed text-white/90 sm:text-xl">
+            <p className="hero-text-shadow mt-5 max-w-2xl text-lg leading-relaxed text-white/90 sm:text-xl xl:text-lg">
               Strategic hiring, built for the long term. We help employers plan ahead and Saudi
               national candidates find roles that match their ambition.
             </p>
 
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+            <div className="mt-8 flex flex-col gap-4 sm:flex-row xl:mt-6">
               <CalendlyButton
                 source={SOURCE}
                 className="ion-primary-button inline-flex h-14 w-full items-center justify-center gap-2 rounded-xl px-8 text-base font-medium shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal-hover focus-visible:ring-offset-2 sm:w-auto"
@@ -132,37 +132,36 @@ export default function SaudiNationalTalentPage() {
         </section>
 
         {/* Positioning statement */}
-        <section className="ion-surface-tonal px-6 py-14 md:py-16 lg:px-12">
+        <section className="ion-density-section-tight ion-surface-tonal px-6 py-10 md:py-12 lg:px-12 xl:py-8">
           <div className="container mx-auto max-w-3xl text-center">
             <p className="text-lg leading-relaxed text-ion-gray sm:text-xl">
-              Saudi national hiring is not a compliance requirement to manage. It is one of the most
-              important workforce decisions an organisation in the Kingdom will make. Done well, it
-              builds leadership pipelines, strengthens institutional knowledge and shapes how a
-              business performs for the next decade.
+              Saudi national hiring is a long-term investment in capability, leadership and growth.
+              Strong talent pipelines help organisations build institutional knowledge while creating
+              meaningful opportunities for Saudi professionals across the Kingdom.
             </p>
           </div>
         </section>
 
         {/* For Employers */}
-        <section className="px-6 py-16 md:py-24 lg:px-12">
+        <section className="ion-density-section-roomy px-6 py-14 md:py-[4.5rem] lg:px-12 xl:py-11">
           <div className="container mx-auto max-w-5xl">
-            <FadeIn className="mx-auto mb-12 max-w-2xl text-center md:mb-16">
+            <FadeIn className="mx-auto mb-12 max-w-2xl text-center md:mb-16 xl:mb-10">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ion-teal">For Employers</p>
-              <h2 className="font-display mt-3 text-3xl font-bold text-ion-navy md:text-4xl text-balance">
-                Plan Saudi National Hiring Like It Matters. Because It Does
+              <h2 className="ion-density-section-heading font-display mt-3 text-3xl font-bold text-ion-navy md:text-4xl xl:text-[1.8rem] text-balance">
+                Saudi National Talent, Built for Long-Term Success.
               </h2>
               <span className="ion-heading-underline mx-auto mt-5" aria-hidden="true" />
-              <p className="mt-5 text-lg leading-relaxed text-ion-gray">
-                The organisations that get the most from Saudi national hiring treat it as a strategic
-                priority, not a reporting line. That means planning early, mapping the market properly and
-                building pipelines before the need becomes urgent.
+              <p className="mt-5 text-lg leading-relaxed text-ion-gray xl:mt-4">
+                Durable Saudi talent pipelines begin with early planning, informed market mapping and
+                opportunities that support long-term professional growth. We help organisations connect
+                workforce priorities with the Saudi professionals who can shape their future.
               </p>
             </FadeIn>
 
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <div className="ion-density-grid grid grid-cols-1 gap-6 sm:grid-cols-2 xl:gap-4">
               {EMPLOYER_POINTS.map((point, i) => (
                 <FadeIn key={point.title} delay={(i % 2) * 100}>
-                  <div className="ion-card-top-3 h-full rounded-[14px] p-6 shadow-sm">
+                  <div className="ion-density-card ion-card-top-3 h-full rounded-[14px] p-6 shadow-sm xl:p-[1.125rem]">
                     <div className="ion-icon-circle-teal flex h-10 w-10 items-center justify-center rounded-full">
                       <point.icon className="h-5 w-5 text-white" aria-hidden="true" />
                     </div>
@@ -173,7 +172,7 @@ export default function SaudiNationalTalentPage() {
               ))}
             </div>
 
-            <FadeIn className="mt-10 text-center">
+            <FadeIn className="mt-10 text-center xl:mt-8">
               <CalendlyButton
                 source={SOURCE}
                 className="ion-primary-button inline-flex h-12 items-center justify-center gap-2 rounded-xl px-8 text-sm font-medium shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal-hover focus-visible:ring-offset-2"
@@ -186,10 +185,10 @@ export default function SaudiNationalTalentPage() {
         </section>
 
         {/* For Saudi National Candidates */}
-        <section className="ion-surface-tonal border-t border-gray-100 px-6 py-16 md:py-20 lg:px-12">
+        <section className="ion-density-section-roomy ion-surface-tonal border-t border-gray-100 px-6 py-16 md:py-20 lg:px-12 xl:py-12">
           <div className="container mx-auto max-w-6xl">
             <FadeIn className="grid overflow-hidden rounded-[20px] border border-ion-navy/10 bg-white shadow-sm md:grid-cols-[0.85fr_1.15fr]">
-              <div className="relative h-72 md:h-full md:min-h-[360px]">
+              <div className="ion-saudi-candidate-image relative h-72 md:h-full md:min-h-[360px] xl:min-h-[320px]">
                 <img
                   src="/photography/saudi-kafd-aerial.jpg"
                   alt=""
@@ -200,22 +199,22 @@ export default function SaudiNationalTalentPage() {
                 />
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ion-navy/30 via-transparent to-transparent md:bg-gradient-to-r md:from-transparent md:to-ion-navy/10" />
               </div>
-              <div className="flex flex-col justify-center p-7 text-center sm:p-9 md:p-10 md:text-left">
+              <div className="flex flex-col justify-center p-7 text-center sm:p-9 md:p-10 md:text-left xl:p-7">
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ion-violet">
                   For Saudi National Candidates
                 </p>
-                <h2 className="font-display mt-3 text-3xl font-bold text-ion-navy md:text-4xl text-balance">
+                <h2 className="ion-density-section-heading font-display mt-3 text-3xl font-bold text-ion-navy md:text-4xl xl:text-[1.8rem] text-balance">
                   Your Experience Belongs at the Centre of Saudi Arabia&apos;s Growth
                 </h2>
-                <span className="ion-heading-underline ion-heading-underline--violet mx-auto mt-5 md:mx-0" aria-hidden="true" />
-                <p className="mt-5 text-lg leading-relaxed text-ion-gray">
+                <span className="ion-heading-underline ion-heading-underline--violet mx-auto mt-5 md:mx-0 xl:mt-4" aria-hidden="true" />
+                <p className="mt-5 text-lg leading-relaxed text-ion-gray xl:mt-4">
                   Saudi national talent is central to the organisations shaping the Kingdom&apos;s
                   fastest-moving sectors: technology, cybersecurity, cloud, data, engineering and
                   beyond. Whether you&apos;re building specialist expertise or stepping into leadership,
                   we want to help you find a role that matches your ambition.
                 </p>
 
-                <div className="mt-8">
+                <div className="mt-8 xl:mt-6">
                   <Link
                     href="/opportunities"
                     className="ion-candidate-button inline-flex h-12 items-center justify-center gap-2 rounded-xl px-8 text-sm font-medium shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-violet focus-visible:ring-offset-2"
@@ -231,12 +230,12 @@ export default function SaudiNationalTalentPage() {
 
         {/* Closing CTA band: same navy panel treatment as the homepage
             referral section, restating both journeys together. */}
-        <section className="px-6 py-16 md:py-20 lg:px-12">
+        <section className="ion-density-section-roomy px-6 py-16 md:py-20 lg:px-12 xl:py-12">
           <div className="container mx-auto max-w-5xl">
             <FadeIn>
-              <div className="ion-section-navy relative overflow-hidden rounded-[24px] px-6 py-10 text-center shadow-lg md:px-14 md:py-14">
+              <div className="ion-density-panel ion-section-navy relative overflow-hidden rounded-[24px] px-6 py-10 text-center shadow-lg md:px-14 md:py-14 xl:px-12 xl:py-10">
                 <div className="ion-gradient-rule absolute top-0 left-0 right-0 opacity-90" aria-hidden="true" />
-                <h2 className="font-display text-3xl font-bold text-white text-balance md:text-4xl">
+                <h2 className="ion-density-section-heading font-display text-3xl font-bold text-white text-balance md:text-4xl xl:text-[1.8rem]">
                   Let&apos;s Talk About Saudi National Hiring
                 </h2>
                 <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed ion-text-on-navy md:text-lg">
@@ -244,7 +243,7 @@ export default function SaudiNationalTalentPage() {
                   their next role.
                 </p>
 
-                <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row xl:mt-6">
                   <CalendlyButton
                     source={SOURCE}
                     className="ion-primary-button inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl px-8 text-sm font-medium shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal-hover focus-visible:ring-offset-2 sm:w-auto"

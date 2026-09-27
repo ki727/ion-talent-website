@@ -4,6 +4,7 @@ import { Suspense } from "react"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { OpportunitiesClient } from "@/components/opportunities-client"
+import { IonLiquidAtmosphere } from "@/components/ion-liquid-atmosphere"
 import { SITE_URL } from "@/lib/site-config"
 
 const TITLE = "Current and Upcoming GCC Opportunities | ION Talent"
@@ -51,19 +52,20 @@ export default function OpportunitiesPage() {
       />
       <SiteHeader />
 
-      <main className="ion-page-enter pt-20">
+      <main className="ion-header-offset ion-page-enter pt-20">
         {/* Hero — an editorial header surface (micro-label / title / lede)
             rather than a flat band, tied to the rest of the site with the
             same signature gradient rule. */}
-        <section className="relative z-10 overflow-hidden border-b border-gray-100 bg-white px-6 py-10 shadow-sm md:py-14 lg:px-12">
+        <section className="ion-opportunities-hero ion-liquid-hero relative z-10 overflow-hidden border-b border-gray-100 px-6 py-8 shadow-sm md:py-10 lg:px-12 xl:py-6">
+          <IonLiquidAtmosphere />
           <div className="ion-gradient-rule absolute top-0 left-0 right-0 opacity-60" aria-hidden="true" />
-          <div className="container mx-auto max-w-4xl text-center">
+          <div className="relative z-10 container mx-auto max-w-4xl text-center xl:max-w-[50rem]">
             <p className="ion-card-eyebrow">ION Talent Opportunities</p>
-            <h1 className="font-display mt-3 text-4xl font-bold text-gray-900 md:text-5xl text-balance">
+            <h1 className="ion-density-page-title font-display mt-3 text-4xl font-bold text-gray-900 md:text-5xl xl:mt-2.5 xl:text-4xl text-balance">
               Current and Upcoming Opportunities
             </h1>
-            <span className="ion-heading-underline ion-heading-underline--gradient mx-auto mt-4" aria-hidden="true" />
-            <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-gray-600">
+            <span className="ion-heading-underline ion-heading-underline--gradient mx-auto mt-4 xl:mt-3" aria-hidden="true" />
+            <p className="ion-density-lede mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-gray-600 xl:mt-3 xl:text-base">
               Explore specialist opportunities across the GCC and international markets. Register your
               interest and we will contact you when your experience matches a relevant live requirement.
             </p>
@@ -71,7 +73,7 @@ export default function OpportunitiesPage() {
         </section>
 
         {/* Filters, cards and registration form */}
-        <section className="px-6 pt-10 pb-10 md:pt-14 md:pb-14 lg:px-12">
+        <section className="ion-density-section-tight px-6 pb-10 pt-6 md:pb-12 md:pt-8 lg:px-12 xl:pb-10 xl:pt-4">
           <div className="container mx-auto max-w-6xl">
             <Suspense fallback={null}>
               <OpportunitiesClient />
@@ -82,9 +84,9 @@ export default function OpportunitiesPage() {
         {/* Secondary referral section - intentionally quieter than the
             registration conversion zone above: a pale teal wash rather than
             an elevated white card, so it reads as a lower-emphasis CTA. */}
-        <section aria-labelledby="referral-cta-heading" className="px-6 pb-14 lg:px-12">
+        <section aria-labelledby="referral-cta-heading" className="px-6 pb-14 lg:px-12 xl:pb-11">
           <div className="container mx-auto max-w-3xl">
-            <div className="relative overflow-hidden rounded-2xl border border-ion-teal/15 bg-ion-teal/[0.04] px-6 py-8 text-center md:px-10">
+            <div className="relative overflow-hidden rounded-2xl border border-ion-teal/15 bg-ion-teal/[0.04] px-6 py-8 text-center md:px-10 xl:py-7">
               <div className="ion-gradient-rule absolute top-0 left-0 right-0 opacity-40" aria-hidden="true" />
               <p className="ion-card-eyebrow">ION Talent Referrals</p>
               <h2 id="referral-cta-heading" className="mt-2 text-xl font-semibold text-gray-900">

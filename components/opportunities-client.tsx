@@ -27,7 +27,7 @@ const PARAM = {
 } as const
 
 const selectClass =
-  "w-full h-11 rounded-lg border border-gray-300 bg-white px-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#14A8A8] focus:border-transparent"
+  "w-full h-11 xl:h-10 rounded-lg border border-gray-300 bg-white px-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#14A8A8] focus:border-transparent"
 
 export function OpportunitiesClient() {
   const router = useRouter()
@@ -129,10 +129,10 @@ export function OpportunitiesClient() {
       {/* ── Filters ── */}
       <section
         aria-label="Opportunity filters"
-        className="relative mb-8 overflow-hidden rounded-2xl border border-gray-200 bg-ion-surface p-5 shadow-sm md:p-6"
+        className="ion-opportunities-filter relative mb-8 overflow-hidden rounded-2xl border border-gray-200 bg-ion-surface p-5 shadow-sm md:p-6 xl:mb-5 xl:p-4"
       >
         <div className="ion-gradient-rule absolute top-0 left-0 right-0 opacity-60" aria-hidden="true" />
-        <div className="mb-4">
+        <div className="mb-4 xl:mb-3">
           <label htmlFor="filter-search" className="mb-1.5 block text-sm font-medium text-gray-900">
             Search
           </label>
@@ -147,13 +147,13 @@ export function OpportunitiesClient() {
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
               placeholder="Search by role, specialism or location"
-              className="h-11 w-full rounded-lg border border-gray-300 bg-white pl-10 pr-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#14A8A8] focus:border-transparent"
+              className="h-11 w-full rounded-lg border border-gray-300 bg-white pl-10 pr-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#14A8A8] focus:border-transparent xl:h-10"
             />
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row sm:items-end gap-4">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 flex-1">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end xl:gap-3">
+          <div className="grid flex-1 grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:gap-3">
             <div>
               <label htmlFor="filter-function" className="mb-1.5 block text-sm font-medium text-gray-900">
                 Function
@@ -268,9 +268,9 @@ export function OpportunitiesClient() {
       </section>
 
       {/* ── Card grid ── */}
-      <section aria-label="Opportunities" className="mb-14">
+      <section aria-label="Opportunities" className="mb-14 xl:mb-10">
         {filtered.length > 0 ? (
-          <div className="grid grid-cols-1 items-start gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 items-start gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:gap-3">
             {filtered.map((opportunity) => (
               <OpportunityCard key={opportunity.id} opportunity={opportunity} />
             ))}
@@ -302,11 +302,11 @@ export function OpportunitiesClient() {
         id="register"
         ref={registerRef}
         aria-labelledby="register-heading"
-        className="scroll-mt-28 rounded-[28px] bg-ion-surface px-6 py-10 md:px-10 md:py-14"
+        className="ion-density-section scroll-mt-28 rounded-[28px] bg-ion-surface px-6 py-10 md:px-10 md:py-14 xl:py-10"
       >
         <div className="mx-auto max-w-3xl">
-          <div className="mb-8 text-center">
-            <h2 id="register-heading" className="font-display text-3xl font-bold text-gray-900 text-balance">
+          <div className="mb-8 text-center xl:mb-6">
+            <h2 id="register-heading" className="ion-density-section-heading-small font-display text-3xl font-bold text-gray-900 text-balance">
               Register Your Interest
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-gray-600 leading-relaxed">
@@ -314,7 +314,7 @@ export function OpportunitiesClient() {
               opportunities.
             </p>
           </div>
-          <div className="relative overflow-hidden rounded-[20px] border border-gray-200 bg-white p-6 shadow-md sm:p-8">
+          <div className="ion-density-card relative overflow-hidden rounded-[20px] border border-gray-200 bg-white p-6 shadow-md sm:p-8 xl:p-6">
             <div className="ion-gradient-rule absolute top-0 left-0 right-0 opacity-70" aria-hidden="true" />
             <CandidateRegistrationForm selectedRole={selectedRole} />
           </div>

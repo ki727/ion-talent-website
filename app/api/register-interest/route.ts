@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { sendCandidateRegistrationEmail } from "@/lib/email"
+import { sendCandidateRegistrationEmail } from "@/lib/mailer"
+import { isDuplicateSubmission, releaseSubmission } from "@/lib/dedupe"
 
 const MAX_CV_BYTES = 10 * 1024 * 1024 // 10 MB
 const ACCEPTED_EXTENSIONS = [".pdf", ".doc", ".docx"]
@@ -16,6 +17,7 @@ const REQUIRED_FIELDS = [
 ] as const
 
 export async function POST(request: NextRequest) {
+  let submissionKey: string | undefined
   try {
     const formData = await request.formData()
 
@@ -29,13 +31,6 @@ export async function POST(request: NextRequest) {
         )
       }
       fields[key] = value.trim()
-    }
-
-    if (formData.get("consent") !== "true") {
-      return NextResponse.json(
-        { success: false, message: "Consent to data processing is required." },
-        { status: 400 },
-      )
     }
 
     const cvFile = formData.get("cv")
@@ -64,6 +59,11 @@ export async function POST(request: NextRequest) {
         ? (formData.get("coverNote") as string).trim()
         : undefined
 
+    submissionKey = `registration:${fields.email.toLowerCase()}:${fields.desiredRole.toLowerCase()}`
+    if (isDuplicateSubmission(submissionKey)) {
+      return NextResponse.json({ success: true, message: "Registration already received." })
+    }
+
     await sendCandidateRegistrationEmail({
       fullName: fields.fullName,
       email: fields.email,
@@ -74,8 +74,6 @@ export async function POST(request: NextRequest) {
       noticePeriod: fields.noticePeriod,
       expectedSalary: fields.expectedSalary,
       coverNote,
-      consent: true,
-      marketingOptIn: formData.get("marketingOptIn") === "true",
       timestamp: new Date().toISOString(),
       cvFile: {
         filename: cvFile.name,
@@ -88,7 +86,8 @@ export async function POST(request: NextRequest) {
       message: "Registration submitted successfully",
     })
   } catch (error) {
-    console.error("Error processing candidate registration:", error)
+    if (submissionKey) releaseSubmission(submissionKey)
+    console.error("[ION] candidate registration error:", error)
     return NextResponse.json(
       { success: false, message: "Failed to submit registration. Please try again." },
       { status: 500 },

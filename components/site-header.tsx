@@ -40,27 +40,27 @@ export function SiteHeader() {
 
   return (
     <header
-      className={`fixed top-0 z-50 w-full px-6 transition-all duration-300 ${
+      className={`ion-site-header fixed top-0 z-50 w-full px-6 transition-all duration-300 ${
         overHomeHero
           ? "border-b border-white/10 bg-ion-navy/10 text-white backdrop-blur-sm"
           : "border-b border-gray-200/80 bg-white/90 text-ion-navy shadow-sm backdrop-blur-md"
       }`}
     >
       <div className="mx-auto w-full max-w-6xl">
-        <div className="flex h-[4.5rem] items-center gap-4">
+        <div className="ion-site-header-row flex h-[4.5rem] items-center gap-4">
           {/* Official ION Talent wordmark — web-optimised derivative of public/brand/logo-primary-2026-08-04.svg */}
           <Link href="/" className="flex shrink-0 items-center" aria-label="ION Talent home">
             <img
               src={overHomeHero ? "/brand/logo-white-web.svg" : "/brand/logo-primary-web.svg"}
               alt="ION Talent"
-              className="h-8 w-auto sm:h-9 md:h-[2.3rem]"
+              className="ion-site-header-logo h-8 w-auto sm:h-9 md:h-[2.3rem]"
             />
           </Link>
 
           {/* Spacer */}
           <div className="flex-1" />
 
-          <nav className="hidden lg:flex items-center gap-8" aria-label="Primary">
+          <nav className="ion-site-header-nav hidden lg:flex items-center gap-8" aria-label="Primary">
             {NAV_LINKS.map((link) => {
               const isActive = link.href.startsWith("/") && !link.href.includes("#") && pathname === link.href
               return (
@@ -79,11 +79,11 @@ export function SiteHeader() {
             })}
           </nav>
 
-          <div className="hidden lg:flex items-center gap-3 shrink-0">
+          <div className="ion-site-header-actions hidden lg:flex items-center gap-3 shrink-0">
             <Button
               asChild
               variant="outline"
-              className={`${overHomeHero ? "ion-header-secondary-dark" : "ion-candidate-outline-button"} gap-2 rounded-xl px-5 text-sm shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:ring-2 focus-visible:ring-ion-violet focus-visible:ring-offset-2`}
+              className={`${overHomeHero ? "ion-header-secondary-dark" : "ion-candidate-outline-button"} ion-site-header-cta gap-2 rounded-xl px-5 text-sm shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:ring-2 focus-visible:ring-ion-violet focus-visible:ring-offset-2`}
             >
               <Link href="/opportunities">
                 Explore Opportunities
@@ -95,7 +95,7 @@ export function SiteHeader() {
                 teal "Hire Talent") with a small teal accent on the arrow. */}
             <Button
               asChild
-              className={`${overHomeHero ? "ion-primary-button" : "ion-primary-button-navy"} gap-2 rounded-xl px-5 text-sm shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:ring-2 focus-visible:ring-ion-teal-hover focus-visible:ring-offset-2`}
+              className={`${overHomeHero ? "ion-header-primary-dark" : "ion-primary-button-navy"} ion-site-header-cta gap-2 rounded-xl px-5 text-sm shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:ring-2 focus-visible:ring-ion-teal-hover focus-visible:ring-offset-2`}
             >
               <Link href="/#contact">
                 Hire Talent

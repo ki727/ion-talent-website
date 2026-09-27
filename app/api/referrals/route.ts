@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { sendReferralEmail } from "@/lib/mailer"
-import { isDuplicateSubmission } from "@/lib/dedupe"
+import { isDuplicateSubmission, releaseSubmission } from "@/lib/dedupe"
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 // Deliberately lenient: accepts a full URL ("https://linkedin.com/in/x") or a
@@ -8,11 +8,8 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 // works either way, without accepting arbitrary unstructured text.
 const URL_RE = /^(https?:\/\/)?([\w-]+\.)+[a-z]{2,}(\/\S*)?$/i
 
-function isValidContactDetails(value: string): boolean {
-  return EMAIL_RE.test(value) || URL_RE.test(value)
-}
-
 export async function POST(request: NextRequest) {
+  let submissionKey: string | undefined
   try {
     const data = await request.json()
 
@@ -25,7 +22,8 @@ export async function POST(request: NextRequest) {
     const referrerEmail = typeof data.referrerEmail === "string" ? data.referrerEmail.trim() : ""
     const companyName = typeof data.companyName === "string" ? data.companyName.trim() : ""
     const contactName = typeof data.contactName === "string" ? data.contactName.trim() : ""
-    const contactDetails = typeof data.contactDetails === "string" ? data.contactDetails.trim() : ""
+    const contactEmail = typeof data.contactEmail === "string" ? data.contactEmail.trim() : ""
+    const contactLinkedin = typeof data.contactLinkedin === "string" ? data.contactLinkedin.trim() : undefined
     const hiringNote =
       typeof data.hiringNote === "string" && data.hiringNote.trim() ? data.hiringNote.trim() : undefined
     const pageUrl = typeof data.pageUrl === "string" ? data.pageUrl.trim() : ""
@@ -42,11 +40,14 @@ export async function POST(request: NextRequest) {
     if (!contactName) {
       return NextResponse.json({ success: false, message: "Hiring contact's name is required." }, { status: 400 })
     }
-    if (!contactDetails || !isValidContactDetails(contactDetails)) {
+    if (!contactEmail || !EMAIL_RE.test(contactEmail)) {
       return NextResponse.json(
-        { success: false, message: "Enter a valid email address or LinkedIn/web URL for the hiring contact." },
+        { success: false, message: "A valid hiring contact email is required." },
         { status: 400 },
       )
+    }
+    if (contactLinkedin && !URL_RE.test(contactLinkedin)) {
+      return NextResponse.json({ success: false, message: "Enter a valid LinkedIn URL." }, { status: 400 })
     }
     if (data.permissionConfirmed !== true) {
       return NextResponse.json(
@@ -56,7 +57,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Best-effort de-dupe: a double-click on submit shouldn't send two emails.
-    if (isDuplicateSubmission(`referral:${referrerEmail.toLowerCase()}:${companyName.toLowerCase()}`)) {
+    submissionKey = `referral:${referrerEmail.toLowerCase()}:${companyName.toLowerCase()}`
+    if (isDuplicateSubmission(submissionKey)) {
       return NextResponse.json({ success: true, message: "Introduction already received." })
     }
 
@@ -65,7 +67,8 @@ export async function POST(request: NextRequest) {
       referrerEmail,
       companyName,
       contactName,
-      contactDetails,
+      contactEmail,
+      contactLinkedin,
       hiringNote,
       pageUrl,
       submittedAt: new Date().toISOString(),
@@ -73,6 +76,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true, message: "Introduction sent." })
   } catch (error) {
+    if (submissionKey) releaseSubmission(submissionKey)
     // Never log submitted names, emails or company details — only the failure itself.
     console.error("[ION] referrals error:", error instanceof Error ? error.message : "unknown error")
     return NextResponse.json(

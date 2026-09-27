@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { sendCVEmail } from "@/lib/email"
+import { sendCandidateRegistrationEmail } from "@/lib/mailer"
 
 export async function POST(request: NextRequest) {
   try {
@@ -31,8 +31,17 @@ export async function POST(request: NextRequest) {
     const cvBuffer = Buffer.from(await cvFile.arrayBuffer())
 
     // Send email with CV attachment
-    await sendCVEmail({
-      ...data,
+    await sendCandidateRegistrationEmail({
+      fullName: `${data.firstName} ${data.lastName}`,
+      email: data.email,
+      mobile: "Not provided",
+      linkedin: data.linkedin || "Not provided",
+      currentLocation: data.location || "Not provided",
+      desiredRole: data.desiredRole || data.currentRole || "General opportunities",
+      noticePeriod: data.availability || "Not provided",
+      expectedSalary: data.salary || "Not provided",
+      coverNote: data.message || undefined,
+      timestamp: data.timestamp || new Date().toISOString(),
       cvFile: {
         filename: cvFile.name,
         content: cvBuffer,

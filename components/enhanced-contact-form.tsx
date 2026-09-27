@@ -156,7 +156,7 @@ export function EnhancedContactForm({ initialService }: EnhancedContactFormProps
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+    <form onSubmit={handleSubmit} className="ion-density-form space-y-6" noValidate>
       {/* Honeypot field — hidden from real visitors and assistive tech, left blank by them */}
       <input
         type="text"

@@ -39,7 +39,7 @@ const Section = ({
   title: string
   children: React.ReactNode
 }) => (
-  <section id={id} aria-labelledby={`${id}-heading`} className="mb-10">
+  <section id={id} aria-labelledby={`${id}-heading`} className="ion-privacy-section mb-10">
     <h2
       id={`${id}-heading`}
       className="text-lg font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-100"
@@ -57,14 +57,14 @@ export default function PrivacyPage() {
     <div className="min-h-screen bg-white">
       <SiteHeader />
 
-      <main className="pt-20">
+      <main className="ion-header-offset pt-20">
         {/* Hero */}
-        <section className="border-b border-gray-100 bg-gray-50/60 px-6 py-14 lg:px-12">
+        <section className="ion-density-section border-b border-gray-100 bg-gray-50/60 px-6 py-14 lg:px-12">
           <div className="container mx-auto max-w-3xl">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#14A8A8]">
               ION Talent
             </p>
-            <h1 className="mt-3 text-3xl font-bold text-gray-900 md:text-4xl text-balance">
+            <h1 className="ion-density-page-title mt-3 text-3xl font-bold text-gray-900 md:text-4xl text-balance">
               Candidate Privacy Notice
             </h1>
             <p className="mt-3 text-sm text-gray-500">Last updated: August 2026</p>
@@ -72,7 +72,7 @@ export default function PrivacyPage() {
         </section>
 
         {/* Body */}
-        <article className="px-6 py-14 lg:px-12">
+        <article className="ion-density-section-roomy px-6 py-14 lg:px-12">
           <div className="container mx-auto max-w-3xl">
             <Section id="who" title="Who we are">
               <p>

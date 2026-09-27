@@ -1,10 +1,11 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { sendHiringEnquiryEmail } from "@/lib/mailer"
-import { isDuplicateSubmission } from "@/lib/dedupe"
+import { isDuplicateSubmission, releaseSubmission } from "@/lib/dedupe"
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export async function POST(request: NextRequest) {
+  let submissionKey: string | undefined
   try {
     const data = await request.json()
 
@@ -42,7 +43,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Best-effort de-dupe: a double-click on submit shouldn't send two emails.
-    if (isDuplicateSubmission(`hiring:${businessEmail.toLowerCase()}`)) {
+    submissionKey = `hiring:${businessEmail.toLowerCase()}`
+    if (isDuplicateSubmission(submissionKey)) {
       return NextResponse.json({ success: true, message: "Enquiry already received." })
     }
 
@@ -60,6 +62,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true, message: "Hiring enquiry sent." })
   } catch (error) {
+    if (submissionKey) releaseSubmission(submissionKey)
     console.error("[ION] hiring-enquiry error:", error)
     return NextResponse.json(
       { success: false, message: "We couldn't send your enquiry. Please try again in a moment." },

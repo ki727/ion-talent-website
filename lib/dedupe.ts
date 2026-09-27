@@ -24,3 +24,9 @@ export function isDuplicateSubmission(key: string): boolean {
   recentSubmissions.set(key, now)
   return false
 }
+
+/** Release a claimed key when downstream processing fails so a genuine retry
+ * is never reported as successful without actually being delivered. */
+export function releaseSubmission(key: string): void {
+  recentSubmissions.delete(key)
+}

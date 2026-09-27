@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { Inter, Raleway } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { LINKEDIN_COMPANY_URL, SITE_URL } from "@/lib/site-config"
+import { SalaryGuidePrompt } from "@/components/salary-guide-prompt"
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
@@ -79,6 +80,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
         {children}
+        <SalaryGuidePrompt />
         <Analytics />
       </body>
     </html>

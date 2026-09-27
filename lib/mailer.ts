@@ -198,8 +198,9 @@ export interface ApplicationEmailData {
 export async function sendApplicationEmail(data: ApplicationEmailData) {
   const transporter = getTransporter()
   const fullName = `${data.firstName} ${data.lastName}`
+  const from = requireEnv("EMAIL_FROM")
   await transporter.sendMail({
-    from: requireEnv("EMAIL_FROM"),
+    from,
     to: requireEnv("APPLICATION_TO"),
     replyTo: data.email,
     subject: `Website Application | ${data.roleTitle} | ${fullName}`,
@@ -220,6 +221,87 @@ export async function sendApplicationEmail(data: ApplicationEmailData) {
     ]),
     attachments: [data.cvFile],
   })
+
+  await transporter.sendMail({
+    from,
+    to: data.email,
+    subject: `Your ION Talent application - ${data.roleTitle}`,
+    html: `<!doctype html>
+<html><body style="margin:0;padding:24px;background:#F8FAFC;font-family:Arial,Helvetica,sans-serif;">
+  <table role="presentation" cellpadding="0" cellspacing="0" style="max-width:600px;margin:0 auto;background:#FFFFFF;border:1px solid ${BORDER};border-radius:14px;overflow:hidden;">
+    <tr><td style="background:${NAVY};padding:24px;"><p style="margin:0;color:${TEAL};font-size:11px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;">ION Talent</p><h1 style="margin:8px 0 0;color:#FFFFFF;font-size:20px;font-weight:700;">Application received</h1></td></tr>
+    <tr><td style="padding:24px;"><p style="font-size:14px;color:#334155;line-height:1.6;">Thank you, ${esc(data.firstName)}. We have received your application for <strong>${esc(data.roleTitle)}</strong>.</p><p style="font-size:14px;color:#334155;line-height:1.6;">Our team will review your experience and contact you if your profile matches the requirement.</p><p style="font-size:13px;color:#64748B;margin-top:24px;">ION Talent</p></td></tr>
+  </table>
+</body></html>`,
+  })
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Candidate registration (/opportunities)  ->  APPLICATION_TO               */
+/* -------------------------------------------------------------------------- */
+
+export interface CandidateRegistrationEmailData {
+  fullName: string
+  email: string
+  mobile: string
+  linkedin: string
+  currentLocation: string
+  desiredRole: string
+  noticePeriod: string
+  expectedSalary: string
+  coverNote?: string
+  timestamp: string
+  cvFile: { filename: string; content: Buffer }
+}
+
+export async function sendCandidateRegistrationEmail(data: CandidateRegistrationEmailData) {
+  const transporter = getTransporter()
+  const from = requireEnv("EMAIL_FROM")
+
+  await transporter.sendMail({
+    from,
+    to: requireEnv("APPLICATION_TO"),
+    replyTo: data.email,
+    subject: `Candidate Registration | ${data.desiredRole} | ${data.fullName}`,
+    html: buildEmail("Candidate Registration", `${data.fullName} - ${data.desiredRole}`, [
+      ["Full Name", data.fullName],
+      ["Email", data.email],
+      ["Mobile", data.mobile],
+      ["LinkedIn", data.linkedin],
+      ["Current Location", data.currentLocation],
+      ["Desired Role", data.desiredRole],
+      ["Notice Period", data.noticePeriod],
+      ["Expected Salary", data.expectedSalary],
+      ["Cover Note", data.coverNote],
+      ["CV Attached", data.cvFile.filename],
+      ["Submitted", data.timestamp],
+    ]),
+    attachments: [data.cvFile],
+  })
+
+  const acknowledgementHtml = `<!doctype html>
+<html>
+  <body style="margin:0;padding:24px;background:#F8FAFC;font-family:Arial,Helvetica,sans-serif;">
+    <table role="presentation" cellpadding="0" cellspacing="0" style="max-width:600px;margin:0 auto;background:#FFFFFF;border:1px solid ${BORDER};border-radius:14px;overflow:hidden;">
+      <tr><td style="background:${NAVY};padding:24px;">
+        <p style="margin:0;color:${TEAL};font-size:11px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;">ION Talent</p>
+        <h1 style="margin:8px 0 0;color:#FFFFFF;font-size:20px;font-weight:700;">Thank you, ${esc(data.fullName)}</h1>
+      </td></tr>
+      <tr><td style="padding:24px;">
+        <p style="font-size:14px;color:#334155;line-height:1.6;">Thank you for registering your interest with ION Talent. Your details have been added to our specialist network for <strong>${esc(data.desiredRole)}</strong> opportunities.</p>
+        <p style="font-size:14px;color:#334155;line-height:1.6;">We review registrations carefully and will be in touch when your experience matches a relevant live requirement.</p>
+        <p style="font-size:13px;color:#64748B;margin-top:24px;">ION Talent</p>
+      </td></tr>
+    </table>
+  </body>
+</html>`
+
+  await transporter.sendMail({
+    from,
+    to: data.email,
+    subject: `Your ION Talent registration - ${data.desiredRole}`,
+    html: acknowledgementHtml,
+  })
 }
 
 /* -------------------------------------------------------------------------- */
@@ -232,7 +314,8 @@ export interface ReferralEmailData {
   companyName: string
   contactName: string
   /** Hiring contact's email address or LinkedIn/web profile URL — free-form by design. */
-  contactDetails: string
+  contactEmail: string
+  contactLinkedin?: string
   /** Optional: what they're hiring for, or any other useful note. */
   hiringNote?: string
   pageUrl: string
@@ -251,7 +334,8 @@ export async function sendReferralEmail(data: ReferralEmailData) {
       ["Referrer Email", data.referrerEmail],
       ["Referred Company", data.companyName],
       ["Hiring Contact", data.contactName],
-      ["Contact Email / LinkedIn", data.contactDetails],
+      ["Hiring Contact Email", data.contactEmail],
+      ["Hiring Contact LinkedIn", data.contactLinkedin],
       ["Hiring Note", data.hiringNote],
       ["Submission Page", data.pageUrl],
       ["Submitted", data.submittedAt],

@@ -38,7 +38,7 @@ const Section = ({
   title: string
   children: React.ReactNode
 }) => (
-  <section id={id} aria-labelledby={`${id}-heading`} className="mb-10">
+  <section id={id} aria-labelledby={`${id}-heading`} className="ion-privacy-section mb-10">
     <h2 id={`${id}-heading`} className="text-lg font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-100">
       {title}
     </h2>
@@ -48,19 +48,19 @@ const Section = ({
 
 export default function ReferralTermsPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="ion-legal-page min-h-screen bg-white">
       <SiteHeader />
 
-      <main className="pt-20">
-        <section className="border-b border-gray-100 bg-gray-50/60 px-6 py-14 lg:px-12">
+      <main className="ion-header-offset ion-page-enter pt-20">
+        <section className="ion-density-section border-b border-gray-100 bg-gray-50/60 px-6 py-14 lg:px-12">
           <div className="container mx-auto max-w-3xl">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ion-teal">ION Talent</p>
-            <h1 className="mt-3 text-3xl font-bold text-gray-900 md:text-4xl text-balance">Referral Terms</h1>
+            <h1 className="ion-density-page-title mt-3 text-3xl font-bold text-gray-900 md:text-4xl text-balance">Referral Terms</h1>
             <p className="mt-3 text-sm text-gray-500">Last updated: August 2026</p>
           </div>
         </section>
 
-        <article className="px-6 py-14 lg:px-12">
+        <article className="ion-density-section-roomy px-6 py-14 lg:px-12">
           <div className="container mx-auto max-w-3xl">
             <p className="mb-10 rounded-xl border border-gray-200 bg-gray-50 px-5 py-4 text-sm leading-relaxed text-gray-700">
               Submitting an introduction does not automatically guarantee eligibility for a reward.

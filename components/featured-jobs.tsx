@@ -119,6 +119,9 @@ const FEATURED_ROLES = selectFeaturedRoles()
 
 export function FeaturedJobs() {
   const railRef = useRef<HTMLDivElement>(null)
+  const pauseUntilRef = useRef(0)
+  const isHoveredRef = useRef(false)
+  const hasFocusRef = useRef(false)
   const [canScrollLeft, setCanScrollLeft] = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(true)
 
@@ -142,10 +145,40 @@ export function FeaturedJobs() {
     }
   }, [])
 
+  useEffect(() => {
+    const rail = railRef.current
+    if (!rail) return
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)")
+
+    const interval = window.setInterval(() => {
+      if (reducedMotion.matches || isHoveredRef.current || hasFocusRef.current || Date.now() < pauseUntilRef.current) return
+
+      const firstCard = rail.firstElementChild as HTMLElement | null
+      if (!firstCard) return
+      const gap = Number.parseFloat(window.getComputedStyle(rail).columnGap) || 0
+      const step = firstCard.offsetWidth + gap
+      const atEnd = rail.scrollLeft >= rail.scrollWidth - rail.clientWidth - 4
+
+      rail.scrollTo({
+        left: atEnd ? 0 : Math.min(rail.scrollLeft + step, rail.scrollWidth - rail.clientWidth),
+        behavior: "smooth",
+      })
+    }, 5500)
+
+    return () => window.clearInterval(interval)
+  }, [])
+
+  const pauseAutoAdvance = (duration = 12000) => {
+    pauseUntilRef.current = Date.now() + duration
+  }
+
   const moveRail = (direction: -1 | 1) => {
     const rail = railRef.current
     const firstCard = rail?.firstElementChild as HTMLElement | null
     if (!rail || !firstCard) return
+
+    pauseAutoAdvance()
 
     const gap = Number.parseFloat(window.getComputedStyle(rail).columnGap) || 0
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -156,11 +189,11 @@ export function FeaturedJobs() {
   }
 
   return (
-    <section className="border-t border-ion-border bg-white px-6 py-14 md:py-16">
+    <section className="ion-featured-jobs ion-density-section border-t border-ion-border bg-white px-6 pb-12 pt-12 md:pb-14 md:pt-14 xl:pb-11 xl:pt-11">
       <div className="container mx-auto max-w-6xl">
-        <FadeIn className="mb-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+        <FadeIn className="mb-6 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div>
-            <h2 className="font-display text-4xl lg:text-5xl font-semibold text-ion-navy mb-3 tracking-tight text-balance">
+          <h2 className="ion-density-section-heading font-display text-4xl lg:text-5xl xl:text-[2.65rem] font-semibold text-ion-navy mb-3 tracking-tight text-balance">
               Featured Opportunities
             </h2>
             <span className="ion-heading-underline mb-4" aria-hidden="true" />
@@ -175,18 +208,18 @@ export function FeaturedJobs() {
                 onClick={() => moveRail(-1)}
                 disabled={!canScrollLeft}
                 aria-label="Previous featured opportunity"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-ion-navy/15 text-ion-navy transition-colors hover:border-ion-teal hover:text-ion-teal disabled:cursor-not-allowed disabled:opacity-30"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-ion-navy/20 bg-ion-surface-pale text-ion-navy shadow-sm transition-all hover:-translate-y-0.5 hover:border-ion-teal hover:bg-white hover:text-ion-teal hover:shadow-md disabled:cursor-not-allowed disabled:opacity-30 disabled:shadow-none"
               >
-                <ChevronLeft className="h-4 w-4" aria-hidden="true" />
+                <ChevronLeft className="h-5 w-5" aria-hidden="true" />
               </button>
               <button
                 type="button"
                 onClick={() => moveRail(1)}
                 disabled={!canScrollRight}
                 aria-label="Next featured opportunity"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-ion-navy/15 text-ion-navy transition-colors hover:border-ion-teal hover:text-ion-teal disabled:cursor-not-allowed disabled:opacity-30"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-ion-navy/20 bg-ion-surface-pale text-ion-navy shadow-sm transition-all hover:-translate-y-0.5 hover:border-ion-teal hover:bg-white hover:text-ion-teal hover:shadow-md disabled:cursor-not-allowed disabled:opacity-30 disabled:shadow-none"
               >
-                <ChevronRight className="h-4 w-4" aria-hidden="true" />
+                <ChevronRight className="h-5 w-5" aria-hidden="true" />
               </button>
             </div>
             <Link
@@ -199,16 +232,36 @@ export function FeaturedJobs() {
           </div>
         </FadeIn>
 
-        <div
-          ref={railRef}
-          className="ion-role-rail grid snap-x snap-mandatory grid-flow-col auto-cols-[100%] gap-4 overflow-x-auto pb-3 sm:auto-cols-[calc((100%-1rem)/2)] lg:auto-cols-[calc((100%-2rem)/3)]"
-        >
+        <div className="relative">
+          <div
+            ref={railRef}
+            onMouseEnter={() => {
+              isHoveredRef.current = true
+            }}
+            onMouseLeave={() => {
+              isHoveredRef.current = false
+            }}
+            onFocusCapture={() => {
+              hasFocusRef.current = true
+            }}
+            onBlurCapture={(event) => {
+              if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+                hasFocusRef.current = false
+                pauseAutoAdvance(6000)
+              }
+            }}
+            onPointerDown={() => pauseAutoAdvance()}
+            onTouchStart={() => pauseAutoAdvance()}
+            onWheel={() => pauseAutoAdvance()}
+            className="ion-role-rail grid snap-x snap-mandatory grid-flow-col auto-cols-[100%] gap-4 overflow-x-auto pb-3 sm:auto-cols-[calc((100%-1rem)/2)] lg:auto-cols-[calc((100%-2rem)/3)]"
+          >
           {FEATURED_ROLES.map((role, i) => (
             <FadeIn key={role.id} delay={(i % 3) * 100} className="h-full snap-start">
               <Link
                 href={`/opportunities/${role.slug}`}
                 aria-label={`${role.title} — view role details`}
-                className="ion-card-hairline group relative flex h-full min-h-[13rem] flex-col overflow-hidden rounded-2xl p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2"
+                onClick={() => pauseAutoAdvance()}
+              className="ion-density-card ion-card-hairline group relative flex h-full min-h-[11.5rem] flex-col overflow-hidden rounded-2xl p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2 lg:min-h-[10.75rem]"
               >
                 <span className="ion-badge-teal mb-3 inline-block w-fit rounded-full px-2.5 py-0.5 text-xs font-semibold">
                   {getRoleTypeLabel(role)}
@@ -230,6 +283,10 @@ export function FeaturedJobs() {
               </Link>
             </FadeIn>
           ))}
+          </div>
+          {canScrollRight && (
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-white to-transparent" aria-hidden="true" />
+          )}
         </div>
       </div>
     </section>

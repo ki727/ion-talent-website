@@ -167,7 +167,7 @@ export function RoleApplicationForm({
   const idleLabel = roleType === "Live Vacancy" ? "Apply for this Role" : "Submit CV / Register Interest"
 
   return (
-    <form onSubmit={handleSubmit} className="rounded-2xl border border-gray-200 bg-white p-6 md:p-8" noValidate>
+    <form onSubmit={handleSubmit} className="ion-density-form-card rounded-2xl border border-gray-200 bg-white p-6 md:p-8" noValidate>
       {/* Honeypot field — hidden from real visitors and assistive tech, left blank by them */}
       <input
         type="text"
@@ -180,7 +180,7 @@ export function RoleApplicationForm({
         className="hidden"
       />
 
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+      <div className="ion-density-form-grid grid grid-cols-1 gap-5 md:grid-cols-2">
         <div>
           <label htmlFor="app-first-name" className={labelClass}>
             First name <span aria-hidden="true">*</span>

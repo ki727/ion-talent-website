@@ -39,7 +39,8 @@ export function ReferralForm() {
       companyLocation: formData.get("companyLocation"),
       contactName: formData.get("contactName"),
       contactJobTitle: formData.get("contactJobTitle"),
-      contactDetails: formData.get("contactDetails"),
+      contactEmail: formData.get("contactEmail"),
+      contactLinkedin: formData.get("contactLinkedin"),
       rolesHiring: formData.get("rolesHiring"),
       relationship: formData.get("relationship"),
       additionalContext: formData.get("additionalContext"),
@@ -134,14 +135,27 @@ export function ReferralForm() {
           <input id="ref-contact-title" name="contactJobTitle" required className={inputClass} />
         </div>
         <div>
-          <label htmlFor="ref-contact-details" className={labelClass}>
-            Hiring contact&apos;s email or LinkedIn <span aria-hidden="true">*</span>
+          <label htmlFor="ref-contact-email" className={labelClass}>
+            Hiring contact&apos;s email <span aria-hidden="true">*</span>
           </label>
           <input
-            id="ref-contact-details"
-            name="contactDetails"
+            id="ref-contact-email"
+            name="contactEmail"
+            type="email"
             required
-            placeholder="Email address or LinkedIn profile URL"
+            autoComplete="email"
+            className={inputClass}
+          />
+        </div>
+        <div>
+          <label htmlFor="ref-contact-linkedin" className={labelClass}>
+            Hiring contact&apos;s LinkedIn <span className="font-normal text-gray-500">(optional)</span>
+          </label>
+          <input
+            id="ref-contact-linkedin"
+            name="contactLinkedin"
+            type="url"
+            placeholder="https://linkedin.com/in/profile"
             className={inputClass}
           />
         </div>
