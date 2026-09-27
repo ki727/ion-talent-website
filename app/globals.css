@@ -1447,13 +1447,23 @@
   }
 
   .ion-home-hero {
-    min-height: 100svh;
+    min-height: min(760px, 88svh);
+    padding-bottom: 2.5rem;
+  }
+
+  .ion-home-hero video {
+    filter: grayscale(0.12) saturate(0.92) brightness(1.02) contrast(1.02) !important;
+  }
+
+  .ion-home-hero-title {
+    font-size: clamp(3.25rem, 13.5vw, 3.375rem);
+    line-height: 0.96;
   }
 
   .ion-home-hero::after {
     background:
-      linear-gradient(90deg, rgba(9, 17, 31, 0.91), rgba(9, 17, 31, 0.64)),
-      linear-gradient(180deg, rgba(9, 17, 31, 0.38), rgba(9, 17, 31, 0.7));
+      linear-gradient(90deg, rgba(9, 17, 31, 0.76), rgba(9, 17, 31, 0.4)),
+      linear-gradient(180deg, rgba(9, 17, 31, 0.22), rgba(9, 17, 31, 0.46));
   }
 
   .ion-home-hero-atmosphere {
@@ -1511,7 +1521,9 @@
    page body and never changes that cinematic opening composition. */
 @media (min-width: 1100px) and (pointer: fine) {
   .ion-home-hero-title {
-    font-size: clamp(3.75rem, 4.65vw, 5.25rem);
+    max-width: 15.5ch;
+    font-size: clamp(4.125rem, 5.1vw, 5.75rem);
+    line-height: 0.95;
   }
 
   .ion-home-proof {
