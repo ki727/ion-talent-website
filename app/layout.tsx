@@ -13,7 +13,7 @@ const raleway = Raleway({ subsets: ["latin"], weight: ["600", "700", "800"], var
 
 const SITE_NAME = "ION Talent"
 const SITE_DESCRIPTION =
-  "ION Talent provides executive search and specialist recruitment across the GCC and UK, with international reach."
+  "ION Talent provides specialist recruitment and executive search for critical technology and leadership roles across international markets."
 const SITE_TITLE = "ION Talent | Executive Search & Specialist Recruitment"
 
 export const metadata: Metadata = {
