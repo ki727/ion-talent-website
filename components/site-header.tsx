@@ -19,6 +19,10 @@ export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
   const overHomeHero = (pathname === "/" || pathname === "/global") && !scrolled && !mobileMenuOpen
+  const isGlobalPreview = pathname === "/global"
+  const visibleNavLinks = isGlobalPreview
+    ? NAV_LINKS.map((link) => link.href.startsWith("/#") ? { ...link, href: `/global${link.href.slice(1)}` } : link)
+    : NAV_LINKS
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12)
@@ -49,7 +53,7 @@ export function SiteHeader() {
       <div className="mx-auto w-full max-w-6xl">
         <div className="ion-site-header-row flex h-[4.5rem] items-center gap-4">
           {/* Official ION Talent wordmark — web-optimised derivative of public/brand/logo-primary-2026-08-04.svg */}
-          <Link href="/" className="flex shrink-0 items-center" aria-label="ION Talent home">
+          <Link href={isGlobalPreview ? "/global" : "/"} className="flex shrink-0 items-center" aria-label="ION Talent home">
             <img
               src={overHomeHero ? "/brand/logo-white-web.svg" : "/brand/logo-primary-web.svg"}
               alt="ION Talent"
@@ -61,7 +65,7 @@ export function SiteHeader() {
           <div className="flex-1" />
 
           <nav className="ion-site-header-nav hidden lg:flex items-center gap-8" aria-label="Primary">
-            {NAV_LINKS.map((link) => {
+            {visibleNavLinks.map((link) => {
               const isActive = link.href.startsWith("/") && !link.href.includes("#") && pathname === link.href
               return (
                 <Link
@@ -119,7 +123,7 @@ export function SiteHeader() {
         {mobileMenuOpen && (
           <div className="lg:hidden border-t border-gray-100 py-6">
             <nav className="flex flex-col gap-6" aria-label="Mobile">
-              {NAV_LINKS.map((link) => (
+              {visibleNavLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
