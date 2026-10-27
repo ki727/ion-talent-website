@@ -3,12 +3,13 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ArrowRight, Globe2, CheckCircle2 } from "lucide-react"
 import { GLOBAL_REGIONS, getGlobalRegion } from "@/lib/global-regions"
+import { GLOBAL_MARKETS } from "@/lib/global-market-hubs"
 import { GlobalPreviewHeader, GlobalPreviewFooter } from "@/components/global-preview-shell"
 
 type PageProps = { params: { region: string } }
 
 export function generateStaticParams() {
-  return GLOBAL_REGIONS.map(({ slug }) => ({ region: slug }))
+  return [...GLOBAL_MARKETS, ...GLOBAL_REGIONS].map(({ slug }) => ({ region: slug }))
 }
 
 export function generateMetadata({ params }: PageProps): Metadata {
@@ -72,6 +73,18 @@ export default function RegionalConceptPage({ params }: PageProps) {
         <div className="mx-auto max-w-6xl">
           <h2 className="mb-5 text-2xl font-bold">A regional approach. One ION Talent.</h2>
           <p className="max-w-3xl leading-relaxed text-slate-600">{region.marketNote}</p>
+          {"countryLinks" in region && region.countryLinks.length > 0 && (
+            <div className="mt-10">
+              <h3 className="mb-4 text-lg font-semibold">Explore this region</h3>
+              <div className="flex flex-wrap gap-3">
+                {region.countryLinks.map((country) => (
+                  <Link key={country.slug} href={`/global/${country.slug}`} className="inline-flex items-center rounded-lg border border-slate-200 bg-white px-5 py-3 text-sm font-semibold hover:bg-slate-50">
+                    {country.label} <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
           <div className="mt-10 flex flex-wrap gap-3">
             <Link href="/global" className="inline-flex items-center gap-2 rounded-md bg-ion-navy px-6 py-3 font-semibold text-white hover:opacity-90">
               View global concept <ArrowRight className="h-4 w-4" aria-hidden="true" />
