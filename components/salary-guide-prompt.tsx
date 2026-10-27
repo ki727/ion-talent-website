@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { ArrowRight, X } from "lucide-react"
 
 const STORAGE_KEY = "ion-salary-guide-prompt-dismissed-this-session"
@@ -9,10 +10,13 @@ const SHOW_DELAY_MS = 10 * 1000
 const SCROLL_THRESHOLD = 0.28
 
 export function SalaryGuidePrompt() {
+  const pathname = usePathname()
   const [isVisible, setIsVisible] = useState(false)
   const suppressedRef = useRef(false)
 
   useEffect(() => {
+    // The unlaunched global concept must not surface live-site conversion prompts.
+    if (pathname.startsWith("/global")) return
     if (window.sessionStorage.getItem(STORAGE_KEY) === "true") return
 
     const checkEligibility = () => {
@@ -39,7 +43,7 @@ export function SalaryGuidePrompt() {
       window.removeEventListener("scroll", checkEligibility)
       window.removeEventListener("resize", checkEligibility)
     }
-  }, [])
+  }, [pathname])
 
   const suppress = () => {
     suppressedRef.current = true
@@ -47,7 +51,7 @@ export function SalaryGuidePrompt() {
     setIsVisible(false)
   }
 
-  if (!isVisible) return null
+  if (pathname.startsWith("/global") || !isVisible) return null
 
   return (
     <aside
