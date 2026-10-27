@@ -3,6 +3,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ArrowRight, Globe2, CheckCircle2 } from "lucide-react"
 import { GLOBAL_REGIONS, getGlobalRegion } from "@/lib/global-regions"
+import { GlobalPreviewHeader, GlobalPreviewFooter } from "@/components/global-preview-shell"
 
 type PageProps = { params: { region: string } }
 
@@ -25,6 +26,8 @@ export default function RegionalConceptPage({ params }: PageProps) {
   if (!region) notFound()
 
   return (
+    <>
+    <GlobalPreviewHeader />
     <main className="min-h-screen bg-white text-ion-navy">
       <section className="bg-ion-navy px-6 py-20 text-white md:py-28">
         <div className="mx-auto max-w-6xl">
@@ -80,5 +83,7 @@ export default function RegionalConceptPage({ params }: PageProps) {
         </div>
       </section>
     </main>
+    <GlobalPreviewFooter />
+    </>
   )
 }
