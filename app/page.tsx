@@ -10,6 +10,8 @@ import { StatCounter } from "@/components/stat-counter"
 import { HomepageReferralSection } from "@/components/homepage-referral-section"
 import { Target, Award, Users, ArrowRight, UserCheck, Radar, Globe } from "lucide-react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { GLOBAL_MARKETS } from "@/lib/global-market-hubs"
 import { useRef, useEffect, useState } from "react"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
@@ -18,6 +20,7 @@ export default function HomePage() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const heroContentRef = useRef<HTMLDivElement>(null)
   const [selectedService, setSelectedService] = useState<string | undefined>(undefined)
+  const isGlobalPreview = usePathname() === "/global"
 
   useEffect(() => {
     const video = videoRef.current
@@ -154,6 +157,34 @@ export default function HomePage() {
           aria-hidden="true"
         />
       </section>
+
+      {isGlobalPreview && (
+        <section id="markets" className="ion-surface-tonal scroll-mt-[100px] border-b border-ion-border px-6 py-12 md:py-14" aria-labelledby="global-markets-title">
+          <div className="container mx-auto max-w-6xl">
+            <div className="mb-7 text-center">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-ion-gray">ION Talent Global</p>
+              <h2 id="global-markets-title" className="font-display text-3xl font-bold text-ion-navy md:text-4xl">
+                Explore our markets
+              </h2>
+              <p className="mx-auto mt-3 max-w-2xl text-base text-ion-gray">
+                International specialist search, with a focused approach to each region.
+              </p>
+            </div>
+            <nav aria-label="Regional websites" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {GLOBAL_MARKETS.map((market) => (
+                <Link
+                  key={market.slug}
+                  href={`/global/${market.slug}`}
+                  className="group flex min-h-20 items-center justify-between gap-3 rounded-xl border border-ion-border bg-white px-5 py-4 text-base font-semibold text-ion-navy shadow-sm transition-colors hover:border-ion-teal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal"
+                >
+                  {market.label}
+                  <ArrowRight className="h-5 w-5 shrink-0 text-ion-teal transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                </Link>
+              ))}
+            </nav>
+          </div>
+        </section>
+      )}
 
       {/* Proof & Credibility */}
       <section
