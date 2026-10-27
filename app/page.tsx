@@ -120,7 +120,7 @@ export default function HomePage() {
             </h1>
 
             <p className="ion-home-hero-lede ion-hero-reveal ion-hero-reveal--2 hero-text-shadow max-w-2xl text-lg leading-relaxed text-white/90 sm:text-xl">
-              Specialist recruitment and executive search across the GCC and UK, with international reach.
+              Specialist recruitment and executive search for critical technology and leadership roles across international markets.
             </p>
 
             <div className="ion-home-hero-actions ion-hero-reveal ion-hero-reveal--3 flex flex-col gap-4 pt-1 sm:flex-row sm:pt-2">
