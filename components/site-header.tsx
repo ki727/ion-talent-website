@@ -18,7 +18,7 @@ export function SiteHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
-  const overHomeHero = pathname === "/" && !scrolled && !mobileMenuOpen
+  const overHomeHero = (pathname === "/" || pathname === "/global") && !scrolled && !mobileMenuOpen
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12)
