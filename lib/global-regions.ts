@@ -1,3 +1,5 @@
+import { GLOBAL_MARKETS } from "@/lib/global-market-hubs"
+
 /**
  * Content for the private global-market concept.
  * These are positioning drafts, not claims of legal entities or offices.
@@ -73,5 +75,6 @@ export const GLOBAL_REGIONS = [
 export type GlobalRegionSlug = (typeof GLOBAL_REGIONS)[number]["slug"]
 
 export function getGlobalRegion(slug: string) {
-  return GLOBAL_REGIONS.find((region) => region.slug === slug)
+  return GLOBAL_MARKETS.find((region) => region.slug === slug) ??
+    GLOBAL_REGIONS.find((region) => region.slug === slug)
 }
