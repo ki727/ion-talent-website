@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { Globe2, ArrowUpRight } from "lucide-react"
-import { GLOBAL_REGIONS } from "@/lib/global-regions"
+import { GLOBAL_MARKETS } from "@/lib/global-market-hubs"
 
 export function GlobalPreviewHeader() {
   return (
@@ -16,7 +16,7 @@ export function GlobalPreviewHeader() {
           <details className="group relative">
             <summary className="cursor-pointer select-none hover:text-slate-600">Markets</summary>
             <div className="absolute right-0 top-8 z-50 min-w-56 rounded-lg border border-slate-200 bg-white p-2 shadow-xl">
-              {GLOBAL_REGIONS.map((region) => (
+              {GLOBAL_MARKETS.map((region) => (
                 <Link key={region.slug} href={`/global/${region.slug}`} className="block rounded px-3 py-2 hover:bg-slate-100">
                   {region.label}
                 </Link>
@@ -43,7 +43,7 @@ export function GlobalPreviewFooter() {
             </p>
           </div>
           <nav aria-label="Market pages" className="flex max-w-xl flex-wrap gap-x-6 gap-y-3 text-sm text-slate-300">
-            {GLOBAL_REGIONS.map((region) => (
+            {GLOBAL_MARKETS.map((region) => (
               <Link className="hover:text-white" href={`/global/${region.slug}`} key={region.slug}>
                 {region.label} <ArrowUpRight className="inline h-3 w-3" aria-hidden="true" />
               </Link>
