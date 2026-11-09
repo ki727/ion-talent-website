@@ -65,7 +65,7 @@ export function SiteHeader() {
           {/* Spacer */}
           <div className="flex-1" />
 
-          <nav className={`ion-site-header-nav hidden lg:flex items-center ${isGlobalPreview ? "gap-5" : "gap-8"}`} aria-label="Primary">
+          <nav className={`ion-site-header-nav hidden items-center ${isGlobalPreview ? "xl:flex gap-5" : "lg:flex gap-8"}`} aria-label="Primary">
             {visibleNavLinks.map((link) => {
               const isActive = link.href.startsWith("/") && !link.href.includes("#") && pathname === link.href
               return (
@@ -98,7 +98,7 @@ export function SiteHeader() {
             )}
           </nav>
 
-          <div className="ion-site-header-actions hidden lg:flex items-center gap-3 shrink-0">
+          <div className={`ion-site-header-actions hidden items-center gap-3 shrink-0 ${isGlobalPreview ? "xl:flex" : "lg:flex"}`}>
             <Button
               asChild
               variant="outline"
@@ -125,7 +125,7 @@ export function SiteHeader() {
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className={`flex h-11 w-11 items-center justify-center rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal lg:hidden ${
+            className={`flex h-11 w-11 items-center justify-center rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal ${isGlobalPreview ? "xl:hidden" : "lg:hidden"} ${
               overHomeHero ? "text-white" : "text-ion-navy"
             }`}
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
@@ -136,7 +136,7 @@ export function SiteHeader() {
         </div>
 
         {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-gray-100 py-6">
+          <div className={`${isGlobalPreview ? "xl:hidden" : "lg:hidden"} border-t border-gray-100 py-6`}>
             <nav className="flex flex-col gap-6" aria-label="Mobile">
               {visibleNavLinks.map((link) => (
                 <Link
