@@ -5,6 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Menu, X, ArrowRight } from "lucide-react"
+import { GLOBAL_MARKETS } from "@/lib/global-market-hubs"
 
 const NAV_LINKS = [
   { label: "Services", href: "/#services" },
@@ -19,7 +20,7 @@ export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
   const overHomeHero = (pathname === "/" || pathname === "/global") && !scrolled && !mobileMenuOpen
-  const isGlobalPreview = pathname === "/global"
+  const isGlobalPreview = pathname.startsWith("/global")
   const visibleNavLinks = isGlobalPreview
     ? NAV_LINKS.map((link) => link.href.startsWith("/#") ? { ...link, href: `/global${link.href.slice(1)}` } : link)
     : NAV_LINKS
@@ -64,7 +65,7 @@ export function SiteHeader() {
           {/* Spacer */}
           <div className="flex-1" />
 
-          <nav className="ion-site-header-nav hidden lg:flex items-center gap-8" aria-label="Primary">
+          <nav className={`ion-site-header-nav hidden lg:flex items-center ${isGlobalPreview ? "gap-5" : "gap-8"}`} aria-label="Primary">
             {visibleNavLinks.map((link) => {
               const isActive = link.href.startsWith("/") && !link.href.includes("#") && pathname === link.href
               return (
@@ -81,6 +82,20 @@ export function SiteHeader() {
                 </Link>
               )
             })}
+            {isGlobalPreview && (
+              <details className="group relative">
+                <summary className={`ion-nav-link cursor-pointer select-none list-none whitespace-nowrap rounded-sm text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal ${overHomeHero ? "text-white/85 hover:text-white" : "text-gray-700 hover:text-gray-900"}`}>
+                  Markets <span aria-hidden="true">⌄</span>
+                </summary>
+                <nav aria-label="Global market hubs" className="absolute right-0 top-8 z-50 min-w-52 overflow-hidden rounded-xl border border-ion-border bg-white p-2 text-ion-navy shadow-xl">
+                  {GLOBAL_MARKETS.map((market) => (
+                    <Link key={market.slug} href={`/global/${market.slug}`} className="block rounded-lg px-3 py-2 text-sm font-medium text-ion-navy hover:bg-slate-100">
+                      {market.label}
+                    </Link>
+                  ))}
+                </nav>
+              </details>
+            )}
           </nav>
 
           <div className="ion-site-header-actions hidden lg:flex items-center gap-3 shrink-0">
@@ -101,7 +116,7 @@ export function SiteHeader() {
               asChild
               className={`${overHomeHero ? "ion-header-primary-dark" : "ion-primary-button-navy"} ion-site-header-cta gap-2 rounded-xl px-5 text-sm shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:ring-2 focus-visible:ring-ion-teal-hover focus-visible:ring-offset-2`}
             >
-              <Link href="/#contact">
+              <Link href={isGlobalPreview ? "/global#contact" : "/#contact"}>
                 Hire Talent
                 <ArrowRight className={`h-4 w-4 ${overHomeHero ? "text-white" : "text-ion-teal"}`} />
               </Link>
@@ -133,6 +148,16 @@ export function SiteHeader() {
                   {link.label}
                 </Link>
               ))}
+              {isGlobalPreview && (
+                <div className="space-y-3 border-t border-gray-200 pt-4">
+                  <p className="text-xs font-semibold uppercase tracking-widest text-ion-gray">Markets</p>
+                  {GLOBAL_MARKETS.map((market) => (
+                    <Link key={market.slug} href={`/global/${market.slug}`} onClick={() => setMobileMenuOpen(false)} className="block min-h-11 rounded-md py-2 text-sm font-medium text-ion-navy">
+                      {market.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
 
               <div className="mt-2 flex flex-col gap-3">
                 <Link
@@ -144,7 +169,7 @@ export function SiteHeader() {
                   <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link
-                  href="/#contact"
+                  href={isGlobalPreview ? "/global#contact" : "/#contact"}
                   onClick={() => setMobileMenuOpen(false)}
                   className="ion-primary-button-navy flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl px-6 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal-hover focus-visible:ring-offset-2"
                 >
