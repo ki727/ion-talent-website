@@ -14,6 +14,7 @@ import { usePathname } from "next/navigation"
 import { GLOBAL_MARKETS } from "@/lib/global-market-hubs"
 import { useRef, useEffect, useState } from "react"
 import { SiteHeader } from "@/components/site-header"
+import { GlobalHeroVeil } from "@/components/global/global-hero-veil"
 import { SiteFooter } from "@/components/site-footer"
 
 export default function HomePage() {
@@ -93,6 +94,10 @@ export default function HomePage() {
       <main className="ion-page-enter">
       <section className="ion-home-hero relative flex items-center overflow-hidden px-6 pb-16 pt-24 sm:pb-20 sm:pt-28 lg:pb-14 lg:pt-24">
         <div className="pointer-events-none absolute inset-0 z-0 bg-ion-navy" aria-hidden="true">
+          {isGlobalPreview ? (
+            <GlobalHeroVeil />
+          ) : (
+            <>
           <video
             ref={videoRef}
             className="hero-zoom w-full h-full object-cover"
@@ -112,14 +117,26 @@ export default function HomePage() {
           </video>
           <div className="ion-home-hero-atmosphere" aria-hidden="true" />
           <div className="ion-home-hero-atmosphere ion-home-hero-atmosphere--secondary" aria-hidden="true" />
+            </>
+          )}
         </div>
 
         <div ref={heroContentRef} className="ion-hero-depth pointer-events-auto container relative z-10 mx-auto max-w-6xl">
           <div className="ion-home-hero-copy space-y-5 sm:space-y-6">
             <h1 className="ion-display ion-home-hero-title ion-hero-reveal ion-hero-reveal--1 hero-text-shadow font-bold text-white text-balance">
-              Specialist talent solutions that
-              <br />
-              <span className="ion-hero-teal-accent">transform businesses</span>
+              {isGlobalPreview ? (
+                <>
+                  Specialist search.
+                  <br />
+                  <span className="ion-hero-teal-accent">International reach.</span>
+                </>
+              ) : (
+                <>
+                  Specialist talent solutions that
+                  <br />
+                  <span className="ion-hero-teal-accent">transform businesses</span>
+                </>
+              )}
             </h1>
 
             <p className="ion-home-hero-lede ion-hero-reveal ion-hero-reveal--2 hero-text-shadow max-w-2xl text-lg leading-relaxed text-white/90 sm:text-xl">
