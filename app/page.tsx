@@ -170,8 +170,11 @@ export default function HomePage() {
                 International specialist search, with a focused approach to each region.
               </p>
             </div>
-            <nav aria-label="Regional websites" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              {GLOBAL_MARKETS.map((market) => (
+            <p className="mb-4 text-center text-xs font-semibold uppercase tracking-[0.18em] text-ion-gray">
+              Our core markets
+            </p>
+            <nav aria-label="Core recruitment markets" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {GLOBAL_MARKETS.filter((market) => market.tier === "core").map((market) => (
                 <Link
                   key={market.slug}
                   href={`/global/${market.slug}`}
@@ -182,6 +185,18 @@ export default function HomePage() {
                 </Link>
               ))}
             </nav>
+            <div className="mt-5 flex flex-col gap-4 rounded-xl border border-ion-border bg-white px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="mb-1 text-xs font-semibold uppercase tracking-[0.14em] text-ion-teal">Strategic growth market</p>
+                <h3 className="text-xl font-semibold text-ion-navy">Asia-Pacific</h3>
+                <p className="mt-1 max-w-2xl text-sm text-ion-gray">
+                  Selective specialist search across Singapore, Australia and Southeast Asia.
+                </p>
+              </div>
+              <Link href="/global/asia-pacific" className="inline-flex min-h-11 shrink-0 items-center gap-2 text-sm font-semibold text-ion-navy transition-colors hover:text-ion-teal">
+                Explore Asia-Pacific <ArrowRight className="h-4 w-4 text-ion-teal" aria-hidden="true" />
+              </Link>
+            </div>
           </div>
         </section>
       )}
