@@ -103,14 +103,24 @@ export default function GlobalMarketPage({ params }: PageProps) {
               </div>
             )}
 
-            <h3 className="mb-4 mt-12 text-lg font-semibold">All our markets</h3>
-            <nav aria-label="Global markets" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              {GLOBAL_MARKETS.map((market) => (
+            <h3 className="mb-4 mt-12 text-lg font-semibold">Our core markets</h3>
+            <nav aria-label="Core markets" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {GLOBAL_MARKETS.filter((market) => market.tier === "core").map((market) => (
                 <Link key={market.slug} href={`/global/${market.slug}`} aria-current={params.region === market.slug ? "page" : undefined} className="group flex min-h-16 items-center justify-between gap-3 rounded-xl border border-ion-border bg-white px-5 py-4 text-sm font-semibold text-ion-navy transition-colors hover:border-ion-teal">
                   {market.label} <ArrowRight className="h-4 w-4 shrink-0 text-ion-teal transition-transform group-hover:translate-x-1" aria-hidden="true" />
                 </Link>
               ))}
             </nav>
+            <div className="mt-4 flex flex-col justify-between gap-4 rounded-xl border border-ion-border bg-white px-5 py-4 sm:flex-row sm:items-center">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wider text-ion-teal">Strategic growth market</p>
+                <p className="mt-1 font-semibold text-ion-navy">Asia-Pacific</p>
+                <p className="mt-1 text-sm text-ion-gray">Selective specialist searches across Singapore, Australia and Southeast Asia.</p>
+              </div>
+              <Link href="/global/asia-pacific" aria-current={params.region === "asia-pacific" ? "page" : undefined} className="inline-flex min-h-11 shrink-0 items-center gap-2 text-sm font-semibold text-ion-navy hover:text-ion-teal">
+                Explore Asia-Pacific <ArrowRight className="h-4 w-4 text-ion-teal" aria-hidden="true" />
+              </Link>
+            </div>
           </div>
         </section>
 
