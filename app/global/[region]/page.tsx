@@ -37,6 +37,22 @@ export default function GlobalMarketPage({ params }: PageProps) {
       <SiteHeader />
       <main className="ion-page-enter">
         <section className="relative overflow-hidden bg-ion-navy px-6 pb-20 pt-36 text-white md:pb-24 md:pt-44">
+          {params.region === "middle-east" && (
+            <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+              <video
+                className="h-full w-full object-cover"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                style={{ filter: "grayscale(0.18) saturate(0.84) brightness(0.88) contrast(1.03)" }}
+              >
+                <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/18637270-hd_1920_1080_30fps%20%281%29-Q1nwQiLnflKYyfti4CC4me1eLtnMwk.mp4" type="video/mp4" />
+              </video>
+              <div className="absolute inset-0 bg-ion-navy/65" />
+            </div>
+          )}
           <div className="ion-home-hero-atmosphere pointer-events-none absolute inset-0" aria-hidden="true" />
           <div className="ion-home-hero-atmosphere ion-home-hero-atmosphere--secondary pointer-events-none absolute inset-0" aria-hidden="true" />
           <div className="container relative z-10 mx-auto max-w-6xl">
