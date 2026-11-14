@@ -27,6 +27,16 @@ const nextConfig = {
         ? [{ source: "/", destination: "/global", permanent: false }]
         : []),
       {
+        source: "/global/north-america",
+        destination: "/global/us",
+        permanent: false,
+      },
+      {
+        source: "/global/rest-of-world",
+        destination: "/global/asia-pacific",
+        permanent: false,
+      },
+      {
         source: "/referrals",
         destination: "/refer",
         permanent: true,
