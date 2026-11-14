@@ -110,7 +110,7 @@ export const GLOBAL_MARKETS = [
     approach:
       "We assess each opportunity individually, confirming local market context, search capability and hiring requirements before accepting a mandate.",
     marketNote:
-      "Asia-Pacific is a strategic growth market, not a claim of established offices or full coverage. Bali provides a useful regional base for exploring relationships and opportunities.",
+      "Asia-Pacific is a strategic growth market, not a claim of established offices or full regional coverage. Each mandate is assessed for genuine market and delivery fit.",
     countryLinks: [],
   },
 ] as const
