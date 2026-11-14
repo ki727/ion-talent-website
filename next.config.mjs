@@ -16,7 +16,16 @@ const nextConfig = {
       : []
   },
   async redirects() {
+    // Open the global website directly when someone clicks "Visit" on this
+    // branch's Vercel preview. Other branches and production remain unchanged.
+    const globalBranchPreview =
+      process.env.VERCEL_ENV === "preview" &&
+      process.env.VERCEL_GIT_COMMIT_REF === "global-expansion"
+
     return [
+      ...(globalBranchPreview
+        ? [{ source: "/", destination: "/global", permanent: false }]
+        : []),
       {
         source: "/referrals",
         destination: "/refer",
