@@ -44,32 +44,6 @@ export const GLOBAL_REGIONS = [
       "Combine precise job scoping with relevant market mapping, direct sourcing and clear stakeholder communication.",
     marketNote: "Saudi national talent, market requirements and localized content will have dedicated sections at launch.",
   },
-  {
-    slug: "uk",
-    label: "United Kingdom",
-    kicker: "UK",
-    headline: "Specialist technology and executive search across the UK.",
-    introduction:
-      "Focused recruitment support for UK employers seeking high-impact technical specialists and senior leaders.",
-    emphasis: "A focused partner for hard-to-fill, business-critical roles.",
-    priorities: ["Enterprise architecture", "Cybersecurity and resilience", "Cloud and platform leadership", "Executive and transformation hiring"],
-    approach:
-      "Use detailed role calibration, candidate research and thoughtful outreach to support selective, complex hiring.",
-    marketNote: "UK market copy and search specialisms are draft positioning pending final review.",
-  },
-  {
-    slug: "us",
-    label: "United States",
-    kicker: "USA · Proposed growth market",
-    headline: "A specialist approach to technology search in the United States.",
-    introduction:
-      "A proposed US-market offering for organisations seeking expertise in enterprise technology, cyber, data and leadership.",
-    emphasis: "International perspective, with an intentionally focused specialism.",
-    priorities: ["Enterprise and solutions architecture", "Cybersecurity and security sales", "Cloud and AI infrastructure", "Technical leadership and transformation"],
-    approach:
-      "The intended US approach is focused: understand the business problem, identify the relevant talent market and build a targeted search.",
-    marketNote: "US positioning is a proposed expansion, not a representation of an existing US office or entity.",
-  },
 ] as const
 
 export type GlobalRegionSlug = (typeof GLOBAL_REGIONS)[number]["slug"]
