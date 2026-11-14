@@ -136,7 +136,7 @@ export function SiteHeader() {
         </div>
 
         {mobileMenuOpen && (
-          <div className={`${isGlobalPreview ? "xl:hidden" : "lg:hidden"} border-t border-gray-100 py-6`}>
+          <div className={`${isGlobalPreview ? "xl:hidden" : "lg:hidden"} max-h-[calc(100dvh-4.5rem)] overflow-y-auto overscroll-contain border-t border-gray-100 py-6`}>
             <nav className="flex flex-col gap-6" aria-label="Mobile">
               {visibleNavLinks.map((link) => (
                 <Link
