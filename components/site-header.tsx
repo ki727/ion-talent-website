@@ -89,8 +89,8 @@ export function SiteHeader() {
                 </summary>
                 <nav aria-label="Global market hubs" className="absolute right-0 top-8 z-50 min-w-52 overflow-hidden rounded-xl border border-ion-border bg-white p-2 text-ion-navy shadow-xl">
                   {GLOBAL_MARKETS.map((market) => (
-                    <Link key={market.slug} href={`/global/${market.slug}`} className="block rounded-lg px-3 py-2 text-sm font-medium text-ion-navy hover:bg-slate-100">
-                      {market.label}
+                    <Link key={market.slug} href={`/global/${market.slug}`} className={`block rounded-lg px-3 py-2 text-sm font-medium text-ion-navy hover:bg-slate-100 ${market.tier === "growth" ? "mt-2 border-t border-ion-border pt-3" : ""}`}>
+                      {market.label}{market.tier === "growth" ? " · Growth" : ""}
                     </Link>
                   ))}
                 </nav>
@@ -152,8 +152,8 @@ export function SiteHeader() {
                 <div className="space-y-3 border-t border-gray-200 pt-4">
                   <p className="text-xs font-semibold uppercase tracking-widest text-ion-gray">Markets</p>
                   {GLOBAL_MARKETS.map((market) => (
-                    <Link key={market.slug} href={`/global/${market.slug}`} onClick={() => setMobileMenuOpen(false)} className="block min-h-11 rounded-md py-2 text-sm font-medium text-ion-navy">
-                      {market.label}
+                    <Link key={market.slug} href={`/global/${market.slug}`} onClick={() => setMobileMenuOpen(false)} className={`block min-h-11 rounded-md py-2 text-sm font-medium text-ion-navy ${market.tier === "growth" ? "mt-2 border-t border-gray-200 pt-4" : ""}`}>
+                      {market.label}{market.tier === "growth" ? " · Growth" : ""}
                     </Link>
                   ))}
                 </div>
