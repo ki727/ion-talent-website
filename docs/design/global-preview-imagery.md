@@ -18,3 +18,7 @@ The preview remains noindex. No offices, credentials, testimonials or case studi
 - Regional image crops and portrait study visually inspected. Saudi National Talent promotion appears only on Middle East within the preview. The unfinished preview resource popup is suppressed.
 - Ribbon transforms change over time; reduced-motion disables animation. Accessible pause/play button stops and restarts movement. The accessibility check caught an inherited aria-hidden attribute around the original background wrapper; this was corrected and the affected check passed on the final production build.
 - No claim of Vercel deployment completion or production release is made by these local checks.
+
+## Subsequent conversion review
+
+The user supplied founder Khaled Israfil’s LinkedIn URL. The rendered trust section now presents that confirmed founder identity with initials and a profile link. The AI portrait study remains a design asset on disk and is no longer presented in the homepage trust section. No real headshot or placement testimonial was supplied. See `docs/qa/conversion-feedback/README.md` for the approved conversion changes and validation.

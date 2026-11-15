@@ -8,105 +8,34 @@ import { FadeIn } from "@/components/fade-in"
 
 const FEATURED_COUNT = 6
 
-/**
- * Multi-word priority phrases for ION's technology specialisms. Matched as
- * plain substrings — phrases are specific enough that false positives aren't
- * a practical risk.
- */
-const TECH_PHRASES = [
-  "enterprise architecture",
-  "solutions architecture",
-  "solutions architect",
-  "artificial intelligence",
-  "machine learning",
-  "software engineering",
-  "data engineering",
-  "platform engineering",
-  "digital technology",
-  "digital transformation",
-  "information security",
-  "cloud security",
-]
-
-/**
- * Single-token priority keywords. Matched with a leading word boundary only
- * (no trailing \b) so inflections like "architecture"/"architects" or
- * "cybersecurity" still count, while avoiding false hits buried mid-word
- * (e.g. "ai" inside "available"). "infrastructure" is deliberately excluded:
- * on its own it also matches physical/civil infrastructure roles (e.g. an
- * "Engineering and Infrastructure" sector for construction project
- * management) — genuine cloud/infra roles already qualify via "cloud",
- * "architect" or "data".
- */
-// A regex literal avoids differently escaped RegExp constructor strings in
-// server and browser production bundles, which changed featured-role order
-// during hydration. Keep the leading word boundary for partial-word safety.
-const TECH_WORD_REGEX = /\b(cybersecurity|cyber|cloud|architect|data|analytics|ai|sap|oracle|digital|devops)/gi
-
-/** Counts distinct technology-specialism signals in a role's function, sector, title and description. */
-function techScore(role: Opportunity): number {
-  const text = [role.function, role.sector, role.title, role.description].join(" ").toLowerCase()
-  let score = 0
-  for (const phrase of TECH_PHRASES) {
-    if (text.includes(phrase)) score += 1
+/** Balance genuine listed roles across functions; never weight technology above other sectors. */
+function selectFeaturedRoles(roles: Opportunity[]): Opportunity[] {
+  const groups = new Map<string, Opportunity[]>()
+  for (const role of roles) {
+    const group = groups.get(role.function) ?? []
+    group.push(role)
+    groups.set(role.function, group)
   }
-  const wordMatches = text.match(TECH_WORD_REGEX) ?? []
-  score += new Set(wordMatches.map((w) => w.toLowerCase())).size
-  return score
-}
-
-/**
- * Selects roles for the homepage rather than always showing whatever is
- * first in the data file. Technology-relevant roles (score > 0) are grouped
- * by function and drawn round-robin, one per specialism per pass, so the six
- * cards span cybersecurity, cloud, data/AI, enterprise technology and similar
- * areas instead of clustering in a single category. Falls back to filling
- * remaining slots from the rest of the list if fewer than six roles carry a
- * technology signal.
- */
-function selectFeaturedRoles(): Opportunity[] {
-  const scored = opportunities.map((role, index) => ({ role, index, score: techScore(role) }))
-  const qualifying = scored.filter((entry) => entry.score > 0)
-
-  const groups = new Map<string, typeof qualifying>()
-  for (const entry of qualifying) {
-    const list = groups.get(entry.role.function) ?? []
-    list.push(entry)
-    groups.set(entry.role.function, list)
-  }
-  for (const list of groups.values()) {
-    list.sort((a, b) => b.score - a.score || a.index - b.index)
-  }
-
-  const functionOrder = [...groups.keys()]
-  const featured: Opportunity[] = []
-  let progressed = true
-  while (featured.length < FEATURED_COUNT && progressed) {
-    progressed = false
-    for (const fn of functionOrder) {
-      const list = groups.get(fn)!
-      if (list.length) {
-        featured.push(list.shift()!.role)
-        progressed = true
-        if (featured.length === FEATURED_COUNT) break
-      }
+  const result: Opportunity[] = []
+  while (result.length < FEATURED_COUNT && [...groups.values()].some(group => group.length)) {
+    for (const group of groups.values()) {
+      const role = group.shift()
+      if (role) result.push(role)
+      if (result.length === FEATURED_COUNT) break
     }
   }
-
-  if (featured.length < FEATURED_COUNT) {
-    const featuredIds = new Set(featured.map((role) => role.id))
-    for (const role of opportunities) {
-      if (featured.length === FEATURED_COUNT) break
-      if (!featuredIds.has(role.id)) featured.push(role)
-    }
-  }
-
-  return featured
+  return result
 }
 
-const FEATURED_ROLES = selectFeaturedRoles()
+const LIVE_ROLES = opportunities.filter(role => role.status === "Live Opportunity")
+const NETWORK_ROLES = opportunities.filter(role => role.status === "Talent Network")
+const FEATURED_LIVE_ROLES = selectFeaturedRoles(LIVE_ROLES)
+const FEATURED_NETWORK_ROLES = selectFeaturedRoles(NETWORK_ROLES)
 
-export function FeaturedJobs() {
+export function FeaturedJobs({ preview = false }: { preview?: boolean }) {
+  const basePath = preview ? "/global/opportunities" : "/opportunities"
+  const hasLiveRoles = FEATURED_LIVE_ROLES.length > 0
+  const featuredRoles = hasLiveRoles ? FEATURED_LIVE_ROLES : FEATURED_NETWORK_ROLES
   const railRef = useRef<HTMLDivElement>(null)
   const pauseUntilRef = useRef(0)
   const isHoveredRef = useRef(false)
@@ -177,17 +106,19 @@ export function FeaturedJobs() {
     })
   }
 
+  if (preview && !hasLiveRoles) return <section className="ion-featured-jobs border-t border-ion-border bg-white px-6 py-9 md:py-10"><div className="container mx-auto flex max-w-6xl flex-col gap-5 md:flex-row md:items-center md:justify-between"><div><p className="ion-card-eyebrow mb-2">FOR CANDIDATES</p><h2 className="font-display text-2xl font-bold text-ion-navy">Join our talent network</h2><p className="mt-2 max-w-2xl text-sm leading-relaxed text-ion-gray">Register your interest for future searches across our recruitment disciplines. Talent-network profiles are expressions of interest, not advertised client vacancies.</p></div><div className="flex shrink-0 flex-col gap-2 sm:flex-row md:flex-col"><Link href={`${basePath}#register`} className="ion-candidate-outline-button inline-flex min-h-11 items-center justify-center gap-2 rounded-xl px-5 text-sm font-semibold">Register your interest <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link><Link href={basePath} className="inline-flex min-h-11 items-center justify-center text-sm font-medium text-ion-teal-dark underline underline-offset-4">Explore the talent network</Link></div></div></section>
+
   return (
     <section className="ion-featured-jobs ion-density-section border-t border-ion-border bg-white px-6 pb-12 pt-12 md:pb-14 md:pt-14 xl:pb-11 xl:pt-11">
       <div className="container mx-auto max-w-6xl">
         <FadeIn className="mb-6 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div>
           <h2 className="ion-density-section-heading font-display text-4xl lg:text-5xl xl:text-[2.65rem] font-semibold text-ion-navy mb-3 tracking-tight text-balance">
-              Featured Opportunities
+              {hasLiveRoles ? "Live Opportunities" : "Talent Network Profiles"}
             </h2>
             <span className="ion-heading-underline mb-4" aria-hidden="true" />
             <p className="text-lg text-ion-gray">
-              A sample of current and upcoming opportunities across the ION Talent Network.
+              {hasLiveRoles ? "Explore currently listed recruitment assignments. Talent-network registrations are available separately." : "Register interest in future searches. These profiles are not advertised client vacancies."}
             </p>
           </div>
           <div className="flex items-center justify-between gap-4 md:justify-end">
@@ -212,10 +143,10 @@ export function FeaturedJobs() {
               </button>
             </div>
             <Link
-              href="/opportunities"
+              href={basePath}
               className="inline-flex shrink-0 items-center gap-2 rounded-sm text-sm font-medium text-ion-teal-dark hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2"
             >
-              View All Opportunities
+              {hasLiveRoles ? "View All Opportunities" : "Explore the Talent Network"}
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
@@ -244,10 +175,10 @@ export function FeaturedJobs() {
             onWheel={() => pauseAutoAdvance()}
             className="ion-role-rail grid snap-x snap-mandatory grid-flow-col auto-cols-[100%] gap-4 overflow-x-auto pb-3 sm:auto-cols-[calc((100%-1rem)/2)] lg:auto-cols-[calc((100%-2rem)/3)]"
           >
-          {FEATURED_ROLES.map((role, i) => (
+          {featuredRoles.map((role, i) => (
             <FadeIn key={role.id} delay={(i % 3) * 100} className="h-full snap-start">
               <Link
-                href={`/opportunities/${role.slug}`}
+                href={`${basePath}/${role.slug}`}
                 aria-label={`${role.title} — view role details`}
                 onClick={() => pauseAutoAdvance()}
               className="ion-density-card ion-card-hairline group relative flex h-full min-h-[11.5rem] flex-col overflow-hidden rounded-2xl p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2 lg:min-h-[10.75rem]"

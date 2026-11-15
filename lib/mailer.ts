@@ -150,6 +150,9 @@ export interface HiringEnquiryData {
   timeline?: string
   projectDetails: string
   pageUrl: string
+  market?: string
+  sourcePage?: string
+  sector?: string
   submittedAt: string
 }
 
@@ -167,6 +170,9 @@ export async function sendHiringEnquiryEmail(data: HiringEnquiryData) {
       ["Phone", data.phone],
       ["Service Interest", data.serviceInterest],
       ["Timeline", data.timeline],
+      ["Hiring Market", data.market],
+      ["Sector", data.sector],
+      ["Original Market Page", data.sourcePage],
       ["Project Details", data.projectDetails],
       ["Page URL", data.pageUrl],
       ["Submitted", data.submittedAt],

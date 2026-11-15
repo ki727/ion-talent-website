@@ -1,8 +1,9 @@
 import type { Metadata } from "next"
-import Link from "next/link"
+import { PreviewLink as Link } from "@/components/preview-link"
 import { Suspense } from "react"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
+import { OpportunitiesHeading } from "@/components/opportunities-heading"
 import { OpportunitiesClient } from "@/components/opportunities-client"
 import { IonLiquidAtmosphere } from "@/components/ion-liquid-atmosphere"
 import { SITE_URL } from "@/lib/site-config"
@@ -62,7 +63,7 @@ export default function OpportunitiesPage() {
           <div className="relative z-10 container mx-auto max-w-4xl text-center xl:max-w-[50rem]">
             <p className="ion-card-eyebrow">ION Talent Opportunities</p>
             <h1 className="ion-density-page-title font-display mt-3 text-4xl font-bold text-gray-900 md:text-5xl xl:mt-2.5 xl:text-4xl text-balance">
-              Current and Upcoming Opportunities
+              <OpportunitiesHeading />
             </h1>
             <span className="ion-heading-underline ion-heading-underline--gradient mx-auto mt-4 xl:mt-3" aria-hidden="true" />
             <p className="ion-density-lede mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-gray-600 xl:mt-3 xl:text-base">

@@ -2,7 +2,7 @@
 
 import type React from "react"
 import { useEffect, useRef, useState } from "react"
-import Link from "next/link"
+import { PreviewLink as Link } from "@/components/preview-link"
 import { track } from "@vercel/analytics"
 import { CheckCircle2, Loader2, Upload, X } from "lucide-react"
 
