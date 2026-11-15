@@ -1,6 +1,7 @@
 "use client"
 
 import type React from "react"
+import { usePathname } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 import { PreviewLink as Link } from "@/components/preview-link"
 import { track } from "@vercel/analytics"
@@ -31,6 +32,7 @@ function FieldError({ id, message }: { id: string; message: string }) {
 }
 
 export function CandidateRegistrationForm({ selectedRole = "" }: CandidateRegistrationFormProps) {
+  const preview = usePathname().startsWith("/global")
   const [desiredRole, setDesiredRole] = useState("")
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle")
   const [errorMessage, setErrorMessage] = useState("")
@@ -183,7 +185,7 @@ export function CandidateRegistrationForm({ selectedRole = "" }: CandidateRegist
             type="tel"
             required
             autoComplete="tel"
-            placeholder="+971 50 000 0000"
+            placeholder={preview ? "Include country code" : "+971 50 000 0000"}
             className={inputClass}
           />
         </div>
@@ -212,7 +214,7 @@ export function CandidateRegistrationForm({ selectedRole = "" }: CandidateRegist
             id="reg-location"
             name="currentLocation"
             required
-            placeholder="e.g. Dubai, UAE"
+            placeholder={preview ? "City, country" : "e.g. Dubai, UAE"}
             className={inputClass}
           />
         </div>
@@ -257,6 +259,7 @@ export function CandidateRegistrationForm({ selectedRole = "" }: CandidateRegist
           <label htmlFor="reg-salary" className={labelClass}>
             Expected salary range <span aria-hidden="true">*</span>
           </label>
+          {preview ? <><input id="reg-salary" name="expectedSalary" required maxLength={150} placeholder="Amount, currency and annual/monthly period" aria-describedby="reg-salary-help" className={inputClass} /><p id="reg-salary-help" className="mt-2 text-xs text-gray-500">Include your currency, or enter “Open to discussion”.</p></> : (
           <select id="reg-salary" name="expectedSalary" required defaultValue="" className={inputClass}>
             <option value="" disabled>
               Select a range
@@ -269,6 +272,7 @@ export function CandidateRegistrationForm({ selectedRole = "" }: CandidateRegist
             <option value="AED 1,000,000+">AED 1,000,000+</option>
             <option value="USD equivalent — open to discuss">USD equivalent — open to discuss</option>
           </select>
+          )}
         </div>
 
         {/* CV upload */}

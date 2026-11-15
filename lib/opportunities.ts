@@ -1,3 +1,5 @@
+import { additionalNetworkRoles } from "./network-role-expansion"
+
 /**
  * Opportunity data model for the ION Talent Opportunities page.
  *
@@ -133,7 +135,7 @@ export const opportunities: Opportunity[] = [
     employmentLabel: "Permanent",
     employmentTypes: ["Permanent"],
     seniority: "Director",
-    salaryRange: "AED 280,000 – 480,000 per annum",
+    salaryRange: "To be discussed for a confirmed brief",
     description:
       "Financial control, consolidation and governance leadership roles across multinational and regional businesses in London.",
     overview:
@@ -150,10 +152,9 @@ export const opportunities: Opportunity[] = [
       "8+ years in financial control, preferably with Big Four grounding",
       "Strong IFRS knowledge and multi-entity consolidation experience",
       "ERP proficiency (SAP, Oracle or similar)",
-      "GCC experience preferred; MENA market knowledge an advantage",
+      "Experience with UK reporting requirements and international group structures",
     ],
-    packageNotes:
-      "Packages include base salary, annual bonus, housing allowance and medical cover. Total compensation benchmarked against current London market rates.",
+    packageNotes: "Compensation, benefits and working arrangements depend on a confirmed brief and will be discussed before an application progresses.",
   },
   {
     id: "fpa-manager-director",
@@ -166,7 +167,7 @@ export const opportunities: Opportunity[] = [
     employmentLabel: "Permanent",
     employmentTypes: ["Permanent"],
     seniority: "Director",
-    salaryRange: "AED 240,000 – 420,000 per annum",
+    salaryRange: "To be discussed for a confirmed brief",
     description:
       "Commercial finance, planning and senior business partnering roles with high-growth regional and international organisations.",
     overview:
@@ -185,8 +186,7 @@ export const opportunities: Opportunity[] = [
       "Experience presenting analysis at ExCo or board level",
       "Technology sector or high-growth environment experience preferred",
     ],
-    packageNotes:
-      "Competitive base, target bonus 15–25%, full expatriate package for international candidates.",
+    packageNotes: "Compensation, benefits and working arrangements depend on a confirmed brief and will be discussed before an application progresses.",
   },
   {
     id: "tax-audit-compliance",
@@ -199,7 +199,7 @@ export const opportunities: Opportunity[] = [
     employmentLabel: "Permanent",
     employmentTypes: ["Permanent"],
     seniority: "Senior Manager",
-    salaryRange: "AED 200,000 – 360,000 per annum",
+    salaryRange: "To be discussed for a confirmed brief",
     description:
       "VAT, corporate tax, internal audit and financial risk and compliance roles across the GCC as regulatory complexity increases.",
     overview:
@@ -217,8 +217,7 @@ export const opportunities: Opportunity[] = [
       "Strong knowledge of KSA ZATCA, VAT and corporate tax regulations",
       "Big Four or major advisory firm background preferred",
     ],
-    packageNotes:
-      "Market-rate packages with full statutory benefits. Roles span Big Four, boutique advisory and in-house positions.",
+    packageNotes: "Compensation, benefits and working arrangements depend on a confirmed brief and will be discussed before an application progresses.",
   },
 
   // ── Cybersecurity ────────────────────────────────────────────────────────
@@ -233,7 +232,7 @@ export const opportunities: Opportunity[] = [
     employmentLabel: "Permanent · Executive Search",
     employmentTypes: ["Permanent", "Executive Search"],
     seniority: "VP / Head of",
-    salaryRange: "AED 420,000 – 750,000 per annum",
+    salaryRange: "To be discussed for a confirmed brief",
     description:
       "CISO and Head of Cybersecurity leadership roles for organisations investing in security transformation, resilience and governance across the GCC.",
     overview:
@@ -252,8 +251,7 @@ export const opportunities: Opportunity[] = [
       "Broad technical depth across SOC, architecture, GRC and IAM",
       "Experience in regulated industries or critical national infrastructure preferred",
     ],
-    packageNotes:
-      "Executive packages include substantial base, performance bonus, housing, schooling and medical. Equity upside available for technology company mandates.",
+    packageNotes: "Compensation, benefits and working arrangements depend on a confirmed brief and will be discussed before an application progresses.",
   },
   {
     id: "cybersecurity-architect",
@@ -266,7 +264,7 @@ export const opportunities: Opportunity[] = [
     employmentLabel: "Permanent · Contract",
     employmentTypes: ["Permanent", "Contract"],
     seniority: "Senior Specialist",
-    salaryRange: "AED 280,000 – 480,000 per annum",
+    salaryRange: "To be discussed for a confirmed brief",
     description:
       "Enterprise and cloud security architecture roles for specialists who can design and implement robust security frameworks at scale.",
     overview:
@@ -285,8 +283,7 @@ export const opportunities: Opportunity[] = [
       "Strong understanding of zero-trust, SASE and micro-segmentation",
       "Experience in large-scale enterprise or public sector programmes preferred",
     ],
-    packageNotes:
-      "Permanent and fixed-term contract options. Contract rates typically USD 120–180 per day equivalent.",
+    packageNotes: "Compensation, benefits and working arrangements depend on a confirmed brief and will be discussed before an application progresses.",
   },
   {
     id: "grc-information-security-manager",
@@ -299,7 +296,7 @@ export const opportunities: Opportunity[] = [
     employmentLabel: "Permanent",
     employmentTypes: ["Permanent"],
     seniority: "Manager",
-    salaryRange: "AED 200,000 – 320,000 per annum",
+    salaryRange: "To be discussed for a confirmed brief",
     description:
       "Governance, risk and compliance professionals to build and manage information security programmes across regulated industries.",
     overview:
@@ -317,8 +314,7 @@ export const opportunities: Opportunity[] = [
       "Practical knowledge of UAE and KSA regulatory frameworks",
       "Strong written communication and executive reporting skills",
     ],
-    packageNotes:
-      "Competitive package including performance bonus and full medical cover.",
+    packageNotes: "Compensation, benefits and working arrangements depend on a confirmed brief and will be discussed before an application progresses.",
   },
 
   // ── Cloud and Infrastructure ──────────────────────────────────────────────
@@ -434,7 +430,7 @@ export const opportunities: Opportunity[] = [
     employmentLabel: "Permanent",
     employmentTypes: ["Permanent"],
     seniority: "Senior Manager",
-    salaryRange: "AED 380,000 – 640,000 per annum",
+    salaryRange: "To be discussed for a confirmed brief",
     description:
       "AI and machine learning engineering leadership roles for specialists building production ML systems and LLM-powered applications.",
     overview:
@@ -453,8 +449,7 @@ export const opportunities: Opportunity[] = [
       "Familiarity with LLM fine-tuning, RAG pipelines and prompt engineering",
       "MSc or PhD in Computer Science, Statistics or related field preferred",
     ],
-    packageNotes:
-      "Highly competitive packages reflecting AI engineering talent scarcity. Equity available for growth-stage technology company mandates.",
+    packageNotes: "Compensation, benefits and working arrangements depend on a confirmed brief and will be discussed before an application progresses.",
   },
 
   // ── Enterprise Technology ─────────────────────────────────────────────────
@@ -469,7 +464,7 @@ export const opportunities: Opportunity[] = [
     employmentLabel: "Permanent · Contract",
     employmentTypes: ["Permanent", "Contract"],
     seniority: "Director",
-    salaryRange: "AED 420,000 – 680,000 per annum",
+    salaryRange: "To be discussed for a confirmed brief",
     description:
       "SAP S/4HANA transformation and programme leadership roles for large-scale enterprise implementations across government and energy clients.",
     overview:
@@ -483,13 +478,12 @@ export const opportunities: Opportunity[] = [
     ],
     requirements: [
       "15+ years in enterprise technology, minimum 5 delivering SAP or Oracle programmes",
-      "Proven track record leading programmes exceeding AED 50M in value",
+      "Proven track record leading large, complex enterprise programmes",
       "PMP, Prince2 or SAP Activate certified",
       "GCC market experience strongly preferred",
       "Arabic language skills an advantage for Saudi Arabia mandates",
     ],
-    packageNotes:
-      "Packages reflect high programme complexity and KSA market premiums. Contract day rates available for interim mandates.",
+    packageNotes: "Compensation, benefits and working arrangements depend on a confirmed brief and will be discussed before an application progresses.",
   },
   {
     id: "oracle-erp-lead",
@@ -568,7 +562,7 @@ export const opportunities: Opportunity[] = [
     employmentLabel: "Permanent",
     employmentTypes: ["Permanent"],
     seniority: "Senior Specialist",
-    salaryRange: "AED 240,000 – 420,000 OTE per annum",
+    salaryRange: "To be discussed for a confirmed brief",
     description:
       "Pre-sales and solutions consulting roles bridging technical capability and commercial value for enterprise technology vendors.",
     overview:
@@ -586,7 +580,7 @@ export const opportunities: Opportunity[] = [
       "Excellent written and verbal communication skills at executive level",
       "Relevant vendor or platform certifications preferred",
     ],
-    packageNotes: "Competitive base plus sales bonus. Full expatriate package for international candidates.",
+    packageNotes: "Compensation, benefits and working arrangements depend on a confirmed brief and will be discussed before an application progresses.",
   },
 
   // ── Project and Programme Management ──────────────────────────────────────
@@ -601,7 +595,7 @@ export const opportunities: Opportunity[] = [
     employmentLabel: "Permanent · Contract",
     employmentTypes: ["Permanent", "Contract"],
     seniority: "Director",
-    salaryRange: "AED 420,000 – 700,000 per annum",
+    salaryRange: "To be discussed for a confirmed brief",
     description:
       "Digital transformation and technology programme leadership for large-scale GCC delivery programmes spanning enterprise technology, cloud and operational change.",
     overview:
@@ -615,12 +609,11 @@ export const opportunities: Opportunity[] = [
     ],
     requirements: [
       "15+ years in technology delivery, minimum 5 as a Programme Director",
-      "Proven track record of delivering programmes over AED 100M in total value",
+      "Proven track record of delivering complex, multi-workstream technology programmes",
       "PMP, MSP or Prince2 Practitioner certification",
       "Strong GCC or MENA delivery experience preferred",
     ],
-    packageNotes:
-      "Senior packages reflect programme complexity and GCC demand. Long-term contract options available.",
+    packageNotes: "Compensation, benefits and working arrangements depend on a confirmed brief and will be discussed before an application progresses.",
   },
   {
     id: "pmo-lead",
@@ -633,7 +626,7 @@ export const opportunities: Opportunity[] = [
     employmentLabel: "Permanent",
     employmentTypes: ["Permanent"],
     seniority: "Senior Manager",
-    salaryRange: "AED 280,000 – 460,000 per annum",
+    salaryRange: "To be discussed for a confirmed brief",
     description:
       "PMO establishment and leadership roles for organisations building or maturing their project and portfolio management capabilities.",
     overview:
@@ -651,7 +644,7 @@ export const opportunities: Opportunity[] = [
       "Experience establishing or maturing a PMO in a comparable organisation",
       "Strong stakeholder management and executive communication skills",
     ],
-    packageNotes: "Market-rate permanent packages with full GCC benefits.",
+    packageNotes: "Compensation, benefits and working arrangements depend on a confirmed brief and will be discussed before an application progresses.",
   },
 
   // ── Engineering and Operations ─────────────────────────────────────────────
@@ -666,7 +659,7 @@ export const opportunities: Opportunity[] = [
     employmentLabel: "Permanent · Executive Search",
     employmentTypes: ["Permanent", "Executive Search"],
     seniority: "C-Suite / Executive",
-    salaryRange: "USD 200,000 – 350,000 per annum",
+    salaryRange: "To be discussed for a confirmed brief",
     description:
       "Senior operations and engineering leadership for upstream, midstream and downstream oil and gas clients across the Arabian Peninsula.",
     overview:
@@ -684,8 +677,7 @@ export const opportunities: Opportunity[] = [
       "Proven track record in a senior operations role with an NOC or major IOC",
       "GCC or MENA operational experience strongly preferred",
     ],
-    packageNotes:
-      "Executive compensation including base, bonus, housing, schooling, flights and medical. USD packages for senior international mandates.",
+    packageNotes: "Compensation, benefits and working arrangements depend on a confirmed brief and will be discussed before an application progresses.",
   },
   {
     id: "engineering-project-manager",
@@ -731,7 +723,7 @@ export const opportunities: Opportunity[] = [
     employmentLabel: "Permanent",
     employmentTypes: ["Permanent"],
     seniority: "Director",
-    salaryRange: "AED 380,000 – 620,000 per annum",
+    salaryRange: "To be discussed for a confirmed brief",
     description:
       "Senior supply chain and logistics leadership roles for retail, FMCG, industrial and healthcare clients across the GCC.",
     overview:
@@ -750,7 +742,7 @@ export const opportunities: Opportunity[] = [
       "ERP and supply chain platform experience (SAP SCM, Oracle SCM or equivalent)",
       "GCC market knowledge preferred",
     ],
-    packageNotes: "Competitive packages benchmarked to GCC supply chain market rates.",
+    packageNotes: "Compensation, benefits and working arrangements depend on a confirmed brief and will be discussed before an application progresses.",
   },
 
   // ── HR and People ──────────────────────────────────────────────────────────
@@ -831,7 +823,7 @@ export const opportunities: Opportunity[] = [
     employmentLabel: "Permanent · Executive Search",
     employmentTypes: ["Permanent", "Executive Search"],
     seniority: "C-Suite / Executive",
-    salaryRange: "AED 600,000 – 1,000,000 per annum",
+    salaryRange: "To be discussed for a confirmed brief",
     description:
       "CDO and Head of Digital roles for organisations accelerating digital transformation, platform modernisation and AI adoption.",
     overview:
@@ -850,8 +842,7 @@ export const opportunities: Opportunity[] = [
       "P&L accountability for digital business units preferred",
       "GCC or emerging market experience highly valued",
     ],
-    packageNotes:
-      "Executive packages with significant performance upside. Equity or co-investment available for senior digital mandates.",
+    packageNotes: "Compensation, benefits and working arrangements depend on a confirmed brief and will be discussed before an application progresses.",
   },
   {
     id: "transformation-programme-lead",
@@ -864,7 +855,7 @@ export const opportunities: Opportunity[] = [
     employmentLabel: "Permanent · Contract",
     employmentTypes: ["Permanent", "Contract"],
     seniority: "Director",
-    salaryRange: "AED 380,000 – 620,000 per annum",
+    salaryRange: "To be discussed for a confirmed brief",
     description:
       "Business transformation and operating model change leadership for organisations undergoing restructuring, growth or technology-driven change.",
     overview:
@@ -882,7 +873,7 @@ export const opportunities: Opportunity[] = [
       "Strong operating model design and change management capability",
       "MBA or equivalent advanced degree preferred",
     ],
-    packageNotes: "Senior packages. Day-rate contract options for defined transformation engagements.",
+    packageNotes: "Compensation, benefits and working arrangements depend on a confirmed brief and will be discussed before an application progresses.",
   },
 
   // ── Additional specialist roles ────────────────────────────────────────────
@@ -958,7 +949,7 @@ export const opportunities: Opportunity[] = [
     employmentLabel: "Permanent · Contract",
     employmentTypes: ["Permanent", "Contract"],
     seniority: "Senior Specialist",
-    salaryRange: "AED 240,000 – 420,000 per annum",
+    salaryRange: "To be discussed for a confirmed brief",
     description:
       "DevOps and platform engineering roles for technology companies and enterprises building cloud-native delivery capability.",
     overview:
@@ -975,7 +966,7 @@ export const opportunities: Opportunity[] = [
       "Experience with GitHub Actions, GitLab CI or equivalent",
       "Cloud certifications (AWS, Azure or GCP) preferred",
     ],
-    packageNotes: "Permanent and contract options, with strong interest from international candidates.",
+    packageNotes: "Compensation, benefits and working arrangements depend on a confirmed brief and will be discussed before an application progresses.",
   },
   {
     id: "head-of-risk-compliance",
@@ -1049,6 +1040,8 @@ export const opportunities: Opportunity[] = [
     packageNotes:
       "Compensation and benefits will be discussed with shortlisted candidates and aligned with experience, scope of mandate and market benchmarks.",
   },
+  // Additional city-specific candidate-network profiles; no confirmed vacancies implied.
+  ...additionalNetworkRoles,
 ]
 
 /** Every distinct primary city currently in use, derived from the data itself. */

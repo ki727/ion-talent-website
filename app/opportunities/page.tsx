@@ -3,7 +3,7 @@ import { PreviewLink as Link } from "@/components/preview-link"
 import { Suspense } from "react"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
-import { OpportunitiesHeading } from "@/components/opportunities-heading"
+import { OpportunitiesHeading, OpportunitiesIntro } from "@/components/opportunities-heading"
 import { OpportunitiesClient } from "@/components/opportunities-client"
 import { IonLiquidAtmosphere } from "@/components/ion-liquid-atmosphere"
 import { SITE_URL } from "@/lib/site-config"
@@ -67,8 +67,7 @@ export default function OpportunitiesPage() {
             </h1>
             <span className="ion-heading-underline ion-heading-underline--gradient mx-auto mt-4 xl:mt-3" aria-hidden="true" />
             <p className="ion-density-lede mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-gray-600 xl:mt-3 xl:text-base">
-              Explore specialist opportunities across the GCC and international markets. Register your
-              interest and we will contact you when your experience matches a relevant live requirement.
+              <OpportunitiesIntro />
             </p>
           </div>
         </section>

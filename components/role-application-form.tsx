@@ -1,6 +1,7 @@
 "use client"
 
 import type React from "react"
+import { usePathname } from "next/navigation"
 
 import { useEffect, useRef, useState } from "react"
 import { AlertCircle, CheckCircle2, Loader2, Upload, X } from "lucide-react"
@@ -46,6 +47,7 @@ export function RoleApplicationForm({
   roleLocation,
   roleType,
 }: RoleApplicationFormProps) {
+  const preview = usePathname().startsWith("/global")
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
   const [email, setEmail] = useState("")
@@ -239,7 +241,7 @@ export function RoleApplicationForm({
             inputMode="tel"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            placeholder="+971 50 000 0000"
+            placeholder={preview ? "Include country code" : "+971 50 000 0000"}
             className={inputClass}
           />
         </div>
