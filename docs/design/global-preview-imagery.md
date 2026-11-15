@@ -22,3 +22,13 @@ The preview remains noindex. No offices, credentials, testimonials or case studi
 ## Subsequent conversion review
 
 The user supplied founder Khaled Israfil’s LinkedIn URL. The rendered trust section now presents that confirmed founder identity with initials and a profile link. The AI portrait study remains a design asset on disk and is no longer presented in the homepage trust section. No real headshot or placement testimonial was supplied. See `docs/qa/conversion-feedback/README.md` for the approved conversion changes and validation.
+
+## Added individual and team concepts to About
+
+On explicit request, `/global/about` now shows the two separate fictional portrait concepts and the revised team concept. The homepage remains company-led. The gallery uses visible AI/fictional captions and descriptive alt text; proposed character roles are not presented as real employment facts. The real founder card remains distinct.
+
+- `public/photography/team/cofounder-concept.webp` — fictional male portrait; original `/workspace/generated_images/exec-a0fb1ab6-099d-4de6-b2b3-154baf9e6490.png`.
+- `public/photography/team/anna-wynn-concept.webp` — fictional Anna Wynn portrait; original `/workspace/generated_images/exec-a42a7280-c72d-430f-bb5f-aa3eb4705cc5.png`.
+- `public/photography/team/team-concept.webp` — revised AI-generated team concept using the uploaded founder photo as a likeness reference; original `/workspace/generated_images/exec-c95c35b1-28a6-450a-b139-e41f237fe53c.png`. The earlier generated founder solo portrait was rejected by the user and is not used on the website.
+
+Assets are resized/compressed WebP exports. Originals are retained. This is preview imagery, not a company team photograph or evidence of additional employees.
