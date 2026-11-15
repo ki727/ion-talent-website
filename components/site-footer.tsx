@@ -1,3 +1,6 @@
+"use client"
+
+import { usePathname } from "next/navigation"
 import Link from "next/link"
 import { LinkedinFollowLink } from "@/components/linkedin-follow-link"
 
@@ -12,6 +15,7 @@ const FOOTER_LINKS = [
 ]
 
 export function SiteFooter() {
+  const preview = usePathname().startsWith("/global")
   return (
     <footer className="ion-site-footer border-t border-ion-border bg-gray-900 px-6 py-12 text-white">
       <div className="container mx-auto max-w-6xl">
@@ -21,8 +25,8 @@ export function SiteFooter() {
           </Link>
 
           <nav className="ion-site-footer-nav flex flex-col md:flex-row md:flex-wrap gap-6 md:gap-8 text-sm text-gray-400">
-            {FOOTER_LINKS.map((link) => (
-              <Link key={link.href} href={link.href} className="hover:text-white transition-colors">
+            {FOOTER_LINKS.filter(link => !preview || !["/salary-guide", "/saudi-national-talent"].includes(link.href)).map((link) => (
+              <Link key={link.href} href={preview && link.href.startsWith("/#") ? `/global${link.href.slice(1)}` : link.href} className="hover:text-white transition-colors">
                 {link.label}
               </Link>
             ))}

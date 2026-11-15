@@ -11,6 +11,7 @@ import { HomepageReferralSection } from "@/components/homepage-referral-section"
 import { Target, Award, Users, ArrowRight, UserCheck, Radar, Globe } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { MiddleEastResource } from "@/components/middle-east-resource"
 import { GLOBAL_MARKETS } from "@/lib/global-market-hubs"
 import { useRef, useEffect, useState } from "react"
 import { SiteHeader } from "@/components/site-header"
@@ -21,7 +22,10 @@ export default function HomePage() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const heroContentRef = useRef<HTMLDivElement>(null)
   const [selectedService, setSelectedService] = useState<string | undefined>(undefined)
-  const isGlobalPreview = usePathname() === "/global"
+  const pathname = usePathname()
+  const isGlobalPreview = pathname === "/global"
+  const isMiddleEast = pathname === "/global/middle-east"
+  const isPreview = pathname.startsWith("/global")
 
   useEffect(() => {
     const video = videoRef.current
@@ -100,6 +104,7 @@ export default function HomePage() {
             <>
           <video
             ref={videoRef}
+            poster="/photography/dubai-hero-poster.webp"
             className="hero-zoom w-full h-full object-cover"
             autoPlay
             muted
@@ -124,23 +129,13 @@ export default function HomePage() {
         <div ref={heroContentRef} className="ion-hero-depth pointer-events-auto container relative z-10 mx-auto max-w-6xl">
           <div className="ion-home-hero-copy space-y-5 sm:space-y-6">
             <h1 className="ion-display ion-home-hero-title ion-hero-reveal ion-hero-reveal--1 hero-text-shadow font-bold text-white text-balance">
-              {isGlobalPreview ? (
-                <>
-                  Specialist search.
-                  <br />
-                  <span className="ion-hero-teal-accent">International reach.</span>
-                </>
-              ) : (
-                <>
-                  Specialist talent solutions that
-                  <br />
-                  <span className="ion-hero-teal-accent">transform businesses</span>
-                </>
-              )}
+              Specialist talent solutions that
+              <br />
+              <span className="ion-hero-teal-accent">transform businesses</span>
             </h1>
 
             <p className="ion-home-hero-lede ion-hero-reveal ion-hero-reveal--2 hero-text-shadow max-w-2xl text-lg leading-relaxed text-white/90 sm:text-xl">
-              Specialist recruitment and executive search for critical technology and leadership roles across international markets.
+              {isGlobalPreview ? "Specialist recruitment and executive search across sectors and levels, with international reach." : "Specialist recruitment and executive search across the GCC and UK, with international reach."}
             </p>
 
             <div className="ion-home-hero-actions ion-hero-reveal ion-hero-reveal--3 flex flex-col gap-4 pt-1 sm:flex-row sm:pt-2">
@@ -174,49 +169,6 @@ export default function HomePage() {
           aria-hidden="true"
         />
       </section>
-
-      {isGlobalPreview && (
-        <section id="markets" className="ion-surface-tonal scroll-mt-[100px] border-b border-ion-border px-6 py-12 md:py-14" aria-labelledby="global-markets-title">
-          <div className="container mx-auto max-w-6xl">
-            <div className="mb-7 text-center">
-              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-ion-gray">ION Talent Global</p>
-              <h2 id="global-markets-title" className="font-display text-3xl font-bold text-ion-navy md:text-4xl">
-                Explore our markets
-              </h2>
-              <p className="mx-auto mt-3 max-w-2xl text-base text-ion-gray">
-                International specialist search, with a focused approach to each region.
-              </p>
-            </div>
-            <p className="mb-4 text-center text-xs font-semibold uppercase tracking-[0.18em] text-ion-gray">
-              Our core markets
-            </p>
-            <nav aria-label="Core recruitment markets" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              {GLOBAL_MARKETS.filter((market) => market.tier === "core").map((market) => (
-                <Link
-                  key={market.slug}
-                  href={`/global/${market.slug}`}
-                  className="group flex min-h-20 items-center justify-between gap-3 rounded-xl border border-ion-border bg-white px-5 py-4 text-base font-semibold text-ion-navy shadow-sm transition-colors hover:border-ion-teal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal"
-                >
-                  {market.label}
-                  <ArrowRight className="h-5 w-5 shrink-0 text-ion-teal transition-transform group-hover:translate-x-1" aria-hidden="true" />
-                </Link>
-              ))}
-            </nav>
-            <div className="mt-5 flex flex-col gap-4 rounded-xl border border-ion-border bg-white px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <p className="mb-1 text-xs font-semibold uppercase tracking-[0.14em] text-ion-teal">Strategic growth market</p>
-                <h3 className="text-xl font-semibold text-ion-navy">Asia-Pacific</h3>
-                <p className="mt-1 max-w-2xl text-sm text-ion-gray">
-                  Selective specialist search across Singapore, Australia and Southeast Asia.
-                </p>
-              </div>
-              <Link href="/global/asia-pacific" className="inline-flex min-h-11 shrink-0 items-center gap-2 text-sm font-semibold text-ion-navy transition-colors hover:text-ion-teal">
-                Explore Asia-Pacific <ArrowRight className="h-4 w-4 text-ion-teal" aria-hidden="true" />
-              </Link>
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* Proof & Credibility */}
       <section
@@ -415,6 +367,7 @@ export default function HomePage() {
           text and button fall back to exactly the original 3-column grid on
           tablet/desktop) instead of hiding the cover and
           stretching into a tall text-only card. */}
+      {isMiddleEast ? <MiddleEastResource /> : !isPreview && (
       <section id="salary-guide-feature" className="ion-density-section border-t border-ion-violet/10 bg-[#F8F7FF] px-6 py-12 md:py-14 xl:py-11">
         <div className="container mx-auto max-w-6xl">
           <FadeIn>
@@ -454,6 +407,7 @@ export default function HomePage() {
           </FadeIn>
         </div>
       </section>
+      )}
 
       <section
         id="industries"
@@ -495,6 +449,7 @@ export default function HomePage() {
           homepage's single dedicated entry point into the new page. Kept to
           one restrained image, paired with copy rather than a full-bleed
           slab, per the site's photography system. */}
+      {(!isPreview || isMiddleEast) && (
       <section className="ion-density-section border-t border-gray-100 bg-white px-6 py-14 md:py-12 xl:py-10">
         <div className="container mx-auto max-w-6xl">
           <FadeIn>
@@ -536,6 +491,7 @@ export default function HomePage() {
           </FadeIn>
         </div>
       </section>
+      )}
 
       {/* Why ION Talent */}
       <section id="approach" className="ion-density-section border-t border-gray-100 bg-ion-surface px-6 py-14 md:py-14 xl:py-12">
@@ -599,6 +555,37 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {isGlobalPreview && (
+        <section id="markets" className="ion-surface-tonal scroll-mt-[100px] border-b border-ion-border px-6 py-12 md:py-14" aria-labelledby="global-markets-title">
+          <div className="container mx-auto max-w-6xl">
+            <div className="mb-7 text-center">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-ion-gray">ION Talent Global</p>
+              <h2 id="global-markets-title" className="font-display text-3xl font-bold text-ion-navy md:text-4xl">
+                Explore our markets
+              </h2>
+              <p className="mx-auto mt-3 max-w-2xl text-base text-ion-gray">
+                Recruitment and executive search, with an approach tailored to each market.
+              </p>
+            </div>
+            <p className="mb-4 text-center text-xs font-semibold uppercase tracking-[0.18em] text-ion-gray">
+              Our markets
+            </p>
+            <nav aria-label="Core recruitment markets" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+              {GLOBAL_MARKETS.map((market) => (
+                <Link
+                  key={market.slug}
+                  href={`/global/${market.slug}`}
+                  className="group flex min-h-20 items-center justify-between gap-3 rounded-xl border border-ion-border bg-white px-5 py-4 text-base font-semibold text-ion-navy shadow-sm transition-colors hover:border-ion-teal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal"
+                >
+                  {market.label}
+                  <ArrowRight className="h-5 w-5 shrink-0 text-ion-teal transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                </Link>
+              ))}
+            </nav>
+          </div>
+        </section>
+      )}
 
       <HomepageReferralSection />
 

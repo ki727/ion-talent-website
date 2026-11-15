@@ -1,3 +1,5 @@
+import HomePage from "@/app/page"
+import { GlobalHeroVeil } from "@/components/global/global-hero-veil"
 import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
@@ -32,6 +34,7 @@ export function generateMetadata({ params }: PageProps): Metadata {
 export default function GlobalMarketPage({ params }: PageProps) {
   const region = getGlobalRegion(params.region)
   if (!region) notFound()
+  if (params.region === "middle-east") return <HomePage />
 
   return (
     <div className="min-h-screen bg-white text-ion-navy">
@@ -54,7 +57,7 @@ export default function GlobalMarketPage({ params }: PageProps) {
               <div className="ion-market-hero-scrim absolute inset-0" />
             </div>
           )}
-          <div className="ion-home-hero-atmosphere pointer-events-none absolute inset-0" aria-hidden="true" />
+          <GlobalHeroVeil />
           <div className="ion-home-hero-atmosphere ion-home-hero-atmosphere--secondary pointer-events-none absolute inset-0" aria-hidden="true" />
           <div className="container relative z-10 mx-auto max-w-6xl">
             <Link href="/global#markets" className="mb-8 inline-flex items-center gap-2 text-sm font-medium text-white/75 transition-colors hover:text-white">
@@ -89,10 +92,10 @@ export default function GlobalMarketPage({ params }: PageProps) {
 
         <section id="market-focus" className="px-6 py-16 md:py-20" aria-labelledby="specialisms-title">
           <div className="container mx-auto max-w-6xl">
-            <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-ion-gray">Specialist recruitment & executive search</p>
-            <h2 id="specialisms-title" className="mb-9 font-display text-3xl font-bold text-ion-navy md:text-4xl">Where we focus</h2>
+            <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-ion-gray">Recruitment & executive search</p>
+            <h2 id="specialisms-title" className="mb-9 font-display text-3xl font-bold text-ion-navy md:text-4xl">Industry expertise</h2>
             <div className="grid gap-5 sm:grid-cols-2">
-              {region.priorities.map((priority) => (
+              {["Technology", "Finance", "Engineering", "Construction", "Cybersecurity", "Consulting"].map((priority) => (
                 <article key={priority} className="ion-density-card ion-card-top-4 flex items-start gap-4 rounded-[14px] border border-ion-border bg-white p-6 shadow-sm">
                   <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-ion-teal" aria-hidden="true" />
                   <h3 className="text-lg font-semibold leading-snug text-ion-navy">{priority}</h3>
@@ -120,31 +123,22 @@ export default function GlobalMarketPage({ params }: PageProps) {
               </div>
             )}
 
-            <h3 className="mb-4 mt-12 text-lg font-semibold">Our core markets</h3>
-            <nav aria-label="Core markets" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              {GLOBAL_MARKETS.filter((market) => market.tier === "core").map((market) => (
+            <h3 className="mb-4 mt-12 text-lg font-semibold">Our markets</h3>
+            <nav aria-label="Core markets" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+              {GLOBAL_MARKETS.map((market) => (
                 <Link key={market.slug} href={`/global/${market.slug}`} aria-current={params.region === market.slug ? "page" : undefined} className="group flex min-h-16 items-center justify-between gap-3 rounded-xl border border-ion-border bg-white px-5 py-4 text-sm font-semibold text-ion-navy transition-colors hover:border-ion-teal">
                   {market.label} <ArrowRight className="h-4 w-4 shrink-0 text-ion-teal transition-transform group-hover:translate-x-1" aria-hidden="true" />
                 </Link>
               ))}
             </nav>
-            <div className="mt-4 flex flex-col justify-between gap-4 rounded-xl border border-ion-border bg-white px-5 py-4 sm:flex-row sm:items-center">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-ion-teal">Strategic growth market</p>
-                <p className="mt-1 font-semibold text-ion-navy">Asia-Pacific</p>
-                <p className="mt-1 text-sm text-ion-gray">Selective specialist searches across Singapore, Australia and Southeast Asia.</p>
-              </div>
-              <Link href="/global/asia-pacific" aria-current={params.region === "asia-pacific" ? "page" : undefined} className="inline-flex min-h-11 shrink-0 items-center gap-2 text-sm font-semibold text-ion-navy hover:text-ion-teal">
-                Explore Asia-Pacific <ArrowRight className="h-4 w-4 text-ion-teal" aria-hidden="true" />
-              </Link>
-            </div>
+
           </div>
         </section>
 
         <section className="ion-section-navy px-6 py-16 text-white md:py-20">
           <div className="container mx-auto flex max-w-6xl flex-col items-start justify-between gap-6 md:flex-row md:items-center">
             <div>
-              <h2 className="font-display text-3xl font-bold">Hiring specialist talent?</h2>
+              <h2 className="font-display text-3xl font-bold">Tell us what you are hiring for</h2>
               <p className="mt-3 max-w-2xl text-lg text-white/75">Tell us what you need. Every enquiry starts with understanding the role, market and search requirements.</p>
             </div>
             <Link href="/global#contact" className="ion-primary-button inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-xl px-7 py-3 font-semibold text-white">

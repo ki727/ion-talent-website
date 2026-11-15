@@ -47,7 +47,7 @@ export function GlobalHeroVeil() {
     <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
       {/* Permanent static background: visible before JS, on mobile, and on low-power devices. */}
       <div
-        className="absolute inset-0"
+        className="ion-global-colour-field absolute inset-0"
         style={{
           background:
             "radial-gradient(ellipse at 76% 40%, rgba(20,97,105,.55), transparent 42%), radial-gradient(ellipse at 90% 82%, rgba(85,66,134,.25), transparent 44%), linear-gradient(116deg, #081326 4%, #101d32 55%, #122b38 100%)",
@@ -57,15 +57,15 @@ export function GlobalHeroVeil() {
         <DarkVeil
           className="h-full w-full"
           color="#22B5B0"
-          speed={0.12}
-          flow={0.35}
-          glow={0.2}
+          speed={0.24}
+          flow={0.6}
+          glow={0.35}
           sheen={0.12}
           grain={0.01}
-          brightness={0.85}
+          brightness={1.05}
           quality={0.35}
           dpr={1}
-          opacity={0.7}
+          opacity={0.9}
           mouseInteraction={false}
           intro={false}
         />
@@ -75,7 +75,7 @@ export function GlobalHeroVeil() {
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(90deg, rgba(6,14,27,.91) 0%, rgba(8,18,34,.80) 39%, rgba(8,20,35,.27) 100%), radial-gradient(ellipse at 86% 88%, rgba(99,80,164,.19), transparent 44%)",
+            "linear-gradient(90deg, rgba(6,14,27,.68) 0%, rgba(8,18,34,.48) 39%, rgba(8,20,35,.27) 100%), radial-gradient(ellipse at 86% 88%, rgba(99,80,164,.19), transparent 44%)",
         }}
       />
     </div>

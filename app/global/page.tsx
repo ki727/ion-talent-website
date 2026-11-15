@@ -6,7 +6,7 @@ import HomePage from "../page"
 export const metadata: Metadata = {
   title: "ION Talent | Homepage Preview",
   description:
-    "Specialist recruitment and executive search for critical technology and leadership roles across international markets.",
+    "Specialist recruitment and executive search across sectors and levels, with international reach.",
   robots: { index: false, follow: false },
   alternates: { canonical: null },
 }
