@@ -131,15 +131,13 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Finance",
     sector: "Finance",
-    locationLabel: "London",
+    locationLabel: "Edinburgh",
     employmentLabel: "Permanent",
     employmentTypes: ["Permanent"],
     seniority: "Director",
     salaryRange: "To be discussed for a confirmed brief",
-    description:
-      "Financial control, consolidation and governance leadership roles across multinational and regional businesses in London.",
-    overview:
-      "ION Talent is building a network of experienced Financial Controllers for current and upcoming opportunities in London. Clients are undergoing growth, transformation and consolidation, and candidates with Big Four backgrounds and in-house controller experience in complex, multi-entity environments are particularly sought after.",
+    description: "Register interest in future financial control, consolidation and reporting leadership searches in Edinburgh.",
+    overview: "This Edinburgh talent-network profile is for financial controllers with experience in reporting, governance and multi-entity financial operations. Typical remits can include close processes, audit coordination, controls and business partnering. It is not a confirmed client vacancy; the relevant accounting standards and responsibilities would be established for an actual hiring brief.",
     responsibilities: [
       "Lead month-end close, group consolidation and statutory reporting",
       "Own internal controls, governance and audit relationships",
@@ -154,7 +152,7 @@ export const opportunities: Opportunity[] = [
       "ERP proficiency (SAP, Oracle or similar)",
       "Experience with UK reporting requirements and international group structures",
     ],
-    packageNotes: "Compensation, benefits and working arrangements depend on a confirmed brief and will be discussed before an application progresses.",
+    packageNotes: "Compensation, benefits, working arrangements, language and work-eligibility requirements will be confirmed for any actual hiring brief.",
   },
   {
     id: "fpa-manager-director",
@@ -163,15 +161,13 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Finance",
     sector: "Finance",
-    locationLabel: "London",
+    locationLabel: "Boston",
     employmentLabel: "Permanent",
     employmentTypes: ["Permanent"],
     seniority: "Director",
     salaryRange: "To be discussed for a confirmed brief",
-    description:
-      "Commercial finance, planning and senior business partnering roles with high-growth regional and international organisations.",
-    overview:
-      "ION Talent is active across FP&A and commercial finance mandates for technology companies, real estate businesses and diversified regional conglomerates. Candidates who combine strong financial modelling skills with a commercial mindset and proven executive partnership experience are consistently in demand.",
+    description: "A talent-network profile for commercial finance and planning leaders interested in potential FP&A appointments in Boston.",
+    overview: "Register interest in future FP&A Manager and Director searches in Boston. This profile describes a typical remit across planning cycles, performance analysis, financial modelling and senior business partnering. It does not advertise a confirmed employer or vacancy; the industry context, reporting standards and compensation would be specified for any actual assignment.",
     responsibilities: [
       "Lead annual planning, rolling forecasts and budget cycles",
       "Build board-quality financial models and scenario analyses",
@@ -186,7 +182,7 @@ export const opportunities: Opportunity[] = [
       "Experience presenting analysis at ExCo or board level",
       "Technology sector or high-growth environment experience preferred",
     ],
-    packageNotes: "Compensation, benefits and working arrangements depend on a confirmed brief and will be discussed before an application progresses.",
+    packageNotes: "Compensation, benefits, working arrangements, language and work-eligibility requirements will be confirmed for any actual hiring brief.",
   },
   {
     id: "tax-audit-compliance",
@@ -492,15 +488,13 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Enterprise Technology",
     sector: "Enterprise Technology / ERP",
-    locationLabel: "Dubai",
+    locationLabel: "Amsterdam",
     employmentLabel: "Permanent · Contract",
     employmentTypes: ["Permanent", "Contract"],
     seniority: "Senior Specialist",
-    salaryRange: "AED 320,000 – 520,000 per annum",
-    description:
-      "Oracle Fusion, EBS and Cloud implementation and architecture roles for regional and multinational enterprise clients.",
-    overview:
-      "ION Talent places Oracle ERP specialists — from solution architects and functional leads to programme managers — across clients running transformations on Oracle Fusion Cloud, EBS and Oracle SCM. Demand is consistent across financial services, manufacturing, real estate and government sectors.",
+    salaryRange: "To be discussed for a confirmed brief",
+    description: "A talent-network profile for Oracle ERP and cloud professionals interested in future implementation and architecture appointments in Amsterdam.",
+    overview: "Register interest in potential Oracle ERP searches in Amsterdam. Typical assignments can span Fusion Cloud, EBS or SCM implementations, solution design, data migration and functional-team delivery. This profile describes candidate capabilities rather than a confirmed client vacancy; language, module expertise and delivery arrangements would be assessed against a specific brief.",
     responsibilities: [
       "Lead Oracle Fusion or EBS implementation workstreams",
       "Configure and extend Oracle modules including Finance, SCM and HCM",
@@ -511,10 +505,9 @@ export const opportunities: Opportunity[] = [
       "8+ years in Oracle ERP implementation or architecture",
       "Hands-on experience with Oracle Fusion Cloud preferred",
       "Oracle Cloud certification in at least one functional module",
-      "GCC project experience advantageous",
+      "Experience delivering ERP workstreams across international stakeholder groups",
     ],
-    packageNotes:
-      "Permanent and contract options. Strong contract market for Oracle resources on active implementations.",
+    packageNotes: "Compensation, benefits, working arrangements, language and work-eligibility requirements will be confirmed for any actual hiring brief.",
   },
 
   // ── Technology Sales ───────────────────────────────────────────────────────
@@ -591,15 +584,13 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Project and Programme Management",
     sector: "Programme Delivery",
-    locationLabel: "Riyadh",
+    locationLabel: "Manchester",
     employmentLabel: "Permanent · Contract",
     employmentTypes: ["Permanent", "Contract"],
     seniority: "Director",
     salaryRange: "To be discussed for a confirmed brief",
-    description:
-      "Digital transformation and technology programme leadership for large-scale GCC delivery programmes spanning enterprise technology, cloud and operational change.",
-    overview:
-      "ION Talent places Technology Programme Directors across the GCC for national transformation initiatives, large IT delivery portfolios and complex multi-vendor programmes. Clients include government entities, sovereign wealth funds, utilities, banks and multinational organisations.",
+    description: "Register interest in future Manchester-based technology programme leadership searches spanning enterprise systems, cloud and operational change.",
+    overview: "This Manchester talent-network profile is for experienced technology programme leaders. A typical remit can involve complex delivery portfolios, programme governance, multi-vendor coordination and organisational change. No employer, project or live vacancy is advertised through this profile; any future assignment would have a separately confirmed scope and terms.",
     responsibilities: [
       "Lead delivery of complex multi-workstream technology transformation programmes",
       "Own programme governance, reporting, risk and issue management",
@@ -611,9 +602,9 @@ export const opportunities: Opportunity[] = [
       "15+ years in technology delivery, minimum 5 as a Programme Director",
       "Proven track record of delivering complex, multi-workstream technology programmes",
       "PMP, MSP or Prince2 Practitioner certification",
-      "Strong GCC or MENA delivery experience preferred",
+      "Experience leading delivery across complex organisations and multiple stakeholder groups",
     ],
-    packageNotes: "Compensation, benefits and working arrangements depend on a confirmed brief and will be discussed before an application progresses.",
+    packageNotes: "Compensation, benefits, working arrangements, language and work-eligibility requirements will be confirmed for any actual hiring brief.",
   },
   {
     id: "pmo-lead",
@@ -622,15 +613,13 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Project and Programme Management",
     sector: "Programme Delivery",
-    locationLabel: "Riyadh",
+    locationLabel: "Glasgow",
     employmentLabel: "Permanent",
     employmentTypes: ["Permanent"],
     seniority: "Senior Manager",
     salaryRange: "To be discussed for a confirmed brief",
-    description:
-      "PMO establishment and leadership roles for organisations building or maturing their project and portfolio management capabilities.",
-    overview:
-      "ION Talent is placing PMO Leads and Heads of PMO across technology, government and financial services clients in the GCC. Candidates who can establish PMO functions from scratch, implement PPM tooling and drive delivery governance are particularly sought after.",
+    description: "A talent-network profile for PMO leaders interested in future Glasgow appointments involving portfolio governance, planning and delivery assurance.",
+    overview: "Register interest in potential PMO Lead and Head of PMO searches in Glasgow. Typical responsibilities can include establishing governance, introducing portfolio tools, improving reporting and supporting project delivery teams. This is a candidate-interest profile, not an advertised client vacancy or a commitment to a particular assignment.",
     responsibilities: [
       "Establish and lead the enterprise or divisional PMO function",
       "Define project methodologies, standards, templates and governance frameworks",
@@ -640,11 +629,11 @@ export const opportunities: Opportunity[] = [
     ],
     requirements: [
       "8+ years in programme management or PMO leadership",
-      "PMP, Prince2 or CAPM certified",
+      "PMP, MSP or PRINCE2 qualification, or equivalent programme-delivery experience",
       "Experience establishing or maturing a PMO in a comparable organisation",
       "Strong stakeholder management and executive communication skills",
     ],
-    packageNotes: "Compensation, benefits and working arrangements depend on a confirmed brief and will be discussed before an application progresses.",
+    packageNotes: "Compensation, benefits, working arrangements, language and work-eligibility requirements will be confirmed for any actual hiring brief.",
   },
 
   // ── Engineering and Operations ─────────────────────────────────────────────
@@ -686,15 +675,13 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Engineering and Operations",
     sector: "Engineering and Infrastructure",
-    locationLabel: "Abu Dhabi",
+    locationLabel: "Chicago",
     employmentLabel: "Permanent · Contract",
     employmentTypes: ["Permanent", "Contract"],
     seniority: "Senior Manager",
-    salaryRange: "AED 280,000 – 480,000 per annum",
-    description:
-      "Engineering project management roles across energy, infrastructure and industrial sectors in the UAE.",
-    overview:
-      "ION Talent places experienced Engineering Project Managers for clients delivering capital infrastructure, utilities, energy and industrial projects across the GCC. Demand is strong for candidates with EPCM experience and familiarity with GCC project delivery environments.",
+    salaryRange: "To be discussed for a confirmed brief",
+    description: "A talent-network profile for engineering project managers interested in future industrial and infrastructure appointments in Chicago.",
+    overview: "Register interest in potential engineering project-management searches in Chicago. Typical responsibilities can span feasibility, design coordination, procurement, delivery and commissioning for industrial or infrastructure projects. No employer or project is currently advertised through this profile; local qualifications, site requirements and working arrangements would be confirmed for a specific brief.",
     responsibilities: [
       "Manage engineering projects from feasibility through to commissioning",
       "Own project scope, cost, schedule, risk and quality",
@@ -706,9 +693,9 @@ export const opportunities: Opportunity[] = [
       "Engineering degree plus PMP or Prince2 certification",
       "8+ years engineering project management experience",
       "EPCM or EPC background preferred",
-      "GCC site and project delivery experience an advantage",
+      "Experience coordinating site delivery and applicable safety or engineering requirements",
     ],
-    packageNotes: "Packages include site allowances and project-completion incentives.",
+    packageNotes: "Compensation, benefits, working arrangements, language and work-eligibility requirements will be confirmed for any actual hiring brief.",
   },
 
   // ── Supply Chain and Procurement ──────────────────────────────────────────
@@ -719,15 +706,13 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Supply Chain and Procurement",
     sector: "Supply Chain and Logistics",
-    locationLabel: "Dammam",
+    locationLabel: "Boston",
     employmentLabel: "Permanent",
     employmentTypes: ["Permanent"],
     seniority: "Director",
     salaryRange: "To be discussed for a confirmed brief",
-    description:
-      "Senior supply chain and logistics leadership roles for retail, FMCG, industrial and healthcare clients across the GCC.",
-    overview:
-      "ION Talent places Supply Chain Directors for clients optimising regional supply chains, implementing digital supply chain platforms and building resilience across distribution, procurement and inventory management functions.",
+    description: "A talent-network profile for supply chain leaders interested in potential Boston appointments across procurement, planning and distribution.",
+    overview: "Register interest in future supply chain leadership searches in Boston. Typical responsibilities can include supply planning, supplier management, logistics, inventory resilience and digital process improvement. This profile does not identify an active employer or vacancy; sector requirements and the geographic scope would be confirmed for a specific assignment.",
     responsibilities: [
       "Lead end-to-end supply chain strategy across procurement, logistics and distribution",
       "Own inventory optimisation, demand planning and S&OP processes",
@@ -740,9 +725,9 @@ export const opportunities: Opportunity[] = [
       "12+ years in supply chain leadership",
       "Proven regional supply chain transformation experience",
       "ERP and supply chain platform experience (SAP SCM, Oracle SCM or equivalent)",
-      "GCC market knowledge preferred",
+      "Experience managing supplier networks and supply-chain requirements relevant to the hiring sector",
     ],
-    packageNotes: "Compensation, benefits and working arrangements depend on a confirmed brief and will be discussed before an application progresses.",
+    packageNotes: "Compensation, benefits, working arrangements, language and work-eligibility requirements will be confirmed for any actual hiring brief.",
   },
 
   // ── HR and People ──────────────────────────────────────────────────────────
@@ -753,15 +738,13 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "HR and People",
     sector: "HR and People",
-    locationLabel: "Dubai",
+    locationLabel: "Manchester",
     employmentLabel: "Permanent · Executive Search",
     employmentTypes: ["Permanent", "Executive Search"],
     seniority: "C-Suite / Executive",
-    salaryRange: "AED 480,000 – 780,000 per annum",
-    description:
-      "Chief People Officer and HR Director roles for technology-led and high-growth organisations building modern people functions.",
-    overview:
-      "ION Talent places CHROs and HR Directors for technology companies, PE-backed businesses and diversified regional groups investing in people, culture and talent capability. Candidates with experience in talent acquisition transformation, organisational design and HR technology adoption are in particularly high demand.",
+    salaryRange: "To be discussed for a confirmed brief",
+    description: "A talent-network profile for senior people leaders interested in future CHRO and HR Director appointments in Manchester.",
+    overview: "Register interest in potential people-leadership searches in Manchester. Typical remits can include people strategy, organisational design, talent acquisition and HR operations across growing or established businesses. This is a candidate-interest profile, not a confirmed vacancy or an advertised client assignment.",
     responsibilities: [
       "Define and deliver the people strategy aligned to business growth",
       "Lead talent acquisition, L&D, total rewards and people operations",
@@ -775,7 +758,7 @@ export const opportunities: Opportunity[] = [
       "Technology company or high-growth environment experience preferred",
       "Experience leading HR transformation and HRIS implementation",
     ],
-    packageNotes: "Executive packages. Equity available for technology sector CHRO mandates.",
+    packageNotes: "Compensation, benefits, working arrangements, language and work-eligibility requirements will be confirmed for any actual hiring brief.",
   },
 
   // ── Legal and Compliance ───────────────────────────────────────────────────
@@ -819,15 +802,13 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Transformation and Strategy",
     sector: "Digital Transformation",
-    locationLabel: "Riyadh",
+    locationLabel: "Copenhagen",
     employmentLabel: "Permanent · Executive Search",
     employmentTypes: ["Permanent", "Executive Search"],
     seniority: "C-Suite / Executive",
     salaryRange: "To be discussed for a confirmed brief",
-    description:
-      "CDO and Head of Digital roles for organisations accelerating digital transformation, platform modernisation and AI adoption.",
-    overview:
-      "ION Talent is sourcing Chief Digital Officers and senior digital leaders for clients in financial services, government, healthcare and retail who are investing heavily in digital transformation, customer experience and AI-enabled services across the GCC.",
+    description: "Register interest in potential Copenhagen digital-leadership searches across product strategy, platform modernisation and customer experience.",
+    overview: "This Copenhagen talent-network profile is for senior digital leaders with experience translating business priorities into digital products, platforms and operating models. It describes a typical leadership remit, not a confirmed employer or vacancy. Local-language requirements, reporting responsibilities and working arrangements would be assessed for each actual brief.",
     responsibilities: [
       "Define and own the digital transformation strategy and roadmap",
       "Lead digital product development, platform modernisation and CX initiatives",
@@ -840,9 +821,9 @@ export const opportunities: Opportunity[] = [
       "Proven track record leading enterprise-scale digital transformation",
       "Strong executive presence and board-level communication",
       "P&L accountability for digital business units preferred",
-      "GCC or emerging market experience highly valued",
+      "Experience leading digital change across international or cross-functional organisations",
     ],
-    packageNotes: "Compensation, benefits and working arrangements depend on a confirmed brief and will be discussed before an application progresses.",
+    packageNotes: "Compensation, benefits, working arrangements, language and work-eligibility requirements will be confirmed for any actual hiring brief.",
   },
   {
     id: "transformation-programme-lead",
@@ -915,15 +896,13 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Finance",
     sector: "Finance",
-    locationLabel: "Dubai",
+    locationLabel: "Dublin",
     employmentLabel: "Permanent",
     employmentTypes: ["Permanent"],
     seniority: "Senior Manager",
-    salaryRange: "AED 240,000 – 400,000 per annum",
-    description:
-      "Treasury, funding and corporate finance roles for banks, corporates and sovereign entities across the UAE.",
-    overview:
-      "ION Talent places treasury and corporate finance professionals across UAE-based banks, sovereign entities and large corporates. Demand is strongest for candidates with liquidity management, capital markets and FX risk experience.",
+    salaryRange: "To be discussed for a confirmed brief",
+    description: "Register interest in future treasury and corporate finance searches in Dublin, spanning liquidity, funding and financial risk management.",
+    overview: "This Dublin talent-network profile is intended for treasury and corporate finance professionals with experience in cash management, funding, banking relationships or financial risk. It describes a typical remit and does not represent a confirmed employer or vacancy. The scope, reporting requirements and working arrangements would be agreed for an actual hiring brief.",
     responsibilities: [
       "Manage liquidity, funding and cash management operations",
       "Execute FX hedging, interest rate and commodity risk strategies",
@@ -934,9 +913,9 @@ export const opportunities: Opportunity[] = [
       "CFA, ACA or ACT (AMCT) qualification preferred",
       "6+ years in treasury or corporate finance",
       "Bloomberg, Murex or Treasury Management System experience",
-      "GCC banking or corporate treasury experience an advantage",
+      "Experience in banking or corporate treasury within an international business",
     ],
-    packageNotes: "Competitive packages. Financial services premium applies for banking-sector roles.",
+    packageNotes: "Compensation, benefits, working arrangements, language and work-eligibility requirements will be confirmed for any actual hiring brief.",
   },
   {
     id: "devops-platform-engineer",
@@ -945,15 +924,13 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Cloud and Infrastructure",
     sector: "Cloud and Infrastructure",
-    locationLabel: "London",
+    locationLabel: "Austin",
     employmentLabel: "Permanent · Contract",
     employmentTypes: ["Permanent", "Contract"],
     seniority: "Senior Specialist",
     salaryRange: "To be discussed for a confirmed brief",
-    description:
-      "DevOps and platform engineering roles for technology companies and enterprises building cloud-native delivery capability.",
-    overview:
-      "ION Talent places experienced DevOps and Platform Engineers for clients modernising their software delivery pipeline, implementing GitOps practices and building internal developer platforms.",
+    description: "Register interest in future Austin-based DevOps and platform engineering searches involving cloud infrastructure and software delivery.",
+    overview: "This Austin talent-network profile is for engineers experienced in cloud-native platforms, delivery automation and developer tooling. Typical work can involve infrastructure as code, Kubernetes, security controls and CI/CD improvements. It is an expression of candidate interest, not a confirmed client vacancy or promise of employment.",
     responsibilities: [
       "Design and maintain CI/CD pipelines, IaC and cloud infrastructure",
       "Build and operate Kubernetes-based platform services",
@@ -966,7 +943,7 @@ export const opportunities: Opportunity[] = [
       "Experience with GitHub Actions, GitLab CI or equivalent",
       "Cloud certifications (AWS, Azure or GCP) preferred",
     ],
-    packageNotes: "Compensation, benefits and working arrangements depend on a confirmed brief and will be discussed before an application progresses.",
+    packageNotes: "Compensation, benefits, working arrangements, language and work-eligibility requirements will be confirmed for any actual hiring brief.",
   },
   {
     id: "head-of-risk-compliance",
@@ -975,15 +952,13 @@ export const opportunities: Opportunity[] = [
     status: "Talent Network",
     function: "Legal and Compliance",
     sector: "Risk and Compliance",
-    locationLabel: "Abu Dhabi",
+    locationLabel: "Edinburgh",
     employmentLabel: "Permanent",
     employmentTypes: ["Permanent"],
     seniority: "VP / Head of",
-    salaryRange: "AED 380,000 – 620,000 per annum",
-    description:
-      "Enterprise risk and compliance leadership roles for financial services, technology and regulated industry clients in the GCC.",
-    overview:
-      "ION Talent places Heads of Risk and Compliance for financial services, fintech, insurance and technology clients across the GCC. Candidates with DFSA, ADGM, SAMA or NCA regulatory framework experience are in strongest demand.",
+    salaryRange: "To be discussed for a confirmed brief",
+    description: "Register interest in future Edinburgh risk and compliance leadership searches across financial services and other regulated businesses.",
+    overview: "This Edinburgh talent-network profile is intended for risk and compliance leaders with experience in governance, regulatory engagement and financial-crime controls. It describes a typical remit rather than a confirmed client vacancy. The relevant UK regulatory frameworks, authorisations and reporting responsibilities would be assessed against an actual hiring brief.",
     responsibilities: [
       "Own the enterprise risk management framework and compliance programme",
       "Manage regulatory relationships and filings across relevant jurisdictions",
@@ -994,11 +969,10 @@ export const opportunities: Opportunity[] = [
     requirements: [
       "ICA, ACAMS or equivalent risk or compliance qualification",
       "10+ years in risk or compliance, minimum 3 in a leadership role",
-      "GCC regulatory framework knowledge (DFSA, ADGM, SAMA, NCA)",
+      "Knowledge of applicable UK financial-services risk and regulatory frameworks",
       "Financial services or fintech sector experience preferred",
     ],
-    packageNotes:
-      "Packages reflect regulatory expertise premium in the GCC financial services market.",
+    packageNotes: "Compensation, benefits, working arrangements, language and work-eligibility requirements will be confirmed for any actual hiring brief.",
   },
 
   // ── Technology ────────────────────────────────────────────────────────────
