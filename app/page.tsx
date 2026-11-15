@@ -11,6 +11,7 @@ import { HomepageReferralSection } from "@/components/homepage-referral-section"
 import { Target, Award, Users, ArrowRight, UserCheck, Radar, Globe } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { PeopleSection } from "@/components/global/people-section"
 import { MiddleEastResource } from "@/components/middle-east-resource"
 import { GLOBAL_MARKETS } from "@/lib/global-market-hubs"
 import { useRef, useEffect, useState } from "react"
@@ -95,9 +96,9 @@ export default function HomePage() {
 
       <SiteHeader />
 
-      <main className="ion-page-enter">
+      <main className={isPreview ? undefined : "ion-page-enter"}>
       <section className={`${isGlobalPreview ? "ion-global-hero " : ""}ion-home-hero relative flex items-center overflow-hidden px-6 pb-16 pt-24 sm:pb-20 sm:pt-28 lg:pb-14 lg:pt-24`}>
-        <div className="pointer-events-none absolute inset-0 z-0 bg-ion-navy" aria-hidden="true">
+        <div className="pointer-events-none absolute inset-0 z-0 bg-ion-navy" aria-hidden={isGlobalPreview ? undefined : true}>
           {isGlobalPreview ? (
             <GlobalHeroVeil />
           ) : (
@@ -221,7 +222,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      <FeaturedJobs />
+      {isGlobalPreview && <PeopleSection />}
+
+      {!isGlobalPreview && <FeaturedJobs />}
 
       <section id="services" className="ion-density-section ion-section-navy scroll-mt-[100px] px-6 py-14 md:py-[4.5rem] xl:py-14">
         <div className="container mx-auto max-w-6xl">
@@ -444,6 +447,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {isGlobalPreview && <FeaturedJobs />}
 
       {/* Saudi National Talent — one editorial image/copy pairing, the
           homepage's single dedicated entry point into the new page. Kept to

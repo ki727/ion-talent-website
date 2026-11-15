@@ -1,153 +1,38 @@
 import HomePage from "@/app/page"
-import { GlobalHeroVeil } from "@/components/global/global-hero-veil"
 import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ArrowRight, Globe2, CheckCircle2 } from "lucide-react"
+import { ArrowRight, ArrowUpRight } from "lucide-react"
 import { GLOBAL_REGIONS, getGlobalRegion } from "@/lib/global-regions"
 import { GLOBAL_MARKETS } from "@/lib/global-market-hubs"
+import { EDITORIAL_MARKETS } from "@/lib/global-editorial"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 
 type PageProps = { params: { region: string } }
-
-export function generateStaticParams() {
-  return [...GLOBAL_MARKETS, ...GLOBAL_REGIONS].map(({ slug }) => ({ region: slug }))
-}
-
+export function generateStaticParams() { return [...GLOBAL_MARKETS, ...GLOBAL_REGIONS].map(({ slug }) => ({ region: slug })) }
 export function generateMetadata({ params }: PageProps): Metadata {
   const region = getGlobalRegion(params.region)
-  if (!region) return { title: "Market not found", robots: { index: false } }
-  return {
-    title: `${region.label} | Specialist Search | ION Talent`,
-    description: region.introduction,
-    robots: { index: false, follow: false },
-    alternates: { canonical: null },
-  }
+  return { title: `${region?.label || "Our markets"} Recruitment & Executive Search | ION Talent`, description: region?.introduction, robots: { index: false, follow: false }, alternates: { canonical: null } }
 }
-
-/**
- * The global market pages intentionally reuse the live ION design language,
- * navigation and conversion paths. They are preview-only and are not
- * representations of physical offices in every market.
- */
 export default function GlobalMarketPage({ params }: PageProps) {
   const region = getGlobalRegion(params.region)
   if (!region) notFound()
   if (params.region === "middle-east") return <HomePage />
-
-  return (
-    <div className="min-h-screen bg-white text-ion-navy">
-      <SiteHeader />
-      <main className="ion-page-enter">
-        <section className="ion-market-hero relative overflow-hidden bg-ion-navy px-6 pb-20 pt-36 text-white md:pb-24 md:pt-44">
-          {params.region === "middle-east" && (
-            <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-              <video
-                className="h-full w-full object-cover"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                style={{ filter: "grayscale(0.18) saturate(0.84) brightness(0.88) contrast(1.03)" }}
-              >
-                <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/18637270-hd_1920_1080_30fps%20%281%29-Q1nwQiLnflKYyfti4CC4me1eLtnMwk.mp4" type="video/mp4" />
-              </video>
-              <div className="ion-market-hero-scrim absolute inset-0" />
-            </div>
-          )}
-          <GlobalHeroVeil />
-          <div className="ion-home-hero-atmosphere ion-home-hero-atmosphere--secondary pointer-events-none absolute inset-0" aria-hidden="true" />
-          <div className="container relative z-10 mx-auto max-w-6xl">
-            <Link href="/global#markets" className="mb-8 inline-flex items-center gap-2 text-sm font-medium text-white/75 transition-colors hover:text-white">
-              <Globe2 className="h-4 w-4" aria-hidden="true" /> ION Talent / Our Markets
-            </Link>
-            <p className="mb-5 text-xs font-semibold uppercase tracking-[0.18em] text-ion-teal-bright">{region.kicker}</p>
-            <h1 className="ion-display max-w-4xl text-balance text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-              {region.headline}
-            </h1>
-            <p className="mt-7 max-w-3xl text-lg leading-relaxed text-white/85 md:text-xl">{region.introduction}</p>
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Link href="/global#contact" className="ion-primary-button inline-flex min-h-12 items-center justify-center gap-2 rounded-xl px-7 py-3 font-semibold text-white transition-opacity hover:opacity-90">
-                Discuss a Search <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
-              <Link href="/opportunities" className="ion-secondary-button inline-flex min-h-12 items-center justify-center gap-2 rounded-xl px-7 py-3 font-semibold text-white">
-                Explore Opportunities <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
-            </div>
-          </div>
-          <div className="ion-gradient-rule pointer-events-none absolute bottom-0 left-0 right-0 opacity-80" aria-hidden="true" />
-        </section>
-
-        <section className="ion-surface-tonal border-b border-ion-border px-6 py-16 md:py-20" aria-labelledby="market-approach">
-          <div className="container mx-auto grid max-w-6xl gap-8 md:grid-cols-2 md:gap-16">
-            <div>
-              <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-ion-gray">Our perspective</p>
-              <h2 id="market-approach" className="font-display text-3xl font-bold leading-tight text-ion-navy md:text-4xl">{region.emphasis}</h2>
-            </div>
-            <p className="self-center text-lg leading-relaxed text-ion-gray">{region.approach}</p>
-          </div>
-        </section>
-
-        <section id="market-focus" className="px-6 py-16 md:py-20" aria-labelledby="specialisms-title">
-          <div className="container mx-auto max-w-6xl">
-            <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-ion-gray">Recruitment & executive search</p>
-            <h2 id="specialisms-title" className="mb-9 font-display text-3xl font-bold text-ion-navy md:text-4xl">Industry expertise</h2>
-            <div className="grid gap-5 sm:grid-cols-2">
-              {["Technology", "Finance", "Engineering", "Construction", "Cybersecurity", "Consulting"].map((priority) => (
-                <article key={priority} className="ion-density-card ion-card-top-4 flex items-start gap-4 rounded-[14px] border border-ion-border bg-white p-6 shadow-sm">
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-ion-teal" aria-hidden="true" />
-                  <h3 className="text-lg font-semibold leading-snug text-ion-navy">{priority}</h3>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="ion-surface-tonal border-t border-ion-border px-6 py-16 md:py-20">
-          <div className="container mx-auto max-w-6xl">
-            <h2 className="font-display text-3xl font-bold text-ion-navy">Local understanding. International reach.</h2>
-            <p className="mt-5 max-w-3xl leading-relaxed text-ion-gray">{region.marketNote}</p>
-
-            {"countryLinks" in region && region.countryLinks.length > 0 && (
-              <div className="mt-10">
-                <h3 className="mb-4 text-lg font-semibold">Explore this region</h3>
-                <div className="flex flex-wrap gap-3">
-                  {region.countryLinks.map((country) => (
-                    <Link key={country.slug} href={`/global/${country.slug}`} className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-ion-border bg-white px-5 py-3 text-sm font-semibold text-ion-navy transition-colors hover:border-ion-teal">
-                      {country.label} <ArrowRight className="h-4 w-4 text-ion-teal" aria-hidden="true" />
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            <h3 className="mb-4 mt-12 text-lg font-semibold">Our markets</h3>
-            <nav aria-label="Core markets" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-              {GLOBAL_MARKETS.map((market) => (
-                <Link key={market.slug} href={`/global/${market.slug}`} aria-current={params.region === market.slug ? "page" : undefined} className="group flex min-h-16 items-center justify-between gap-3 rounded-xl border border-ion-border bg-white px-5 py-4 text-sm font-semibold text-ion-navy transition-colors hover:border-ion-teal">
-                  {market.label} <ArrowRight className="h-4 w-4 shrink-0 text-ion-teal transition-transform group-hover:translate-x-1" aria-hidden="true" />
-                </Link>
-              ))}
-            </nav>
-
-          </div>
-        </section>
-
-        <section className="ion-section-navy px-6 py-16 text-white md:py-20">
-          <div className="container mx-auto flex max-w-6xl flex-col items-start justify-between gap-6 md:flex-row md:items-center">
-            <div>
-              <h2 className="font-display text-3xl font-bold">Tell us what you are hiring for</h2>
-              <p className="mt-3 max-w-2xl text-lg text-white/75">Tell us what you need. Every enquiry starts with understanding the role, market and search requirements.</p>
-            </div>
-            <Link href="/global#contact" className="ion-primary-button inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-xl px-7 py-3 font-semibold text-white">
-              Hire Talent <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
-          </div>
-        </section>
-      </main>
-      <SiteFooter />
-    </div>
-  )
+  const editorial = EDITORIAL_MARKETS[params.region]
+  // Supporting Gulf pages retain a concise brief-led introduction without invented local evidence.
+  if (!editorial) return <div><SiteHeader /><main className="bg-[#f5f6f7] px-6 pb-20 pt-36"><div className="mx-auto max-w-6xl"><Link href="/global/middle-east" className="text-sm text-ion-teal-dark">Middle East / {region.label}</Link><h1 className="my-6 font-display text-5xl font-bold text-ion-navy">Recruitment in {region.label}</h1><p className="max-w-2xl text-lg text-ion-gray">Discuss your hiring requirements, from an individual appointment to a growing team. We’ll start with your brief, the location and the capabilities you need.</p><Link href="/global#contact" className="ion-primary-button mt-8 inline-flex rounded-xl px-6 py-4">Discuss a Search</Link></div></main><SiteFooter /></div>
+  return <div className="min-h-screen bg-white text-ion-navy"><SiteHeader /><main>
+    <section className={`ion-market-editorial ion-market-editorial--${params.region}`}>
+      <div className="ion-market-intro">
+        <div className="ion-market-copy"><Link href="/global#markets" className="mb-9 text-xs font-medium uppercase tracking-widest opacity-70">Our markets / {region.label}</Link><p className="ion-editorial-number mb-5">ION TALENT · {region.label.toUpperCase()}</p><h1 className="whitespace-pre-line font-display text-4xl font-bold leading-[1.06] tracking-tight sm:text-5xl lg:text-[3.6rem]">{editorial.title}</h1><p className="ion-market-lede mt-7 max-w-xl text-base leading-relaxed lg:text-lg">{editorial.intro}</p><div className="mt-8 flex flex-wrap gap-5"><Link href="/global#contact" className="ion-primary-button inline-flex min-h-12 items-center gap-3 rounded-xl px-6 text-sm font-semibold">Discuss a Search <ArrowRight className="h-4 w-4" /></Link><Link href="/opportunities" className="inline-flex min-h-12 items-center gap-2 text-sm font-semibold underline underline-offset-4">Explore Opportunities <ArrowUpRight className="h-4 w-4" /></Link></div></div>
+        <figure className="ion-market-photo"><div role="img" aria-label={`AI-generated illustrative cityscape inspired by ${editorial.city}`} className={`ion-city-image ion-city-image--${params.region}`} /><figcaption>{editorial.city} · AI-generated illustration</figcaption></figure>
+      </div>
+      <div className="ion-gradient-rule" />
+    </section>
+    <section className="px-6 py-16 md:py-24"><div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-[.8fr_1.2fr] md:gap-20"><div><p className="ion-editorial-number mb-5">01 / THE HIRING CONVERSATION</p><h2 className="font-display text-3xl font-bold leading-tight md:text-4xl">{editorial.question}</h2></div><div><p className="max-w-2xl text-lg leading-relaxed text-ion-gray">{editorial.perspective}</p><div className="mt-8 border-t border-ion-border">{editorial.considerations.map((item,i)=><div key={item} className="flex gap-5 border-b border-ion-border py-5"><span className="ion-editorial-number pt-1">0{i+1}</span><p className="font-medium leading-relaxed">{item}</p></div>)}</div></div></div></section>
+    <section className="bg-[#f3f5f7] px-6 py-16 md:py-20"><div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-2 md:gap-20"><div><p className="ion-editorial-number mb-5">02 / SECTORS & APPOINTMENTS</p><h2 className="font-display text-3xl font-bold leading-tight md:text-4xl">Broad sector knowledge.<br />A focused search.</h2><p className="mt-5 max-w-md leading-relaxed text-ion-gray">We recruit across sectors and levels. The assignment shapes the approach—not a fixed list of job titles.</p><p className="mt-7 max-w-md text-sm leading-relaxed text-ion-gray">Contingent recruitment · Retained search · RPO / Embedded</p></div><div className="ion-sector-list">{["Technology & Cybersecurity", "Finance", "Engineering & Construction", "Consulting & Leadership"].map(x=><Link key={x} href="/global#contact" className="text-lg font-semibold">{x}<ArrowUpRight className="h-5 w-5 text-ion-teal" aria-hidden="true" /></Link>)}</div></div></section>
+    <section className="px-6 py-16 md:py-24"><div className="mx-auto max-w-6xl"><p className="ion-editorial-number mb-5">03 / YOUR NEXT APPOINTMENT</p><div className="grid gap-8 md:grid-cols-2 md:gap-20"><h2 className="font-display text-3xl font-bold md:text-4xl">{editorial.focus}</h2><div><p className="text-lg leading-relaxed text-ion-gray">{editorial.detail}</p><Link href="/global#contact" className="ion-primary-button mt-7 inline-flex min-h-12 items-center gap-3 rounded-xl px-7 text-sm font-semibold">Tell us about the role <ArrowRight className="h-4 w-4" /></Link><p className="mt-4 text-xs text-ion-gray">A conversation to understand the brief. No obligation.</p></div></div></div></section>
+    <section className="border-t border-ion-border bg-[#f7f8fa] px-6 py-9"><nav aria-label="Explore other markets" className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-8 gap-y-4"><span className="text-xs uppercase tracking-widest text-ion-gray">Explore our markets</span>{GLOBAL_MARKETS.map(m=><Link key={m.slug} aria-current={m.slug===params.region ? "page" : undefined} href={`/global/${m.slug}`} className={`text-sm font-semibold hover:text-ion-teal ${m.slug===params.region ? "text-ion-teal-dark underline underline-offset-4" : ""}`}>{m.label}</Link>)}</nav></section>
+  </main><SiteFooter /></div>
 }

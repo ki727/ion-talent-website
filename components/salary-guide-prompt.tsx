@@ -15,7 +15,7 @@ export function SalaryGuidePrompt() {
   const suppressedRef = useRef(false)
 
   useEffect(() => {
-    if (pathname.startsWith("/global") && pathname !== "/global/middle-east") return
+    if (pathname.startsWith("/global")) return
     if (window.sessionStorage.getItem(STORAGE_KEY) === "true") return
 
     const checkEligibility = () => {
@@ -51,7 +51,7 @@ export function SalaryGuidePrompt() {
   }
 
   const placeholder = pathname === "/global/middle-east"
-  if ((pathname.startsWith("/global") && !placeholder) || !isVisible) return null
+  if (pathname.startsWith("/global") || !isVisible) return null
 
   return (
     <aside
