@@ -32,3 +32,9 @@ On explicit request, `/global/about` now shows the two separate fictional portra
 - `public/photography/team/team-concept.webp` — revised AI-generated team concept using the uploaded founder photo as a likeness reference; original `/workspace/generated_images/exec-c95c35b1-28a6-450a-b139-e41f237fe53c.png`. The earlier generated founder solo portrait was rejected by the user and is not used on the website.
 
 Assets are resized/compressed WebP exports. Originals are retained. This is preview imagery, not a company team photograph or evidence of additional employees.
+
+## Classic individual portrait revision
+
+At the user's request, the group/team image is no longer rendered. `/global/about#team-concepts` now presents only compact individual portrait studies: 260px-wide photographs with a classic 4:5 crop and understated captions. The two fictional characters retain one concise, visible AI-concept disclosure. The rejected generated founder portrait remains unused, and the homepage remains company-led. Portrait assets are being revised separately to a more natural style; original generations remain retained.
+
+The classic headshot revision regenerates the two fictional individuals against plain neutral walls with understated light/retouching. New originals are `/workspace/generated_images/exec-d122a875-6f5e-4415-b66c-916cdc67c93f.png` (male concept) and `/workspace/generated_images/exec-9a98dbab-b366-415e-96d4-4cdeb30a42cd.png` (Anna concept). WebP filenames are retained for the individual assets; the old group asset is no longer rendered. The rejected founder solo portrait is still not used.
