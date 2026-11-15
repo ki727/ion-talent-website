@@ -1860,7 +1860,7 @@
   inset: -30%;
   background: radial-gradient(ellipse at 65% 38%, rgba(15, 163, 161, .6), transparent 45%),
     radial-gradient(ellipse at 85% 70%, rgba(145, 119, 247, .5), transparent 42%);
-  animation: ion-global-colour-flow 13s ease-in-out infinite alternate;
+  animation: ion-global-colour-flow 8s ease-in-out infinite alternate;
 }
 @keyframes ion-global-colour-flow {
   from { transform: translate3d(-8%, -5%, 0) rotate(-9deg) scale(1); }
@@ -1869,3 +1869,5 @@
 @media (prefers-reduced-motion: reduce) {
   .ion-global-colour-field::after { animation: none; }
 }
+
+.ion-global-flow { mix-blend-mode: screen; }

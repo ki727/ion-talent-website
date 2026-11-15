@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic"
 import { useEffect, useState } from "react"
 
-// Only fetch the WebGL shader after desktop / motion / data-saver checks.
+// Load the source shader when motion and connection preferences permit it.
 const DarkVeil = dynamic(() => import("@/components/global/dark-veil"), {
   ssr: false,
   loading: () => null,
@@ -11,41 +11,30 @@ const DarkVeil = dynamic(() => import("@/components/global/dark-veil"), {
 
 type NetworkConnection = { saveData?: boolean; effectiveType?: string }
 
-/**
- * Global V1 preview hero: ION navy static fallback with a restrained
- * Dark Veil animation on capable desktop devices only.
- *
- * This is deliberately not used by the live homepage or regional pages.
- * It adds no background video download to the global preview.
- */
+/** Shared source-style flowing hero; CSS colour flow remains available without WebGL. */
 export function GlobalHeroVeil() {
   const [animate, setAnimate] = useState(false)
 
   useEffect(() => {
-    const desktop = window.matchMedia("(min-width: 1024px)")
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)")
     const device = navigator as Navigator & { connection?: NetworkConnection; deviceMemory?: number }
     const connection = device.connection
 
     const update = () => {
       const isSlowConnection = connection?.effectiveType === "slow-2g" || connection?.effectiveType === "2g"
-      const weakDevice = (device.hardwareConcurrency > 0 && device.hardwareConcurrency <= 4) ||
-        (device.deviceMemory !== undefined && device.deviceMemory <= 4)
-      setAnimate(desktop.matches && !reducedMotion.matches && !connection?.saveData && !isSlowConnection && !weakDevice && "IntersectionObserver" in window && "ResizeObserver" in window)
+      setAnimate(!reducedMotion.matches && !connection?.saveData && !isSlowConnection && "IntersectionObserver" in window && "ResizeObserver" in window)
     }
 
     update()
-    desktop.addEventListener("change", update)
     reducedMotion.addEventListener("change", update)
     return () => {
-      desktop.removeEventListener("change", update)
       reducedMotion.removeEventListener("change", update)
     }
   }, [])
 
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-      {/* Permanent static background: visible before JS, on mobile, and on low-power devices. */}
+      {/* Brand colour flow also remains available before the shader loads. */}
       <div
         className="ion-global-colour-field absolute inset-0"
         style={{
@@ -55,17 +44,17 @@ export function GlobalHeroVeil() {
       />
       {animate && (
         <DarkVeil
-          className="h-full w-full"
-          color="#22B5B0"
-          speed={0.24}
-          flow={0.6}
-          glow={0.35}
-          sheen={0.12}
+          className="ion-global-flow h-full w-full"
+          color="#38C8C1"
+          speed={0.5}
+          flow={1}
+          glow={0.4}
+          sheen={0.25}
           grain={0.01}
           brightness={1.05}
-          quality={0.35}
+          quality={0.5}
           dpr={1}
-          opacity={0.9}
+          opacity={1}
           mouseInteraction={false}
           intro={false}
         />
@@ -75,7 +64,7 @@ export function GlobalHeroVeil() {
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(90deg, rgba(6,14,27,.68) 0%, rgba(8,18,34,.48) 39%, rgba(8,20,35,.27) 100%), radial-gradient(ellipse at 86% 88%, rgba(99,80,164,.19), transparent 44%)",
+            "linear-gradient(90deg, rgba(6,14,27,.5) 0%, rgba(8,18,34,.22) 39%, rgba(8,20,35,.04) 100%), radial-gradient(ellipse at 86% 88%, rgba(99,80,164,.19), transparent 44%)",
         }}
       />
     </div>
