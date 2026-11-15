@@ -40,3 +40,7 @@ At the user's request, the group/team image is no longer rendered. `/global/abou
 The classic headshot revision regenerates the two fictional individuals against plain neutral walls with understated light/retouching. New originals are `/workspace/generated_images/exec-d122a875-6f5e-4415-b66c-916cdc67c93f.png` (male concept) and `/workspace/generated_images/exec-9a98dbab-b366-415e-96d4-4cdeb30a42cd.png` (Anna concept). WebP filenames are retained for the individual assets; the old group asset is no longer rendered. The rejected founder solo portrait is still not used.
 
 The subsequent sizing request reduces individual portraits from 260px-wide features to 88px square thumbnails in understated horizontal profile rows. Gallery styling and large headings are removed, with slightly muted saturation and one concise fictional-AI disclosure. The group image and rejected founder image remain unused.
+
+## Final direction: supporting workspace imagery, no fictional staff
+
+Following the user's agreement to remove invented staff profiles, the About page now uses the existing `/photography/about-office.webp` as clearly illustrative workspace imagery. Fictional names, portraits, biographies and team concepts are no longer rendered; the old generated assets remain on disk only as design history. The gallery component was removed. The genuine founder profile stays on About, and the homepage remains company-led. No new stock licence claim or assertion that this image shows ION premises is made.
