@@ -12,7 +12,6 @@ import { Target, Award, Users, ArrowRight, UserCheck, Radar, Globe } from "lucid
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { EmployerBookingLink } from "@/components/global/employer-booking-link"
-import { PeopleSection } from "@/components/global/people-section"
 import { MiddleEastResource } from "@/components/middle-east-resource"
 import { CompactMarkets } from "@/components/global/compact-markets"
 import { MobileServices } from "@/components/global/mobile-services"
@@ -226,8 +225,6 @@ export default function HomePage() {
       </section>
 
       {isGlobalPreview && <CompactMarkets />}
-
-      {isGlobalPreview && <PeopleSection />}
 
       {!isGlobalPreview && <FeaturedJobs preview={isPreview} />}
 
