@@ -1,0 +1,10 @@
+{
+  "pageErrors": [],
+  "noJsProofMetrics": [
+    "10+",
+    "500+",
+    "4"
+  ],
+  "narrow320": true,
+  "reason": "Rechecked global captures and hydration after rendering real proof metrics in server markup."
+}

@@ -32,7 +32,7 @@ export function FloatingContact() {
           <div className="space-y-4">
             <div>
               <h4 className="font-bold text-[#1a1a1a] mb-1">Need immediate assistance?</h4>
-              <p className="text-sm text-[#6a6a6a]">Let's discuss your hiring needs</p>
+              <p className="text-sm text-[#6a6a6a]">Let&apos;s discuss your hiring needs</p>
             </div>
 
             <div className="space-y-3">

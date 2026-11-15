@@ -92,7 +92,7 @@ export default function HomePage() {
       <SiteHeader />
 
       <main className="ion-page-enter">
-      <section className="ion-home-hero relative flex items-center overflow-hidden px-6 pb-16 pt-24 sm:pb-20 sm:pt-28 lg:pb-14 lg:pt-24">
+      <section className={`${isGlobalPreview ? "ion-global-hero " : ""}ion-home-hero relative flex items-center overflow-hidden px-6 pb-16 pt-24 sm:pb-20 sm:pt-28 lg:pb-14 lg:pt-24`}>
         <div className="pointer-events-none absolute inset-0 z-0 bg-ion-navy" aria-hidden="true">
           {isGlobalPreview ? (
             <GlobalHeroVeil />
@@ -255,9 +255,9 @@ export default function HomePage() {
             </div>
             <div className="[&_p]:leading-tight md:border-l md:border-ion-navy/10 md:px-6">
               <StatCounter
-                end={3}
+                end={isGlobalPreview ? 4 : 3}
                 label="Core Markets"
-                sublabel="UAE · Saudi Arabia · UK"
+                sublabel={isGlobalPreview ? "UK · Europe · USA · Middle East" : "UAE · Saudi Arabia · UK"}
                 startDelay={240}
                 showAccent={false}
               />
@@ -431,7 +431,7 @@ export default function HomePage() {
                     className="ion-home-salary-cover w-20 shrink-0 rounded-lg shadow-md ring-1 ring-black/5 sm:w-24 md:w-[140px] xl:w-32"
                   />
                   <div className="min-w-0">
-                    <p className="ion-card-eyebrow mb-1.5 md:mb-2">2026 Salary &amp; Hiring Guide</p>
+                    <p className="ion-card-eyebrow mb-1.5 md:mb-2">{isGlobalPreview ? "Middle East insight · 2026" : "2026 Salary & Hiring Guide"}</p>
                     <h2 className="ion-density-section-heading-small font-display text-lg font-bold text-ion-navy mb-1 text-balance sm:text-2xl md:mb-2 md:text-3xl">
                       UAE &amp; Saudi Arabia Salary &amp; Hiring Guide 2026
                     </h2>

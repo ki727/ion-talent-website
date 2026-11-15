@@ -26,7 +26,8 @@ export function StatCounter({
   showAccent = true,
 }: StatCounterProps) {
   const ref = useRef<HTMLDivElement>(null)
-  const [count, setCount] = useState(0)
+  // SSR and no-JS readers must see the actual metric, never a placeholder zero.
+  const [count, setCount] = useState(end)
   const [hasAnimated, setHasAnimated] = useState(false)
 
   useEffect(() => {
@@ -69,6 +70,7 @@ export function StatCounter({
           window.clearTimeout(fallbackTimer)
           const begin = () => {
             try {
+              setCount(0)
               const start = performance.now()
               const step = (now: number) => {
                 const progress = Math.min((now - start) / duration, 1)

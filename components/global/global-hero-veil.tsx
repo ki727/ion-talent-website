@@ -24,11 +24,14 @@ export function GlobalHeroVeil() {
   useEffect(() => {
     const desktop = window.matchMedia("(min-width: 1024px)")
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)")
-    const connection = (navigator as Navigator & { connection?: NetworkConnection }).connection
+    const device = navigator as Navigator & { connection?: NetworkConnection; deviceMemory?: number }
+    const connection = device.connection
 
     const update = () => {
       const isSlowConnection = connection?.effectiveType === "slow-2g" || connection?.effectiveType === "2g"
-      setAnimate(desktop.matches && !reducedMotion.matches && !connection?.saveData && !isSlowConnection)
+      const weakDevice = (device.hardwareConcurrency > 0 && device.hardwareConcurrency <= 4) ||
+        (device.deviceMemory !== undefined && device.deviceMemory <= 4)
+      setAnimate(desktop.matches && !reducedMotion.matches && !connection?.saveData && !isSlowConnection && !weakDevice && "IntersectionObserver" in window && "ResizeObserver" in window)
     }
 
     update()

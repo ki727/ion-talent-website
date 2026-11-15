@@ -1,0 +1,12 @@
+{
+  "report": [
+    "Hiring enquiry empty validation: no API request",
+    "Hiring enquiry mocked server failure: error shown, input retained",
+    "Hiring enquiry mocked success: success screen",
+    "Salary guide empty validation: no API request",
+    "Salary guide mocked success: original PDF download available"
+  ],
+  "requestsIntercepted": 3,
+  "emailsSent": 0,
+  "limitation": "Browser API responses mocked; SMTP integration not exercised."
+}

@@ -822,17 +822,36 @@
   animation: pulse-slow 4s ease-in-out infinite;
 }
 
-/* Fade-up on scroll entry (used by <FadeIn />) */
+/* Content stays readable in SSR, without JS/IntersectionObserver, and in
+   full-page captures before scrolling. Only the entrance is enhanced. */
 .fade-up {
-  opacity: 0;
-  transform: translateY(var(--motion-distance));
-  transition: opacity var(--motion-duration) var(--motion-ease), transform var(--motion-duration) var(--motion-ease);
-  will-change: opacity, transform;
+  opacity: 1;
+  transform: none;
 }
 
 .fade-up-visible {
-  opacity: 1;
-  transform: translateY(0);
+  animation: ion-section-enter var(--motion-duration) var(--motion-ease) backwards;
+}
+
+@keyframes ion-section-enter {
+  from { opacity: 0.65; transform: translateY(var(--motion-distance)); }
+  to { opacity: 1; transform: none; }
+}
+
+/* A critical hero surface must stay legible independently of utility output. */
+.ion-market-hero {
+  isolation: isolate;
+  color: #fff;
+  background: #0f172a;
+  background-image: linear-gradient(116deg, #081326 4%, #101d32 55%, #122b38 100%);
+}
+
+.ion-market-hero-scrim {
+  background: linear-gradient(90deg, rgba(8, 19, 38, .88), rgba(15, 23, 42, .65));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up-visible { animation: none; }
 }
 
 /* Brief content-wrapper transition on route change (see components/page-transition.tsx).
@@ -1824,5 +1843,12 @@
   .ion-saudi-page .ion-density-section-roomy .mt-10,
   .ion-saudi-page .ion-density-section-roomy .mt-8 {
     margin-top: 1rem !important;
+  }
+}
+
+/* Keep the long global headline inside its copy column on narrow phones. */
+@media (max-width: 359px) {
+  .ion-global-hero .ion-home-hero-title {
+    font-size: clamp(2.75rem, 13.5vw, 3.25rem);
   }
 }

@@ -20,6 +20,7 @@ export function generateMetadata({ params }: PageProps): Metadata {
     title: `${region.label} | Specialist Search | ION Talent`,
     description: region.introduction,
     robots: { index: false, follow: false },
+    alternates: { canonical: null },
   }
 }
 
@@ -36,7 +37,7 @@ export default function GlobalMarketPage({ params }: PageProps) {
     <div className="min-h-screen bg-white text-ion-navy">
       <SiteHeader />
       <main className="ion-page-enter">
-        <section className="relative overflow-hidden bg-ion-navy px-6 pb-20 pt-36 text-white md:pb-24 md:pt-44">
+        <section className="ion-market-hero relative overflow-hidden bg-ion-navy px-6 pb-20 pt-36 text-white md:pb-24 md:pt-44">
           {params.region === "middle-east" && (
             <div className="pointer-events-none absolute inset-0" aria-hidden="true">
               <video
@@ -50,7 +51,7 @@ export default function GlobalMarketPage({ params }: PageProps) {
               >
                 <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/18637270-hd_1920_1080_30fps%20%281%29-Q1nwQiLnflKYyfti4CC4me1eLtnMwk.mp4" type="video/mp4" />
               </video>
-              <div className="absolute inset-0 bg-ion-navy/65" />
+              <div className="ion-market-hero-scrim absolute inset-0" />
             </div>
           )}
           <div className="ion-home-hero-atmosphere pointer-events-none absolute inset-0" aria-hidden="true" />

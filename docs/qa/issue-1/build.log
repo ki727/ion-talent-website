@@ -1,0 +1,98 @@
+
+> ion-talent-website@0.1.0 build
+> next build
+
+  ▲ Next.js 14.2.35
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+
+./app/about/page.tsx
+86:19  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+169:17  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./app/page.tsx
+240:15  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+424:19  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+504:19  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./app/saudi-national-talent/page.tsx
+86:13  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+192:17  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./components/global-preview-shell.tsx
+10:11  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./components/salary-guide-client.tsx
+120:19  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./components/salary-guide-prompt.tsx
+71:9  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./components/site-footer.tsx
+20:13  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./components/site-header.tsx
+58:13  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+   Collecting page data ...
+ ⚠ Using edge runtime on a page currently disables static generation for that page
+   Generating static pages (0/33) ...
+   Generating static pages (8/33) 
+   Generating static pages (16/33) 
+   Generating static pages (24/33) 
+ ✓ Generating static pages (33/33)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                Size     First Load JS
+┌ ○ /                                      190 B           150 kB
+├ ○ /_not-found                            871 B          88.6 kB
+├ ○ /about                                 1.09 kB         111 kB
+├ ƒ /api/applications                      0 B                0 B
+├ ƒ /api/contact                           0 B                0 B
+├ ƒ /api/cv-upload                         0 B                0 B
+├ ƒ /api/hiring-enquiry                    0 B                0 B
+├ ƒ /api/referral                          0 B                0 B
+├ ƒ /api/referrals                         0 B                0 B
+├ ƒ /api/register-interest                 0 B                0 B
+├ ƒ /api/salary-guide                      0 B                0 B
+├ ƒ /api/submit-cv                         0 B                0 B
+├ ○ /global                                188 B           150 kB
+├ ● /global/[region]                       200 B           110 kB
+├   ├ /global/uk
+├   ├ /global/europe
+├   ├ /global/us
+├   └ [+5 more paths]
+├ ○ /icon.svg                              0 B                0 B
+├ ○ /jobs                                  142 B          87.9 kB
+├ ƒ /opengraph-image                       0 B                0 B
+├ ○ /opportunities                         7.58 kB         130 kB
+├ ƒ /opportunities/[slug]                  5.72 kB         115 kB
+├ ƒ /opportunities/[slug]/opengraph-image  0 B                0 B
+├ ○ /privacy                               200 B           110 kB
+├ ○ /refer                                 2.07 kB         125 kB
+├ ƒ /refer/opengraph-image                 0 B                0 B
+├ ○ /referral-terms                        200 B           110 kB
+├ ○ /robots.txt                            0 B                0 B
+├ ○ /salary-guide                          6.54 kB         116 kB
+├ ƒ /salary-guide/opengraph-image          0 B                0 B
+├ ○ /saudi-national-talent                 1.11 kB         111 kB
+└ ○ /sitemap.xml                           0 B                0 B
++ First Load JS shared by all              87.7 kB
+  ├ chunks/69e647db-5ca9d91b6f5a95fd.js    53.6 kB
+  ├ chunks/957-aa8a9c0912e47080.js         31.7 kB
+  └ other shared chunks (total)            2.39 kB
+
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses getStaticProps)
+ƒ  (Dynamic)  server-rendered on demand
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

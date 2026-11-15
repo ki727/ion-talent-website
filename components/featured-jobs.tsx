@@ -38,21 +38,10 @@ const TECH_PHRASES = [
  * management) — genuine cloud/infra roles already qualify via "cloud",
  * "architect" or "data".
  */
-const TECH_WORD_PREFIXES = [
-  "cybersecurity",
-  "cyber",
-  "cloud",
-  "architect",
-  "data",
-  "analytics",
-  "ai",
-  "sap",
-  "oracle",
-  "digital",
-  "devops",
-]
-
-const TECH_WORD_REGEX = new RegExp(`\\b(${TECH_WORD_PREFIXES.join("|")})`, "gi")
+// A regex literal avoids differently escaped RegExp constructor strings in
+// server and browser production bundles, which changed featured-role order
+// during hydration. Keep the leading word boundary for partial-word safety.
+const TECH_WORD_REGEX = /\b(cybersecurity|cyber|cloud|architect|data|analytics|ai|sap|oracle|digital|devops)/gi
 
 /** Counts distinct technology-specialism signals in a role's function, sector, title and description. */
 function techScore(role: Opportunity): number {

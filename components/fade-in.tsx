@@ -23,7 +23,7 @@ export function FadeIn({ children, className = "", delay = 0, as: Tag = "div" }:
     const prefersReduced =
       typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
 
-    if (prefersReduced) {
+    if (prefersReduced || !("IntersectionObserver" in window)) {
       setVisible(true)
       return
     }
@@ -37,7 +37,7 @@ export function FadeIn({ children, className = "", delay = 0, as: Tag = "div" }:
           }
         })
       },
-      { threshold: 0.12, rootMargin: "0px 0px -60px 0px" },
+      { threshold: 0, rootMargin: "0px 0px 60px 0px" },
     )
 
     observer.observe(node)
@@ -48,7 +48,7 @@ export function FadeIn({ children, className = "", delay = 0, as: Tag = "div" }:
     <Tag
       ref={ref}
       className={`fade-up ${visible ? "fade-up-visible" : ""} ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
+      style={{ animationDelay: `${delay}ms` }}
     >
       {children}
     </Tag>

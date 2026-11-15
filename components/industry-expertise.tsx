@@ -264,7 +264,7 @@ export function IndustryExpertise() {
         {/* Bottom CTA */}
         <div className="text-center mt-20">
           <div className="bg-gradient-to-r from-[#1a1a1a] to-[#2a2a2a] rounded-3xl p-12 max-w-4xl mx-auto">
-            <h3 className="text-3xl font-bold text-white mb-4">Don't see your industry?</h3>
+            <h3 className="text-3xl font-bold text-white mb-4">Don&apos;t see your industry?</h3>
             <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
               We work across multiple sectors including manufacturing, real estate, logistics, and emerging industries.
               Our adaptable approach ensures success in any vertical.

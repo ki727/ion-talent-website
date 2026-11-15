@@ -13,7 +13,7 @@ const nextConfig = {
             headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }],
           },
         ]
-      : []
+      : [{ source: "/global/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }] }]
   },
   async redirects() {
     // Open the global website directly when someone clicks "Visit" on this

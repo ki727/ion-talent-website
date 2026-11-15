@@ -61,7 +61,7 @@ export default function NewsletterSignup() {
                 <CheckCircle className="h-16 w-16 text-[#2ecc71] mx-auto mb-4" />
                 <h3 className="text-xl font-bold text-[#2c3e50] mb-2">Welcome to the Network!</h3>
                 <p className="text-[#6c757d]">
-                  You'll receive your first executive intelligence report within 24 hours.
+                  You&apos;ll receive your first executive intelligence report within 24 hours.
                 </p>
               </div>
             )}
