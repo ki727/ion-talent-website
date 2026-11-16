@@ -16,11 +16,10 @@ type RegionalPhotograph = {
 
 export const REGIONAL_PHOTOGRAPHY: Record<string, RegionalPhotograph> = {
   uk: {
-    src: "/photography/global/london-bridge-commuters.jpg",
-    alt: "Commuters and a red bus on London Bridge, with The Shard at dusk",
-    caption: "London Bridge · London",
-    position: "50% center",
-    nativeSize: { width: 612, height: 408 },
+    src: "/photography/global/london-millennium-bridge.webp",
+    alt: "People walking across Millennium Bridge in London, with The Shard and riverside buildings behind",
+    caption: "Millennium Bridge · London · Johan Mouchet",
+    position: "40% center",
     supporting: {
       src: "/photography/global/london-bank-skyline.jpeg",
       alt: "An elevated view of Bank junction, red buses and the City of London skyline",
