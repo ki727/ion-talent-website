@@ -1,0 +1,73 @@
+{
+  "checkedAt": "16 November 2026 at 8:39 pm",
+  "results": [
+    {
+      "region": "uk",
+      "device": "desktop",
+      "width": 612,
+      "height": 408,
+      "nativeWidth": 612,
+      "nativeHeight": 408,
+      "noUpscaling": true,
+      "fullComposition": true,
+      "noOverflow": true,
+      "noindex": true,
+      "headingColor": "rgb(15, 23, 42)"
+    },
+    {
+      "region": "us",
+      "device": "desktop",
+      "width": 612,
+      "height": 408,
+      "nativeWidth": 612,
+      "nativeHeight": 408,
+      "noUpscaling": true,
+      "fullComposition": true,
+      "noOverflow": true,
+      "noindex": true,
+      "headingColor": "rgb(255, 255, 255)"
+    },
+    {
+      "region": "uk",
+      "device": "mobile",
+      "width": 342,
+      "height": 228,
+      "nativeWidth": 612,
+      "nativeHeight": 408,
+      "noUpscaling": true,
+      "fullComposition": true,
+      "noOverflow": true,
+      "noindex": true,
+      "headingColor": "rgb(15, 23, 42)"
+    },
+    {
+      "region": "us",
+      "device": "mobile",
+      "width": 342,
+      "height": 228,
+      "nativeWidth": 612,
+      "nativeHeight": 408,
+      "noUpscaling": true,
+      "fullComposition": true,
+      "noOverflow": true,
+      "noindex": true,
+      "headingColor": "rgb(255, 255, 255)"
+    },
+    {
+      "region": "europe",
+      "photographyUnchanged": true
+    },
+    {
+      "region": "asia-pacific",
+      "photographyUnchanged": true
+    }
+  ],
+  "pageErrors": [],
+  "finalStyleRecheck": {
+    "checkedAt": "16 November 2026 at 8:41 pm",
+    "nativePhotoSizingPassed": true,
+    "usMobileSpacingPassed": true,
+    "usEyebrowContrastUpdated": true,
+    "pageErrors": []
+  }
+}

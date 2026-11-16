@@ -28,11 +28,11 @@ export default function GlobalMarketPage({ params }: PageProps) {
   const photograph = REGIONAL_PHOTOGRAPHY[params.region]
   const supportingPhotograph = photograph.supporting
   return <div className="min-h-screen bg-white text-ion-navy"><SiteHeader /><main>
-    <section className={`ion-market-editorial ion-market-editorial--${params.region}`}>
+    <section className={`ion-market-editorial ion-market-editorial--${params.region} ${photograph.nativeSize ? "ion-market-editorial--native-photo" : ""}`}>
       <div className="ion-market-intro">
         <div className="ion-market-copy"><Link href="/global#markets" className="mb-9 text-xs font-medium uppercase tracking-widest opacity-70">Our markets / {region.label}</Link><p className="ion-editorial-number mb-5">ION TALENT · {region.label.toUpperCase()}</p><h1 className="whitespace-pre-line font-display text-4xl font-bold leading-[1.06] tracking-tight sm:text-5xl lg:text-[3.6rem]">{editorial.title}</h1><p className="ion-market-lede mt-7 max-w-xl text-base leading-relaxed lg:text-lg">{editorial.intro}</p><div className="mt-8 flex flex-wrap gap-5"><Link href={getEnquiryHref(`/global/${params.region}`)} className="ion-primary-button inline-flex min-h-12 items-center gap-3 rounded-xl px-6 text-sm font-semibold">Discuss a Search <ArrowRight className="h-4 w-4" /></Link><Link href="/global/opportunities" className="inline-flex min-h-12 items-center gap-2 text-sm font-semibold underline underline-offset-4">Explore Opportunities <ArrowUpRight className="h-4 w-4" /></Link></div></div>
-        <figure className="ion-market-photo">
-          <Image src={photograph.src} alt={photograph.alt} fill priority sizes={params.region === "us" ? "100vw" : "(min-width: 768px) 50vw, 100vw"} style={{ objectPosition: photograph.position }} />
+        <figure className={`ion-market-photo ${photograph.nativeSize ? "ion-market-photo--native" : ""}`} style={photograph.nativeSize ? { maxWidth: photograph.nativeSize.width, aspectRatio: `${photograph.nativeSize.width} / ${photograph.nativeSize.height}` } : undefined}>
+          <Image src={photograph.src} alt={photograph.alt} fill priority sizes={photograph.nativeSize ? `(min-width: 768px) ${photograph.nativeSize.width}px, calc(100vw - 48px)` : params.region === "us" ? "100vw" : "(min-width: 768px) 50vw, 100vw"} style={{ objectPosition: photograph.position }} />
           <figcaption>{photograph.caption}</figcaption>
         </figure>
       </div>

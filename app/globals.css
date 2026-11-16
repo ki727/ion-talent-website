@@ -1902,6 +1902,11 @@
 .ion-market-editorial--us .ion-market-copy { position:relative; z-index:1; color:white; }
 .ion-market-editorial--us .ion-market-photo figcaption { z-index:2; left:auto; right:24px; }
 .ion-market-editorial--us .ion-market-lede { color:#e1e8ef; }
+/* Keep small supplied photos in their own frame, without enlarging or cropping them. */
+.ion-market-editorial .ion-market-photo--native { position:relative; inset:auto; align-self:center; width:calc(100% - 48px); min-height:0; margin:24px auto; border-radius:16px; }
+.ion-market-editorial--us.ion-market-editorial--native-photo { background:#091525; }
+.ion-market-editorial--us.ion-market-editorial--native-photo .ion-market-photo::after { display:none; }
+.ion-market-editorial--us.ion-market-editorial--native-photo .ion-editorial-number { color:#2dd4bf; }
 .ion-market-lede { color:#526174; }
 .ion-editorial-number { font-size:12px; letter-spacing:.12em; color:#008c8c; font-weight:700; }
 .ion-sector-list a { display:flex; justify-content:space-between; padding:22px 0; border-bottom:1px solid #d9dfe5; transition:color .2s; }
@@ -1911,6 +1916,7 @@
 .ion-portrait-window img { position:absolute; width:300%; height:100%; max-width:none; object-fit:cover; }
 @media(max-width:767px) { .ion-market-intro { grid-template-columns:1fr; min-height:0; } .ion-market-copy,.ion-market-editorial--europe .ion-market-copy { padding:45px 24px; } .ion-market-photo { min-height:330px; } .ion-market-editorial--europe .ion-market-photo { order:0; } .ion-market-editorial--us .ion-market-intro { min-height:650px; } .ion-market-editorial--us .ion-market-photo { min-height:0; } .ion-market-editorial--us .ion-market-copy { padding-top:70px; padding-bottom:90px; } .ion-silk-ribbons { width:190%; right:-65%; } .ion-silk-copy-shade { background:linear-gradient(90deg,rgba(7,16,30,.88),rgba(7,16,30,.52) 65%,rgba(7,16,30,.28)); } }
 .ion-global-hero { min-height:min(820px,90svh); }
+@media(max-width:767px) { .ion-market-editorial--us.ion-market-editorial--native-photo .ion-market-copy { padding-top:45px; padding-bottom:24px; } }
 @media(max-width:767px) { .ion-global-hero { min-height:720px; } }
 .ion-silk-field[data-paused="true"] .ion-silk-ribbon { animation-play-state:paused; }
 @media(prefers-reduced-motion:reduce) { .ion-motion-toggle { display:none; } }

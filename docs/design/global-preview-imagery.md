@@ -4,6 +4,8 @@
 
 The UK page now uses the user's two supplied London photos: London Bridge commuters as the hero and an elevated Bank/City skyline beside the closing enquiry. See [the UK source record](third-party/uk-user-photography.md). This supersedes the earlier illustrative architecture entry for the UK below.
 
+The USA hero now uses the user's Wall Street photograph. Both USA ZIPs contained that same file; the separate inline Manhattan image remains unavailable as an asset. UK and USA hero photos are framed at their native aspect ratio and capped at 612px wide after the user reported London softness. See [the USA source record](third-party/us-user-photography.md).
+
 The preview now uses real photographs in all four regional image panels. The generated city sheet and unused fictional portraits/team images have been removed from `public`; they remain recoverable from Git history. About uses the existing illustrative workspace image and the confirmed founder identity. No invented staff profiles are rendered.
 
 Three newly sourced photographs come from Libre Photography's expressly CC0 collection. The US panel shows New York. The other panels use accurately captioned illustrative architecture/workplace photography, with no London, Paris or Singapore location claim. See [the per-file source record](third-party/photography-sources.md) for provenance and limitations.

@@ -4,6 +4,7 @@ type RegionalPhotograph = {
   alt: string
   caption: string
   position: string
+  nativeSize?: { width: number; height: number }
   supporting?: {
     src: string
     alt: string
@@ -19,6 +20,7 @@ export const REGIONAL_PHOTOGRAPHY: Record<string, RegionalPhotograph> = {
     alt: "Commuters and a red bus on London Bridge, with The Shard at dusk",
     caption: "London Bridge · London",
     position: "50% center",
+    nativeSize: { width: 612, height: 408 },
     supporting: {
       src: "/photography/global/london-bank-skyline.jpeg",
       alt: "An elevated view of Bank junction, red buses and the City of London skyline",
@@ -34,10 +36,11 @@ export const REGIONAL_PHOTOGRAPHY: Record<string, RegionalPhotograph> = {
     position: "center 65%",
   },
   us: {
-    src: "/photography/global/new-york-waterfront.webp",
-    alt: "New York waterfront at dusk with illuminated buildings reflected in the river",
-    caption: "New York · Libre Photography",
-    position: "center 56%",
+    src: "/photography/global/new-york-wall-street.jpg",
+    alt: "Wall Street in New York, with American flags, pedestrians and the stock exchange",
+    caption: "Wall Street · New York",
+    position: "center",
+    nativeSize: { width: 612, height: 408 },
   },
   "asia-pacific": {
     src: "/photography/global/urban-landscape.webp",

@@ -2,7 +2,7 @@
 
 Updated 16 November 2026. Photos illustrate recruitment and workplaces; they do not establish ION premises, employees, clients or a local office.
 
-The UK page subsequently switched to the user's two supplied London photographs. See [uk-user-photography.md](uk-user-photography.md) for the current UK files and provenance. The commercial-architecture entry below records the earlier illustrative panel, which is no longer rendered in the UK hero.
+The UK and USA pages subsequently switched to user-supplied photographs. See [uk-user-photography.md](uk-user-photography.md) and [us-user-photography.md](us-user-photography.md) for the current files and provenance. The commercial-architecture and New York waterfront entries below record earlier panels that are no longer rendered in those heroes.
 
 | Local file | Preview use | Source | Dimensions |
 | --- | --- | --- | --- |
