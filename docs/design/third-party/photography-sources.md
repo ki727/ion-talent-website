@@ -2,6 +2,8 @@
 
 Updated 16 November 2026. Photos illustrate recruitment and workplaces; they do not establish ION premises, employees, clients or a local office.
 
+The UK page subsequently switched to the user's two supplied London photographs. See [uk-user-photography.md](uk-user-photography.md) for the current UK files and provenance. The commercial-architecture entry below records the earlier illustrative panel, which is no longer rendered in the UK hero.
+
 | Local file | Preview use | Source | Dimensions |
 | --- | --- | --- | --- |
 | `public/photography/global/commercial-architecture.webp` | UK; captioned illustrative commercial architecture | Libre Photography `public/1.jpg` | 1400 × 1050 |

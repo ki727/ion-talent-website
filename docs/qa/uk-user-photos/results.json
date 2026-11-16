@@ -1,0 +1,38 @@
+{
+  "checkedAt": "16 November 2026 at 8:29 pm",
+  "results": [
+    {
+      "device": "desktop",
+      "width": 1440,
+      "hero": "London Bridge",
+      "supporting": "Bank, City of London",
+      "nativeFilesLoaded": true,
+      "noOverflow": true,
+      "noindex": true,
+      "marketEnquiryLink": true
+    },
+    {
+      "device": "mobile",
+      "width": 390,
+      "hero": "London Bridge",
+      "supporting": "Bank, City of London",
+      "nativeFilesLoaded": true,
+      "noOverflow": true,
+      "noindex": true,
+      "marketEnquiryLink": true
+    },
+    {
+      "region": "europe",
+      "photographyUnchanged": true
+    },
+    {
+      "region": "us",
+      "photographyUnchanged": true
+    },
+    {
+      "region": "asia-pacific",
+      "photographyUnchanged": true
+    }
+  ],
+  "pageErrors": []
+}

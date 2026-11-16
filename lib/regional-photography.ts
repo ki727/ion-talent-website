@@ -4,14 +4,28 @@ type RegionalPhotograph = {
   alt: string
   caption: string
   position: string
+  supporting?: {
+    src: string
+    alt: string
+    caption: string
+    width: number
+    height: number
+  }
 }
 
 export const REGIONAL_PHOTOGRAPHY: Record<string, RegionalPhotograph> = {
   uk: {
-    src: "/photography/global/commercial-architecture.webp",
-    alt: "Stone and glass building façades, used as illustrative commercial architecture",
-    caption: "Commercial architecture · Illustrative photography",
-    position: "43% center",
+    src: "/photography/global/london-bridge-commuters.jpg",
+    alt: "Commuters and a red bus on London Bridge, with The Shard at dusk",
+    caption: "London Bridge · London",
+    position: "50% center",
+    supporting: {
+      src: "/photography/global/london-bank-skyline.jpeg",
+      alt: "An elevated view of Bank junction, red buses and the City of London skyline",
+      caption: "Bank · City of London",
+      width: 399,
+      height: 501,
+    },
   },
   europe: {
     src: "/photography/about-office.webp",
