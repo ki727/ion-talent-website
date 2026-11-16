@@ -1,12 +1,14 @@
 import HomePage from "@/app/page"
 import { getEnquiryHref } from "@/lib/enquiry-context"
 import type { Metadata } from "next"
+import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ArrowRight, ArrowUpRight } from "lucide-react"
 import { GLOBAL_REGIONS, getGlobalRegion } from "@/lib/global-regions"
 import { GLOBAL_MARKETS } from "@/lib/global-market-hubs"
 import { EDITORIAL_MARKETS } from "@/lib/global-editorial"
+import { REGIONAL_PHOTOGRAPHY } from "@/lib/regional-photography"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 
@@ -23,11 +25,15 @@ export default function GlobalMarketPage({ params }: PageProps) {
   const editorial = EDITORIAL_MARKETS[params.region]
   // Supporting Gulf pages retain a concise brief-led introduction without invented local evidence.
   if (!editorial) return <div><SiteHeader /><main className="bg-[#f5f6f7] px-6 pb-20 pt-36"><div className="mx-auto max-w-6xl"><Link href="/global/middle-east" className="text-sm text-ion-teal-dark">Middle East / {region.label}</Link><h1 className="my-6 font-display text-5xl font-bold text-ion-navy">Recruitment in {region.label}</h1><p className="max-w-2xl text-lg text-ion-gray">Discuss your hiring requirements, from an individual appointment to a growing team. We’ll start with your brief, the location and the capabilities you need.</p><Link href={getEnquiryHref(`/global/${params.region}`)} className="ion-primary-button mt-8 inline-flex rounded-xl px-6 py-4">Discuss a Search</Link></div></main><SiteFooter /></div>
+  const photograph = REGIONAL_PHOTOGRAPHY[params.region]
   return <div className="min-h-screen bg-white text-ion-navy"><SiteHeader /><main>
     <section className={`ion-market-editorial ion-market-editorial--${params.region}`}>
       <div className="ion-market-intro">
         <div className="ion-market-copy"><Link href="/global#markets" className="mb-9 text-xs font-medium uppercase tracking-widest opacity-70">Our markets / {region.label}</Link><p className="ion-editorial-number mb-5">ION TALENT · {region.label.toUpperCase()}</p><h1 className="whitespace-pre-line font-display text-4xl font-bold leading-[1.06] tracking-tight sm:text-5xl lg:text-[3.6rem]">{editorial.title}</h1><p className="ion-market-lede mt-7 max-w-xl text-base leading-relaxed lg:text-lg">{editorial.intro}</p><div className="mt-8 flex flex-wrap gap-5"><Link href={getEnquiryHref(`/global/${params.region}`)} className="ion-primary-button inline-flex min-h-12 items-center gap-3 rounded-xl px-6 text-sm font-semibold">Discuss a Search <ArrowRight className="h-4 w-4" /></Link><Link href="/global/opportunities" className="inline-flex min-h-12 items-center gap-2 text-sm font-semibold underline underline-offset-4">Explore Opportunities <ArrowUpRight className="h-4 w-4" /></Link></div></div>
-        <figure className="ion-market-photo"><div role="img" aria-label={`AI-generated illustrative cityscape inspired by ${editorial.city}`} className={`ion-city-image ion-city-image--${params.region}`} /><figcaption>{editorial.city} · AI-generated illustration</figcaption></figure>
+        <figure className="ion-market-photo">
+          <Image src={photograph.src} alt={photograph.alt} fill priority sizes={params.region === "us" ? "100vw" : "(min-width: 768px) 50vw, 100vw"} style={{ objectPosition: photograph.position }} />
+          <figcaption>{photograph.caption}</figcaption>
+        </figure>
       </div>
       <div className="ion-gradient-rule" />
     </section>

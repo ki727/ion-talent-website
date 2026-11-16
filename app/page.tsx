@@ -13,6 +13,8 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { EmployerBookingLink } from "@/components/global/employer-booking-link"
 import { MiddleEastResource } from "@/components/middle-east-resource"
+import { MarketLogoMarquee } from "@/components/global/market-logo-marquee"
+import { MARKET_BRANDS } from "@/lib/market-brands"
 import { CompactMarkets } from "@/components/global/compact-markets"
 import { MobileServices } from "@/components/global/mobile-services"
 import { MobileHireCta } from "@/components/global/mobile-hire-cta"
@@ -179,7 +181,8 @@ export default function HomePage() {
         className="ion-home-proof ion-surface-tonal scroll-mt-[100px] border-t border-transparent px-6 py-8 md:py-7 xl:py-[1.375rem]"
       >
         <div className="container mx-auto max-w-6xl">
-          <h2 className="sr-only">Our Track Record</h2>
+          <h2 className="sr-only">{isPreview ? "Market landscape and recruitment experience" : "Our Track Record"}</h2>
+          {isPreview ? <MarketLogoMarquee logos={MARKET_BRANDS} /> : <>
           <p className="mb-2.5 text-center text-xs font-medium uppercase tracking-wider text-ion-gray">
             Experience Across Leading Organisations
           </p>
@@ -200,6 +203,8 @@ export default function HomePage() {
               />
             ))}
           </div>
+
+          </>}
 
           <div className="mx-auto grid max-w-5xl grid-cols-1 gap-5 border-t border-ion-navy/10 pt-4 md:grid-cols-3 md:gap-0 xl:pt-3.5">
             <div className="md:px-6">

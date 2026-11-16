@@ -1,0 +1,46 @@
+{
+  "package": "simple-icons",
+  "version": "16.38.0",
+  "packageLicense": "CC0-1.0",
+  "note": "Package licence is not a trademark permission grant. Marks used as editorial market examples, not client or partner claims. See included disclaimer and individual source/brand guidelines.",
+  "icons": [
+    {
+      "title": "Siemens",
+      "slug": "siemens",
+      "hex": "009999",
+      "source": "https://siemens.com"
+    },
+    {
+      "title": "ABB",
+      "slug": "abb",
+      "hex": "FF000F",
+      "source": "https://global.abb"
+    },
+    {
+      "title": "Accenture",
+      "slug": "accenture",
+      "hex": "A100FF",
+      "source": "https://www.accenture.com"
+    },
+    {
+      "title": "Airbus",
+      "slug": "airbus",
+      "hex": "00205B",
+      "source": "https://brand.airbus.com/en/asset-library/airbus-logo",
+      "guidelines": "https://brand.airbus.com/en/asset-library/airbus-logo"
+    },
+    {
+      "title": "HSBC",
+      "slug": "hsbc",
+      "hex": "DB0011",
+      "source": "https://www.hsbc.com",
+      "guidelines": "https://www.hsbc.com/terms-and-conditions"
+    },
+    {
+      "title": "Unilever",
+      "slug": "unilever",
+      "hex": "1F36C7",
+      "source": "https://www.unilever.com/our-company/the-logo"
+    }
+  ]
+}

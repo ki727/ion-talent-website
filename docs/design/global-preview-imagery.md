@@ -1,6 +1,18 @@
 # Global preview imagery and motion
 
-This iteration uses AI-generated illustrative assets. Stock downloads from images.unsplash.com returned network-policy 403 errors, including an escalated request. No stock assets were downloaded or represented as licensed photography.
+## Current direction — 16 November 2026
+
+The preview now uses real photographs in all four regional image panels. The generated city sheet and unused fictional portraits/team images have been removed from `public`; they remain recoverable from Git history. About uses the existing illustrative workspace image and the confirmed founder identity. No invented staff profiles are rendered.
+
+Three newly sourced photographs come from Libre Photography's expressly CC0 collection. The US panel shows New York. The other panels use accurately captioned illustrative architecture/workplace photography, with no London, Paris or Singapore location claim. See [the per-file source record](third-party/photography-sources.md) for provenance and limitations.
+
+The preview's company strip now continuously scrolls 13 organisation marks, with pause/play, hover/focus pause and a static reduced-motion layout. It is labelled “Companies shaping our markets”; it does not present the selected organisations as ION clients. See [the logo source record](third-party/market-logo-sources.json).
+
+The following sections record earlier design iterations, which have been superseded where they describe generated photos or fictional profiles.
+
+## Initial imagery iteration (superseded)
+
+The initial iteration used AI-generated illustrative assets. Stock downloads from images.unsplash.com returned network-policy 403 errors. Those initial assets were not represented as licensed photography.
 
 - `public/photography/global/cities.webp`: AI-generated London, Paris, New York and Singapore city studies in a four-panel sheet. The public preview visibly labels them AI-generated illustrations. These do not document ION premises or offices. Original generation: `/workspace/generated_images/exec-399e704e-7667-4a17-a501-73c3f0973d88.png`.
 - `public/photography/global/portrait-study.webp`: three fictional AI-generated professionals. Explicitly labelled as illustrative placeholders, without names, job titles, biographies or placement claims. Replace with actual team photography before public launch. Original generation: `/workspace/generated_images/exec-8ca28023-c166-4b6d-a038-e218150beb2c.png`.

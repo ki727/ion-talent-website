@@ -1910,12 +1910,6 @@
 .ion-portrait-window { aspect-ratio:3/4; overflow:hidden; border-radius:8px; position:relative; }
 .ion-portrait-window img { position:absolute; width:300%; height:100%; max-width:none; object-fit:cover; }
 @media(max-width:767px) { .ion-market-intro { grid-template-columns:1fr; min-height:0; } .ion-market-copy,.ion-market-editorial--europe .ion-market-copy { padding:45px 24px; } .ion-market-photo { min-height:330px; } .ion-market-editorial--europe .ion-market-photo { order:0; } .ion-market-editorial--us .ion-market-intro { min-height:650px; } .ion-market-editorial--us .ion-market-photo { min-height:0; } .ion-market-editorial--us .ion-market-copy { padding-top:70px; padding-bottom:90px; } .ion-silk-ribbons { width:190%; right:-65%; } .ion-silk-copy-shade { background:linear-gradient(90deg,rgba(7,16,30,.88),rgba(7,16,30,.52) 65%,rgba(7,16,30,.28)); } }
-.ion-city-image { position:absolute; inset:0; background-image:url('/photography/global/cities.webp'); background-repeat:no-repeat; background-size:auto 200%; }
-.ion-city-image--uk { background-position:0 0; }
-.ion-city-image--europe { background-position:100% 0; }
-.ion-city-image--us { background-position:0 100%; background-size:200% auto; }
-.ion-city-image--asia-pacific { background-position:100% 100%; }
-@media(max-width:767px) { .ion-city-image--us { background-size:auto 200%; } }
 .ion-global-hero { min-height:min(820px,90svh); }
 @media(max-width:767px) { .ion-global-hero { min-height:720px; } }
 .ion-silk-field[data-paused="true"] .ion-silk-ribbon { animation-play-state:paused; }
