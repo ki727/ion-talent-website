@@ -1,3 +1,4 @@
+import { ManageCookiesButton } from "@/components/cookie-consent"
 import type { Metadata } from "next"
 import Link from "next/link"
 import { SiteHeader } from "@/components/site-header"
@@ -67,7 +68,7 @@ export default function PrivacyPage() {
             <h1 className="ion-density-page-title mt-3 text-3xl font-bold text-gray-900 md:text-4xl text-balance">
               Candidate Privacy Notice
             </h1>
-            <p className="mt-3 text-sm text-gray-500">Last updated: August 2026</p>
+            <p className="mt-3 text-sm text-gray-500">Last updated: November 2026</p>
           </div>
         </section>
 
@@ -201,6 +202,22 @@ export default function PrivacyPage() {
                 </a>
                 .
               </p>
+            </Section>
+
+            <Section id="cookies" title="Cookies and analytics">
+              <p>
+                With your consent, we use Google Analytics 4 to understand how visitors use our website, for
+                example which pages are viewed and whether forms are completed. Google Analytics cookies
+                (such as <code>_ga</code>) are only set, and the Google tag is only loaded, after you select &ldquo;Accept&rdquo; in our cookie
+                notice. If you decline, or have not yet chosen, no analytics cookies are stored. Analytics data
+                is not used for advertising, and we do not send your name, email or form content to Google
+                Analytics.
+              </p>
+              <p className="mt-3">
+                We also use Vercel Web Analytics, which measures page views without cookies or personal
+                identifiers. You can change your choice at any time.
+              </p>
+              <ManageCookiesButton />
             </Section>
 
             <Section id="contact" title="Contact us">

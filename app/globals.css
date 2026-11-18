@@ -1826,3 +1826,9 @@
     margin-top: 1rem !important;
   }
 }
+
+/* While the cookie notice is open on small screens, hold back the salary-guide
+   prompt so the two bottom sheets never overlap. */
+@media (max-width: 639px) {
+  html[data-consent-open] .ion-salary-guide-prompt { display: none; }
+}

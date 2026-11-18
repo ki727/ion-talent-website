@@ -4,6 +4,8 @@ import { Inter, Raleway } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { LINKEDIN_COMPANY_URL, SITE_URL } from "@/lib/site-config"
 import { SalaryGuidePrompt } from "@/components/salary-guide-prompt"
+import { GoogleAnalytics } from "@/components/google-analytics"
+import { CookieConsent } from "@/components/cookie-consent"
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
@@ -81,7 +83,9 @@ export default function RootLayout({
         />
         {children}
         <SalaryGuidePrompt />
+        <CookieConsent />
         <Analytics />
+        <GoogleAnalytics />
       </body>
     </html>
   )

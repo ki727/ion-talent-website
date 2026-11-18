@@ -42,6 +42,9 @@ type SafeAnalyticsPayload = Record<string, string | number | boolean>
 export function trackEvent(event: AnalyticsEvent, payload?: SafeAnalyticsPayload): void {
   try {
     track(event, payload)
+    // Mirror the same non-identifying event to GA4. gtag honours the visitor's consent state.
+    const gtag = (window as Window & { gtag?: (...args: unknown[]) => void }).gtag
+    gtag?.("event", event, payload ?? {})
   } catch {
     // Intentionally swallowed — analytics is best-effort only.
   }
