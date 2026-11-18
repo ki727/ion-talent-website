@@ -1,0 +1,688 @@
+{
+  "pages": [
+    {
+      "path": "/global",
+      "device": "desktop",
+      "status": 200,
+      "noindexHeader": "noindex, nofollow, noarchive",
+      "bodyFont": "__Inter_d8ebd1, __Inter_Fallback_d8ebd1, system-ui, -apple-system, sans-serif",
+      "headingFont": "__Raleway_4a9df1, __Raleway_Fallback_4a9df1, __Inter_d8ebd1, __Inter_Fallback_d8ebd1, system-ui, sans-serif",
+      "fonts": [
+        "__Inter_d8ebd1",
+        "__Raleway_4a9df1",
+        "__Raleway_4a9df1"
+      ],
+      "heroBackground": "rgba(0, 0, 0, 0)",
+      "overflow": false,
+      "hiddenReveals": 0,
+      "videoCount": 0,
+      "canvas": [
+        {
+          "width": 1440,
+          "height": 1000
+        }
+      ],
+      "robots": "noindex, nofollow",
+      "cls": 0.00002591537663966049,
+      "failedImages": [],
+      "mediaRequests": []
+    },
+    {
+      "path": "/global/uk",
+      "device": "desktop",
+      "status": 200,
+      "noindexHeader": "noindex, nofollow, noarchive",
+      "bodyFont": "__Inter_d8ebd1, __Inter_Fallback_d8ebd1, system-ui, -apple-system, sans-serif",
+      "headingFont": "__Raleway_4a9df1, __Raleway_Fallback_4a9df1, __Inter_d8ebd1, __Inter_Fallback_d8ebd1, system-ui, sans-serif",
+      "fonts": [
+        "__Inter_d8ebd1",
+        "__Raleway_4a9df1"
+      ],
+      "heroBackground": "rgb(15, 23, 42)",
+      "overflow": false,
+      "hiddenReveals": 0,
+      "videoCount": 0,
+      "canvas": [],
+      "robots": "noindex, nofollow",
+      "cls": 0,
+      "failedImages": [],
+      "mediaRequests": []
+    },
+    {
+      "path": "/global/europe",
+      "device": "desktop",
+      "status": 200,
+      "noindexHeader": "noindex, nofollow, noarchive",
+      "bodyFont": "__Inter_d8ebd1, __Inter_Fallback_d8ebd1, system-ui, -apple-system, sans-serif",
+      "headingFont": "__Raleway_4a9df1, __Raleway_Fallback_4a9df1, __Inter_d8ebd1, __Inter_Fallback_d8ebd1, system-ui, sans-serif",
+      "fonts": [
+        "__Inter_d8ebd1",
+        "__Raleway_4a9df1"
+      ],
+      "heroBackground": "rgb(15, 23, 42)",
+      "overflow": false,
+      "hiddenReveals": 0,
+      "videoCount": 0,
+      "canvas": [],
+      "robots": "noindex, nofollow",
+      "cls": 0,
+      "failedImages": [],
+      "mediaRequests": []
+    },
+    {
+      "path": "/global/us",
+      "device": "desktop",
+      "status": 200,
+      "noindexHeader": "noindex, nofollow, noarchive",
+      "bodyFont": "__Inter_d8ebd1, __Inter_Fallback_d8ebd1, system-ui, -apple-system, sans-serif",
+      "headingFont": "__Raleway_4a9df1, __Raleway_Fallback_4a9df1, __Inter_d8ebd1, __Inter_Fallback_d8ebd1, system-ui, sans-serif",
+      "fonts": [
+        "__Inter_d8ebd1",
+        "__Raleway_4a9df1"
+      ],
+      "heroBackground": "rgb(15, 23, 42)",
+      "overflow": false,
+      "hiddenReveals": 0,
+      "videoCount": 0,
+      "canvas": [],
+      "robots": "noindex, nofollow",
+      "cls": 0,
+      "failedImages": [],
+      "mediaRequests": []
+    },
+    {
+      "path": "/global/middle-east",
+      "device": "desktop",
+      "status": 200,
+      "noindexHeader": "noindex, nofollow, noarchive",
+      "bodyFont": "__Inter_d8ebd1, __Inter_Fallback_d8ebd1, system-ui, -apple-system, sans-serif",
+      "headingFont": "__Raleway_4a9df1, __Raleway_Fallback_4a9df1, __Inter_d8ebd1, __Inter_Fallback_d8ebd1, system-ui, sans-serif",
+      "fonts": [
+        "__Inter_d8ebd1",
+        "__Raleway_4a9df1"
+      ],
+      "heroBackground": "rgb(15, 23, 42)",
+      "overflow": false,
+      "hiddenReveals": 0,
+      "videoCount": 1,
+      "canvas": [],
+      "robots": "noindex, nofollow",
+      "cls": 0,
+      "failedImages": [],
+      "mediaRequests": [
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/18637270-hd_1920_1080_30fps%20%281%29-Q1nwQiLnflKYyfti4CC4me1eLtnMwk.mp4"
+      ]
+    },
+    {
+      "path": "/global/asia-pacific",
+      "device": "desktop",
+      "status": 200,
+      "noindexHeader": "noindex, nofollow, noarchive",
+      "bodyFont": "__Inter_d8ebd1, __Inter_Fallback_d8ebd1, system-ui, -apple-system, sans-serif",
+      "headingFont": "__Raleway_4a9df1, __Raleway_Fallback_4a9df1, __Inter_d8ebd1, __Inter_Fallback_d8ebd1, system-ui, sans-serif",
+      "fonts": [
+        "__Inter_d8ebd1",
+        "__Raleway_4a9df1"
+      ],
+      "heroBackground": "rgb(15, 23, 42)",
+      "overflow": false,
+      "hiddenReveals": 0,
+      "videoCount": 0,
+      "canvas": [],
+      "robots": "noindex, nofollow",
+      "cls": 0,
+      "failedImages": [],
+      "mediaRequests": []
+    },
+    {
+      "path": "/global",
+      "device": "mobile",
+      "status": 200,
+      "noindexHeader": "noindex, nofollow, noarchive",
+      "bodyFont": "__Inter_d8ebd1, __Inter_Fallback_d8ebd1, system-ui, -apple-system, sans-serif",
+      "headingFont": "__Raleway_4a9df1, __Raleway_Fallback_4a9df1, __Inter_d8ebd1, __Inter_Fallback_d8ebd1, system-ui, sans-serif",
+      "fonts": [
+        "__Inter_d8ebd1",
+        "__Raleway_4a9df1",
+        "__Raleway_4a9df1"
+      ],
+      "heroBackground": "rgba(0, 0, 0, 0)",
+      "overflow": false,
+      "hiddenReveals": 0,
+      "videoCount": 0,
+      "canvas": [],
+      "robots": "noindex, nofollow",
+      "cls": 0.0001292290255995586,
+      "failedImages": [],
+      "mediaRequests": []
+    },
+    {
+      "path": "/global/uk",
+      "device": "mobile",
+      "status": 200,
+      "noindexHeader": "noindex, nofollow, noarchive",
+      "bodyFont": "__Inter_d8ebd1, __Inter_Fallback_d8ebd1, system-ui, -apple-system, sans-serif",
+      "headingFont": "__Raleway_4a9df1, __Raleway_Fallback_4a9df1, __Inter_d8ebd1, __Inter_Fallback_d8ebd1, system-ui, sans-serif",
+      "fonts": [
+        "__Inter_d8ebd1",
+        "__Raleway_4a9df1"
+      ],
+      "heroBackground": "rgb(15, 23, 42)",
+      "overflow": false,
+      "hiddenReveals": 0,
+      "videoCount": 0,
+      "canvas": [],
+      "robots": "noindex, nofollow",
+      "cls": 0,
+      "failedImages": [],
+      "mediaRequests": []
+    },
+    {
+      "path": "/global/europe",
+      "device": "mobile",
+      "status": 200,
+      "noindexHeader": "noindex, nofollow, noarchive",
+      "bodyFont": "__Inter_d8ebd1, __Inter_Fallback_d8ebd1, system-ui, -apple-system, sans-serif",
+      "headingFont": "__Raleway_4a9df1, __Raleway_Fallback_4a9df1, __Inter_d8ebd1, __Inter_Fallback_d8ebd1, system-ui, sans-serif",
+      "fonts": [
+        "__Inter_d8ebd1",
+        "__Raleway_4a9df1"
+      ],
+      "heroBackground": "rgb(15, 23, 42)",
+      "overflow": false,
+      "hiddenReveals": 0,
+      "videoCount": 0,
+      "canvas": [],
+      "robots": "noindex, nofollow",
+      "cls": 0,
+      "failedImages": [],
+      "mediaRequests": []
+    },
+    {
+      "path": "/global/us",
+      "device": "mobile",
+      "status": 200,
+      "noindexHeader": "noindex, nofollow, noarchive",
+      "bodyFont": "__Inter_d8ebd1, __Inter_Fallback_d8ebd1, system-ui, -apple-system, sans-serif",
+      "headingFont": "__Raleway_4a9df1, __Raleway_Fallback_4a9df1, __Inter_d8ebd1, __Inter_Fallback_d8ebd1, system-ui, sans-serif",
+      "fonts": [
+        "__Inter_d8ebd1",
+        "__Raleway_4a9df1"
+      ],
+      "heroBackground": "rgb(15, 23, 42)",
+      "overflow": false,
+      "hiddenReveals": 0,
+      "videoCount": 0,
+      "canvas": [],
+      "robots": "noindex, nofollow",
+      "cls": 0,
+      "failedImages": [],
+      "mediaRequests": []
+    },
+    {
+      "path": "/global/middle-east",
+      "device": "mobile",
+      "status": 200,
+      "noindexHeader": "noindex, nofollow, noarchive",
+      "bodyFont": "__Inter_d8ebd1, __Inter_Fallback_d8ebd1, system-ui, -apple-system, sans-serif",
+      "headingFont": "__Raleway_4a9df1, __Raleway_Fallback_4a9df1, __Inter_d8ebd1, __Inter_Fallback_d8ebd1, system-ui, sans-serif",
+      "fonts": [
+        "__Inter_d8ebd1",
+        "__Raleway_4a9df1"
+      ],
+      "heroBackground": "rgb(15, 23, 42)",
+      "overflow": false,
+      "hiddenReveals": 0,
+      "videoCount": 1,
+      "canvas": [],
+      "robots": "noindex, nofollow",
+      "cls": 0,
+      "failedImages": [],
+      "mediaRequests": [
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/18637270-hd_1920_1080_30fps%20%281%29-Q1nwQiLnflKYyfti4CC4me1eLtnMwk.mp4"
+      ]
+    },
+    {
+      "path": "/global/asia-pacific",
+      "device": "mobile",
+      "status": 200,
+      "noindexHeader": "noindex, nofollow, noarchive",
+      "bodyFont": "__Inter_d8ebd1, __Inter_Fallback_d8ebd1, system-ui, -apple-system, sans-serif",
+      "headingFont": "__Raleway_4a9df1, __Raleway_Fallback_4a9df1, __Inter_d8ebd1, __Inter_Fallback_d8ebd1, system-ui, sans-serif",
+      "fonts": [
+        "__Inter_d8ebd1",
+        "__Raleway_4a9df1"
+      ],
+      "heroBackground": "rgb(15, 23, 42)",
+      "overflow": false,
+      "hiddenReveals": 0,
+      "videoCount": 0,
+      "canvas": [],
+      "robots": "noindex, nofollow",
+      "cls": 0,
+      "failedImages": [],
+      "mediaRequests": []
+    }
+  ],
+  "fallbacks": [
+    {
+      "mode": "no-js",
+      "hidden": 0,
+      "canvas": 0,
+      "videos": 0,
+      "headline": "Specialist search.\nInternational reach."
+    },
+    {
+      "mode": "reduced-motion",
+      "hidden": 0,
+      "canvas": 0,
+      "videos": 0,
+      "headline": "Specialist search.\nInternational reach."
+    },
+    {
+      "mode": "save-data",
+      "hidden": 0,
+      "canvas": 0,
+      "videos": 0,
+      "headline": "Specialist search.\nInternational reach."
+    },
+    {
+      "mode": "weak-device",
+      "hidden": 0,
+      "canvas": 0,
+      "videos": 0,
+      "headline": "Specialist search.\nInternational reach."
+    },
+    {
+      "mode": "no-webgl",
+      "hidden": 0,
+      "canvas": 1,
+      "videos": 0,
+      "headline": "Specialist search.\nInternational reach."
+    },
+    {
+      "mode": "no-observer",
+      "hidden": 0,
+      "canvas": 0,
+      "videos": 0,
+      "headline": "Specialist search.\nInternational reach."
+    }
+  ],
+  "links": [
+    {
+      "href": "/global/ae",
+      "status": 200,
+      "anchor": true
+    },
+    {
+      "href": "/global/sa",
+      "status": 200,
+      "anchor": true
+    },
+    {
+      "href": "/global/gcc",
+      "status": 200,
+      "anchor": true
+    },
+    {
+      "href": "/global/north-america",
+      "status": 200,
+      "anchor": true
+    },
+    {
+      "href": "/global/rest-of-world",
+      "status": 200,
+      "anchor": true
+    },
+    {
+      "href": "/salary-guide",
+      "status": 200,
+      "anchor": true
+    },
+    {
+      "href": "/resources/ion-talent-uae-saudi-salary-hiring-guide-2026.pdf",
+      "status": 200,
+      "anchor": true
+    },
+    {
+      "href": "/icon.svg",
+      "status": 200,
+      "anchor": true
+    },
+    {
+      "href": "/global",
+      "status": 200,
+      "anchor": true
+    },
+    {
+      "href": "/global#services",
+      "status": 200,
+      "anchor": true
+    },
+    {
+      "href": "/global#industries",
+      "status": 200,
+      "anchor": true
+    },
+    {
+      "href": "/about",
+      "status": 200,
+      "anchor": true
+    },
+    {
+      "href": "/global#contact",
+      "status": 200,
+      "anchor": true
+    },
+    {
+      "href": "/global/uk",
+      "status": 200,
+      "anchor": true
+    },
+    {
+      "href": "/global/europe",
+      "status": 200,
+      "anchor": true
+    },
+    {
+      "href": "/global/us",
+      "status": 200,
+      "anchor": true
+    },
+    {
+      "href": "/global/middle-east",
+      "status": 200,
+      "anchor": true
+    },
+    {
+      "href": "/global/asia-pacific",
+      "status": 200,
+      "anchor": true
+    },
+    {
+      "href": "/opportunities",
+      "status": 200,
+      "anchor": true
+    },
+    {
+      "href": "/opportunities/cybersecurity-architect",
+      "status": 200,
+      "anchor": true
+    },
+    {
+      "href": "/opportunities/cloud-solutions-architect",
+      "status": 200,
+      "anchor": true
+    },
+    {
+      "href": "/opportunities/data-engineering-analytics-ai",
+      "status": 200,
+      "anchor": true
+    },
+    {
+      "href": "/opportunities/oracle-erp-lead",
+      "status": 200,
+      "anchor": true
+    },
+    {
+      "href": "/opportunities/technology-programme-director",
+      "status": 200,
+      "anchor": true
+    },
+    {
+      "href": "/opportunities/chief-digital-officer",
+      "status": 200,
+      "anchor": true
+    },
+    {
+      "href": "/saudi-national-talent",
+      "status": 200,
+      "anchor": true
+    },
+    {
+      "href": "/referral-terms",
+      "status": 200,
+      "anchor": true
+    },
+    {
+      "href": "/",
+      "status": 200,
+      "anchor": true
+    },
+    {
+      "href": "/#contact",
+      "status": 200,
+      "anchor": true
+    },
+    {
+      "href": "/refer",
+      "status": 200,
+      "anchor": true
+    },
+    {
+      "href": "/privacy",
+      "status": 200,
+      "anchor": true
+    },
+    {
+      "href": "/global#markets",
+      "status": 200,
+      "anchor": true
+    }
+  ],
+  "menus": [
+    {
+      "width": 320,
+      "pass": true
+    },
+    {
+      "width": 390,
+      "pass": true
+    },
+    {
+      "width": 768,
+      "pass": true
+    },
+    {
+      "width": 1024,
+      "pass": true
+    },
+    {
+      "width": 1280,
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "pass": true
+    },
+    {
+      "width": 1920,
+      "pass": true
+    }
+  ],
+  "forms": [],
+  "errors": [
+    {
+      "device": "desktop",
+      "resource": "http://127.0.0.1:3001/_vercel/insights/script.js",
+      "status": 404
+    },
+    {
+      "device": "desktop",
+      "url": "http://127.0.0.1:3001/global",
+      "type": "error",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "device": "desktop",
+      "url": "http://127.0.0.1:3001/global",
+      "type": "warning",
+      "message": "[]Automatic fallback to software WebGL has been deprecated. Please use the --enable-unsafe-swiftshader flag to opt in to lower security guarantees for trusted content."
+    },
+    {
+      "device": "desktop",
+      "url": "http://127.0.0.1:3001/global",
+      "type": "warning",
+      "message": "[.WebGL-0x33f400940200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+    },
+    {
+      "device": "desktop",
+      "url": "http://127.0.0.1:3001/global",
+      "type": "warning",
+      "message": "[.WebGL-0x33f400940200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+    },
+    {
+      "device": "desktop",
+      "url": "http://127.0.0.1:3001/global",
+      "type": "warning",
+      "message": "[.WebGL-0x33f400940200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+    },
+    {
+      "device": "desktop",
+      "url": "http://127.0.0.1:3001/global",
+      "type": "warning",
+      "message": "[.WebGL-0x33f400940200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)"
+    },
+    {
+      "device": "desktop",
+      "resource": "http://127.0.0.1:3001/_vercel/insights/script.js",
+      "status": 404
+    },
+    {
+      "device": "desktop",
+      "url": "http://127.0.0.1:3001/global/uk",
+      "type": "error",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "device": "desktop",
+      "resource": "http://127.0.0.1:3001/_vercel/insights/script.js",
+      "status": 404
+    },
+    {
+      "device": "desktop",
+      "url": "http://127.0.0.1:3001/global/europe",
+      "type": "error",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "device": "desktop",
+      "resource": "http://127.0.0.1:3001/_vercel/insights/script.js",
+      "status": 404
+    },
+    {
+      "device": "desktop",
+      "url": "http://127.0.0.1:3001/global/us",
+      "type": "error",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "device": "desktop",
+      "url": "http://127.0.0.1:3001/global/middle-east",
+      "type": "error",
+      "message": "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+    },
+    {
+      "device": "desktop",
+      "resource": "http://127.0.0.1:3001/_vercel/insights/script.js",
+      "status": 404
+    },
+    {
+      "device": "desktop",
+      "url": "http://127.0.0.1:3001/global/middle-east",
+      "type": "error",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "device": "desktop",
+      "resource": "http://127.0.0.1:3001/_vercel/insights/script.js",
+      "status": 404
+    },
+    {
+      "device": "desktop",
+      "url": "http://127.0.0.1:3001/global/asia-pacific",
+      "type": "error",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "device": "mobile",
+      "resource": "http://127.0.0.1:3001/_vercel/insights/script.js",
+      "status": 404
+    },
+    {
+      "device": "mobile",
+      "url": "http://127.0.0.1:3001/global",
+      "type": "error",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "device": "mobile",
+      "resource": "http://127.0.0.1:3001/_vercel/insights/script.js",
+      "status": 404
+    },
+    {
+      "device": "mobile",
+      "url": "http://127.0.0.1:3001/global/uk",
+      "type": "error",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "device": "mobile",
+      "resource": "http://127.0.0.1:3001/_vercel/insights/script.js",
+      "status": 404
+    },
+    {
+      "device": "mobile",
+      "url": "http://127.0.0.1:3001/global/europe",
+      "type": "error",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "device": "mobile",
+      "resource": "http://127.0.0.1:3001/_vercel/insights/script.js",
+      "status": 404
+    },
+    {
+      "device": "mobile",
+      "url": "http://127.0.0.1:3001/global/us",
+      "type": "error",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "device": "mobile",
+      "url": "http://127.0.0.1:3001/global/middle-east",
+      "type": "error",
+      "message": "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+    },
+    {
+      "device": "mobile",
+      "resource": "http://127.0.0.1:3001/_vercel/insights/script.js",
+      "status": 404
+    },
+    {
+      "device": "mobile",
+      "url": "http://127.0.0.1:3001/global/middle-east",
+      "type": "error",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "device": "mobile",
+      "resource": "http://127.0.0.1:3001/_vercel/insights/script.js",
+      "status": 404
+    },
+    {
+      "device": "mobile",
+      "url": "http://127.0.0.1:3001/global/asia-pacific",
+      "type": "error",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    }
+  ],
+  "resize": [
+    {
+      "width": 1440,
+      "height": 1000,
+      "error": 0
+    }
+  ],
+  "animationChanges": true
+}

@@ -822,17 +822,36 @@
   animation: pulse-slow 4s ease-in-out infinite;
 }
 
-/* Fade-up on scroll entry (used by <FadeIn />) */
+/* Content stays readable in SSR, without JS/IntersectionObserver, and in
+   full-page captures before scrolling. Only the entrance is enhanced. */
 .fade-up {
-  opacity: 0;
-  transform: translateY(var(--motion-distance));
-  transition: opacity var(--motion-duration) var(--motion-ease), transform var(--motion-duration) var(--motion-ease);
-  will-change: opacity, transform;
+  opacity: 1;
+  transform: none;
 }
 
 .fade-up-visible {
-  opacity: 1;
-  transform: translateY(0);
+  animation: ion-section-enter var(--motion-duration) var(--motion-ease) backwards;
+}
+
+@keyframes ion-section-enter {
+  from { opacity: 0.65; transform: translateY(var(--motion-distance)); }
+  to { opacity: 1; transform: none; }
+}
+
+/* A critical hero surface must stay legible independently of utility output. */
+.ion-market-hero {
+  isolation: isolate;
+  color: #fff;
+  background: #0f172a;
+  background-image: linear-gradient(116deg, #081326 4%, #101d32 55%, #122b38 100%);
+}
+
+.ion-market-hero-scrim {
+  background: linear-gradient(90deg, rgba(8, 19, 38, .88), rgba(15, 23, 42, .65));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up-visible { animation: none; }
 }
 
 /* Brief content-wrapper transition on route change (see components/page-transition.tsx).
@@ -1826,3 +1845,78 @@
     margin-top: 1rem !important;
   }
 }
+
+/* Keep the long global headline inside its copy column on narrow phones. */
+@media (max-width: 359px) {
+  .ion-global-hero .ion-home-hero-title {
+    font-size: clamp(2.75rem, 13.5vw, 3.25rem);
+  }
+}
+
+/* Shared Global preview atmosphere remains visible without WebGL. */
+.ion-global-colour-field::after {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  background: radial-gradient(ellipse at 65% 38%, rgba(15, 163, 161, .6), transparent 45%),
+    radial-gradient(ellipse at 85% 70%, rgba(145, 119, 247, .5), transparent 42%);
+  animation: ion-global-colour-flow 8s ease-in-out infinite alternate;
+}
+@keyframes ion-global-colour-flow {
+  from { transform: translate3d(-8%, -5%, 0) rotate(-9deg) scale(1); }
+  to { transform: translate3d(8%, 6%, 0) rotate(9deg) scale(1.15); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ion-global-colour-field::after { animation: none; }
+}
+
+.ion-global-flow { mix-blend-mode: screen; }
+
+/* Preview art direction: broad travelling ribbons, rather than a near-static wash. */
+.ion-silk-field { position:absolute; inset:0; overflow:hidden; pointer-events:none; background:#091525; }
+.ion-silk-glow { position:absolute; inset:-20%; background:radial-gradient(ellipse at 70% 30%,#17656b,transparent 48%),radial-gradient(ellipse at 85% 80%,#493b80,transparent 50%); }
+.ion-silk-ribbons { position:absolute; width:120%; height:130%; right:-12%; top:-15%; filter:blur(2px); }
+.ion-silk-ribbon { transform-origin:1000px 500px; will-change:transform; }
+.ion-silk-ribbon--teal { animation:ion-silk-travel 11s ease-in-out infinite alternate; opacity:.82; }
+.ion-silk-ribbon--lilac { animation:ion-silk-turn 14s ease-in-out infinite alternate; opacity:.7; }
+.ion-silk-ribbon--fine { animation:ion-silk-travel 9s -4s ease-in-out infinite alternate-reverse; opacity:.35; filter:blur(8px); }
+.ion-silk-copy-shade { position:absolute; inset:0; background:linear-gradient(90deg,rgba(7,16,30,.94),rgba(7,16,30,.72) 38%,rgba(7,16,30,.12) 72%,rgba(7,16,30,.08)); }
+@keyframes ion-silk-travel { from { transform:translate(-180px,-110px) rotate(-17deg) scale(.9); } to { transform:translate(190px,140px) rotate(19deg) scale(1.16); } }
+@keyframes ion-silk-turn { from { transform:translate(170px,-130px) rotate(24deg) scale(1.15); } to { transform:translate(-190px,130px) rotate(-22deg) scale(.88); } }
+@media(prefers-reduced-motion:reduce) { .ion-silk-ribbon { animation:none; will-change:auto; } }
+
+.ion-market-editorial { padding-top:4.5rem; background:#f6f5f2; }
+.ion-market-editorial--europe { background:#f4f2f8; }
+.ion-market-editorial--asia-pacific { background:#f0f5f2; }
+.ion-market-editorial--us { background:#eef2f7; }
+.ion-market-intro { display:grid; grid-template-columns:1fr 1fr; min-height:620px; }
+.ion-market-copy { padding:70px max(28px,calc((100vw - 1152px)/2)) 70px max(28px,calc((100vw - 1152px)/2)); padding-right:48px; display:flex; flex-direction:column; justify-content:center; }
+.ion-market-photo { position:relative; min-height:500px; overflow:hidden; }
+.ion-market-photo img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.ion-market-photo figcaption { position:absolute; bottom:20px; left:24px; color:white; font-size:11px; padding:6px 10px; background:rgba(9,21,37,.7); border-radius:4px; }
+.ion-market-editorial--europe .ion-market-photo { order:-1; }
+.ion-market-editorial--europe .ion-market-copy { padding-left:48px; padding-right:max(28px,calc((100vw - 1152px)/2)); }
+.ion-market-editorial--us .ion-market-intro { position:relative; min-height:650px; }
+.ion-market-editorial--us .ion-market-photo { position:absolute; inset:0; }
+.ion-market-editorial--us .ion-market-photo::after { content:""; position:absolute; inset:0; background:linear-gradient(90deg,rgba(9,21,37,.94),rgba(9,21,37,.7) 45%,rgba(9,21,37,.1)); }
+.ion-market-editorial--us .ion-market-copy { position:relative; z-index:1; color:white; }
+.ion-market-editorial--us .ion-market-photo figcaption { z-index:2; left:auto; right:24px; }
+.ion-market-editorial--us .ion-market-lede { color:#e1e8ef; }
+/* Keep small supplied photos in their own frame, without enlarging or cropping them. */
+.ion-market-editorial .ion-market-photo--native { position:relative; inset:auto; align-self:center; width:calc(100% - 48px); min-height:0; margin:24px auto; border-radius:16px; }
+.ion-market-editorial--us.ion-market-editorial--native-photo { background:#091525; }
+.ion-market-editorial--us.ion-market-editorial--native-photo .ion-market-photo::after { display:none; }
+.ion-market-editorial--us.ion-market-editorial--native-photo .ion-editorial-number { color:#2dd4bf; }
+.ion-market-lede { color:#526174; }
+.ion-editorial-number { font-size:12px; letter-spacing:.12em; color:#008c8c; font-weight:700; }
+.ion-sector-list a { display:flex; justify-content:space-between; padding:22px 0; border-bottom:1px solid #d9dfe5; transition:color .2s; }
+.ion-sector-list a:hover { color:#008c8c; }
+.ion-portrait-strip { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.ion-portrait-window { aspect-ratio:3/4; overflow:hidden; border-radius:8px; position:relative; }
+.ion-portrait-window img { position:absolute; width:300%; height:100%; max-width:none; object-fit:cover; }
+@media(max-width:767px) { .ion-market-intro { grid-template-columns:1fr; min-height:0; } .ion-market-copy,.ion-market-editorial--europe .ion-market-copy { padding:45px 24px; } .ion-market-photo { min-height:330px; } .ion-market-editorial--europe .ion-market-photo { order:0; } .ion-market-editorial--us .ion-market-intro { min-height:650px; } .ion-market-editorial--us .ion-market-photo { min-height:0; } .ion-market-editorial--us .ion-market-copy { padding-top:70px; padding-bottom:90px; } .ion-silk-ribbons { width:190%; right:-65%; } .ion-silk-copy-shade { background:linear-gradient(90deg,rgba(7,16,30,.88),rgba(7,16,30,.52) 65%,rgba(7,16,30,.28)); } }
+.ion-global-hero { min-height:min(820px,90svh); }
+@media(max-width:767px) { .ion-market-editorial--us.ion-market-editorial--native-photo .ion-market-copy { padding-top:45px; padding-bottom:24px; } }
+@media(max-width:767px) { .ion-global-hero { min-height:720px; } }
+.ion-silk-field[data-paused="true"] .ion-silk-ribbon { animation-play-state:paused; }
+@media(prefers-reduced-motion:reduce) { .ion-motion-toggle { display:none; } }

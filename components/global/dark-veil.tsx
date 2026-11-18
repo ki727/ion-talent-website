@@ -337,7 +337,7 @@ export const DarkVeil = ({
       antialias: false,
       depth: false,
       stencil: false,
-      powerPreference: 'high-performance'
+      powerPreference: 'low-power'
     });
     if (!container || !canvas || !gl) return undefined;
 
@@ -354,13 +354,17 @@ export const DarkVeil = ({
     gl.enableVertexAttribArray(0);
     gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
 
-    const texture = gl.createTexture();
+    let texture: WebGLTexture | null = null;
     const framebuffer = gl.createFramebuffer();
     const target = { width: 0, height: 0 };
     const sizeTarget = (width: number, height: number) => {
       if (target.width === width && target.height === height) return;
       target.width = width;
       target.height = height;
+      // Immutable texture storage cannot be allocated twice on the same object.
+      // Recreate it when the hero resizes (including desktop viewport changes).
+      if (texture) gl.deleteTexture(texture);
+      texture = gl.createTexture();
       gl.bindTexture(gl.TEXTURE_2D, texture);
       const levels = Math.floor(Math.log2(Math.max(width, height))) + 1;
       gl.texStorage2D(gl.TEXTURE_2D, levels, floatTargets ? gl.RGBA16F : gl.RGBA8, width, height);

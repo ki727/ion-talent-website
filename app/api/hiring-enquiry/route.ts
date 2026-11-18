@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { sendHiringEnquiryEmail } from "@/lib/mailer"
+import { ENQUIRY_MARKETS, normaliseEnquiryMarket, normaliseEnquirySource, normaliseEnquirySector } from "@/lib/enquiry-context"
 import { isDuplicateSubmission, releaseSubmission } from "@/lib/dedupe"
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -24,7 +25,13 @@ export async function POST(request: NextRequest) {
         : "General Enquiry"
     const timeline = typeof data.timeline === "string" ? data.timeline.trim() : undefined
     const phone = typeof data.phone === "string" ? data.phone.trim() : undefined
-    const pageUrl = typeof data.pageUrl === "string" ? data.pageUrl.trim() : ""
+    const pageUrl = typeof data.pageUrl === "string" ? data.pageUrl.trim().slice(0, 2000) : ""
+    const market = normaliseEnquiryMarket(data.market)
+    const sourcePage = normaliseEnquirySource(data.sourcePage)
+    const sector = normaliseEnquirySector(data.sector)
+    if (typeof data.market === "string" && data.market && !market) {
+      return NextResponse.json({ success: false, message: "Please select a valid hiring market." }, { status: 400 })
+    }
 
     if (!fullName) {
       return NextResponse.json({ success: false, message: "Full name is required." }, { status: 400 })
@@ -42,6 +49,10 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    if (fullName.length > 150 || company.length > 200 || businessEmail.length > 254 || projectDetails.length > 500) {
+      return NextResponse.json({ success: false, message: "Please keep your enquiry within the field limits." }, { status: 400 })
+    }
+
     // Best-effort de-dupe: a double-click on submit shouldn't send two emails.
     submissionKey = `hiring:${businessEmail.toLowerCase()}`
     if (isDuplicateSubmission(submissionKey)) {
@@ -57,6 +68,9 @@ export async function POST(request: NextRequest) {
       timeline,
       projectDetails,
       pageUrl,
+      market: ENQUIRY_MARKETS.find(item => item.slug === market)?.label,
+      sourcePage: sourcePage || undefined,
+      sector: sector || undefined,
       submittedAt: new Date().toISOString(),
     })
 

@@ -1,0 +1,40 @@
+{
+  "checkedAt": "16 November 2026 at 9:07 pm",
+  "results": [
+    {
+      "width": 720,
+      "naturalWidth": 2400,
+      "naturalHeight": 1600,
+      "height": 620,
+      "noOverflow": true,
+      "creditFits": true,
+      "noindex": true,
+      "supportingPhotoPreserved": true,
+      "viewportWidth": 1440
+    },
+    {
+      "width": 390,
+      "naturalWidth": 2400,
+      "naturalHeight": 1600,
+      "height": 330,
+      "noOverflow": true,
+      "creditFits": true,
+      "noindex": true,
+      "supportingPhotoPreserved": true,
+      "viewportWidth": 390
+    },
+    {
+      "width": 320,
+      "naturalWidth": 2400,
+      "naturalHeight": 1600,
+      "height": 330,
+      "noOverflow": true,
+      "creditFits": true,
+      "noindex": true,
+      "supportingPhotoPreserved": true,
+      "viewportWidth": 320
+    }
+  ],
+  "usUnchanged": true,
+  "pageErrors": []
+}

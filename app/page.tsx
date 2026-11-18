@@ -11,7 +11,13 @@ import { HomepageReferralSection } from "@/components/homepage-referral-section"
 import { Target, Award, Users, ArrowRight, UserCheck, Radar, Globe } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { GLOBAL_MARKETS } from "@/lib/global-market-hubs"
+import { EmployerBookingLink } from "@/components/global/employer-booking-link"
+import { MiddleEastResource } from "@/components/middle-east-resource"
+import { MarketLogoMarquee } from "@/components/global/market-logo-marquee"
+import { MARKET_BRANDS } from "@/lib/market-brands"
+import { CompactMarkets } from "@/components/global/compact-markets"
+import { MobileServices } from "@/components/global/mobile-services"
+import { MobileHireCta } from "@/components/global/mobile-hire-cta"
 import { useRef, useEffect, useState } from "react"
 import { SiteHeader } from "@/components/site-header"
 import { GlobalHeroVeil } from "@/components/global/global-hero-veil"
@@ -21,7 +27,10 @@ export default function HomePage() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const heroContentRef = useRef<HTMLDivElement>(null)
   const [selectedService, setSelectedService] = useState<string | undefined>(undefined)
-  const isGlobalPreview = usePathname() === "/global"
+  const pathname = usePathname()
+  const isGlobalPreview = pathname === "/global"
+  const isMiddleEast = pathname === "/global/middle-east"
+  const isPreview = pathname.startsWith("/global")
 
   useEffect(() => {
     const video = videoRef.current
@@ -91,15 +100,16 @@ export default function HomePage() {
 
       <SiteHeader />
 
-      <main className="ion-page-enter">
-      <section className="ion-home-hero relative flex items-center overflow-hidden px-6 pb-16 pt-24 sm:pb-20 sm:pt-28 lg:pb-14 lg:pt-24">
-        <div className="pointer-events-none absolute inset-0 z-0 bg-ion-navy" aria-hidden="true">
+      <main className={isPreview ? undefined : "ion-page-enter"}>
+      <section className={`${isGlobalPreview ? "ion-global-hero " : ""}ion-home-hero relative flex items-center overflow-hidden px-6 pb-16 pt-24 sm:pb-20 sm:pt-28 lg:pb-14 lg:pt-24`}>
+        <div className="pointer-events-none absolute inset-0 z-0 bg-ion-navy" aria-hidden={isGlobalPreview ? undefined : true}>
           {isGlobalPreview ? (
             <GlobalHeroVeil />
           ) : (
             <>
           <video
             ref={videoRef}
+            poster="/photography/dubai-hero-poster.webp"
             className="hero-zoom w-full h-full object-cover"
             autoPlay
             muted
@@ -124,23 +134,13 @@ export default function HomePage() {
         <div ref={heroContentRef} className="ion-hero-depth pointer-events-auto container relative z-10 mx-auto max-w-6xl">
           <div className="ion-home-hero-copy space-y-5 sm:space-y-6">
             <h1 className="ion-display ion-home-hero-title ion-hero-reveal ion-hero-reveal--1 hero-text-shadow font-bold text-white text-balance">
-              {isGlobalPreview ? (
-                <>
-                  Specialist search.
-                  <br />
-                  <span className="ion-hero-teal-accent">International reach.</span>
-                </>
-              ) : (
-                <>
-                  Specialist talent solutions that
-                  <br />
-                  <span className="ion-hero-teal-accent">transform businesses</span>
-                </>
-              )}
+              Specialist talent solutions that
+              <br />
+              <span className="ion-hero-teal-accent">transform businesses</span>
             </h1>
 
             <p className="ion-home-hero-lede ion-hero-reveal ion-hero-reveal--2 hero-text-shadow max-w-2xl text-lg leading-relaxed text-white/90 sm:text-xl">
-              Specialist recruitment and executive search for critical technology and leadership roles across international markets.
+              {isGlobalPreview ? "Specialist recruitment and executive search across sectors and levels, with international reach." : "Specialist recruitment and executive search across the GCC and UK, with international reach."}
             </p>
 
             <div className="ion-home-hero-actions ion-hero-reveal ion-hero-reveal--3 flex flex-col gap-4 pt-1 sm:flex-row sm:pt-2">
@@ -158,7 +158,7 @@ export default function HomePage() {
                 size="lg"
                 className="ion-secondary-button ion-hero-button ion-hero-button--secondary h-14 w-full gap-2 rounded-xl px-8 text-base focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 sm:w-auto"
               >
-                <Link href="/opportunities">
+                <Link href={isPreview ? "/global/opportunities" : "/opportunities"}>
                   Explore Opportunities
                   <ArrowRight className="h-5 w-5" aria-hidden="true" />
                 </Link>
@@ -175,56 +175,14 @@ export default function HomePage() {
         />
       </section>
 
-      {isGlobalPreview && (
-        <section id="markets" className="ion-surface-tonal scroll-mt-[100px] border-b border-ion-border px-6 py-12 md:py-14" aria-labelledby="global-markets-title">
-          <div className="container mx-auto max-w-6xl">
-            <div className="mb-7 text-center">
-              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-ion-gray">ION Talent Global</p>
-              <h2 id="global-markets-title" className="font-display text-3xl font-bold text-ion-navy md:text-4xl">
-                Explore our markets
-              </h2>
-              <p className="mx-auto mt-3 max-w-2xl text-base text-ion-gray">
-                International specialist search, with a focused approach to each region.
-              </p>
-            </div>
-            <p className="mb-4 text-center text-xs font-semibold uppercase tracking-[0.18em] text-ion-gray">
-              Our core markets
-            </p>
-            <nav aria-label="Core recruitment markets" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              {GLOBAL_MARKETS.filter((market) => market.tier === "core").map((market) => (
-                <Link
-                  key={market.slug}
-                  href={`/global/${market.slug}`}
-                  className="group flex min-h-20 items-center justify-between gap-3 rounded-xl border border-ion-border bg-white px-5 py-4 text-base font-semibold text-ion-navy shadow-sm transition-colors hover:border-ion-teal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal"
-                >
-                  {market.label}
-                  <ArrowRight className="h-5 w-5 shrink-0 text-ion-teal transition-transform group-hover:translate-x-1" aria-hidden="true" />
-                </Link>
-              ))}
-            </nav>
-            <div className="mt-5 flex flex-col gap-4 rounded-xl border border-ion-border bg-white px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <p className="mb-1 text-xs font-semibold uppercase tracking-[0.14em] text-ion-teal">Strategic growth market</p>
-                <h3 className="text-xl font-semibold text-ion-navy">Asia-Pacific</h3>
-                <p className="mt-1 max-w-2xl text-sm text-ion-gray">
-                  Selective specialist search across Singapore, Australia and Southeast Asia.
-                </p>
-              </div>
-              <Link href="/global/asia-pacific" className="inline-flex min-h-11 shrink-0 items-center gap-2 text-sm font-semibold text-ion-navy transition-colors hover:text-ion-teal">
-                Explore Asia-Pacific <ArrowRight className="h-4 w-4 text-ion-teal" aria-hidden="true" />
-              </Link>
-            </div>
-          </div>
-        </section>
-      )}
-
       {/* Proof & Credibility */}
       <section
         id="proof"
         className="ion-home-proof ion-surface-tonal scroll-mt-[100px] border-t border-transparent px-6 py-8 md:py-7 xl:py-[1.375rem]"
       >
         <div className="container mx-auto max-w-6xl">
-          <h2 className="sr-only">Our Track Record</h2>
+          <h2 className="sr-only">{isPreview ? "Market landscape and recruitment experience" : "Our Track Record"}</h2>
+          {isPreview ? <MarketLogoMarquee logos={MARKET_BRANDS} /> : <>
           <p className="mb-2.5 text-center text-xs font-medium uppercase tracking-wider text-ion-gray">
             Experience Across Leading Organisations
           </p>
@@ -246,18 +204,20 @@ export default function HomePage() {
             ))}
           </div>
 
+          </>}
+
           <div className="mx-auto grid max-w-5xl grid-cols-1 gap-5 border-t border-ion-navy/10 pt-4 md:grid-cols-3 md:gap-0 xl:pt-3.5">
             <div className="md:px-6">
-              <StatCounter end={10} suffix="+" label="Years of Recruitment Experience" startDelay={0} showAccent={false} />
+              <StatCounter end={10} suffix="+" label="Years in recruitment" startDelay={0} showAccent={false} />
             </div>
             <div className="md:border-l md:border-ion-navy/10 md:px-6">
               <StatCounter end={500} suffix="+" label="Placements Delivered" startDelay={120} showAccent={false} />
             </div>
             <div className="[&_p]:leading-tight md:border-l md:border-ion-navy/10 md:px-6">
               <StatCounter
-                end={3}
+                end={isGlobalPreview ? 4 : 3}
                 label="Core Markets"
-                sublabel="UAE · Saudi Arabia · UK"
+                sublabel={isGlobalPreview ? "UK · Europe · USA · Middle East" : "UAE · Saudi Arabia · UK"}
                 startDelay={240}
                 showAccent={false}
               />
@@ -269,7 +229,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      <FeaturedJobs />
+      {isGlobalPreview && <CompactMarkets />}
+
+      {!isGlobalPreview && <FeaturedJobs preview={isPreview} />}
 
       <section id="services" className="ion-density-section ion-section-navy scroll-mt-[100px] px-6 py-14 md:py-[4.5rem] xl:py-14">
         <div className="container mx-auto max-w-6xl">
@@ -283,7 +245,9 @@ export default function HomePage() {
             </p>
           </FadeIn>
 
-          <div className="ion-density-grid grid grid-cols-1 gap-6 lg:grid-cols-3">
+          {isPreview && <MobileServices onSelect={scrollToContact} />}
+
+          <div className={`ion-density-grid gap-6 lg:grid-cols-3 ${isPreview ? "hidden lg:grid" : "grid grid-cols-1"}`}>
             <FadeIn className="h-full">
               <Card className="ion-density-card ion-card-top-4 group relative h-full overflow-hidden rounded-[14px] p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md xl:p-5">
                 <div className="relative flex h-full flex-col gap-4">
@@ -415,6 +379,7 @@ export default function HomePage() {
           text and button fall back to exactly the original 3-column grid on
           tablet/desktop) instead of hiding the cover and
           stretching into a tall text-only card. */}
+      {isMiddleEast ? <MiddleEastResource /> : !isPreview && (
       <section id="salary-guide-feature" className="ion-density-section border-t border-ion-violet/10 bg-[#F8F7FF] px-6 py-12 md:py-14 xl:py-11">
         <div className="container mx-auto max-w-6xl">
           <FadeIn>
@@ -431,7 +396,7 @@ export default function HomePage() {
                     className="ion-home-salary-cover w-20 shrink-0 rounded-lg shadow-md ring-1 ring-black/5 sm:w-24 md:w-[140px] xl:w-32"
                   />
                   <div className="min-w-0">
-                    <p className="ion-card-eyebrow mb-1.5 md:mb-2">2026 Salary &amp; Hiring Guide</p>
+                    <p className="ion-card-eyebrow mb-1.5 md:mb-2">{isGlobalPreview ? "Middle East insight · 2026" : "2026 Salary & Hiring Guide"}</p>
                     <h2 className="ion-density-section-heading-small font-display text-lg font-bold text-ion-navy mb-1 text-balance sm:text-2xl md:mb-2 md:text-3xl">
                       UAE &amp; Saudi Arabia Salary &amp; Hiring Guide 2026
                     </h2>
@@ -454,6 +419,7 @@ export default function HomePage() {
           </FadeIn>
         </div>
       </section>
+      )}
 
       <section
         id="industries"
@@ -491,10 +457,13 @@ export default function HomePage() {
         </div>
       </section>
 
+      {isGlobalPreview && <FeaturedJobs preview />}
+
       {/* Saudi National Talent — one editorial image/copy pairing, the
           homepage's single dedicated entry point into the new page. Kept to
           one restrained image, paired with copy rather than a full-bleed
           slab, per the site's photography system. */}
+      {(!isPreview || isMiddleEast) && (
       <section className="ion-density-section border-t border-gray-100 bg-white px-6 py-14 md:py-12 xl:py-10">
         <div className="container mx-auto max-w-6xl">
           <FadeIn>
@@ -523,7 +492,7 @@ export default function HomePage() {
                   </p>
                   <div>
                     <Link
-                      href="/saudi-national-talent"
+                      href={isPreview ? "/global/saudi-national-talent" : "/saudi-national-talent"}
                       className="ion-primary-button inline-flex h-12 items-center justify-center gap-2 rounded-xl px-8 text-sm font-medium shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal-hover focus-visible:ring-offset-2"
                     >
                       Learn More
@@ -536,6 +505,7 @@ export default function HomePage() {
           </FadeIn>
         </div>
       </section>
+      )}
 
       {/* Why ION Talent */}
       <section id="approach" className="ion-density-section border-t border-gray-100 bg-ion-surface px-6 py-14 md:py-14 xl:py-12">
@@ -600,7 +570,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <HomepageReferralSection />
+      {!isPreview && <HomepageReferralSection />}
 
       {/* Employer Enquiry Form */}
       <section
@@ -613,6 +583,7 @@ export default function HomePage() {
               Tell Us What You Are Hiring For
             </h2>
             <p className="text-lg text-ion-gray">Ready to transform your hiring? Let&apos;s talk.</p>
+            {isPreview && <EmployerBookingLink />}
           </div>
 
           <div className="ion-density-card relative overflow-hidden rounded-[20px] border border-gray-200 bg-white p-6 shadow-md sm:p-8 md:p-8 xl:p-7">
@@ -621,7 +592,10 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      {isPreview && <HomepageReferralSection compact />}
       </main>
+
+      {isPreview && <MobileHireCta onSelect={() => scrollToContact()} />}
 
       <SiteFooter />
     </div>

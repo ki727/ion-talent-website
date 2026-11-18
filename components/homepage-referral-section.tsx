@@ -10,7 +10,7 @@ import { trackEvent } from "@/lib/analytics"
 const SOURCE = "homepage"
 
 /** Premium homepage referral section — sits immediately before the employer hiring-enquiry section. */
-export function HomepageReferralSection() {
+export function HomepageReferralSection({ compact = false }: { compact?: boolean }) {
   const viewRef = useRef<HTMLDivElement>(null)
   const trackedRef = useRef(false)
 
@@ -31,6 +31,8 @@ export function HomepageReferralSection() {
     observer.observe(node)
     return () => observer.disconnect()
   }, [])
+
+  if (compact) return <section className="border-t border-ion-border bg-white px-6 py-6"><div ref={viewRef} className="container mx-auto flex max-w-6xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"><div><h2 className="text-base font-semibold text-ion-navy">Know a business that is hiring?</h2><p className="mt-1 text-sm text-ion-gray">Make an introduction through our client referral programme.</p></div><Link href="/global/refer" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-ion-teal-dark underline underline-offset-4">Refer a hiring company <span aria-hidden="true">→</span></Link></div></section>
 
   return (
     <section className="ion-density-section scroll-mt-24 border-t border-gray-100 bg-ion-surface px-6 py-14 md:py-12 xl:py-10">

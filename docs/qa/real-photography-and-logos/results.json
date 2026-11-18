@@ -1,0 +1,173 @@
+{
+  "checkedAt": "2026-11-16T07:23:14.480Z",
+  "regions": [
+    {
+      "region": "uk",
+      "device": "desktop",
+      "naturalWidth": 1400,
+      "naturalHeight": 1050,
+      "width": 720,
+      "height": 620,
+      "caption": "Commercial architecture · Illustrative photography",
+      "noOverflow": true,
+      "noindex": true
+    },
+    {
+      "region": "europe",
+      "device": "desktop",
+      "naturalWidth": 1600,
+      "naturalHeight": 1066,
+      "width": 720,
+      "height": 620,
+      "caption": "A shared workspace · Illustrative photography",
+      "noOverflow": true,
+      "noindex": true
+    },
+    {
+      "region": "us",
+      "device": "desktop",
+      "naturalWidth": 1800,
+      "naturalHeight": 1350,
+      "width": 1440,
+      "height": 650,
+      "caption": "New York · Libre Photography",
+      "noOverflow": true,
+      "noindex": true
+    },
+    {
+      "region": "asia-pacific",
+      "device": "desktop",
+      "naturalWidth": 1400,
+      "naturalHeight": 934,
+      "width": 720,
+      "height": 620,
+      "caption": "Urban landscape · Illustrative photography",
+      "noOverflow": true,
+      "noindex": true
+    },
+    {
+      "region": "uk",
+      "device": "mobile",
+      "naturalWidth": 1400,
+      "naturalHeight": 1050,
+      "width": 390,
+      "height": 330,
+      "caption": "Commercial architecture · Illustrative photography",
+      "noOverflow": true,
+      "noindex": true
+    },
+    {
+      "region": "europe",
+      "device": "mobile",
+      "naturalWidth": 1600,
+      "naturalHeight": 1066,
+      "width": 390,
+      "height": 330,
+      "caption": "A shared workspace · Illustrative photography",
+      "noOverflow": true,
+      "noindex": true
+    },
+    {
+      "region": "us",
+      "device": "mobile",
+      "naturalWidth": 1800,
+      "naturalHeight": 1350,
+      "width": 390,
+      "height": 650,
+      "caption": "New York · Libre Photography",
+      "noOverflow": true,
+      "noindex": true
+    },
+    {
+      "region": "asia-pacific",
+      "device": "mobile",
+      "naturalWidth": 1400,
+      "naturalHeight": 934,
+      "width": 390,
+      "height": 330,
+      "caption": "Urban landscape · Illustrative photography",
+      "noOverflow": true,
+      "noindex": true
+    }
+  ],
+  "marquees": [
+    {
+      "route": "/global",
+      "device": "desktop",
+      "uniqueBrands": 13,
+      "groupWidths": [
+        2132,
+        2132
+      ],
+      "seamDriftPx": 0.1185455322265625,
+      "moves": true,
+      "pausePlay": true,
+      "hoverPause": true,
+      "keyboardPause": true
+    },
+    {
+      "route": "/global/middle-east",
+      "device": "desktop",
+      "uniqueBrands": 13,
+      "groupWidths": [
+        2132,
+        2132
+      ],
+      "seamDriftPx": 0.1185455322265625,
+      "moves": true,
+      "pausePlay": true,
+      "hoverPause": true,
+      "keyboardPause": true
+    },
+    {
+      "route": "/global",
+      "device": "mobile",
+      "uniqueBrands": 13,
+      "groupWidths": [
+        1742,
+        1742
+      ],
+      "seamDriftPx": 0.09685134887695312,
+      "moves": true,
+      "pausePlay": true,
+      "hoverPause": true,
+      "keyboardPause": true
+    },
+    {
+      "route": "/global/middle-east",
+      "device": "mobile",
+      "uniqueBrands": 13,
+      "groupWidths": [
+        1742,
+        1742
+      ],
+      "seamDriftPx": 0.09685134887695312,
+      "moves": true,
+      "pausePlay": true,
+      "hoverPause": true,
+      "keyboardPause": true
+    }
+  ],
+  "reducedMotion": [
+    {
+      "width": 1440,
+      "staticLayout": true,
+      "duplicateHidden": true,
+      "noOverflow": true
+    },
+    {
+      "width": 390,
+      "staticLayout": true,
+      "duplicateHidden": true,
+      "noOverflow": true
+    },
+    {
+      "width": 320,
+      "staticLayout": true,
+      "duplicateHidden": true,
+      "noOverflow": true
+    }
+  ],
+  "pageErrors": [],
+  "generatedImageRequests": []
+}

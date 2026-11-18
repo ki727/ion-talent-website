@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import Link from "next/link"
+import { PreviewLink as Link } from "@/components/preview-link"
 import { notFound } from "next/navigation"
 import { ArrowLeft, ArrowRight, Briefcase, MapPin, TrendingUp } from "lucide-react"
 import { SiteHeader } from "@/components/site-header"
@@ -109,6 +109,7 @@ export default function RolePage({ params }: RolePageProps) {
             </Link>
 
             <p className="ion-card-eyebrow mt-5 xl:mt-3">{opportunity.sector}</p>
+            {!isLiveVacancy(opportunity) && <p className="mt-3 text-sm font-medium text-ion-violet-deep">Talent network profile · Not a confirmed live vacancy</p>}
             <h1 className="ion-density-job-title font-display mt-2 text-3xl font-bold text-gray-900 md:text-4xl xl:mt-1.5 xl:text-[1.75rem] text-balance">
               {opportunity.title}
             </h1>

@@ -17,6 +17,24 @@ import { CandidateRegistrationForm } from "@/components/candidate-registration-f
 
 const ALL = "All"
 
+/** Give the unfiltered list a useful spread of cities instead of one long location block. */
+function spreadAcrossCities<T extends { locationLabel: string }>(roles: T[]): T[] {
+  const cities = new Map<string, T[]>()
+  roles.forEach(role => {
+    const group = cities.get(role.locationLabel) ?? []
+    group.push(role)
+    cities.set(role.locationLabel, group)
+  })
+  const result: T[] = []
+  while (result.length < roles.length) {
+    for (const group of cities.values()) {
+      const role = group.shift()
+      if (role) result.push(role)
+    }
+  }
+  return result
+}
+
 /** Short, meaningful query param keys — only ever present when a filter is actually active. */
 const PARAM = {
   search: "q",
@@ -33,6 +51,7 @@ export function OpportunitiesClient() {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const preview = pathname.startsWith("/global")
 
   // The URL is the single source of truth for the dropdown filters, so a
   // refreshed or shared link — and browser back/forward — always show the
@@ -92,6 +111,7 @@ export function OpportunitiesClient() {
   const filtered = useMemo(() => {
     const query = searchInput.trim().toLowerCase()
     return opportunities.filter((o) => {
+      if (preview && o.status === "Paused") return false
       const matchesFilters =
         (functionFilter === ALL || o.function === (functionFilter as OpportunityFunction)) &&
         (locationFilter === ALL || o.locationLabel === locationFilter) &&
@@ -102,7 +122,15 @@ export function OpportunitiesClient() {
       const haystack = `${o.title} ${o.sector} ${o.locationLabel} ${o.description}`.toLowerCase()
       return haystack.includes(query)
     })
-  }, [functionFilter, locationFilter, employmentFilter, seniorityFilter, searchInput])
+  }, [functionFilter, locationFilter, employmentFilter, seniorityFilter, searchInput, preview])
+
+  const [visibleCount, setVisibleCount] = useState(12)
+  useEffect(() => { setVisibleCount(12) }, [functionFilter, locationFilter, employmentFilter, seniorityFilter, searchInput])
+  const orderedProfiles = preview ? [
+    ...spreadAcrossCities(filtered.filter(role => role.status === "Live Opportunity")),
+    ...spreadAcrossCities(filtered.filter(role => role.status === "Talent Network")),
+  ] : filtered
+  const visibleProfiles = preview ? orderedProfiles.slice(0, visibleCount) : orderedProfiles
 
   const chips: { key: string; label: string; value: string }[] = [
     functionFilter !== ALL ? { key: PARAM.function as string, label: "Function", value: functionFilter } : null,
@@ -263,18 +291,19 @@ export function OpportunitiesClient() {
         )}
 
         <p className="mt-3 text-sm text-gray-500" role="status" aria-live="polite">
-          {filtered.length} {filtered.length === 1 ? "opportunity" : "opportunities"} shown
+          {preview ? `Showing ${visibleProfiles.length} of ${filtered.length} matching profiles and roles` : `${filtered.length} profiles and roles shown`}
         </p>
       </section>
 
       {/* ── Card grid ── */}
       <section aria-label="Opportunities" className="mb-14 xl:mb-10">
         {filtered.length > 0 ? (
-          <div className="grid grid-cols-1 items-start gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:gap-3">
-            {filtered.map((opportunity) => (
-              <OpportunityCard key={opportunity.id} opportunity={opportunity} />
-            ))}
-          </div>
+          preview ? <div className="space-y-10">
+            <section aria-labelledby="live-roles-heading"><h2 id="live-roles-heading" className="mb-3 font-display text-2xl font-bold text-ion-navy">Live opportunities</h2>
+              {filtered.some(role => role.status === "Live Opportunity") ? <div className="grid grid-cols-1 items-start gap-4 sm:grid-cols-2 lg:grid-cols-3">{visibleProfiles.filter(role => role.status === "Live Opportunity").map(role => <OpportunityCard key={role.id} opportunity={role} />)}</div> : <p className="rounded-xl border border-ion-border bg-white p-5 text-sm leading-relaxed text-ion-gray">No confirmed live vacancies match this selection. You can still register your interest for future searches.</p>}
+            </section>
+            {visibleProfiles.some(role => role.status === "Talent Network") && <section aria-labelledby="network-profiles-heading"><h2 id="network-profiles-heading" className="font-display text-2xl font-bold text-ion-navy">Talent network profiles</h2><p className="mb-5 mt-2 text-sm leading-relaxed text-ion-gray">These profiles describe areas of candidate interest. They are not confirmed client vacancies or offers of employment.</p><div className="grid grid-cols-1 items-start gap-4 sm:grid-cols-2 lg:grid-cols-3">{visibleProfiles.filter(role => role.status === "Talent Network").map(role => <OpportunityCard key={role.id} opportunity={role} />)}</div></section>}
+          </div> : <div className="grid grid-cols-1 items-start gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:gap-3">{filtered.map(opportunity => <OpportunityCard key={opportunity.id} opportunity={opportunity} />)}</div>
         ) : (
           <div className="rounded-2xl border border-dashed border-gray-300 bg-gray-50 px-6 py-16 text-center">
             <SearchX className="mx-auto h-10 w-10 text-gray-400" aria-hidden="true" />
@@ -292,6 +321,7 @@ export function OpportunitiesClient() {
             </button>
           </div>
         )}
+        {preview && visibleProfiles.length < filtered.length && <div className="mt-7 text-center"><button type="button" onClick={() => setVisibleCount(count => count + 12)} className="ion-candidate-outline-button inline-flex min-h-11 items-center justify-center rounded-xl px-6 text-sm font-semibold">Show more profiles ({filtered.length - visibleProfiles.length} remaining)</button><p className="mt-3 text-xs text-ion-gray">Or <a href="#register" className="underline underline-offset-2">register your interest</a> without browsing every profile.</p></div>}
       </section>
 
       {/* ── Candidate registration ── */}

@@ -1,4 +1,4 @@
-import Link from "next/link"
+import { PreviewLink as Link } from "@/components/preview-link"
 import { MapPin, Briefcase, ArrowRight } from "lucide-react"
 import { getRoleTypeLabel, type Opportunity, type OpportunityStatus } from "@/lib/opportunities"
 import { IonInteractiveSurface } from "@/components/ion-interactive-surface"
@@ -51,7 +51,7 @@ export function OpportunityCard({ opportunity }: OpportunityCardProps) {
         aria-label={`View details for ${opportunity.title}`}
         className="ion-candidate-outline-button mt-3 inline-flex h-9 items-center justify-center gap-1.5 rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-violet focus-visible:ring-offset-2 xl:mt-2.5"
       >
-        View Role
+        {opportunity.status === "Live Opportunity" ? "View Live Role" : "View Network Profile"}
         <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
       </Link>
     </IonInteractiveSurface>

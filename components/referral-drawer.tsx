@@ -1,5 +1,7 @@
 "use client"
 
+import { PreviewLink } from "@/components/preview-link"
+
 import type React from "react"
 import { useState } from "react"
 import { AlertCircle, CheckCircle2, Loader2 } from "lucide-react"
@@ -302,14 +304,14 @@ export function ReferralDrawer({ trigger, source }: ReferralDrawerProps) {
                 />
                 <span>
                   I confirm I have permission to share these details and agree to the{" "}
-                  <a
+                  <PreviewLink
                     href="/referral-terms"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="underline underline-offset-2 hover:text-ion-teal-dark"
                   >
                     referral terms
-                  </a>
+                  </PreviewLink>
                   . <span aria-hidden="true">*</span>
                 </span>
               </label>
