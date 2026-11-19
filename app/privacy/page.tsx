@@ -217,7 +217,7 @@ export default function PrivacyPage() {
                 and Clarity load only after you select &ldquo;Accept&rdquo; in the
                 cookie notice. If you decline or have not decided, these optional trackers
                 do not load. In certain countries (currently the United States, Indonesia and
-                the United Arab Emirates), these analytics tools may run on a first visit without a
+                the United Arab Emirates and Saudi Arabia), these analytics tools may run on a first visit without a
                 popup. In every region, you can opt out or change your preference using
                 the button below.
               </p>
