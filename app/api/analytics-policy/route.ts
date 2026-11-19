@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server"
 // privacy/legal review. For all other locations, and where country detection
 // is unavailable, retain the consent-first behaviour. No IP or country is
 // saved to browser storage or transmitted to the analytics providers here.
-const NOTICE_ONLY_COUNTRIES = new Set(["US", "ID"])
+const NOTICE_ONLY_COUNTRIES = new Set(["US", "ID", "AE"])
 
 export const dynamic = "force-dynamic"
 
