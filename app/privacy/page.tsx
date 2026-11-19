@@ -206,21 +206,30 @@ export default function PrivacyPage() {
 
             <Section id="cookies" title="Cookies and analytics">
               <p>
-                With your consent, we use Google Analytics 4 and Microsoft Clarity to understand how visitors
-                use our website, for example which pages are viewed, whether forms are completed, and how
-                visitors interact with page layouts. Their analytics tags and cookies (such as <code>_ga</code>,{" "}
-                <code>_clck</code>, and <code>_clsk</code>) are only loaded or set after you select
-                &ldquo;Accept&rdquo; in our cookie notice. If you decline, or have not yet chosen, neither tag is
-                loaded. Analytics data is not used for advertising.
+                We use Vercel Web Analytics to measure website visits without placing analytics
+                cookies. We also use Google Analytics 4 and Microsoft Clarity to understand
+                page views, enquiries, site navigation and interactions with our website.
+                Microsoft Clarity can provide masked session recordings and heatmaps.
               </p>
-              <p className="mt-3">
-                Clarity provides aggregated interaction insights, heatmaps, and session recordings. All page
-                content, personal information, forms, candidate details, and sensitive fields are masked so
-                their contents are not uploaded in recordings. We do not send your name, email, form content,
-                or candidate details to Google Analytics. We also use Vercel Web Analytics, which measures page
-                views without cookies or personal identifiers. You can change your choice at any time; on
-                withdrawal, analytics tracking is stopped and applicable first-party analytics cookies are
-                removed.
+              <p>
+                In the UK, European Economic Area, Switzerland, and all locations where
+                our regional policy has not enabled analytics by default, Google Analytics
+                and Clarity load only after you select &ldquo;Accept&rdquo; in the
+                cookie notice. If you decline or have not decided, these optional trackers
+                do not load. In certain countries (currently the United States and
+                Indonesia), these analytics tools may run on a first visit without a
+                popup. In every region, you can opt out or change your preference using
+                the button below.
+              </p>
+              <p>
+                Google Analytics may set <code>_ga</code> cookies and Microsoft Clarity may
+                set <code>_clck</code> and <code>_clsk</code> cookies when enabled.
+                We do not use these analytics tools for advertising. Candidate forms,
+                personal information and sensitive content are masked from Clarity
+                recordings; names, email addresses and submitted form content are
+                not intentionally sent to Google Analytics. When you decline or withdraw
+                permission, the optional tracking is stopped and applicable first-party
+                analytics cookies are removed.
               </p>
               <ManageCookiesButton />
             </Section>
