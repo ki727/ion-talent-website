@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { LINKEDIN_COMPANY_URL, SITE_URL } from "@/lib/site-config"
 import { SalaryGuidePrompt } from "@/components/salary-guide-prompt"
 import { GoogleAnalytics } from "@/components/google-analytics"
+import { MicrosoftClarity } from "@/components/microsoft-clarity"
 import { CookieConsent } from "@/components/cookie-consent"
 import "./globals.css"
 
@@ -70,7 +71,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${raleway.variable}`}>
-      <body>
+      <body data-clarity-mask="true">
         <script
           type="application/ld+json"
           // eslint-disable-next-line react/no-danger
@@ -86,6 +87,7 @@ export default function RootLayout({
         <CookieConsent />
         <Analytics />
         <GoogleAnalytics />
+        <MicrosoftClarity />
       </body>
     </html>
   )

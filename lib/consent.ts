@@ -6,6 +6,7 @@ export const CONSENT_CHANGE_EVENT = "ion-consent-change"
 export const CONSENT_RESET_EVENT = "ion-consent-reset"
 
 type Gtag = (...args: unknown[]) => void
+type Clarity = (...args: unknown[]) => void
 
 export function readConsent(): "granted" | "denied" | null {
   try {
@@ -16,15 +17,19 @@ export function readConsent(): "granted" | "denied" | null {
   }
 }
 
-/** Removes first-party Google Analytics cookies (_ga, _ga_<ID>) after a visitor withdraws consent. */
+/** Removes first-party GA4 and Clarity cookies after analytics consent is withdrawn. */
 function clearAnalyticsCookies() {
   const host = window.location.hostname
   const domains = ["", host, `.${host}`, `.${host.replace(/^www\./, "")}`]
-  document.cookie.split(";").map(c => c.split("=")[0].trim()).filter(name => name === "_ga" || name.startsWith("_ga_")).forEach(name => {
-    domains.forEach(domain => {
-      document.cookie = `${name}=; Max-Age=0; path=/${domain ? `; domain=${domain}` : ""}`
+  document.cookie
+    .split(";")
+    .map(cookie => cookie.split("=")[0].trim())
+    .filter(name => name === "_ga" || name.startsWith("_ga_") || name === "_clck" || name === "_clsk")
+    .forEach(name => {
+      domains.forEach(domain => {
+        document.cookie = `${name}=; Max-Age=0; path=/${domain ? `; domain=${domain}` : ""}`
+      })
     })
-  })
 }
 
 export function saveConsent(choice: "granted" | "denied") {
@@ -35,7 +40,17 @@ export function saveConsent(choice: "granted" | "denied") {
   }
   const gtag = (window as Window & { gtag?: Gtag }).gtag
   gtag?.("consent", "update", { analytics_storage: choice })
-  if (choice === "denied") clearAnalyticsCookies()
+  const clarity = (window as Window & { clarity?: Clarity }).clarity
+  clarity?.("consentv2", {
+    ad_Storage: "denied",
+    analytics_Storage: choice,
+  })
+  if (choice === "denied") {
+    // Microsoft documents this call as ending the session, clearing Clarity
+    // cookies and preventing more tracking until consent is granted again.
+    clarity?.("consent", false)
+    clearAnalyticsCookies()
+  }
   window.dispatchEvent(new Event(CONSENT_CHANGE_EVENT))
 }
 

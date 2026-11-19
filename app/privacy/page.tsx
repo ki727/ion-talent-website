@@ -206,16 +206,21 @@ export default function PrivacyPage() {
 
             <Section id="cookies" title="Cookies and analytics">
               <p>
-                With your consent, we use Google Analytics 4 to understand how visitors use our website, for
-                example which pages are viewed and whether forms are completed. Google Analytics cookies
-                (such as <code>_ga</code>) are only set, and the Google tag is only loaded, after you select &ldquo;Accept&rdquo; in our cookie
-                notice. If you decline, or have not yet chosen, no analytics cookies are stored. Analytics data
-                is not used for advertising, and we do not send your name, email or form content to Google
-                Analytics.
+                With your consent, we use Google Analytics 4 and Microsoft Clarity to understand how visitors
+                use our website, for example which pages are viewed, whether forms are completed, and how
+                visitors interact with page layouts. Their analytics tags and cookies (such as <code>_ga</code>,{" "}
+                <code>_clck</code>, and <code>_clsk</code>) are only loaded or set after you select
+                &ldquo;Accept&rdquo; in our cookie notice. If you decline, or have not yet chosen, neither tag is
+                loaded. Analytics data is not used for advertising.
               </p>
               <p className="mt-3">
-                We also use Vercel Web Analytics, which measures page views without cookies or personal
-                identifiers. You can change your choice at any time.
+                Clarity provides aggregated interaction insights, heatmaps, and session recordings. All page
+                content, personal information, forms, candidate details, and sensitive fields are masked so
+                their contents are not uploaded in recordings. We do not send your name, email, form content,
+                or candidate details to Google Analytics. We also use Vercel Web Analytics, which measures page
+                views without cookies or personal identifiers. You can change your choice at any time; on
+                withdrawal, analytics tracking is stopped and applicable first-party analytics cookies are
+                removed.
               </p>
               <ManageCookiesButton />
             </Section>
