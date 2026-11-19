@@ -1,3 +1,4 @@
+import { ManageCookiesButton } from "@/components/cookie-consent"
 import type { Metadata } from "next"
 import Link from "next/link"
 import { SiteHeader } from "@/components/site-header"
@@ -67,7 +68,7 @@ export default function PrivacyPage() {
             <h1 className="ion-density-page-title mt-3 text-3xl font-bold text-gray-900 md:text-4xl text-balance">
               Candidate Privacy Notice
             </h1>
-            <p className="mt-3 text-sm text-gray-500">Last updated: August 2026</p>
+            <p className="mt-3 text-sm text-gray-500">Last updated: November 2026</p>
           </div>
         </section>
 
@@ -201,6 +202,27 @@ export default function PrivacyPage() {
                 </a>
                 .
               </p>
+            </Section>
+
+            <Section id="cookies" title="Cookies and analytics">
+              <p>
+                With your consent, we use Google Analytics 4 and Microsoft Clarity to understand how visitors
+                use our website, for example which pages are viewed, whether forms are completed, and how
+                visitors interact with page layouts. Their analytics tags and cookies (such as <code>_ga</code>,{" "}
+                <code>_clck</code>, and <code>_clsk</code>) are only loaded or set after you select
+                &ldquo;Accept&rdquo; in our cookie notice. If you decline, or have not yet chosen, neither tag is
+                loaded. Analytics data is not used for advertising.
+              </p>
+              <p className="mt-3">
+                Clarity provides aggregated interaction insights, heatmaps, and session recordings. All page
+                content, personal information, forms, candidate details, and sensitive fields are masked so
+                their contents are not uploaded in recordings. We do not send your name, email, form content,
+                or candidate details to Google Analytics. We also use Vercel Web Analytics, which measures page
+                views without cookies or personal identifiers. You can change your choice at any time; on
+                withdrawal, analytics tracking is stopped and applicable first-party analytics cookies are
+                removed.
+              </p>
+              <ManageCookiesButton />
             </Section>
 
             <Section id="contact" title="Contact us">

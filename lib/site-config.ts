@@ -28,3 +28,19 @@ export const SALARY_GUIDE_PAGE_URL = `${SITE_URL}${SALARY_GUIDE_PAGE_PATH}`
 /** Public, static PDF asset — served directly, never proxied through an API route. */
 export const SALARY_GUIDE_PDF_PATH = "/resources/ion-talent-uae-saudi-salary-hiring-guide-2026.pdf"
 export const SALARY_GUIDE_PDF_URL = `${SITE_URL}${SALARY_GUIDE_PDF_PATH}`
+
+/**
+ * Google Analytics 4 measurement ID. Loaded with Consent Mode v2 (denied by
+ * default), so nothing is stored until a visitor accepts analytics cookies.
+ * Override with NEXT_PUBLIC_GA_MEASUREMENT_ID; set it to "off" to disable.
+ */
+const GA_ID_ENV = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
+export const GA_MEASUREMENT_ID = GA_ID_ENV === "off" ? "" : GA_ID_ENV || "G-4QYLE5KM0R"
+
+/**
+ * Microsoft Clarity project ID. The Clarity tag is injected only after the
+ * visitor grants analytics consent. Set the public environment value to
+ * "off" to disable it without changing the consent UI.
+ */
+const CLARITY_ID_ENV = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID
+export const CLARITY_PROJECT_ID = CLARITY_ID_ENV === "off" ? "" : CLARITY_ID_ENV || "zfiutjoe5i"
