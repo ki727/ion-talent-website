@@ -36,29 +36,33 @@ export function CookieConsent() {
     <div
       role="region"
       aria-label="Cookie preferences"
-      className="fixed inset-x-3 bottom-3 z-50 rounded-2xl border border-gray-200 bg-white/95 p-4 text-sm text-gray-700 shadow-[0_18px_48px_rgba(15,23,42,0.16)] backdrop-blur-xl sm:inset-x-auto sm:bottom-6 sm:left-6 sm:w-[360px]"
+      className="fixed bottom-3 left-1/2 z-50 w-[calc(100%-1.5rem)] max-w-[700px] -translate-x-1/2 rounded-xl border border-slate-200 bg-white/95 px-3 py-3 text-sm text-slate-800 shadow-[0_8px_28px_rgba(15,23,42,0.18)] backdrop-blur-md sm:bottom-5 sm:px-4"
     >
-      <p className="leading-relaxed">
-        We use analytics cookies to understand how our website is used. They are only set if you accept.{" "}
-        <Link href="/privacy#cookies" className="font-medium text-ion-navy underline underline-offset-2">
-          Privacy notice
-        </Link>
-      </p>
-      <div className="mt-3 flex gap-2">
-        <button
-          type="button"
-          onClick={() => choose("denied")}
-          className="inline-flex h-10 flex-1 items-center justify-center rounded-xl border border-gray-300 px-4 font-medium text-gray-700 transition-colors hover:border-ion-navy hover:text-ion-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal"
-        >
-          Decline
-        </button>
-        <button
-          type="button"
-          onClick={() => choose("granted")}
-          className="inline-flex h-10 flex-1 items-center justify-center rounded-xl bg-ion-navy px-4 font-medium text-white transition-colors hover:bg-ion-navy/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2"
-        >
-          Accept
-        </button>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+        <p className="min-w-0 flex-1 text-[13px] leading-5 sm:text-sm">
+          Optional analytics cookies help us improve this site.{" "}
+          <Link href="/privacy#cookies" className="font-medium text-slate-900 underline underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal">
+            Privacy &amp; cookies
+          </Link>
+        </p>
+        <div className="flex shrink-0 gap-2">
+          <button
+            type="button"
+            onClick={() => choose("denied")}
+            className="inline-flex h-10 min-w-[92px] flex-1 items-center justify-center rounded-lg border border-slate-400 px-4 font-semibold transition-colors hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2 sm:flex-none"
+            style={{ backgroundColor: "#ffffff", color: "#0f172a" }}
+          >
+            Decline
+          </button>
+          <button
+            type="button"
+            onClick={() => choose("granted")}
+            className="inline-flex h-10 min-w-[92px] flex-1 items-center justify-center rounded-lg border border-slate-900 px-4 font-semibold transition-colors hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal focus-visible:ring-offset-2 sm:flex-none"
+            style={{ backgroundColor: "#0f172a", color: "#ffffff" }}
+          >
+            Accept
+          </button>
+        </div>
       </div>
     </div>
   )
