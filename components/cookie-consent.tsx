@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { CONSENT_RESET_EVENT, readConsent, saveConsent } from "@/lib/consent"
+import { CONSENT_RESET_EVENT, needsConsentPrompt, saveConsent, setAnalyticsPolicy } from "@/lib/consent"
 
 /**
  * Small analytics consent notice. Shown until the visitor accepts or declines;
@@ -14,10 +14,30 @@ export function CookieConsent() {
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    setOpen(readConsent() === null)
+    let active = true
     const reopen = () => setOpen(true)
     window.addEventListener(CONSENT_RESET_EVENT, reopen)
-    return () => window.removeEventListener(CONSENT_RESET_EVENT, reopen)
+
+    // No optional trackers start while the visitor's jurisdiction is unknown.
+    // Country classification is performed on the server; never infer from the
+    // browser timezone, language, or a user-provided request parameter.
+    fetch("/api/analytics-policy", { cache: "no-store" })
+      .then(async response => {
+        if (!response.ok) throw new Error("Analytics policy unavailable")
+        const data: { policy?: string } = await response.json()
+        return data.policy === "notice-only" ? "notice-only" : "consent-required"
+      })
+      .catch(() => "consent-required" as const)
+      .then(policy => {
+        if (!active) return
+        setAnalyticsPolicy(policy)
+        setOpen(needsConsentPrompt())
+      })
+
+    return () => {
+      active = false
+      window.removeEventListener(CONSENT_RESET_EVENT, reopen)
+    }
   }, [])
 
   useEffect(() => {

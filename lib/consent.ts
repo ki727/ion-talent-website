@@ -5,16 +5,36 @@ export const CONSENT_CHANGE_EVENT = "ion-consent-change"
 /** Fired to re-open the cookie notice. */
 export const CONSENT_RESET_EVENT = "ion-consent-reset"
 
+/**
+ * The visitor's jurisdiction is determined by our server before analytics run.
+ * Unknown and unreviewed countries require an explicit analytics choice.
+ * "notice-only" is a narrowly allowlisted, non-persistent default, never a
+ * saved claim that the visitor clicked Accept.
+ */
+export type AnalyticsPolicy = "unresolved" | "consent-required" | "notice-only"
+let analyticsPolicy: AnalyticsPolicy = "unresolved"
+
+export function setAnalyticsPolicy(next: AnalyticsPolicy) {
+  if (analyticsPolicy === next) return
+  analyticsPolicy = next
+  window.dispatchEvent(new Event(CONSENT_CHANGE_EVENT))
+}
+
+export function needsConsentPrompt(): boolean {
+  return analyticsPolicy !== "notice-only" && readConsent() === null
+}
+
 type Gtag = (...args: unknown[]) => void
 type Clarity = (...args: unknown[]) => void
 
 export function readConsent(): "granted" | "denied" | null {
   try {
     const value = window.localStorage.getItem(CONSENT_STORAGE_KEY)
-    return value === "granted" || value === "denied" ? value : null
+    if (value === "granted" || value === "denied") return value
   } catch {
-    return null
+    // Storage may be unavailable. Still honour the active regional policy.
   }
+  return analyticsPolicy === "notice-only" ? "granted" : null
 }
 
 /** Removes first-party GA4 and Clarity cookies after analytics consent is withdrawn. */
