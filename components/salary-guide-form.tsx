@@ -42,7 +42,6 @@ const labelClass = "block text-sm font-semibold text-[#1a1a1a] mb-2"
 
 export function SalaryGuideForm() {
   const [form, setForm] = useState<FormState>(EMPTY_FORM)
-  const [marketingOptIn, setMarketingOptIn] = useState(false)
   const [companyWebsite, setCompanyWebsite] = useState("") // honeypot
   const [errors, setErrors] = useState<FormErrors>({})
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle")
@@ -86,7 +85,7 @@ export function SalaryGuideForm() {
           workEmail: form.workEmail.trim(),
           company: form.company.trim(),
           jobTitle: form.jobTitle.trim(),
-          marketingOptIn,
+          marketingOptIn: false,
           companyWebsite,
           pageUrl: typeof window !== "undefined" ? window.location.href : "",
         }),
@@ -271,16 +270,6 @@ export function SalaryGuideForm() {
           )}
         </div>
       </div>
-
-      <label className="flex items-start gap-3 text-sm text-gray-700">
-        <input
-          type="checkbox"
-          checked={marketingOptIn}
-          onChange={(e) => setMarketingOptIn(e.target.checked)}
-          className="mt-0.5 h-5 w-5 shrink-0 rounded border-gray-300 accent-ion-teal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal"
-        />
-        <span>I&apos;d like to receive occasional ION Talent hiring insights and market updates.</span>
-      </label>
 
       {status === "error" && (
         <div
