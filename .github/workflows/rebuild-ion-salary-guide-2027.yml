@@ -1,0 +1,30 @@
+name: Rebuild approved ION 2027 guide assets
+on:
+  push:
+    branches:
+      - fix/salary-guide-2027-final-assets
+    paths:
+      - .github/workflows/rebuild-ion-salary-guide-2027.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  asset-repair:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Install fonts and PDF tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y fonts-inter libcairo2
+          python3 -m pip install --user --break-system-packages pymupdf pillow cairosvg
+      - name: Rebuild and QA 2027 assets
+        run: python3 scripts/rebuild_salary_guide_2027.py
+      - name: Commit only approved PDF and cover
+        run: |
+          git config user.name "ION Guide Asset Build"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/resources/ion-talent-uae-saudi-salary-hiring-guide-2027.pdf public/resources/salary-guide-cover.webp
+          git diff --cached --quiet || (git commit -m "Fix 2027 PDF and approved editorial cover assets" && git push origin HEAD:fix/salary-guide-2027-final-assets)
