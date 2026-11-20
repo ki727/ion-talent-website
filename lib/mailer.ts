@@ -499,13 +499,13 @@ function buildSalaryGuideDownloadEmail(firstName: string, downloadUrl: string): 
       <tr>
         <td style="background:${NAVY};padding:32px 24px;">
           <img src="cid:${LOGO_CID}" width="136" height="31" alt="ION Talent" style="display:block;width:136px;height:31px;border:0;outline:none;" />
-          <h1 style="margin:18px 0 0;color:#FFFFFF;font-size:22px;font-weight:700;">Your 2026 Salary &amp; Hiring Guide</h1>
+          <h1 style="margin:18px 0 0;color:#FFFFFF;font-size:22px;font-weight:700;">Your 2027 Salary &amp; Hiring Guide</h1>
         </td>
       </tr>
       <tr>
         <td style="padding:28px 24px;">
           <p style="margin:0 0 16px;font-size:15px;color:#334155;line-height:1.6;">Hi ${esc(firstName)},</p>
-          <p style="margin:0 0 16px;font-size:15px;color:#334155;line-height:1.6;">Thanks for downloading the ION Talent UAE &amp; Saudi Arabia Salary &amp; Hiring Guide 2026.</p>
+          <p style="margin:0 0 16px;font-size:15px;color:#334155;line-height:1.6;">Thanks for downloading the ION Talent UAE &amp; Saudi Arabia Salary &amp; Hiring Guide 2027.</p>
           <p style="margin:0 0 24px;font-size:15px;color:#334155;line-height:1.6;">Your guide is ready below.</p>
           <table role="presentation" cellpadding="0" cellspacing="0">
             <tr>
@@ -572,7 +572,7 @@ export async function sendSalaryGuideLeadEmail(data: SalaryGuideLeadData) {
     from: { name: "ION Talent", address: "info@iontalentgroup.com" },
     to: data.workEmail,
     replyTo: "info@iontalentgroup.com",
-    subject: "Your ION Talent 2026 Salary & Hiring Guide",
+    subject: "Your ION Talent 2027 Salary & Hiring Guide",
     html: buildSalaryGuideDownloadEmail(data.firstName, SALARY_GUIDE_PDF_URL),
     attachments: [
       { filename: "ion-talent-logo.png", content: getLogoBuffer(), cid: LOGO_CID },

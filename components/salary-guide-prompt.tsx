@@ -74,7 +74,7 @@ export function SalaryGuidePrompt() {
         />
         <div className="min-w-0">
           <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-ion-violet-deep">
-            2026 Salary &amp; Hiring Guide
+            2027 Salary &amp; Hiring Guide
           </p>
           <h2 className="font-display text-base font-bold leading-snug text-ion-navy">
             UAE &amp; Saudi Arabia Salary &amp; Hiring Guide

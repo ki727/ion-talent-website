@@ -368,9 +368,9 @@ export default function HomePage() {
                     className="ion-home-salary-cover w-20 shrink-0 rounded-lg shadow-md ring-1 ring-black/5 sm:w-24 md:w-[140px] xl:w-32"
                   />
                   <div className="min-w-0">
-                    <p className="ion-card-eyebrow mb-1.5 md:mb-2">2026 Salary &amp; Hiring Guide</p>
+                    <p className="ion-card-eyebrow mb-1.5 md:mb-2">2027 Salary &amp; Hiring Guide</p>
                     <h2 className="ion-density-section-heading-small font-display text-lg font-bold text-ion-navy mb-1 text-balance sm:text-2xl md:mb-2 md:text-3xl">
-                      UAE &amp; Saudi Arabia Salary &amp; Hiring Guide 2026
+                      UAE &amp; Saudi Arabia Salary &amp; Hiring Guide 2027
                     </h2>
                     <p className="text-sm text-ion-gray leading-relaxed sm:text-base md:max-w-xl">
                       Explore salary benchmarks and hiring insight across key specialist and leadership functions.

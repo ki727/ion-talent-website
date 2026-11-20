@@ -26,7 +26,7 @@ export const SALARY_GUIDE_PAGE_PATH = "/salary-guide"
 export const SALARY_GUIDE_PAGE_URL = `${SITE_URL}${SALARY_GUIDE_PAGE_PATH}`
 
 /** Public, static PDF asset — served directly, never proxied through an API route. */
-export const SALARY_GUIDE_PDF_PATH = "/resources/ion-talent-uae-saudi-salary-hiring-guide-2026.pdf"
+export const SALARY_GUIDE_PDF_PATH = "/resources/ion-talent-uae-saudi-salary-hiring-guide-2027.pdf"
 export const SALARY_GUIDE_PDF_URL = `${SITE_URL}${SALARY_GUIDE_PDF_PATH}`
 
 /**

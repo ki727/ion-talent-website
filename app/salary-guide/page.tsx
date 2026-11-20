@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { SalaryGuideClient } from "@/components/salary-guide-client"
 import { SALARY_GUIDE_PAGE_URL, SITE_URL } from "@/lib/site-config"
 
-const TITLE = "UAE & Saudi Arabia Salary Guide 2026 | ION Talent"
+const TITLE = "UAE & Saudi Arabia Salary Guide 2027 | ION Talent"
 const DESCRIPTION =
   "Salary benchmarks and hiring insight across the UAE and Saudi Arabia for technology, engineering, finance, commercial, HR, transformation and executive talent."
 

@@ -3,7 +3,7 @@ import { ImageResponse } from "next/og"
 export const runtime = "edge"
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
-export const alt = "ION Talent — UAE & Saudi Arabia Salary & Hiring Guide 2026"
+export const alt = "ION Talent — UAE & Saudi Arabia Salary & Hiring Guide 2027"
 
 const NAVY = "#0F172A"
 const TEAL = "#0FA3A1"
@@ -36,7 +36,7 @@ export default function Image() {
             textTransform: "uppercase",
           }}
         >
-          2026 Salary &amp; Hiring Guide
+          2027 Salary &amp; Hiring Guide
         </div>
         <div style={{ display: "flex", marginTop: 24, fontSize: 58, fontWeight: 700, color: "#FFFFFF", lineHeight: 1.15 }}>
           UAE &amp; Saudi Arabia

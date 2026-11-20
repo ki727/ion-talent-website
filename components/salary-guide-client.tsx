@@ -47,7 +47,7 @@ const FUNCTION_SECTIONS = [
   },
   {
     title: "Compensation & Localisation",
-    description: "2026 package design and workforce planning considerations.",
+    description: "2027 package design and workforce planning considerations.",
   },
 ]
 
@@ -57,7 +57,7 @@ const CROSS_CUTTING_SECTIONS = [
     description: "Market mechanics, localisation and candidate mobility across both markets.",
   },
   {
-    title: "2026 Hiring Outlook",
+    title: "2027 Hiring Outlook",
     description: "UAE and Saudi hiring climate, compensation direction and talent pressure.",
   },
   {
@@ -85,12 +85,12 @@ export function SalaryGuideClient() {
             <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12 xl:gap-8">
               <FadeIn>
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ion-teal-bright">
-                  2026 Salary &amp; Hiring Guide
+                  2027 Salary &amp; Hiring Guide
                 </p>
                 <h1 className="ion-density-feature-title font-display mt-4 text-4xl font-bold leading-[1.1] text-white text-balance sm:text-5xl lg:text-6xl xl:text-[2.85rem]">
                   UAE &amp; Saudi Arabia
                   <br />
-                  Salary &amp; Hiring Guide 2026
+                  Salary &amp; Hiring Guide 2027
                 </h1>
                 <p className="mt-6 max-w-xl text-lg leading-relaxed ion-text-on-navy xl:mt-5">
                   Practical salary benchmarks and hiring insight across the UAE and Saudi Arabia, covering
@@ -106,7 +106,7 @@ export function SalaryGuideClient() {
                     Get the Guide
                     <ArrowRight className="h-5 w-5" aria-hidden="true" />
                   </a>
-                  <p className="mt-3 text-sm text-white/60">Free download &middot; 2026 market data &middot; UAE &amp; Saudi Arabia</p>
+                  <p className="mt-3 text-sm text-white/60">Free download &middot; 2027 market data &middot; UAE &amp; Saudi Arabia</p>
                 </div>
               </FadeIn>
 
@@ -119,7 +119,7 @@ export function SalaryGuideClient() {
                   <div className="ion-gradient-rule absolute -top-3 left-6 right-6 opacity-90" aria-hidden="true" />
                   <img
                     src="/resources/salary-guide-cover.webp"
-                    alt="ION Talent UAE & Saudi Arabia Salary & Hiring Guide 2026 cover"
+                    alt="ION Talent UAE & Saudi Arabia Salary & Hiring Guide 2027 cover"
                     width={800}
                     height={1130}
                     className="w-full rounded-xl shadow-2xl ring-1 ring-white/10"
@@ -146,7 +146,7 @@ export function SalaryGuideClient() {
               <span className="ion-heading-underline ion-heading-underline--gradient mx-auto mt-6 xl:mt-5" aria-hidden="true" />
               <p className="mt-6 text-lg leading-relaxed text-ion-gray xl:mt-5">
                 A generalist GCC market view first, followed by salary benchmarks across ten specialist and
-                leadership functions — plus a direct UAE vs Saudi Arabia comparison, the 2026 hiring outlook, and
+                leadership functions — plus a direct UAE vs Saudi Arabia comparison, the 2027 hiring outlook, and
                 practical action points for employers and candidates.
               </p>
             </FadeIn>
