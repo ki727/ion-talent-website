@@ -68,6 +68,15 @@ doc.save(tmp,garbage=4,deflate=True)
 doc.close()
 inside=fitz.open(tmp)
 assert len(inside)==16
+# Restore the real September 2026 research date; this is not a 2027 research refresh.
+cutoff_page=inside[15]
+cutoff_hits=cutoff_page.search_for("Research cut-off: 9 September 2027.")
+assert len(cutoff_hits)==1, f"Research date not found: {cutoff_hits}"
+year_rect=fitz.Rect(172.85,300.0,195.5,310.0)
+cutoff_page.add_redact_annot(year_rect,fill=(1,1,1))
+cutoff_page.apply_redactions(images=0,graphics=0,text=0)
+cutoff_page.insert_font(fontname="CutoffInter",fontfile="/usr/share/fonts/opentype/inter/Inter-Regular.otf")
+cutoff_page.insert_text((173.4,307.65),"2026.",fontname="CutoffInter",fontsize=7.35,color=(0.09,0.14,0.24))
 # Use the real SVG identity from the website, never AI-drawn text.
 svg_path=ROOT/'public/brand/logo-primary-web.svg'
 raw=cairosvg.svg2png(url=str(svg_path),output_width=850)
