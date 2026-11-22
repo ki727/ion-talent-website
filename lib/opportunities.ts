@@ -132,8 +132,8 @@ export const opportunities: Opportunity[] = [
     locationLabel: "London",
     employmentLabel: "Permanent",
     employmentTypes: ["Permanent"],
-    seniority: "Director",
-    salaryRange: "AED 280,000 – 480,000 per annum",
+    seniority: "Senior Manager",
+    salaryRange: "Competitive London market package",
     description:
       "Financial control, consolidation and governance leadership roles across multinational and regional businesses in London.",
     overview:
@@ -150,10 +150,10 @@ export const opportunities: Opportunity[] = [
       "8+ years in financial control, preferably with Big Four grounding",
       "Strong IFRS knowledge and multi-entity consolidation experience",
       "ERP proficiency (SAP, Oracle or similar)",
-      "GCC experience preferred; MENA market knowledge an advantage",
+      "UK statutory reporting and financial control experience preferred",
     ],
     packageNotes:
-      "Packages include base salary, annual bonus, housing allowance and medical cover. Total compensation benchmarked against current London market rates.",
+      "Competitive London-market salary and benefits, depending on employer and experience.",
   },
   {
     id: "fpa-manager-director",
