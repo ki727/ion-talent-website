@@ -8,7 +8,7 @@
 export const SITE_URL = "https://www.iontalentgroup.com"
 
 /** One preview image for About and opportunity details, including square thumbnail crops. */
-export const SOCIAL_PREVIEW_PATH = "/brand/social-preview-v2.png"
+export const SOCIAL_PREVIEW_PATH = "/brand/social-preview-v3.png"
 export const SOCIAL_PREVIEW_IMAGE = {
   url: `${SITE_URL}${SOCIAL_PREVIEW_PATH}`,
   width: 1200,
