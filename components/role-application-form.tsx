@@ -246,7 +246,7 @@ export function RoleApplicationForm({
 
         <div className="md:col-span-2">
           <label htmlFor="app-linkedin" className={labelClass}>
-            LinkedIn URL <span className="font-normal text-gray-500">(optional)</span>
+            LinkedIn URL <span className="font-normal text-gray-500">(recommended)</span>
           </label>
           <input
             id="app-linkedin"
