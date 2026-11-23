@@ -7,6 +7,16 @@
 /** Canonical production origin, no trailing slash. */
 export const SITE_URL = "https://www.iontalentgroup.com"
 
+/** One preview image for About and opportunity details, including square thumbnail crops. */
+export const SOCIAL_PREVIEW_PATH = "/brand/social-preview-v2.png"
+export const SOCIAL_PREVIEW_IMAGE = {
+  url: `${SITE_URL}${SOCIAL_PREVIEW_PATH}`,
+  width: 1200,
+  height: 630,
+  type: "image/png",
+  alt: "ION Talent",
+}
+
 /** Public referral page — the only URL ever included in referral sharing actions. */
 export const REFERRAL_PAGE_PATH = "/refer"
 export const REFERRAL_PAGE_URL = `${SITE_URL}${REFERRAL_PAGE_PATH}`
