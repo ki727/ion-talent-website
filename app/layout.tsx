@@ -2,7 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Inter, Raleway } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
-import { LINKEDIN_COMPANY_URL, SITE_URL } from "@/lib/site-config"
+import { LINKEDIN_COMPANY_URL, SITE_URL, SOCIAL_PREVIEW_IMAGE } from "@/lib/site-config"
 import { SalaryGuidePrompt } from "@/components/salary-guide-prompt"
 import { GoogleAnalytics } from "@/components/google-analytics"
 import { MicrosoftClarity } from "@/components/microsoft-clarity"
@@ -39,11 +39,13 @@ export const metadata: Metadata = {
     type: "website",
     url: SITE_URL,
     siteName: SITE_NAME,
+    images: [SOCIAL_PREVIEW_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
+    images: [SOCIAL_PREVIEW_IMAGE],
   },
 }
 

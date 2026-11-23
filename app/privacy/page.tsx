@@ -3,7 +3,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
-import { SITE_URL } from "@/lib/site-config"
+import { SITE_URL, SOCIAL_PREVIEW_IMAGE } from "@/lib/site-config"
 
 const TITLE = "Candidate Privacy Notice | ION Talent"
 const DESCRIPTION =
@@ -21,13 +21,13 @@ export const metadata: Metadata = {
     type: "website",
     url: `${SITE_URL}/privacy`,
     siteName: "ION Talent",
-    images: [`${SITE_URL}/opengraph-image`],
+    images: [SOCIAL_PREVIEW_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: TITLE,
     description: DESCRIPTION,
-    images: [`${SITE_URL}/opengraph-image`],
+    images: [SOCIAL_PREVIEW_IMAGE],
   },
 }
 

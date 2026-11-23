@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
-import { SITE_URL } from "@/lib/site-config"
+import { SITE_URL, SOCIAL_PREVIEW_IMAGE } from "@/lib/site-config"
 
 const TITLE = "Referral Terms | ION Talent"
 const DESCRIPTION = "Terms and eligibility requirements for the ION Talent client referral reward."
@@ -19,13 +19,13 @@ export const metadata: Metadata = {
     type: "website",
     url: `${SITE_URL}/referral-terms`,
     siteName: "ION Talent",
-    images: [`${SITE_URL}/opengraph-image`],
+    images: [SOCIAL_PREVIEW_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: TITLE,
     description: DESCRIPTION,
-    images: [`${SITE_URL}/opengraph-image`],
+    images: [SOCIAL_PREVIEW_IMAGE],
   },
 }
 
