@@ -8,7 +8,7 @@ import { RoleApplicationForm } from "@/components/role-application-form"
 import { StickyApplyCta } from "@/components/sticky-apply-cta"
 import { RoleShareControls } from "@/components/role-share-controls"
 import { opportunities, isLiveVacancy, isShareable, getRoleTypeLabel, getApplyCtaLabel } from "@/lib/opportunities"
-import { SITE_URL } from "@/lib/site-config"
+import { SITE_URL, SOCIAL_PREVIEW_IMAGE } from "@/lib/site-config"
 import { IonLiquidAtmosphere } from "@/components/ion-liquid-atmosphere"
 import { IonInteractiveSurface } from "@/components/ion-interactive-surface"
 
@@ -48,6 +48,7 @@ export function generateMetadata({ params }: RolePageProps): Metadata {
       openGraph: {
         title: socialTitle,
         description: NETWORK_OG_DESCRIPTION,
+        images: [SOCIAL_PREVIEW_IMAGE],
         type: "website",
         url: canonical,
         siteName: "ION Talent",
@@ -56,6 +57,7 @@ export function generateMetadata({ params }: RolePageProps): Metadata {
         card: "summary_large_image",
         title: socialTitle,
         description: NETWORK_OG_DESCRIPTION,
+        images: [SOCIAL_PREVIEW_IMAGE],
       },
     }
   }
@@ -67,6 +69,7 @@ export function generateMetadata({ params }: RolePageProps): Metadata {
     openGraph: {
       title: socialTitle,
       description: opportunity.description,
+      images: [SOCIAL_PREVIEW_IMAGE],
       type: "website",
       url: canonical,
       siteName: "ION Talent",
@@ -75,6 +78,7 @@ export function generateMetadata({ params }: RolePageProps): Metadata {
       card: "summary_large_image",
       title: socialTitle,
       description: opportunity.description,
+      images: [SOCIAL_PREVIEW_IMAGE],
     },
   }
 }

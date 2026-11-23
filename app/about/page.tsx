@@ -4,7 +4,7 @@ import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { FadeIn } from "@/components/fade-in"
 import { StatCounter } from "@/components/stat-counter"
-import { SITE_URL } from "@/lib/site-config"
+import { SITE_URL, SOCIAL_PREVIEW_IMAGE } from "@/lib/site-config"
 
 const TITLE = "About ION Talent | Specialist Search. International Reach."
 const DESCRIPTION =
@@ -22,13 +22,13 @@ export const metadata: Metadata = {
     type: "website",
     url: `${SITE_URL}/about`,
     siteName: "ION Talent",
-    images: [`${SITE_URL}/opengraph-image`],
+    images: [SOCIAL_PREVIEW_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: TITLE,
     description: DESCRIPTION,
-    images: [`${SITE_URL}/opengraph-image`],
+    images: [SOCIAL_PREVIEW_IMAGE],
   },
 }
 
