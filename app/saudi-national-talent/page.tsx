@@ -5,7 +5,7 @@ import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { FadeIn } from "@/components/fade-in"
 import { CalendlyButton } from "@/components/calendly-button"
-import { SITE_URL } from "@/lib/site-config"
+import { SITE_URL, SOCIAL_PREVIEW_IMAGE } from "@/lib/site-config"
 
 const SOURCE = "saudi_national_talent"
 
@@ -25,13 +25,13 @@ export const metadata: Metadata = {
     type: "website",
     url: `${SITE_URL}/saudi-national-talent`,
     siteName: "ION Talent",
-    images: [`${SITE_URL}/opengraph-image`],
+    images: [SOCIAL_PREVIEW_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: TITLE,
     description: DESCRIPTION,
-    images: [`${SITE_URL}/opengraph-image`],
+    images: [SOCIAL_PREVIEW_IMAGE],
   },
 }
 
