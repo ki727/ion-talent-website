@@ -210,18 +210,18 @@ const updatesConsentRows = (optIn: boolean | undefined, timestamp: string, sourc
   ["Consent wording", optIn === true ? UPDATES_CONSENT_TEXT : undefined],
 ]
 
-function buildApplicationAcknowledgementEmail(data: ApplicationEmailData): string {
+function buildApplicationAcknowledgementEmail(data: Pick<ApplicationEmailData, "firstName" | "roleTitle" | "marketingOptIn">, registration = false): string {
   return `<!doctype html>
 <html>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="x-apple-disable-message-reformatting" />
-    <title>Your application has been received</title>
+    <title>${registration ? "Your registration has been received" : "Your application has been received"}</title>
   </head>
   <body style="margin:0;padding:0;background:#F1F5F9;font-family:Arial,Helvetica,sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
     <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">
-      We have received your application for ${esc(data.roleTitle)}.
+      ${registration ? "We have received your registration." : `We have received your application for ${esc(data.roleTitle)}.`}
     </div>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;border-collapse:collapse;background:#F1F5F9;">
       <tr>
@@ -246,7 +246,7 @@ function buildApplicationAcknowledgementEmail(data: ApplicationEmailData): strin
                       <img src="cid:${ION_ICON_CID}" width="44" height="44" alt="" style="display:block;width:44px;height:44px;border:0;outline:none;" />
                     </td>
                     <td valign="middle" style="padding:0;">
-                      <h1 style="margin:0;color:#0F172A;font-size:24px;line-height:31px;font-weight:700;letter-spacing:-0.2px;">Your application has been received</h1>
+                      <h1 style="margin:0;color:#0F172A;font-size:24px;line-height:31px;font-weight:700;letter-spacing:-0.2px;">${registration ? "Your registration has been received" : "Your application has been received"}</h1>
                     </td>
                   </tr>
                 </table>
@@ -255,10 +255,10 @@ function buildApplicationAcknowledgementEmail(data: ApplicationEmailData): strin
             <tr>
               <td style="padding:14px 28px 8px;color:#334155;font-size:15px;line-height:24px;">
                 <p style="margin:0 0 18px;">Hi ${esc(data.firstName)},</p>
-                <p style="margin:0 0 18px;">Thank you for applying for <strong style="color:#0F172A;">${esc(data.roleTitle)}</strong> with ION Talent.</p>
-                <p style="margin:0 0 18px;">We&apos;ve received your application successfully.</p>
-                <p style="margin:0 0 18px;">Our team will review your experience against the requirements for this opportunity.</p>
-                <p style="margin:0 0 18px;">If your profile closely matches the role, a member of our team will contact you directly. Due to the volume of applications we receive, we may not be able to respond individually to every applicant.</p>
+                <p style="margin:0 0 18px;">${registration ? "Thank you for registering your interest in opportunities with ION Talent." : `Thank you for applying for <strong style="color:#0F172A;">${esc(data.roleTitle)}</strong> with ION Talent.`}</p>
+                <p style="margin:0 0 18px;">We&apos;ve received your ${registration ? "registration" : "application"} successfully.</p>
+                <p style="margin:0 0 18px;">${registration ? "Our team will review your experience against relevant current and future opportunities." : "Our team will review your experience against the requirements for this opportunity."}</p>
+                <p style="margin:0 0 18px;">If your profile closely matches ${registration ? "an opportunity" : "the role"}, a member of our team will contact you directly. Due to the volume of applications we receive, we may not be able to respond individually to every applicant.</p>
                 <p style="margin:0 0 24px;">We wish you every success with your search and hope to have the opportunity to work with you.</p>
               </td>
             </tr>
@@ -362,7 +362,7 @@ export interface CandidateRegistrationEmailData {
   coverNote?: string
   timestamp: string
   marketingOptIn?: boolean
-  cvFile: { filename: string; content: Buffer }
+  cvFile?: { filename: string; content: Buffer }
 }
 
 export async function sendCandidateRegistrationEmail(data: CandidateRegistrationEmailData) {
@@ -384,36 +384,25 @@ export async function sendCandidateRegistrationEmail(data: CandidateRegistration
       ["Notice Period", data.noticePeriod],
       ["Expected Salary", data.expectedSalary],
       ["Cover Note", data.coverNote],
-      ["CV Attached", data.cvFile.filename],
+      ["CV Attached", data.cvFile?.filename ?? "No CV - LinkedIn profile provided"],
       ["Submitted", data.timestamp],
       ...updatesConsentRows(data.marketingOptIn, data.timestamp, "Website candidate registration"),
     ]),
-    attachments: [data.cvFile],
+    attachments: data.cvFile ? [data.cvFile] : [],
   })
 
-  const acknowledgementHtml = `<!doctype html>
-<html>
-  <body style="margin:0;padding:24px;background:#F8FAFC;font-family:Arial,Helvetica,sans-serif;">
-    <table role="presentation" cellpadding="0" cellspacing="0" style="max-width:600px;margin:0 auto;background:#FFFFFF;border:1px solid ${BORDER};border-radius:14px;overflow:hidden;">
-      <tr><td style="background:${NAVY};padding:24px;">
-        <p style="margin:0;color:${TEAL};font-size:11px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;">ION Talent</p>
-        <h1 style="margin:8px 0 0;color:#FFFFFF;font-size:20px;font-weight:700;">Thank you, ${esc(data.fullName)}</h1>
-      </td></tr>
-      <tr><td style="padding:24px;">
-        <p style="font-size:14px;color:#334155;line-height:1.6;">Thank you for registering your interest with ION Talent. Your details have been added to our specialist network for <strong>${esc(data.desiredRole)}</strong> opportunities.</p>
-        <p style="font-size:14px;color:#334155;line-height:1.6;">We review registrations carefully and will be in touch when your experience matches a relevant live requirement.</p>
-        ${data.marketingOptIn === true ? "" : `<p style="font-size:13px;color:#334155;"><a href="${UPDATES_SUBSCRIBE_URL}">Subscribe to ION Talent updates</a> by sending us your permission by email. Optional; unsubscribe at any time.</p>`}
-        <p style="font-size:13px;color:#64748B;margin-top:24px;">ION Talent</p>
-      </td></tr>
-    </table>
-  </body>
-</html>`
+  const acknowledgementHtml = buildApplicationAcknowledgementEmail({ firstName: data.fullName.trim().split(/\s+/)[0], roleTitle: data.desiredRole, marketingOptIn: data.marketingOptIn }, true)
 
   await transporter.sendMail({
     from,
     to: data.email,
     subject: `Your ION Talent registration - ${data.desiredRole}`,
     html: acknowledgementHtml,
+    attachments: [
+      { filename: "ion-talent-logo.png", content: getLogoBuffer(), cid: LOGO_CID },
+      { filename: "ion-icon.png", content: getIonIconBuffer(), cid: ION_ICON_CID },
+      { filename: "linkedin-icon.png", content: getLinkedInIconBuffer(), cid: LINKEDIN_ICON_CID },
+    ],
   })
 }
 

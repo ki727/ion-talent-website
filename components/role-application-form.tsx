@@ -35,6 +35,8 @@ function CompletionTick({ valid }: { valid: boolean }) {
 }
 
 interface RoleApplicationFormProps {
+  mode?: "application" | "registration"
+  selectedRole?: string
   roleTitle: string
   roleUrl: string
   roleCategory: string
@@ -54,12 +56,17 @@ function validateFile(file: File | null): string {
 }
 
 export function RoleApplicationForm({
+  mode = "application",
+  selectedRole = "",
   roleTitle,
   roleUrl,
   roleCategory,
   roleLocation,
   roleType,
 }: RoleApplicationFormProps) {
+  const isRegistration = mode === "registration"
+  const [desiredRole, setDesiredRole] = useState(selectedRole)
+  useEffect(() => { if (isRegistration && selectedRole) setDesiredRole(selectedRole) }, [isRegistration, selectedRole])
   const [fullName, setFullName] = useState("")
   const [email, setEmail] = useState("")
   const [phone, setPhone] = useState("")
@@ -70,7 +77,7 @@ export function RoleApplicationForm({
   const [expectedSalary, setExpectedSalary] = useState("")
   const [currentCurrency, setCurrentCurrency] = useState("")
   const [expectedCurrency, setExpectedCurrency] = useState("")
-  const showCurrentSalary = asksCurrentSalary(roleLocation)
+  const showCurrentSalary = !isRegistration && asksCurrentSalary(roleLocation)
   const [marketingOptIn, setMarketingOptIn] = useState(false)
   const [companyWebsite, setCompanyWebsite] = useState("") // honeypot
   const [cvFile, setCvFile] = useState<File | null>(null)
@@ -104,7 +111,7 @@ export function RoleApplicationForm({
     e.preventDefault()
     if (status === "submitting") return
 
-    if (!fullName.trim() || !email.trim() || !phone.trim() || !currentLocation.trim() || !noticePeriod || !expectedSalary.trim() || (showCurrentSalary && !currentSalary.trim())) {
+    if (!fullName.trim() || !email.trim() || !phone.trim() || !currentLocation.trim() || !noticePeriod || !expectedSalary.trim() || (showCurrentSalary && !currentSalary.trim()) || (isRegistration && !desiredRole.trim())) {
       setStatus("error")
       setErrorMessage("Please complete all required fields.")
       return
@@ -157,21 +164,28 @@ export function RoleApplicationForm({
       formData.set("expectedCurrency", expectedCurrency)
       formData.set("marketingOptIn", marketingOptIn ? "true" : "false")
       formData.set("companyWebsite", companyWebsite)
-      formData.set("roleTitle", roleTitle)
-      formData.set("roleUrl", typeof window !== "undefined" ? window.location.href : roleUrl)
-      formData.set("roleCategory", roleCategory)
-      formData.set("roleLocation", roleLocation)
-      formData.set("roleType", roleType)
+      if (isRegistration) {
+        formData.set("fullName", fullName.trim())
+        formData.set("mobile", phone.trim())
+        formData.set("desiredRole", desiredRole.trim())
+      } else {
+        formData.set("roleTitle", roleTitle)
+        formData.set("roleUrl", typeof window !== "undefined" ? window.location.href : roleUrl)
+        formData.set("roleCategory", roleCategory)
+        formData.set("roleLocation", roleLocation)
+        formData.set("roleType", roleType)
+      }
       if (cvFile) formData.set("cv", cvFile, cvFile.name)
 
-      const res = await fetch("/api/applications", { method: "POST", body: formData })
+      const res = await fetch(isRegistration ? "/api/register-interest" : "/api/applications", { method: "POST", body: formData })
       const result = await res.json().catch(() => null)
 
       if (!res.ok || !result?.success) {
         throw new Error(result?.message || "We couldn't send your submission. Please try again.")
       }
 
-      trackEvent("candidate_application_success", { roleType })
+      if (isRegistration) trackEvent("candidate_registration_success", { source: "general_registration" })
+      else trackEvent("candidate_application_success", { roleType })
       setStatus("success")
       // Clear the form now that a genuine success has been confirmed.
       setFullName("")
@@ -242,9 +256,9 @@ export function RoleApplicationForm({
             }
           `}</style>
         </div>
-        <h3 className="mt-4 text-2xl font-bold tracking-tight text-white sm:text-3xl">Application submitted successfully</h3>
+        <h3 className="mt-4 text-2xl font-bold tracking-tight text-white sm:text-3xl">{isRegistration ? "Registration submitted successfully" : "Application submitted successfully"}</h3>
         <p className="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-slate-200 sm:text-base">
-          Thank you for applying. We&apos;ll be in touch if your experience matches the opportunity.
+          {isRegistration ? "Thank you for registering your interest. We’ll be in touch if your experience matches a relevant opportunity." : "Thank you for applying. We’ll be in touch if your experience matches the opportunity."}
         </p>
         <LinkedinFollowLink
           source="candidate_success"
@@ -259,7 +273,7 @@ export function RoleApplicationForm({
   }
 
   const isSubmitting = status === "submitting"
-  const idleLabel = "Submit application"
+  const idleLabel = isRegistration ? "Register your interest" : "Submit application"
   const nameValid = fullName.trim().length > 0
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())
   const phoneValid = validContactPhone(phone)
@@ -327,7 +341,7 @@ export function RoleApplicationForm({
             }
           `}</style>
         </div>
-        <div><h3 className="text-[1.4rem] leading-tight font-bold tracking-tight text-gray-900 md:text-[1.7rem]">Apply in under 60 seconds</h3><p className="mt-0.5 text-xs text-gray-600 sm:text-sm">No account required.</p></div>
+        <div><h3 className="text-[1.4rem] leading-tight font-bold tracking-tight text-gray-900 md:text-[1.7rem]">{isRegistration ? "Register in under 60 seconds" : "Apply in under 60 seconds"}</h3><p className="mt-0.5 text-xs text-gray-600 sm:text-sm">No account required.</p></div>
       </div>
       <style>{`
         .ion-application-field-complete:-webkit-autofill {
@@ -391,6 +405,12 @@ export function RoleApplicationForm({
             {NOTICE_PERIODS.map((period) => <option key={period} value={period}>{period}</option>)}
           </select>
         </div>
+        {isRegistration && (
+          <div className="md:col-span-2 lg:col-span-6">
+            <label htmlFor="app-desired-role" className={labelClass}>Desired role <RequiredMark /> <CompletionTick valid={Boolean(desiredRole.trim())} /></label>
+            <input id="app-desired-role" required maxLength={160} value={desiredRole} onChange={(e) => setDesiredRole(e.target.value)} placeholder="e.g. Data Engineering Lead" className={fieldClass(Boolean(desiredRole.trim()))} />
+          </div>
+        )}
         {showCurrentSalary && (
           <div className="min-w-0 md:col-span-2 lg:col-span-6">
             <label htmlFor="app-current-salary" className={labelClass}>Current fixed monthly salary <RequiredMark /> <CompletionTick valid={currentSalaryValid} /></label>

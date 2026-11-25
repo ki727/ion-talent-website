@@ -314,7 +314,7 @@ export function OpportunitiesClient() {
               opportunities.
             </p>
           </div>
-          <div className="ion-density-card relative overflow-hidden rounded-[20px] border border-gray-200 bg-white p-6 shadow-md sm:p-8 xl:p-6">
+          <div className="relative overflow-hidden rounded-[20px] border border-teal-100 bg-white p-4 shadow-md sm:p-6">
             <div className="ion-gradient-rule absolute top-0 left-0 right-0 opacity-70" aria-hidden="true" />
             <CandidateRegistrationForm selectedRole={selectedRole} />
           </div>
