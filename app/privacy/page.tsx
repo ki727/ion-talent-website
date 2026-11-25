@@ -123,7 +123,7 @@ export default function PrivacyPage() {
                 <li>Contact you regarding suitable opportunities</li>
                 <li>Respond to your enquiries</li>
                 <li>
-                  Send you relevant job and market updates, where you have opted in to receive them
+                  Send you job opportunities, salary guides and market insights by email, only where you have opted in to receive them
                 </li>
               </ul>
               <p>
@@ -136,8 +136,7 @@ export default function PrivacyPage() {
               <p>We process your personal data on the following legal bases:</p>
               <ul className="list-disc pl-5 space-y-1">
                 <li>
-                  <strong>Consent</strong> — you have provided explicit consent when submitting your
-                  registration, which you may withdraw at any time
+                  <strong>Consent</strong> — optional email updates require your separate affirmative opt-in. You may withdraw this consent at any time by unsubscribing or contacting us. Your application is not conditional on subscribing.
                 </li>
                 <li>
                   <strong>Legitimate interests</strong> — to operate our talent network and provide

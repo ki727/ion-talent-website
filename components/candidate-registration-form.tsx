@@ -364,6 +364,12 @@ export function CandidateRegistrationForm({ selectedRole = "" }: CandidateRegist
         </div>
       )}
 
+      <div className="mt-5 text-sm text-slate-700">
+        <label className="flex cursor-pointer items-start gap-3 leading-relaxed">
+          <input type="checkbox" name="marketingOptIn" value="true" defaultChecked={false} className="mt-1 h-4 w-4 shrink-0 accent-[#0FA3A1]" />
+          <span>I'd like to receive job opportunities, salary guides and market insights from ION Talent by email.<span className="mt-1 block text-xs text-slate-500">Optional. You can unsubscribe at any time.</span></span>
+        </label>
+      </div>
       <div className="mt-6 flex flex-col sm:flex-row items-center gap-4">
         <button
           type="submit"
