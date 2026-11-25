@@ -233,7 +233,7 @@ export function RoleApplicationForm({
             }
             .ion-application-stopwatch-hand {
               transform-origin: 12px 14px;
-              animation: ion-application-stopwatch-tick 60s steps(60, end) infinite;
+              animation: ion-application-stopwatch-tick 1.5s linear infinite;
             }
             @media (prefers-reduced-motion: reduce) {
               .ion-application-stopwatch-hand { animation: none; }
