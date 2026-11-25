@@ -19,7 +19,15 @@ const ACCEPTED_MIME = [
 
 const inputClass =
   "w-full h-11 rounded-lg border border-gray-300 bg-white px-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-ion-teal focus:border-transparent"
-const labelClass = "block text-sm font-medium text-gray-900 mb-1.5"
+const labelClass = "flex items-center gap-1.5 text-sm font-semibold text-[#087F8C] mb-1.5"
+
+function fieldClass(valid: boolean) {
+  return valid ? inputClass.replace("border-gray-300 bg-white", "border-[#71C5BA] bg-[#F0FDFA]") + " ion-application-field-complete" : inputClass
+}
+
+function CompletionTick({ valid }: { valid: boolean }) {
+  return valid ? <CheckCircle2 className="ml-auto h-4 w-4 shrink-0 text-[#0D9488]" aria-label="Completed" /> : null
+}
 
 interface RoleApplicationFormProps {
   roleTitle: string
@@ -203,6 +211,18 @@ export function RoleApplicationForm({
 
   const isSubmitting = status === "submitting"
   const idleLabel = "Submit application"
+  const nameValid = fullName.trim().length > 0
+  const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())
+  const phoneValid = validInternationalPhone(phone)
+  const locationValid = currentLocation.trim().length > 0
+  const noticeValid = NOTICE_PERIODS.some((period) => period === noticePeriod)
+  const currentAmountValid = validFixedSalary(currentSalary, "USD", true)
+  const expectedAmountValid = validFixedSalary(expectedSalary, "USD")
+  const currentSalaryValid = validFixedSalary(currentSalary, Number(currentSalary) === 0 ? "" : currentCurrency, true)
+  const expectedSalaryValid = validFixedSalary(expectedSalary, expectedCurrency)
+  const linkedinValid = Boolean(normalizedLinkedin(linkedin))
+  const cvValid = Boolean(cvFile && !validateFile(cvFile))
+  const profileValid = cvValid || linkedinValid
 
   return (
     <form onSubmit={handleSubmit} className="w-full">
@@ -260,16 +280,25 @@ export function RoleApplicationForm({
         </div>
         <div><h3 className="text-[1.4rem] leading-tight font-bold tracking-tight text-gray-900 md:text-[1.7rem]">Apply in under 60 seconds</h3><p className="mt-0.5 text-xs text-gray-600 sm:text-sm">No account required.</p></div>
       </div>
+      <style>{`
+        .ion-application-field-complete:-webkit-autofill {
+          -webkit-box-shadow: 0 0 0 1000px #F0FDFA inset;
+          -webkit-text-fill-color: #0F172A;
+        }
+        .ion-application-field-complete:autofill {
+          box-shadow: 0 0 0 1000px #F0FDFA inset;
+        }
+      `}</style>
       <div className="grid grid-cols-1 gap-x-4 gap-y-3 md:grid-cols-2 lg:grid-cols-6">
         <div className="md:col-span-2 lg:col-span-2">
-          <label htmlFor="app-full-name" className={labelClass}>Full name *</label>
+          <label htmlFor="app-full-name" className={labelClass}>Full name * <CompletionTick valid={nameValid} /></label>
           <input id="app-full-name" required autoComplete="name" value={fullName}
-            onChange={(e) => setFullName(e.target.value)} placeholder="Your full name" className={inputClass} maxLength={160} />
+            onChange={(e) => setFullName(e.target.value)} placeholder="Your full name" className={fieldClass(nameValid)} maxLength={160} />
         </div>
 
         <div className="lg:col-span-2">
           <label htmlFor="app-email" className={labelClass}>
-            Email address <span aria-hidden="true">*</span>
+            Email address <span aria-hidden="true">*</span><CompletionTick valid={emailValid} />
           </label>
           <input
             id="app-email"
@@ -280,13 +309,13 @@ export function RoleApplicationForm({
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@example.com"
-            className={inputClass}
+            className={fieldClass(emailValid)}
           />
         </div>
 
         <div className="lg:col-span-2">
           <label htmlFor="app-phone" className={labelClass}>
-            Phone number *
+            Phone number * <CompletionTick valid={phoneValid} />
           </label>
           <input
             id="app-phone"
@@ -297,29 +326,29 @@ export function RoleApplicationForm({
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             placeholder="Including international country code"
-            className={inputClass}
+            className={fieldClass(phoneValid)}
           />
         </div>
 
         <div className="lg:col-span-3">
-          <label htmlFor="app-location" className={labelClass}>Current location *</label>
+          <label htmlFor="app-location" className={labelClass}>Current location * <CompletionTick valid={locationValid} /></label>
           <input id="app-location" required autoComplete="off" value={currentLocation} onChange={(e) => setCurrentLocation(e.target.value)}
-            placeholder="City, country" className={inputClass} maxLength={160} />
+            placeholder="City, country" className={fieldClass(locationValid)} maxLength={160} />
         </div>
         <div className="lg:col-span-3">
-          <label htmlFor="app-notice" className={labelClass}>Notice period *</label>
-          <select id="app-notice" required value={noticePeriod} onChange={(e) => setNoticePeriod(e.target.value)} className={inputClass}>
+          <label htmlFor="app-notice" className={labelClass}>Notice period * <CompletionTick valid={noticeValid} /></label>
+          <select id="app-notice" required value={noticePeriod} onChange={(e) => setNoticePeriod(e.target.value)} className={fieldClass(noticeValid)}>
             <option value="" disabled>Select notice period</option>
             {NOTICE_PERIODS.map((period) => <option key={period} value={period}>{period}</option>)}
           </select>
         </div>
         {showCurrentSalary && (
           <div className="min-w-0 lg:col-span-3">
-            <label htmlFor="app-current-salary" className={labelClass}>Current fixed monthly salary *</label>
+            <label htmlFor="app-current-salary" className={labelClass}>Current fixed monthly salary * <CompletionTick valid={currentSalaryValid} /></label>
             <div className="grid grid-cols-[minmax(0,1fr)_7.75rem] gap-2">
-              <input id="app-current-salary" type="number" inputMode="decimal" min="0" max="999999999999.99" step="0.01" required value={currentSalary} onChange={(e) => setCurrentSalary(e.target.value)}
-                placeholder="Amount" className={inputClass} />
-              <select aria-label="Current salary currency" required={currentSalary === "" || Number(currentSalary) !== 0} disabled={currentSalary !== "" && Number(currentSalary) === 0} value={currentCurrency} onChange={(e) => setCurrentCurrency(e.target.value)} className={inputClass + " disabled:bg-gray-100 disabled:text-gray-400"}>
+              <input id="app-current-salary" type="text" inputMode="decimal" maxLength={15} required value={currentSalary} onChange={(e) => setCurrentSalary(e.target.value)}
+                placeholder="Amount" className={fieldClass(currentAmountValid)} />
+              <select aria-label="Current salary currency" required={currentSalary === "" || Number(currentSalary) !== 0} disabled={currentSalary !== "" && Number(currentSalary) === 0} value={currentCurrency} onChange={(e) => setCurrentCurrency(e.target.value)} className={fieldClass(Boolean(currentCurrency) && !(currentSalary !== "" && Number(currentSalary) === 0)) + " disabled:bg-gray-100 disabled:text-gray-400"}>
                 <option value="">Currency</option>
                 {SALARY_CURRENCIES.map((code) => <option key={code} value={code}>{code}</option>)}
               </select>
@@ -328,11 +357,11 @@ export function RoleApplicationForm({
           </div>
         )}
         <div className={showCurrentSalary ? "min-w-0 lg:col-span-3" : "min-w-0 md:col-span-2 lg:col-span-6"}>
-          <label htmlFor="app-expected-salary" className={labelClass}>Expected fixed monthly salary *</label>
+          <label htmlFor="app-expected-salary" className={labelClass}>Expected fixed monthly salary * <CompletionTick valid={expectedSalaryValid} /></label>
           <div className="grid grid-cols-[minmax(0,1fr)_7.75rem] gap-2">
-            <input id="app-expected-salary" type="number" inputMode="decimal" min="0.01" max="999999999999.99" step="0.01" required value={expectedSalary} onChange={(e) => setExpectedSalary(e.target.value)}
-              placeholder="Amount" className={inputClass} />
-            <select aria-label="Expected salary currency" required value={expectedCurrency} onChange={(e) => setExpectedCurrency(e.target.value)} className={inputClass}>
+            <input id="app-expected-salary" type="text" inputMode="decimal" maxLength={15} required value={expectedSalary} onChange={(e) => setExpectedSalary(e.target.value)}
+              placeholder="Amount" className={fieldClass(expectedAmountValid)} />
+            <select aria-label="Expected salary currency" required value={expectedCurrency} onChange={(e) => setExpectedCurrency(e.target.value)} className={fieldClass(Boolean(expectedCurrency))}>
               <option value="">Currency</option>
               {SALARY_CURRENCIES.map((code) => <option key={code} value={code}>{code}</option>)}
             </select>
@@ -340,13 +369,14 @@ export function RoleApplicationForm({
         </div>
         <p className="md:col-span-2 lg:col-span-6 text-xs text-gray-500">Including fixed allowances, excluding bonuses and commission.</p>
         <div className="md:col-span-2 lg:col-span-6 border-t border-gray-200 pt-3">
-          <h3 className="text-sm font-semibold text-gray-900">Your professional profile *</h3>
-          <p className="mt-1 text-xs text-gray-500">Upload your CV or share your LinkedIn profile. You can also provide both.</p>
+          <h3 className="flex items-center gap-2 text-base font-bold text-[#087F8C]">Your professional profile * <CompletionTick valid={profileValid} /></h3>
+          <p className="mt-1 text-sm font-semibold text-[#5546D7]">Upload your CV and/or share your LinkedIn profile.</p>
+          <p className="mt-0.5 text-xs text-slate-500">At least one is required. Both are welcome.</p>
         </div>
 
         <div className="min-w-0 lg:col-span-3">
           <label className={labelClass} htmlFor="app-cv">
-            CV upload
+            CV upload <CompletionTick valid={cvValid} />
           </label>
 
           {!cvFile ? (
@@ -371,10 +401,10 @@ export function RoleApplicationForm({
               />
             </label>
           ) : (
-            <div className="flex min-h-[90px] flex-col justify-center rounded-xl border border-gray-200 bg-white px-4 py-3">
+            <div className={"flex min-h-[90px] flex-col justify-center rounded-xl border px-4 py-3 " + (cvValid ? "border-[#71C5BA] bg-[#F0FDFA]" : "border-red-300 bg-red-50")}>
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2 min-w-0">
-                  <CheckCircle2 className="h-4 w-4 shrink-0 text-ion-teal" aria-hidden="true" />
+                  {cvValid ? <CheckCircle2 className="h-4 w-4 shrink-0 text-[#0D9488]" aria-hidden="true" /> : <AlertCircle className="h-4 w-4 shrink-0 text-red-600" aria-hidden="true" />}
                   <span className="text-sm font-medium text-gray-900 truncate">{cvFile.name}</span>
                   <span className="text-xs text-gray-500 shrink-0">({(cvFile.size / 1024 / 1024).toFixed(1)} MB)</span>
                 </div>
@@ -398,12 +428,12 @@ export function RoleApplicationForm({
         </div>
 
         <div className="min-w-0 lg:col-span-3">
-          <label htmlFor="app-linkedin" className={labelClass}>LinkedIn profile URL</label>
-          <div className="flex min-h-[90px] flex-col justify-center rounded-xl border border-[#D2E3F2] bg-[#F5F9FD] px-3 py-2">
+          <label htmlFor="app-linkedin" className={labelClass}>LinkedIn profile URL <CompletionTick valid={linkedinValid} /></label>
+          <div className={"flex min-h-[90px] flex-col justify-center rounded-xl border px-3 py-2 " + (linkedinValid ? "border-[#71C5BA] bg-[#F0FDFA]" : "border-[#D2E3F2] bg-[#F5F9FD]")}>
             <div className="flex items-center gap-2">
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#0A66C2] text-white"><Linkedin className="h-5 w-5" aria-hidden="true" /></span>
             <input id="app-linkedin" type="text" inputMode="url" autoComplete="url" value={linkedin}
-              onChange={(e) => { setLinkedin(e.target.value); setFileError("") }} placeholder="Paste your LinkedIn profile URL" className={inputClass} maxLength={500} />
+              onChange={(e) => { setLinkedin(e.target.value); setFileError("") }} placeholder="Paste your LinkedIn profile URL" className={fieldClass(linkedinValid)} maxLength={500} />
             </div>
             <p className="mt-1 text-center text-xs text-gray-500">Use your personal LinkedIn profile</p>
           </div>
