@@ -333,7 +333,7 @@ export function RoleApplicationForm({
         <div className="lg:col-span-3">
           <label htmlFor="app-location" className={labelClass}>Current location * <CompletionTick valid={locationValid} /></label>
           <input id="app-location" required autoComplete="off" value={currentLocation} onChange={(e) => setCurrentLocation(e.target.value)}
-            placeholder="City, country" className={fieldClass(locationValid)} maxLength={160} />
+            placeholder="City & Country" className={fieldClass(locationValid)} maxLength={160} />
         </div>
         <div className="lg:col-span-3">
           <label htmlFor="app-notice" className={labelClass}>Notice period * <CompletionTick valid={noticeValid} /></label>
