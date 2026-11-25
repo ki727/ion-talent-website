@@ -219,24 +219,22 @@ export function RoleApplicationForm({
       />
 
       <div className="mb-5 flex items-center gap-3 rounded-xl border border-teal-100 bg-gradient-to-r from-teal-50 via-white to-violet-50 px-4 py-3">
-        <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-[#0D9488] shadow-sm">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6" aria-hidden="true">
-            <path d="M10 2h4M12 2v3M18 5l2 2" />
-            <circle cx="12" cy="14" r="8" />
-            <g className="ion-application-stopwatch-hand"><path d="M12 14V9" /></g>
-            <circle cx="12" cy="14" r="0.75" fill="currentColor" stroke="none" />
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center" aria-hidden="true">
+          <svg viewBox="0 0 2048 2048" className="h-10 w-10 ion-application-brand-spin" focusable="false">
+            <circle cx="1024" cy="1024" r="892" fill="#0F172A"/>
+            <path d="M913 535 L1139 461 L1139 1591 L913 1591 Z" fill="#0FA3A1"/>
           </svg>
           <style>{`
-            @keyframes ion-application-stopwatch-tick {
+            @keyframes ion-application-brand-rotate {
               from { transform: rotate(0deg); }
               to { transform: rotate(360deg); }
             }
-            .ion-application-stopwatch-hand {
-              transform-origin: 12px 14px;
-              animation: ion-application-stopwatch-tick 1.5s linear infinite;
+            .ion-application-brand-spin {
+              transform-origin: center;
+              animation: ion-application-brand-rotate 1.5s linear infinite;
             }
             @media (prefers-reduced-motion: reduce) {
-              .ion-application-stopwatch-hand { animation: none; }
+              .ion-application-brand-spin { animation: none; }
             }
           `}</style>
         </div>
