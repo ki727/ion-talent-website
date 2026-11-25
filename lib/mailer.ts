@@ -184,6 +184,10 @@ export interface ApplicationEmailData {
   email: string
   phone?: string
   linkedin?: string
+  currentLocation: string
+  noticePeriod: string
+  currentSalary?: string
+  expectedSalary: string
   message?: string
   roleTitle: string
   roleUrl: string
@@ -192,7 +196,7 @@ export interface ApplicationEmailData {
   roleLocation: string
   roleType: string
   submittedAt: string
-  cvFile: { filename: string; content: Buffer }
+  cvFile?: { filename: string; content: Buffer }
 }
 
 const APPLICATION_MAILBOX = "apply@iontalentgroup.com"
@@ -208,7 +212,7 @@ function buildApplicationAcknowledgementEmail(data: ApplicationEmailData): strin
   </head>
   <body style="margin:0;padding:0;background:#F1F5F9;font-family:Arial,Helvetica,sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
     <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">
-      We have received your application and CV for ${esc(data.roleTitle)}.
+      We have received your application for ${esc(data.roleTitle)}.
     </div>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;border-collapse:collapse;background:#F1F5F9;">
       <tr>
@@ -243,7 +247,7 @@ function buildApplicationAcknowledgementEmail(data: ApplicationEmailData): strin
               <td style="padding:14px 28px 8px;color:#334155;font-size:15px;line-height:24px;">
                 <p style="margin:0 0 18px;">Hi ${esc(data.firstName)},</p>
                 <p style="margin:0 0 18px;">Thank you for applying for <strong style="color:#0F172A;">${esc(data.roleTitle)}</strong> with ION Talent.</p>
-                <p style="margin:0 0 18px;">We&apos;ve received your application and CV successfully.</p>
+                <p style="margin:0 0 18px;">We&apos;ve received your application successfully.</p>
                 <p style="margin:0 0 18px;">Our team will review your experience against the requirements for this opportunity.</p>
                 <p style="margin:0 0 18px;">If your profile closely matches the role, a member of our team will contact you directly. Due to the volume of applications we receive, we may not be able to respond individually to every applicant.</p>
                 <p style="margin:0 0 24px;">We wish you every success with your search and hope to have the opportunity to work with you.</p>
@@ -290,7 +294,7 @@ function buildApplicationAcknowledgementEmail(data: ApplicationEmailData): strin
 
 export async function sendApplicationEmail(data: ApplicationEmailData) {
   const transporter = getTransporter()
-  const fullName = `${data.firstName} ${data.lastName}`
+  const fullName = `${data.firstName} ${data.lastName}`.trim()
   await transporter.sendMail({
     from: { name: "ION Talent Website", address: APPLICATION_MAILBOX },
     to: APPLICATION_MAILBOX,
@@ -302,16 +306,19 @@ export async function sendApplicationEmail(data: ApplicationEmailData) {
       ["Email", data.email],
       ["Phone", data.phone],
       ["LinkedIn", data.linkedin],
-      ["Message", data.message],
+      ["Current Location", data.currentLocation],
+      ["Notice Period", data.noticePeriod],
+      ["Current Salary", data.currentSalary ?? "Not requested for this location"],
+      ["Expected Salary", data.expectedSalary],
       ["Role Title", data.roleTitle],
       ["Role URL", data.roleUrl],
       ["Role Category", data.roleCategory],
       ["Role Location", data.roleLocation],
       ["Role Type", data.roleType],
-      ["CV Attached", data.cvFile.filename],
+      ["CV Attached", data.cvFile?.filename ?? "No CV - LinkedIn profile provided"],
       ["Submitted", data.submittedAt],
     ]),
-    attachments: [data.cvFile],
+    attachments: data.cvFile ? [data.cvFile] : [],
   })
 
   await transporter.sendMail({

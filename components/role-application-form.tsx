@@ -3,9 +3,10 @@
 import type React from "react"
 
 import { useEffect, useRef, useState } from "react"
-import { AlertCircle, CheckCircle2, Loader2, Upload, X } from "lucide-react"
+import { AlertCircle, CheckCircle2, Linkedin, Loader2, Lock, Upload, X } from "lucide-react"
 import { LinkedinFollowLink } from "@/components/linkedin-follow-link"
 import { trackEvent } from "@/lib/analytics"
+import { asksCurrentSalary, NOTICE_PERIODS, normalizedLinkedin, validInternationalPhone } from "@/lib/application-screening"
 
 const MAX_CV_BYTES = 4 * 1024 * 1024 // 4 MB — see app/api/applications/route.ts for why
 const MAX_CV_LABEL = "4 MB"
@@ -46,12 +47,15 @@ export function RoleApplicationForm({
   roleLocation,
   roleType,
 }: RoleApplicationFormProps) {
-  const [firstName, setFirstName] = useState("")
-  const [lastName, setLastName] = useState("")
+  const [fullName, setFullName] = useState("")
   const [email, setEmail] = useState("")
   const [phone, setPhone] = useState("")
   const [linkedin, setLinkedin] = useState("")
-  const [message, setMessage] = useState("")
+  const [currentLocation, setCurrentLocation] = useState("")
+  const [noticePeriod, setNoticePeriod] = useState("")
+  const [currentSalary, setCurrentSalary] = useState("")
+  const [expectedSalary, setExpectedSalary] = useState("")
+  const showCurrentSalary = asksCurrentSalary(roleLocation)
   const [companyWebsite, setCompanyWebsite] = useState("") // honeypot
   const [cvFile, setCvFile] = useState<File | null>(null)
   const [fileError, setFileError] = useState("")
@@ -84,13 +88,28 @@ export function RoleApplicationForm({
     e.preventDefault()
     if (status === "submitting") return
 
-    if (!firstName.trim() || !lastName.trim() || !email.trim()) {
+    if (!fullName.trim() || !email.trim() || !phone.trim() || !currentLocation.trim() || !noticePeriod || !expectedSalary.trim() || (showCurrentSalary && !currentSalary.trim())) {
       setStatus("error")
       setErrorMessage("Please complete all required fields.")
       return
     }
 
-    const cvErr = validateFile(cvFile)
+    if (!validInternationalPhone(phone)) {
+      setStatus("error")
+      setErrorMessage("Please enter your phone number including the international country code.")
+      return
+    }
+    const profileUrl = normalizedLinkedin(linkedin)
+    if (linkedin.trim() && !profileUrl) {
+      setStatus("error")
+      setErrorMessage("Please enter a valid LinkedIn personal profile URL.")
+      return
+    }
+    if (!cvFile && !profileUrl) {
+      setFileError("Please upload your CV or provide your LinkedIn profile.")
+      return
+    }
+    const cvErr = cvFile ? validateFile(cvFile) : ""
     if (cvErr) {
       setFileError(cvErr)
       return
@@ -101,12 +120,16 @@ export function RoleApplicationForm({
 
     try {
       const formData = new FormData()
-      formData.set("firstName", firstName.trim())
-      formData.set("lastName", lastName.trim())
+      const [firstName, ...lastName] = fullName.trim().split(/\s+/)
+      formData.set("firstName", firstName)
+      formData.set("lastName", lastName.join(" "))
       formData.set("email", email.trim())
-      if (phone.trim()) formData.set("phone", phone.trim())
-      if (linkedin.trim()) formData.set("linkedin", linkedin.trim())
-      if (message.trim()) formData.set("message", message.trim())
+      formData.set("phone", phone.trim())
+      if (profileUrl) formData.set("linkedin", profileUrl)
+      formData.set("currentLocation", currentLocation.trim())
+      formData.set("noticePeriod", noticePeriod)
+      if (showCurrentSalary) formData.set("currentSalary", currentSalary.trim())
+      formData.set("expectedSalary", expectedSalary.trim())
       formData.set("companyWebsite", companyWebsite)
       formData.set("roleTitle", roleTitle)
       formData.set("roleUrl", typeof window !== "undefined" ? window.location.href : roleUrl)
@@ -119,18 +142,20 @@ export function RoleApplicationForm({
       const result = await res.json().catch(() => null)
 
       if (!res.ok || !result?.success) {
-        throw new Error("We couldn't send your submission. Please try again.")
+        throw new Error(result?.message || "We couldn't send your submission. Please try again.")
       }
 
       trackEvent("candidate_application_success", { roleType })
       setStatus("success")
       // Clear the form now that a genuine success has been confirmed.
-      setFirstName("")
-      setLastName("")
+      setFullName("")
       setEmail("")
       setPhone("")
       setLinkedin("")
-      setMessage("")
+      setCurrentLocation("")
+      setNoticePeriod("")
+      setCurrentSalary("")
+      setExpectedSalary("")
       setCvFile(null)
       if (fileInputRef.current) fileInputRef.current.value = ""
     } catch (err) {
@@ -148,9 +173,9 @@ export function RoleApplicationForm({
         aria-live="polite"
       >
         <CheckCircle2 className="mx-auto h-12 w-12 text-ion-teal" aria-hidden="true" />
-        <h3 className="mt-4 text-xl font-semibold text-gray-900">CV submitted successfully</h3>
+        <h3 className="mt-4 text-xl font-semibold text-gray-900">Application submitted successfully</h3>
         <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-gray-600">
-          Thanks. Your CV has been sent to ION Talent for this opportunity. We&apos;ll be in touch if your
+          Thanks. Your application has been sent to ION Talent for this opportunity. We&apos;ll be in touch if your
           experience matches the requirement.
         </p>
         <LinkedinFollowLink
@@ -164,10 +189,10 @@ export function RoleApplicationForm({
   }
 
   const isSubmitting = status === "submitting"
-  const idleLabel = roleType === "Live Vacancy" ? "Apply for this Role" : "Submit CV / Register Interest"
+  const idleLabel = "Submit application"
 
   return (
-    <form onSubmit={handleSubmit} className="ion-density-form-card rounded-2xl border border-gray-200 bg-white p-6 md:p-8" noValidate>
+    <form onSubmit={handleSubmit} className="ion-density-form-card rounded-2xl border border-gray-200 bg-white p-6 md:p-8">
       {/* Honeypot field — hidden from real visitors and assistive tech, left blank by them */}
       <input
         type="text"
@@ -180,35 +205,12 @@ export function RoleApplicationForm({
         className="hidden"
       />
 
-      <div className="ion-density-form-grid grid grid-cols-1 gap-5 md:grid-cols-2">
-        <div>
-          <label htmlFor="app-first-name" className={labelClass}>
-            First name <span aria-hidden="true">*</span>
-          </label>
-          <input
-            id="app-first-name"
-            required
-            autoComplete="given-name"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            placeholder="Your first name"
-            className={inputClass}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="app-last-name" className={labelClass}>
-            Last name <span aria-hidden="true">*</span>
-          </label>
-          <input
-            id="app-last-name"
-            required
-            autoComplete="family-name"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            placeholder="Your last name"
-            className={inputClass}
-          />
+      <div className="mb-5"><h3 className="text-lg font-semibold text-gray-900">Quick application</h3><p className="mt-1 text-sm text-gray-500">No account required.</p></div>
+      <div className="ion-density-form-grid grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="md:col-span-2">
+          <label htmlFor="app-full-name" className={labelClass}>Full name *</label>
+          <input id="app-full-name" required autoComplete="name" value={fullName}
+            onChange={(e) => setFullName(e.target.value)} placeholder="Your full name" className={inputClass} maxLength={160} />
         </div>
 
         <div>
@@ -230,38 +232,54 @@ export function RoleApplicationForm({
 
         <div>
           <label htmlFor="app-phone" className={labelClass}>
-            Phone <span className="font-normal text-gray-500">(optional)</span>
+            Phone number *
           </label>
           <input
             id="app-phone"
             type="tel"
+            required
             autoComplete="tel"
             inputMode="tel"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            placeholder="+971 50 000 0000"
+            placeholder="Including international country code"
             className={inputClass}
           />
         </div>
 
-        <div className="md:col-span-2">
-          <label htmlFor="app-linkedin" className={labelClass}>
-            LinkedIn URL <span className="font-normal text-gray-500">(recommended)</span>
-          </label>
-          <input
-            id="app-linkedin"
-            type="url"
-            inputMode="url"
-            value={linkedin}
-            onChange={(e) => setLinkedin(e.target.value)}
-            placeholder="https://linkedin.com/in/your-profile"
-            className={inputClass}
-          />
+        <div>
+          <label htmlFor="app-location" className={labelClass}>Current location *</label>
+          <input id="app-location" required autoComplete="off" value={currentLocation} onChange={(e) => setCurrentLocation(e.target.value)}
+            placeholder="City, country" className={inputClass} maxLength={160} />
+        </div>
+        <div>
+          <label htmlFor="app-notice" className={labelClass}>Notice period *</label>
+          <select id="app-notice" required value={noticePeriod} onChange={(e) => setNoticePeriod(e.target.value)} className={inputClass}>
+            <option value="" disabled>Select notice period</option>
+            {NOTICE_PERIODS.map((period) => <option key={period} value={period}>{period}</option>)}
+          </select>
+        </div>
+        {showCurrentSalary && (
+          <div>
+            <label htmlFor="app-current-salary" className={labelClass}>Current salary range *</label>
+            <input id="app-current-salary" required value={currentSalary} onChange={(e) => setCurrentSalary(e.target.value)}
+              placeholder="Amount, currency, monthly/annual" className={inputClass} maxLength={160} />
+            <p className="mt-1 text-xs text-gray-500">If not employed, enter "Not currently employed".</p>
+          </div>
+        )}
+        <div className={showCurrentSalary ? "" : "md:col-span-2"}>
+          <label htmlFor="app-expected-salary" className={labelClass}>Expected salary range *</label>
+          <input id="app-expected-salary" required value={expectedSalary} onChange={(e) => setExpectedSalary(e.target.value)}
+            placeholder="Amount, currency, monthly/annual" className={inputClass} maxLength={160} />
+        </div>
+        <div className="md:col-span-2 border-t border-gray-200 pt-4">
+          <h3 className="text-sm font-semibold text-gray-900">Your professional profile *</h3>
+          <p className="mt-1 text-xs text-gray-500">Provide either or both of the following.</p>
         </div>
 
         <div className="md:col-span-2">
           <label className={labelClass} htmlFor="app-cv">
-            CV upload <span aria-hidden="true">*</span>{" "}
+            CV upload{" "}
             <span className="font-normal text-gray-500">— PDF, DOC or DOCX, max {MAX_CV_LABEL}</span>
           </label>
 
@@ -314,18 +332,15 @@ export function RoleApplicationForm({
         </div>
 
         <div className="md:col-span-2">
-          <label htmlFor="app-message" className={labelClass}>
-            Short message <span className="font-normal text-gray-500">(optional)</span>
-          </label>
-          <textarea
-            id="app-message"
-            rows={3}
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder="Anything you'd like ION Talent to know."
-            className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-ion-teal focus:border-transparent"
-          />
+          <div className="mb-3 flex items-center gap-3 text-xs text-gray-500"><span className="h-px flex-1 bg-gray-200" />OR<span className="h-px flex-1 bg-gray-200" /></div>
+          <label htmlFor="app-linkedin" className={labelClass}>LinkedIn profile URL</label>
+          <div className="flex items-center gap-2">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#0A66C2] text-white"><Linkedin className="h-5 w-5" aria-hidden="true" /></span>
+            <input id="app-linkedin" type="text" inputMode="url" autoComplete="url" value={linkedin}
+              onChange={(e) => { setLinkedin(e.target.value); setFileError("") }} placeholder="Paste your LinkedIn profile URL" className={inputClass} maxLength={500} />
+          </div>
         </div>
+
       </div>
 
       {status === "error" && (
@@ -338,7 +353,8 @@ export function RoleApplicationForm({
         </div>
       )}
 
-      <div className="mt-6 flex flex-col sm:flex-row items-center gap-4">
+      <p className="mt-5 flex items-start gap-2 text-xs leading-relaxed text-gray-500"><Lock className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" /><span>Your details are treated confidentially and will not be shared with prospective employers without your permission. <a href="/privacy" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">Privacy Policy</a>.</span></p>
+      <div className="mt-4 flex flex-col sm:flex-row items-center gap-4">
         <button
           type="submit"
           disabled={isSubmitting}

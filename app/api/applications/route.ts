@@ -1,6 +1,8 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { sendApplicationEmail } from "@/lib/mailer"
 import { isDuplicateSubmission, releaseSubmission } from "@/lib/dedupe"
+import { asksCurrentSalary, NOTICE_PERIODS, normalizedLinkedin, validInternationalPhone } from "@/lib/application-screening"
+import { opportunities } from "@/lib/opportunities"
 
 // Kept comfortably under Vercel's serverless function request-body limit
 // (4.5 MB total, including all other form fields and multipart overhead).
@@ -32,7 +34,12 @@ export async function POST(request: NextRequest) {
     const lastName = String(formData.get("lastName") || "").trim()
     const email = String(formData.get("email") || "").trim()
     const phone = String(formData.get("phone") || "").trim() || undefined
-    const linkedin = String(formData.get("linkedin") || "").trim() || undefined
+    const linkedinInput = String(formData.get("linkedin") || "").trim()
+    const linkedin = normalizedLinkedin(linkedinInput) || undefined
+    const currentLocation = String(formData.get("currentLocation") || "").trim()
+    const noticePeriod = String(formData.get("noticePeriod") || "").trim()
+    const currentSalaryInput = String(formData.get("currentSalary") || "").trim()
+    const expectedSalary = String(formData.get("expectedSalary") || "").trim()
     const message = String(formData.get("message") || "").trim() || undefined
     const roleTitle = String(formData.get("roleTitle") || "").trim()
     const roleUrl = String(formData.get("roleUrl") || "").trim()
@@ -43,9 +50,6 @@ export async function POST(request: NextRequest) {
     if (!firstName) {
       return NextResponse.json({ success: false, message: "First name is required." }, { status: 400 })
     }
-    if (!lastName) {
-      return NextResponse.json({ success: false, message: "Last name is required." }, { status: 400 })
-    }
     if (!email || !EMAIL_RE.test(email)) {
       return NextResponse.json({ success: false, message: "A valid email is required." }, { status: 400 })
     }
@@ -53,23 +57,40 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, message: "Missing role information." }, { status: 400 })
     }
 
-    const cvFile = formData.get("cv")
-    if (!(cvFile instanceof File) || cvFile.size === 0) {
-      return NextResponse.json({ success: false, message: "Please attach your CV." }, { status: 400 })
+    // Resolve the role from the server-side catalogue, not user-supplied location metadata.
+    let rolePath = ""
+    try { rolePath = new URL(roleUrl, "https://iontalentgroup.com").pathname.replace(/\/$/, "") } catch { /* invalid URL */ }
+    const opportunity = opportunities.find((item) => rolePath === "/opportunities/" + item.slug && item.title === roleTitle)
+    if (!opportunity) {
+      return NextResponse.json({ success: false, message: "Missing or invalid role information." }, { status: 400 })
+    }
+    const currentSalary = asksCurrentSalary(opportunity.locationLabel) ? currentSalaryInput : undefined
+    if (!phone || !validInternationalPhone(phone)) {
+      return NextResponse.json({ success: false, message: "Please include a valid international phone number with country code." }, { status: 400 })
+    }
+    if (!currentLocation || currentLocation.length > 160 || !NOTICE_PERIODS.some((p) => p === noticePeriod) ||
+      !expectedSalary || expectedSalary.length > 160 || (currentSalary !== undefined && (!currentSalary || currentSalary.length > 160))) {
+      return NextResponse.json({ success: false, message: "Please complete all required screening fields." }, { status: 400 })
+    }
+    if (linkedinInput && !linkedin) {
+      return NextResponse.json({ success: false, message: "Please enter a valid LinkedIn personal profile URL." }, { status: 400 })
     }
 
-    const lowerName = cvFile.name.toLowerCase()
-    const validExtension = ACCEPTED_EXTENSIONS.some((ext) => lowerName.endsWith(ext))
-    const validMime = !cvFile.type || ACCEPTED_MIME.includes(cvFile.type)
-    if (!validExtension || !validMime) {
-      return NextResponse.json({ success: false, message: "CV must be a PDF, DOC or DOCX file." }, { status: 400 })
+    const cvEntry = formData.get("cv")
+    const cvFile = cvEntry instanceof File && cvEntry.size > 0 ? cvEntry : undefined
+    if (!cvFile && !linkedin) {
+      return NextResponse.json({ success: false, message: "Please upload your CV or provide a LinkedIn profile." }, { status: 400 })
     }
-
-    if (cvFile.size > MAX_CV_BYTES) {
-      return NextResponse.json(
-        { success: false, message: "CV must be 4 MB or smaller." },
-        { status: 400 },
-      )
+    if (cvFile) {
+      const lowerName = cvFile.name.toLowerCase()
+      const validExtension = ACCEPTED_EXTENSIONS.some((ext) => lowerName.endsWith(ext))
+      const validMime = !cvFile.type || ACCEPTED_MIME.includes(cvFile.type)
+      if (!validExtension || !validMime) {
+        return NextResponse.json({ success: false, message: "CV must be a PDF, DOC or DOCX file." }, { status: 400 })
+      }
+      if (cvFile.size > MAX_CV_BYTES) {
+        return NextResponse.json({ success: false, message: "CV must be 4 MB or smaller." }, { status: 400 })
+      }
     }
 
     // Best-effort de-dupe: a double-click on submit shouldn't send two emails.
@@ -78,7 +99,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: true, message: "Application already received." })
     }
 
-    const cvBuffer = Buffer.from(await cvFile.arrayBuffer())
+    const attachment = cvFile ? { filename: cvFile.name, content: Buffer.from(await cvFile.arrayBuffer()) } : undefined
 
     await sendApplicationEmail({
       firstName,
@@ -86,6 +107,10 @@ export async function POST(request: NextRequest) {
       email,
       phone,
       linkedin,
+      currentLocation,
+      noticePeriod,
+      currentSalary,
+      expectedSalary,
       message,
       roleTitle,
       roleUrl,
@@ -93,7 +118,7 @@ export async function POST(request: NextRequest) {
       roleLocation,
       roleType,
       submittedAt: new Date().toISOString(),
-      cvFile: { filename: cvFile.name, content: cvBuffer },
+      cvFile: attachment,
     })
 
     return NextResponse.json({ success: true, message: "Application sent." })

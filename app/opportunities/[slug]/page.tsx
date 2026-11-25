@@ -253,7 +253,7 @@ export default function RolePage({ params }: RolePageProps) {
                 {ctaLabel} for {opportunity.title}
               </h2>
               <p className="mx-auto mt-3 max-w-xl text-gray-600 leading-relaxed">
-                Share your details and CV — ION Talent will review your application and be in touch.
+                Share your details and a CV or LinkedIn profile. ION Talent will review your application and be in touch.
               </p>
             </div>
             <div className="ion-density-card relative overflow-hidden rounded-[20px] border border-gray-200 bg-white p-6 shadow-md sm:p-8 xl:p-7">
