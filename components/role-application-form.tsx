@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react"
 import { AlertCircle, ArrowRight, CheckCircle2, Linkedin, Loader2, Lock, Upload, X } from "lucide-react"
 import { LinkedinFollowLink } from "@/components/linkedin-follow-link"
 import { trackEvent } from "@/lib/analytics"
+import { LINKEDIN_COMPANY_URL } from "@/lib/site-config"
 import { asksCurrentSalary, NOTICE_PERIODS, normalizedLinkedin, validInternationalPhone, SALARY_CURRENCIES, validFixedSalary } from "@/lib/application-screening"
 
 const MAX_CV_BYTES = 4 * 1024 * 1024 // 4 MB — see app/api/applications/route.ts for why
@@ -193,21 +194,62 @@ export function RoleApplicationForm({
     return (
       <div
         ref={successRef}
-        className="rounded-2xl border border-ion-teal/30 bg-white p-8 text-center shadow-md"
+        className="relative isolate overflow-hidden rounded-2xl bg-[#0F172A] px-5 py-8 text-center shadow-lg sm:px-8 sm:py-10"
         role="status"
         aria-live="polite"
       >
-        <CheckCircle2 className="mx-auto h-12 w-12 text-ion-teal" aria-hidden="true" />
-        <h3 className="mt-4 text-xl font-semibold text-gray-900">Application submitted successfully</h3>
-        <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-gray-600">
-          Thanks. Your application has been sent to ION Talent for this opportunity. We&apos;ll be in touch if your
-          experience matches the requirement.
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_left,rgba(15,163,161,0.24),transparent_58%),radial-gradient(ellipse_at_bottom_right,rgba(118,96,223,0.24),transparent_60%)]" aria-hidden="true" />
+        <a href={LINKEDIN_COMPANY_URL} target="_blank" rel="noopener noreferrer"
+          onClick={() => trackEvent("linkedin_follow_click", { page: "candidate_success_logo" })}
+          className="mx-auto inline-flex rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+          aria-label="ION Talent on LinkedIn">
+          <img src="/brand/logo-white-web.svg" alt="ION Talent" className="h-8 w-auto sm:h-10" />
+        </a>
+        <div className="mx-auto mt-6 flex h-16 w-16 items-center justify-center" aria-hidden="true">
+          <div className="ion-application-icon-flip relative h-16 w-16">
+            <span className="ion-application-icon-clock absolute inset-0 flex items-center justify-center rounded-full bg-white text-[#0D9488] shadow-sm">
+              <CheckCircle2 className="h-10 w-10" />
+            </span>
+            <span className="ion-application-icon-logo absolute inset-0 flex items-center justify-center rounded-full bg-white">
+              <svg viewBox="0 0 2048 2048" className="h-16 w-16" focusable="false">
+                <circle cx="1024" cy="1024" r="892" fill="#0F172A"/>
+                <path d="M913 535 L1139 461 L1139 1591 L913 1591 Z" fill="#0FA3A1"/>
+              </svg>
+            </span>
+          </div>
+                    <style>{`
+            @keyframes ion-application-icon-turn {
+              0%, 38% { transform: rotateY(0deg); }
+              50%, 88% { transform: rotateY(180deg); }
+              100% { transform: rotateY(360deg); }
+            }
+            .ion-application-icon-flip {
+              transform-style: preserve-3d;
+              animation: ion-application-icon-turn 4s ease-in-out infinite;
+            }
+            .ion-application-icon-clock,
+            .ion-application-icon-logo {
+              backface-visibility: hidden;
+              -webkit-backface-visibility: hidden;
+            }
+            .ion-application-icon-logo { transform: rotateY(180deg); }
+            @media (prefers-reduced-motion: reduce) {
+              .ion-application-icon-flip { animation: none; }
+              .ion-application-icon-logo { visibility: hidden; }
+            }
+          `}</style>
+        </div>
+        <h3 className="mt-4 text-2xl font-bold tracking-tight text-white sm:text-3xl">Application submitted successfully</h3>
+        <p className="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-slate-200 sm:text-base">
+          Thank you for applying. We&apos;ll be in touch if your experience matches the opportunity.
         </p>
         <LinkedinFollowLink
           source="candidate_success"
-          className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-ion-teal-dark underline underline-offset-2 hover:text-ion-teal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-teal rounded-sm"
+          iconClassName="h-6 w-6"
+          className="mx-auto mt-6 inline-flex w-full max-w-md items-center justify-center gap-3 rounded-xl bg-[#0A66C2] px-4 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#084F96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white sm:w-auto sm:px-6 sm:text-base"
         >
-          Follow ION Talent on LinkedIn for future opportunities and hiring updates.
+          <span>Follow us on LinkedIn for the latest opportunities</span>
+          <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
         </LinkedinFollowLink>
       </div>
     )
@@ -347,9 +389,9 @@ export function RoleApplicationForm({
           </select>
         </div>
         {showCurrentSalary && (
-          <div className="min-w-0 lg:col-span-3">
+          <div className="min-w-0 md:col-span-2 lg:col-span-6">
             <label htmlFor="app-current-salary" className={labelClass}>Current fixed monthly salary <RequiredMark /> <CompletionTick valid={currentSalaryValid} /></label>
-            <div className="grid grid-cols-[minmax(0,1fr)_7.75rem] gap-2">
+            <div className="grid max-w-md grid-cols-[minmax(0,1fr)_7.75rem] gap-2">
               <input id="app-current-salary" type="text" inputMode="decimal" maxLength={15} required value={currentSalary} onChange={(e) => setCurrentSalary(e.target.value)}
                 placeholder="Amount" className={fieldClass(currentAmountValid)} />
               <select aria-label="Current salary currency" required={currentSalary === "" || Number(currentSalary) !== 0} disabled={currentSalary !== "" && Number(currentSalary) === 0} value={currentCurrency} onChange={(e) => setCurrentCurrency(e.target.value)} className={fieldClass(Boolean(currentCurrency) && !(currentSalary !== "" && Number(currentSalary) === 0)) + " disabled:bg-gray-100 disabled:text-gray-400"}>
@@ -360,9 +402,9 @@ export function RoleApplicationForm({
             <p className="mt-1 text-xs leading-relaxed text-slate-600">Enter 0 if not currently employed.</p>
           </div>
         )}
-        <div className={showCurrentSalary ? "min-w-0 lg:col-span-3" : "min-w-0 md:col-span-2 lg:col-span-6"}>
+        <div className="min-w-0 md:col-span-2 lg:col-span-6">
           <label htmlFor="app-expected-salary" className={labelClass}>Expected fixed monthly salary <RequiredMark /> <CompletionTick valid={expectedSalaryValid} /></label>
-          <div className="grid grid-cols-[minmax(0,1fr)_7.75rem] gap-2">
+          <div className="grid max-w-md grid-cols-[minmax(0,1fr)_7.75rem] gap-2">
             <input id="app-expected-salary" type="text" inputMode="decimal" maxLength={15} required value={expectedSalary} onChange={(e) => setExpectedSalary(e.target.value)}
               placeholder="Amount" className={fieldClass(expectedAmountValid)} />
             <select aria-label="Expected salary currency" required value={expectedCurrency} onChange={(e) => setExpectedCurrency(e.target.value)} className={fieldClass(Boolean(expectedCurrency))}>
@@ -370,6 +412,7 @@ export function RoleApplicationForm({
               {SALARY_CURRENCIES.map((code) => <option key={code} value={code}>{code}</option>)}
             </select>
           </div>
+          <p className="mt-1.5 text-xs leading-relaxed text-slate-600">This helps us identify opportunities aligned with your salary expectations. We will always endeavour to secure the best possible package for you.</p>
         </div>
         <p className="md:col-span-2 lg:col-span-6 -mt-1 text-xs leading-relaxed text-slate-600">Including fixed allowances, excluding bonuses and commission.</p>
         <div className="md:col-span-2 lg:col-span-6 border-t border-gray-200 pt-3">
