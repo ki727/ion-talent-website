@@ -74,6 +74,7 @@ export async function POST(request: NextRequest) {
       noticePeriod: fields.noticePeriod,
       expectedSalary: fields.expectedSalary,
       coverNote,
+      marketingOptIn: formData.get("marketingOptIn") === "true",
       timestamp: new Date().toISOString(),
       cvFile: {
         filename: cvFile.name,

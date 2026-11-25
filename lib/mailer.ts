@@ -196,10 +196,19 @@ export interface ApplicationEmailData {
   roleLocation: string
   roleType: string
   submittedAt: string
+  marketingOptIn?: boolean
   cvFile?: { filename: string; content: Buffer }
 }
 
 const APPLICATION_MAILBOX = "apply@iontalentgroup.com"
+const UPDATES_CONSENT_TEXT = "I\u0027d like to receive job opportunities, salary guides and market insights from ION Talent by email."
+const UPDATES_SUBSCRIBE_URL = "mailto:info@iontalentgroup.com?subject=ION%20Updates%20Opt-in&amp;body=" + encodeURIComponent(UPDATES_CONSENT_TEXT)
+const updatesConsentRows = (optIn: boolean | undefined, timestamp: string, source: string): Row[] => [
+  ["Updates opt-in", optIn === true ? "Yes" : "No"],
+  ["Consent timestamp", optIn === true ? timestamp : undefined],
+  ["Consent source", optIn === true ? source : undefined],
+  ["Consent wording", optIn === true ? UPDATES_CONSENT_TEXT : undefined],
+]
 
 function buildApplicationAcknowledgementEmail(data: ApplicationEmailData): string {
   return `<!doctype html>
@@ -271,6 +280,7 @@ function buildApplicationAcknowledgementEmail(data: ApplicationEmailData): strin
             </tr>
             <tr>
               <td style="padding:0 28px 30px;color:#334155;font-size:15px;line-height:24px;">
+                ${data.marketingOptIn === true ? "" : `<p style="margin:0 0 18px;font-size:13px;"><a href="${UPDATES_SUBSCRIBE_URL}" style="color:#0F172A;text-decoration:underline;">Subscribe to ION Talent updates</a> by sending us your permission by email. Optional; unsubscribe at any time.</p>`}
                 <p style="margin:0;">Best regards,<br /><strong style="color:#0F172A;">ION Talent Team</strong></p>
               </td>
             </tr>
@@ -299,7 +309,7 @@ export async function sendApplicationEmail(data: ApplicationEmailData) {
     from: { name: "ION Talent Website", address: APPLICATION_MAILBOX },
     to: APPLICATION_MAILBOX,
     replyTo: data.email,
-    subject: `Website Application | ${data.roleTitle} | ${fullName}`,
+    subject: `Website Application | ${data.roleTitle} | ${fullName}${data.marketingOptIn === true ? " | ION Updates Opt-in" : ""}`,
     html: buildEmail("Website Application", `${fullName} — ${data.roleTitle}`, [
       ["First Name", data.firstName],
       ["Last Name", data.lastName],
@@ -317,6 +327,7 @@ export async function sendApplicationEmail(data: ApplicationEmailData) {
       ["Role Type", data.roleType],
       ["CV Attached", data.cvFile?.filename ?? "No CV - LinkedIn profile provided"],
       ["Submitted", data.submittedAt],
+      ...updatesConsentRows(data.marketingOptIn, data.submittedAt, "Website role application"),
     ]),
     attachments: data.cvFile ? [data.cvFile] : [],
   })
@@ -350,6 +361,7 @@ export interface CandidateRegistrationEmailData {
   expectedSalary: string
   coverNote?: string
   timestamp: string
+  marketingOptIn?: boolean
   cvFile: { filename: string; content: Buffer }
 }
 
@@ -361,7 +373,7 @@ export async function sendCandidateRegistrationEmail(data: CandidateRegistration
     from,
     to: requireEnv("APPLICATION_TO"),
     replyTo: data.email,
-    subject: `Candidate Registration | ${data.desiredRole} | ${data.fullName}`,
+    subject: `Candidate Registration | ${data.desiredRole} | ${data.fullName}${data.marketingOptIn === true ? " | ION Updates Opt-in" : ""}`,
     html: buildEmail("Candidate Registration", `${data.fullName} - ${data.desiredRole}`, [
       ["Full Name", data.fullName],
       ["Email", data.email],
@@ -374,6 +386,7 @@ export async function sendCandidateRegistrationEmail(data: CandidateRegistration
       ["Cover Note", data.coverNote],
       ["CV Attached", data.cvFile.filename],
       ["Submitted", data.timestamp],
+      ...updatesConsentRows(data.marketingOptIn, data.timestamp, "Website candidate registration"),
     ]),
     attachments: [data.cvFile],
   })
@@ -389,6 +402,7 @@ export async function sendCandidateRegistrationEmail(data: CandidateRegistration
       <tr><td style="padding:24px;">
         <p style="font-size:14px;color:#334155;line-height:1.6;">Thank you for registering your interest with ION Talent. Your details have been added to our specialist network for <strong>${esc(data.desiredRole)}</strong> opportunities.</p>
         <p style="font-size:14px;color:#334155;line-height:1.6;">We review registrations carefully and will be in touch when your experience matches a relevant live requirement.</p>
+        ${data.marketingOptIn === true ? "" : `<p style="font-size:13px;color:#334155;"><a href="${UPDATES_SUBSCRIBE_URL}">Subscribe to ION Talent updates</a> by sending us your permission by email. Optional; unsubscribe at any time.</p>`}
         <p style="font-size:13px;color:#64748B;margin-top:24px;">ION Talent</p>
       </td></tr>
     </table>

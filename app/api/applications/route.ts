@@ -123,6 +123,7 @@ export async function POST(request: NextRequest) {
       roleCategory,
       roleLocation,
       roleType,
+      marketingOptIn: formData.get("marketingOptIn") === "true",
       submittedAt: new Date().toISOString(),
       cvFile: attachment,
     })

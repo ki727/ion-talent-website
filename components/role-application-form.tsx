@@ -71,6 +71,7 @@ export function RoleApplicationForm({
   const [currentCurrency, setCurrentCurrency] = useState("")
   const [expectedCurrency, setExpectedCurrency] = useState("")
   const showCurrentSalary = asksCurrentSalary(roleLocation)
+  const [marketingOptIn, setMarketingOptIn] = useState(false)
   const [companyWebsite, setCompanyWebsite] = useState("") // honeypot
   const [cvFile, setCvFile] = useState<File | null>(null)
   const [fileError, setFileError] = useState("")
@@ -154,6 +155,7 @@ export function RoleApplicationForm({
       }
       formData.set("expectedSalary", expectedSalary.trim())
       formData.set("expectedCurrency", expectedCurrency)
+      formData.set("marketingOptIn", marketingOptIn ? "true" : "false")
       formData.set("companyWebsite", companyWebsite)
       formData.set("roleTitle", roleTitle)
       formData.set("roleUrl", typeof window !== "undefined" ? window.location.href : roleUrl)
@@ -174,6 +176,7 @@ export function RoleApplicationForm({
       // Clear the form now that a genuine success has been confirmed.
       setFullName("")
       setEmail("")
+      setMarketingOptIn(false)
       setPhone("")
       setLinkedin("")
       setCurrentLocation("")
@@ -492,6 +495,12 @@ export function RoleApplicationForm({
         </div>
       )}
 
+      <div className="mt-5 text-sm text-slate-700">
+        <label className="flex cursor-pointer items-start gap-3 leading-relaxed">
+          <input type="checkbox" name="marketingOptIn" value="true" checked={marketingOptIn} onChange={(e) => setMarketingOptIn(e.target.checked)} className="mt-1 h-4 w-4 shrink-0 accent-[#0FA3A1]" />
+          <span>I'd like to receive job opportunities, salary guides and market insights from ION Talent by email.<span className="mt-1 block text-xs text-slate-500">Optional. You can unsubscribe at any time.</span></span>
+        </label>
+      </div>
       <p className="mt-4 flex items-start gap-2 text-xs leading-relaxed text-slate-600"><Lock className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" /><span>Your details are treated confidentially and will not be shared with prospective employers without your permission. <a href="/privacy" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">Privacy Policy</a>.</span></p>
       <div className="mt-3 flex flex-col sm:flex-row items-center gap-3">
         <button
