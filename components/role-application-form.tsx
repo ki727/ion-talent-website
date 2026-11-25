@@ -3,10 +3,10 @@
 import type React from "react"
 
 import { useEffect, useRef, useState } from "react"
-import { AlertCircle, CheckCircle2, Linkedin, Loader2, Lock, Upload, X } from "lucide-react"
+import { AlertCircle, CheckCircle2, Linkedin, Loader2, Lock, Timer, Upload, X } from "lucide-react"
 import { LinkedinFollowLink } from "@/components/linkedin-follow-link"
 import { trackEvent } from "@/lib/analytics"
-import { asksCurrentSalary, NOTICE_PERIODS, normalizedLinkedin, validInternationalPhone } from "@/lib/application-screening"
+import { asksCurrentSalary, NOTICE_PERIODS, normalizedLinkedin, validInternationalPhone, SALARY_CURRENCIES, validFixedSalary } from "@/lib/application-screening"
 
 const MAX_CV_BYTES = 4 * 1024 * 1024 // 4 MB — see app/api/applications/route.ts for why
 const MAX_CV_LABEL = "4 MB"
@@ -55,6 +55,8 @@ export function RoleApplicationForm({
   const [noticePeriod, setNoticePeriod] = useState("")
   const [currentSalary, setCurrentSalary] = useState("")
   const [expectedSalary, setExpectedSalary] = useState("")
+  const [currentCurrency, setCurrentCurrency] = useState("")
+  const [expectedCurrency, setExpectedCurrency] = useState("")
   const showCurrentSalary = asksCurrentSalary(roleLocation)
   const [companyWebsite, setCompanyWebsite] = useState("") // honeypot
   const [cvFile, setCvFile] = useState<File | null>(null)
@@ -94,6 +96,11 @@ export function RoleApplicationForm({
       return
     }
 
+    if (!validFixedSalary(expectedSalary, expectedCurrency) || (showCurrentSalary && !validFixedSalary(currentSalary, Number(currentSalary) === 0 ? "" : currentCurrency, true))) {
+      setStatus("error")
+      setErrorMessage("Please enter valid fixed monthly salary amounts and select their currencies. Enter 0 for current salary if not employed.")
+      return
+    }
     if (!validInternationalPhone(phone)) {
       setStatus("error")
       setErrorMessage("Please enter your phone number including the international country code.")
@@ -128,8 +135,12 @@ export function RoleApplicationForm({
       if (profileUrl) formData.set("linkedin", profileUrl)
       formData.set("currentLocation", currentLocation.trim())
       formData.set("noticePeriod", noticePeriod)
-      if (showCurrentSalary) formData.set("currentSalary", currentSalary.trim())
+      if (showCurrentSalary) {
+        formData.set("currentSalary", currentSalary.trim())
+        formData.set("currentCurrency", Number(currentSalary) === 0 ? "" : currentCurrency)
+      }
       formData.set("expectedSalary", expectedSalary.trim())
+      formData.set("expectedCurrency", expectedCurrency)
       formData.set("companyWebsite", companyWebsite)
       formData.set("roleTitle", roleTitle)
       formData.set("roleUrl", typeof window !== "undefined" ? window.location.href : roleUrl)
@@ -156,6 +167,8 @@ export function RoleApplicationForm({
       setNoticePeriod("")
       setCurrentSalary("")
       setExpectedSalary("")
+      setCurrentCurrency("")
+      setExpectedCurrency("")
       setCvFile(null)
       if (fileInputRef.current) fileInputRef.current.value = ""
     } catch (err) {
@@ -192,7 +205,7 @@ export function RoleApplicationForm({
   const idleLabel = "Submit application"
 
   return (
-    <form onSubmit={handleSubmit} className="ion-density-form-card rounded-2xl border border-gray-200 bg-white p-6 md:p-8">
+    <form onSubmit={handleSubmit} className="w-full">
       {/* Honeypot field — hidden from real visitors and assistive tech, left blank by them */}
       <input
         type="text"
@@ -205,15 +218,18 @@ export function RoleApplicationForm({
         className="hidden"
       />
 
-      <div className="mb-5"><h3 className="text-lg font-semibold text-gray-900">Quick application</h3><p className="mt-1 text-sm text-gray-500">No account required.</p></div>
-      <div className="ion-density-form-grid grid grid-cols-1 gap-4 md:grid-cols-2">
-        <div className="md:col-span-2">
+      <div className="mb-5 flex items-center gap-3 rounded-xl border border-teal-100 bg-gradient-to-r from-teal-50 via-white to-violet-50 px-4 py-3">
+        <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-ion-teal shadow-sm"><Timer className="h-5 w-5" aria-hidden="true" /><span aria-hidden="true" className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-ion-teal motion-safe:animate-pulse" /></div>
+        <div><h3 className="text-xl font-bold tracking-tight text-gray-900 md:text-2xl">Apply in under 60 seconds</h3><p className="mt-0.5 text-xs text-gray-600 sm:text-sm">No account required.</p></div>
+      </div>
+      <div className="grid grid-cols-1 gap-x-4 gap-y-3 md:grid-cols-2 lg:grid-cols-6">
+        <div className="md:col-span-2 lg:col-span-2">
           <label htmlFor="app-full-name" className={labelClass}>Full name *</label>
           <input id="app-full-name" required autoComplete="name" value={fullName}
             onChange={(e) => setFullName(e.target.value)} placeholder="Your full name" className={inputClass} maxLength={160} />
         </div>
 
-        <div>
+        <div className="lg:col-span-2">
           <label htmlFor="app-email" className={labelClass}>
             Email address <span aria-hidden="true">*</span>
           </label>
@@ -230,7 +246,7 @@ export function RoleApplicationForm({
           />
         </div>
 
-        <div>
+        <div className="lg:col-span-2">
           <label htmlFor="app-phone" className={labelClass}>
             Phone number *
           </label>
@@ -247,12 +263,12 @@ export function RoleApplicationForm({
           />
         </div>
 
-        <div>
+        <div className="lg:col-span-3">
           <label htmlFor="app-location" className={labelClass}>Current location *</label>
           <input id="app-location" required autoComplete="off" value={currentLocation} onChange={(e) => setCurrentLocation(e.target.value)}
             placeholder="City, country" className={inputClass} maxLength={160} />
         </div>
-        <div>
+        <div className="lg:col-span-3">
           <label htmlFor="app-notice" className={labelClass}>Notice period *</label>
           <select id="app-notice" required value={noticePeriod} onChange={(e) => setNoticePeriod(e.target.value)} className={inputClass}>
             <option value="" disabled>Select notice period</option>
@@ -260,35 +276,47 @@ export function RoleApplicationForm({
           </select>
         </div>
         {showCurrentSalary && (
-          <div>
-            <label htmlFor="app-current-salary" className={labelClass}>Current salary range *</label>
-            <input id="app-current-salary" required value={currentSalary} onChange={(e) => setCurrentSalary(e.target.value)}
-              placeholder="Amount, currency, monthly/annual" className={inputClass} maxLength={160} />
-            <p className="mt-1 text-xs text-gray-500">If not employed, enter "Not currently employed".</p>
+          <div className="min-w-0 lg:col-span-3">
+            <label htmlFor="app-current-salary" className={labelClass}>Current fixed monthly salary *</label>
+            <div className="grid grid-cols-[minmax(0,1fr)_6.5rem] gap-2">
+              <input id="app-current-salary" type="number" inputMode="decimal" min="0" max="999999999999.99" step="0.01" required value={currentSalary} onChange={(e) => setCurrentSalary(e.target.value)}
+                placeholder="Amount" className={inputClass} />
+              <select aria-label="Current salary currency" required={currentSalary === "" || Number(currentSalary) !== 0} disabled={currentSalary !== "" && Number(currentSalary) === 0} value={currentCurrency} onChange={(e) => setCurrentCurrency(e.target.value)} className={inputClass + " disabled:bg-gray-100 disabled:text-gray-400"}>
+                <option value="">Currency</option>
+                {SALARY_CURRENCIES.map((code) => <option key={code} value={code}>{code}</option>)}
+              </select>
+            </div>
+            <p className="mt-1 text-xs text-gray-500">Enter 0 if not currently employed.</p>
           </div>
         )}
-        <div className={showCurrentSalary ? "" : "md:col-span-2"}>
-          <label htmlFor="app-expected-salary" className={labelClass}>Expected salary range *</label>
-          <input id="app-expected-salary" required value={expectedSalary} onChange={(e) => setExpectedSalary(e.target.value)}
-            placeholder="Amount, currency, monthly/annual" className={inputClass} maxLength={160} />
+        <div className={showCurrentSalary ? "min-w-0 lg:col-span-3" : "min-w-0 md:col-span-2 lg:col-span-6"}>
+          <label htmlFor="app-expected-salary" className={labelClass}>Expected fixed monthly salary *</label>
+          <div className="grid grid-cols-[minmax(0,1fr)_6.5rem] gap-2">
+            <input id="app-expected-salary" type="number" inputMode="decimal" min="0.01" max="999999999999.99" step="0.01" required value={expectedSalary} onChange={(e) => setExpectedSalary(e.target.value)}
+              placeholder="Amount" className={inputClass} />
+            <select aria-label="Expected salary currency" required value={expectedCurrency} onChange={(e) => setExpectedCurrency(e.target.value)} className={inputClass}>
+              <option value="">Currency</option>
+              {SALARY_CURRENCIES.map((code) => <option key={code} value={code}>{code}</option>)}
+            </select>
+          </div>
         </div>
-        <div className="md:col-span-2 border-t border-gray-200 pt-4">
+        <p className="md:col-span-2 lg:col-span-6 text-xs text-gray-500">Including fixed allowances, excluding bonuses and commission.</p>
+        <div className="md:col-span-2 lg:col-span-6 border-t border-gray-200 pt-3">
           <h3 className="text-sm font-semibold text-gray-900">Your professional profile *</h3>
           <p className="mt-1 text-xs text-gray-500">Provide either or both of the following.</p>
         </div>
 
-        <div className="md:col-span-2">
+        <div className="min-w-0 lg:col-span-3">
           <label className={labelClass} htmlFor="app-cv">
-            CV upload{" "}
-            <span className="font-normal text-gray-500">— PDF, DOC or DOCX, max {MAX_CV_LABEL}</span>
+            CV upload
           </label>
 
           {!cvFile ? (
             <label
               htmlFor="app-cv"
-              className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 px-6 py-8 cursor-pointer hover:border-ion-teal hover:bg-teal-50 transition-colors group"
+              className="flex flex-col items-center justify-center rounded-xl border border-dashed border-teal-300 bg-teal-50/40 px-3 py-3 cursor-pointer hover:border-ion-teal hover:bg-teal-50 transition-colors group"
             >
-              <Upload className="h-8 w-8 text-gray-400 group-hover:text-ion-teal mb-2 transition-colors" aria-hidden="true" />
+              <Upload className="h-5 w-5 text-ion-teal mb-1 transition-colors" aria-hidden="true" />
               <span className="text-sm font-medium text-gray-700 group-hover:text-ion-teal">
                 Click to upload your CV
               </span>
@@ -331,8 +359,7 @@ export function RoleApplicationForm({
           )}
         </div>
 
-        <div className="md:col-span-2">
-          <div className="mb-3 flex items-center gap-3 text-xs text-gray-500"><span className="h-px flex-1 bg-gray-200" />OR<span className="h-px flex-1 bg-gray-200" /></div>
+        <div className="min-w-0 lg:col-span-3">
           <label htmlFor="app-linkedin" className={labelClass}>LinkedIn profile URL</label>
           <div className="flex items-center gap-2">
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#0A66C2] text-white"><Linkedin className="h-5 w-5" aria-hidden="true" /></span>
@@ -353,8 +380,8 @@ export function RoleApplicationForm({
         </div>
       )}
 
-      <p className="mt-5 flex items-start gap-2 text-xs leading-relaxed text-gray-500"><Lock className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" /><span>Your details are treated confidentially and will not be shared with prospective employers without your permission. <a href="/privacy" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">Privacy Policy</a>.</span></p>
-      <div className="mt-4 flex flex-col sm:flex-row items-center gap-4">
+      <p className="mt-4 flex items-start gap-2 text-xs leading-relaxed text-gray-500"><Lock className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" /><span>Your details are treated confidentially and will not be shared with prospective employers without your permission. <a href="/privacy" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">Privacy Policy</a>.</span></p>
+      <div className="mt-3 flex flex-col sm:flex-row items-center gap-3">
         <button
           type="submit"
           disabled={isSubmitting}

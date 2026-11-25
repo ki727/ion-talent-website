@@ -21,3 +21,17 @@ export function normalizedLinkedin(value: string): string | null {
     return "https://www.linkedin.com" + url.pathname.replace(/\/$/, "")
   } catch { return null }
 }
+
+// Common currencies first, followed by other supported international currency codes.
+export const SALARY_CURRENCIES = ["AED","SAR","QAR","KWD","BHD","OMR","GBP","USD","EUR","CAD","SGD","AUD","INR","PKR","EGP","AFN","ALL","AMD","ANG","AOA","ARS","AWG","AZN","BAM","BBD","BDT","BGN","BIF","BMD","BND","BOB","BRL","BSD","BTN","BWP","BYN","BZD","CDF","CHF","CLP","CNY","COP","CRC","CUC","CUP","CVE","CZK","DJF","DKK","DOP","DZD","ERN","ETB","FJD","FKP","GEL","GHS","GIP","GMD","GNF","GTQ","GYD","HKD","HNL","HRK","HTG","HUF","IDR","ILS","IQD","IRR","ISK","JMD","JOD","JPY","KES","KGS","KHR","KMF","KPW","KRW","KYD","KZT","LAK","LBP","LKR","LRD","LSL","LYD","MAD","MDL","MGA","MKD","MMK","MNT","MOP","MRU","MUR","MVR","MWK","MXN","MYR","MZN","NAD","NGN","NIO","NOK","NPR","NZD","PAB","PEN","PGK","PHP","PLN","PYG","RON","RSD","RUB","RWF","SBD","SCR","SDG","SEK","SHP","SLL","SOS","SRD","SSP","STN","SVC","SYP","SZL","THB","TJS","TMT","TND","TOP","TRY","TTD","TWD","TZS","UAH","UGX","UYU","UZS","VES","VND","VUV","WST","YER","ZAR","ZMW","ZWL"] as const
+
+export function validFixedSalary(amount: string, currency: string, allowZero = false): boolean {
+  if (!/^\d{1,12}(?:\.\d{1,2})?$/.test(amount)) return false
+  const value = Number(amount)
+  if (value === 0) return allowZero && (currency === "" || SALARY_CURRENCIES.some((code) => code === currency))
+  return value > 0 && SALARY_CURRENCIES.some((code) => code === currency)
+}
+
+export function formatFixedSalary(amount: string, currency: string): string {
+  return Number(amount) === 0 ? "0 (not currently employed)" : currency + " " + amount + " / month"
+}
