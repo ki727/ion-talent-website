@@ -219,8 +219,8 @@ export function RoleApplicationForm({
       />
 
       <div className="mb-5 flex items-center gap-3 rounded-xl border border-teal-100 bg-gradient-to-r from-teal-50 via-white to-violet-50 px-4 py-3">
-        <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-ion-teal shadow-sm"><Timer className="h-5 w-5" aria-hidden="true" /><span aria-hidden="true" className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-ion-teal motion-safe:animate-pulse" /></div>
-        <div><h3 className="text-xl font-bold tracking-tight text-gray-900 md:text-2xl">Apply in under 60 seconds</h3><p className="mt-0.5 text-xs text-gray-600 sm:text-sm">No account required.</p></div>
+        <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-ion-teal shadow-sm"><Timer className="h-6 w-6 text-[#0D9488]" aria-hidden="true" /><span aria-hidden="true" className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-[#0D9488] motion-safe:animate-pulse" /></div>
+        <div><h3 className="text-[1.4rem] leading-tight font-bold tracking-tight text-gray-900 md:text-[1.7rem]">Apply in under 60 seconds</h3><p className="mt-0.5 text-xs text-gray-600 sm:text-sm">No account required.</p></div>
       </div>
       <div className="grid grid-cols-1 gap-x-4 gap-y-3 md:grid-cols-2 lg:grid-cols-6">
         <div className="md:col-span-2 lg:col-span-2">
@@ -278,7 +278,7 @@ export function RoleApplicationForm({
         {showCurrentSalary && (
           <div className="min-w-0 lg:col-span-3">
             <label htmlFor="app-current-salary" className={labelClass}>Current fixed monthly salary *</label>
-            <div className="grid grid-cols-[minmax(0,1fr)_6.5rem] gap-2">
+            <div className="grid grid-cols-[minmax(0,1fr)_7.75rem] gap-2">
               <input id="app-current-salary" type="number" inputMode="decimal" min="0" max="999999999999.99" step="0.01" required value={currentSalary} onChange={(e) => setCurrentSalary(e.target.value)}
                 placeholder="Amount" className={inputClass} />
               <select aria-label="Current salary currency" required={currentSalary === "" || Number(currentSalary) !== 0} disabled={currentSalary !== "" && Number(currentSalary) === 0} value={currentCurrency} onChange={(e) => setCurrentCurrency(e.target.value)} className={inputClass + " disabled:bg-gray-100 disabled:text-gray-400"}>
@@ -291,7 +291,7 @@ export function RoleApplicationForm({
         )}
         <div className={showCurrentSalary ? "min-w-0 lg:col-span-3" : "min-w-0 md:col-span-2 lg:col-span-6"}>
           <label htmlFor="app-expected-salary" className={labelClass}>Expected fixed monthly salary *</label>
-          <div className="grid grid-cols-[minmax(0,1fr)_6.5rem] gap-2">
+          <div className="grid grid-cols-[minmax(0,1fr)_7.75rem] gap-2">
             <input id="app-expected-salary" type="number" inputMode="decimal" min="0.01" max="999999999999.99" step="0.01" required value={expectedSalary} onChange={(e) => setExpectedSalary(e.target.value)}
               placeholder="Amount" className={inputClass} />
             <select aria-label="Expected salary currency" required value={expectedCurrency} onChange={(e) => setExpectedCurrency(e.target.value)} className={inputClass}>
@@ -303,7 +303,7 @@ export function RoleApplicationForm({
         <p className="md:col-span-2 lg:col-span-6 text-xs text-gray-500">Including fixed allowances, excluding bonuses and commission.</p>
         <div className="md:col-span-2 lg:col-span-6 border-t border-gray-200 pt-3">
           <h3 className="text-sm font-semibold text-gray-900">Your professional profile *</h3>
-          <p className="mt-1 text-xs text-gray-500">Provide either or both of the following.</p>
+          <p className="mt-1 text-xs text-gray-500">Upload your CV or share your LinkedIn profile. You can also provide both.</p>
         </div>
 
         <div className="min-w-0 lg:col-span-3">
@@ -314,7 +314,7 @@ export function RoleApplicationForm({
           {!cvFile ? (
             <label
               htmlFor="app-cv"
-              className="flex flex-col items-center justify-center rounded-xl border border-dashed border-teal-300 bg-teal-50/40 px-3 py-3 cursor-pointer hover:border-ion-teal hover:bg-teal-50 transition-colors group"
+              className="flex min-h-[90px] flex-col items-center justify-center rounded-xl border border-dashed border-teal-300 bg-teal-50/40 px-3 py-3 cursor-pointer hover:border-ion-teal hover:bg-teal-50 transition-colors group"
             >
               <Upload className="h-5 w-5 text-ion-teal mb-1 transition-colors" aria-hidden="true" />
               <span className="text-sm font-medium text-gray-700 group-hover:text-ion-teal">
@@ -333,7 +333,7 @@ export function RoleApplicationForm({
               />
             </label>
           ) : (
-            <div className="rounded-xl border border-gray-200 bg-white px-4 py-3">
+            <div className="flex min-h-[90px] flex-col justify-center rounded-xl border border-gray-200 bg-white px-4 py-3">
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2 min-w-0">
                   <CheckCircle2 className="h-4 w-4 shrink-0 text-ion-teal" aria-hidden="true" />
@@ -361,10 +361,13 @@ export function RoleApplicationForm({
 
         <div className="min-w-0 lg:col-span-3">
           <label htmlFor="app-linkedin" className={labelClass}>LinkedIn profile URL</label>
-          <div className="flex items-center gap-2">
+          <div className="flex min-h-[90px] flex-col justify-center rounded-xl border border-[#D2E3F2] bg-[#F5F9FD] px-3 py-2">
+            <div className="flex items-center gap-2">
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#0A66C2] text-white"><Linkedin className="h-5 w-5" aria-hidden="true" /></span>
             <input id="app-linkedin" type="text" inputMode="url" autoComplete="url" value={linkedin}
               onChange={(e) => { setLinkedin(e.target.value); setFileError("") }} placeholder="Paste your LinkedIn profile URL" className={inputClass} maxLength={500} />
+            </div>
+            <p className="mt-1 text-center text-xs text-gray-500">Use your personal LinkedIn profile</p>
           </div>
         </div>
 
@@ -386,7 +389,7 @@ export function RoleApplicationForm({
           type="submit"
           disabled={isSubmitting}
           aria-disabled={isSubmitting}
-          className="ion-candidate-button inline-flex h-12 w-full sm:w-auto items-center justify-center gap-2 rounded-xl px-8 text-sm font-medium transition-colors disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-violet focus-visible:ring-offset-2"
+          className="ion-candidate-button inline-flex h-12 w-full sm:w-auto sm:min-w-[240px] items-center justify-center gap-2 rounded-xl px-10 text-sm font-semibold transition-colors disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ion-violet focus-visible:ring-offset-2"
         >
           {isSubmitting && <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />}
           {isSubmitting ? "Submitting..." : idleLabel}
