@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { useEffect, useRef, useState } from "react"
-import { AlertCircle, CheckCircle2, Linkedin, Loader2, Lock, Timer, Upload, X } from "lucide-react"
+import { AlertCircle, CheckCircle2, Linkedin, Loader2, Lock, Upload, X } from "lucide-react"
 import { LinkedinFollowLink } from "@/components/linkedin-follow-link"
 import { trackEvent } from "@/lib/analytics"
 import { asksCurrentSalary, NOTICE_PERIODS, normalizedLinkedin, validInternationalPhone, SALARY_CURRENCIES, validFixedSalary } from "@/lib/application-screening"
@@ -219,7 +219,27 @@ export function RoleApplicationForm({
       />
 
       <div className="mb-5 flex items-center gap-3 rounded-xl border border-teal-100 bg-gradient-to-r from-teal-50 via-white to-violet-50 px-4 py-3">
-        <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-ion-teal shadow-sm"><Timer className="h-6 w-6 text-[#0D9488]" aria-hidden="true" /><span aria-hidden="true" className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-[#0D9488] motion-safe:animate-pulse" /></div>
+        <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-[#0D9488] shadow-sm">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6" aria-hidden="true">
+            <path d="M10 2h4M12 2v3M18 5l2 2" />
+            <circle cx="12" cy="14" r="8" />
+            <g className="ion-application-stopwatch-hand"><path d="M12 14V9" /></g>
+            <circle cx="12" cy="14" r="0.75" fill="currentColor" stroke="none" />
+          </svg>
+          <style>{`
+            @keyframes ion-application-stopwatch-tick {
+              from { transform: rotate(0deg); }
+              to { transform: rotate(360deg); }
+            }
+            .ion-application-stopwatch-hand {
+              transform-origin: 12px 14px;
+              animation: ion-application-stopwatch-tick 60s steps(60, end) infinite;
+            }
+            @media (prefers-reduced-motion: reduce) {
+              .ion-application-stopwatch-hand { animation: none; }
+            }
+          `}</style>
+        </div>
         <div><h3 className="text-[1.4rem] leading-tight font-bold tracking-tight text-gray-900 md:text-[1.7rem]">Apply in under 60 seconds</h3><p className="mt-0.5 text-xs text-gray-600 sm:text-sm">No account required.</p></div>
       </div>
       <div className="grid grid-cols-1 gap-x-4 gap-y-3 md:grid-cols-2 lg:grid-cols-6">
