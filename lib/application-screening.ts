@@ -6,8 +6,9 @@ export function asksCurrentSalary(roleLocation: string): boolean {
   return ["dubai", "abu dhabi", "riyadh", "dammam", "jeddah", "doha", "muscat", "manama", "kuwait city", "sharjah"].includes(roleLocation.trim().toLowerCase())
 }
 
-export function validInternationalPhone(value: string): boolean {
-  return /^\+[1-9]\d{6,14}$/.test(value.trim().replace(/[\s().-]/g, ""))
+// Country code and formatting are guidance only; at least one digit is required.
+export function validContactPhone(value: string): boolean {
+  return /\d/.test(value)
 }
 
 export function normalizedLinkedin(value: string): string | null {

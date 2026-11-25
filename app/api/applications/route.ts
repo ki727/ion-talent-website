@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { sendApplicationEmail } from "@/lib/mailer"
 import { isDuplicateSubmission, releaseSubmission } from "@/lib/dedupe"
-import { asksCurrentSalary, NOTICE_PERIODS, normalizedLinkedin, validInternationalPhone, validFixedSalary, formatFixedSalary } from "@/lib/application-screening"
+import { asksCurrentSalary, NOTICE_PERIODS, normalizedLinkedin, validContactPhone, validFixedSalary, formatFixedSalary } from "@/lib/application-screening"
 import { opportunities } from "@/lib/opportunities"
 
 // Kept comfortably under Vercel's serverless function request-body limit
@@ -72,8 +72,8 @@ export async function POST(request: NextRequest) {
     }
     const currentSalary = showCurrentSalary ? formatFixedSalary(currentSalaryInput, currentCurrency) : undefined
     const expectedSalary = formatFixedSalary(expectedSalaryInput, expectedCurrency)
-    if (!phone || !validInternationalPhone(phone)) {
-      return NextResponse.json({ success: false, message: "Please include a valid international phone number with country code." }, { status: 400 })
+    if (!phone || !validContactPhone(phone)) {
+      return NextResponse.json({ success: false, message: "Please enter a phone number containing at least one digit." }, { status: 400 })
     }
     if (!currentLocation || currentLocation.length > 160 || !NOTICE_PERIODS.some((p) => p === noticePeriod)) {
       return NextResponse.json({ success: false, message: "Please complete all required screening fields." }, { status: 400 })

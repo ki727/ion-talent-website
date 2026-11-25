@@ -7,7 +7,7 @@ import { AlertCircle, ArrowRight, CheckCircle2, Linkedin, Loader2, Lock, Upload,
 import { LinkedinFollowLink } from "@/components/linkedin-follow-link"
 import { trackEvent } from "@/lib/analytics"
 import { LINKEDIN_COMPANY_URL } from "@/lib/site-config"
-import { asksCurrentSalary, NOTICE_PERIODS, normalizedLinkedin, validInternationalPhone, SALARY_CURRENCIES, validFixedSalary } from "@/lib/application-screening"
+import { asksCurrentSalary, NOTICE_PERIODS, normalizedLinkedin, validContactPhone, SALARY_CURRENCIES, validFixedSalary } from "@/lib/application-screening"
 
 const MAX_CV_BYTES = 4 * 1024 * 1024 // 4 MB — see app/api/applications/route.ts for why
 const MAX_CV_LABEL = "4 MB"
@@ -114,9 +114,9 @@ export function RoleApplicationForm({
       setErrorMessage("Please enter valid fixed monthly salary amounts and select their currencies. Enter 0 for current salary if not employed.")
       return
     }
-    if (!validInternationalPhone(phone)) {
+    if (!validContactPhone(phone)) {
       setStatus("error")
-      setErrorMessage("Please enter your phone number including the international country code.")
+      setErrorMessage("Please enter a phone number containing at least one digit.")
       return
     }
     const profileUrl = normalizedLinkedin(linkedin)
@@ -259,7 +259,7 @@ export function RoleApplicationForm({
   const idleLabel = "Submit application"
   const nameValid = fullName.trim().length > 0
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())
-  const phoneValid = validInternationalPhone(phone)
+  const phoneValid = validContactPhone(phone)
   const locationValid = currentLocation.trim().length > 0
   const noticeValid = NOTICE_PERIODS.some((period) => period === noticePeriod)
   const currentAmountValid = validFixedSalary(currentSalary, "USD", true)
